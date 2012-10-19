@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		754E95111630D15A002FEB37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95101630D15A002FEB37 /* UIKit.framework */; };
+		754E95131630D15A002FEB37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95121630D15A002FEB37 /* Foundation.framework */; };
+		754E95151630D15A002FEB37 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95141630D15A002FEB37 /* CoreGraphics.framework */; };
+		754E951B1630D15A002FEB37 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 754E95191630D15A002FEB37 /* InfoPlist.strings */; };
+		754E951D1630D15A002FEB37 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E951C1630D15A002FEB37 /* main.m */; };
+		754E95211630D15A002FEB37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E95201630D15A002FEB37 /* AppDelegate.m */; };
+		754E95231630D15A002FEB37 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 754E95221630D15A002FEB37 /* Default.png */; };
+		754E95251630D15A002FEB37 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754E95241630D15A002FEB37 /* Default@2x.png */; };
+		754E95271630D15A002FEB37 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754E95261630D15A002FEB37 /* Default-568h@2x.png */; };
+		754E952A1630D15A002FEB37 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 754E95281630D15A002FEB37 /* MainStoryboard.storyboard */; };
+		754E952D1630D15A002FEB37 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E952C1630D15A002FEB37 /* ViewController.m */; };
+		754E95351630D15A002FEB37 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95341630D15A002FEB37 /* SenTestingKit.framework */; };
+		754E95361630D15A002FEB37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95101630D15A002FEB37 /* UIKit.framework */; };
+		754E95371630D15A002FEB37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95121630D15A002FEB37 /* Foundation.framework */; };
+		754E953F1630D15A002FEB37 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 754E953D1630D15A002FEB37 /* InfoPlist.strings */; };
+		754E95421630D15A002FEB37 /* FuerzaAereaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E95411630D15A002FEB37 /* FuerzaAereaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		754E95381630D15A002FEB37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 754E95031630D15A002FEB37 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 754E950B1630D15A002FEB37;
+			remoteInfo = FuerzaAerea;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		754E950C1630D15A002FEB37 /* FuerzaAerea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FuerzaAerea.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		754E95101630D15A002FEB37 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		754E95121630D15A002FEB37 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		754E95141630D15A002FEB37 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		754E95181630D15A002FEB37 /* FuerzaAerea-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuerzaAerea-Info.plist"; sourceTree = "<group>"; };
+		754E951A1630D15A002FEB37 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		754E951C1630D15A002FEB37 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		754E951E1630D15A002FEB37 /* FuerzaAerea-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FuerzaAerea-Prefix.pch"; sourceTree = "<group>"; };
+		754E951F1630D15A002FEB37 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		754E95201630D15A002FEB37 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		754E95221630D15A002FEB37 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		754E95241630D15A002FEB37 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		754E95261630D15A002FEB37 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		754E95291630D15A002FEB37 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		754E952B1630D15A002FEB37 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		754E952C1630D15A002FEB37 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		754E95331630D15A002FEB37 /* FuerzaAereaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuerzaAereaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		754E95341630D15A002FEB37 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		754E953C1630D15A002FEB37 /* FuerzaAereaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuerzaAereaTests-Info.plist"; sourceTree = "<group>"; };
+		754E953E1630D15A002FEB37 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		754E95401630D15A002FEB37 /* FuerzaAereaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuerzaAereaTests.h; sourceTree = "<group>"; };
+		754E95411630D15A002FEB37 /* FuerzaAereaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuerzaAereaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		754E95091630D15A002FEB37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E95111630D15A002FEB37 /* UIKit.framework in Frameworks */,
+				754E95131630D15A002FEB37 /* Foundation.framework in Frameworks */,
+				754E95151630D15A002FEB37 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		754E952F1630D15A002FEB37 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E95351630D15A002FEB37 /* SenTestingKit.framework in Frameworks */,
+				754E95361630D15A002FEB37 /* UIKit.framework in Frameworks */,
+				754E95371630D15A002FEB37 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		754E95011630D15A002FEB37 = {
+			isa = PBXGroup;
+			children = (
+				754E95161630D15A002FEB37 /* FuerzaAerea */,
+				754E953A1630D15A002FEB37 /* FuerzaAereaTests */,
+				754E950F1630D15A002FEB37 /* Frameworks */,
+				754E950D1630D15A002FEB37 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		754E950D1630D15A002FEB37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				754E950C1630D15A002FEB37 /* FuerzaAerea.app */,
+				754E95331630D15A002FEB37 /* FuerzaAereaTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		754E950F1630D15A002FEB37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				754E95101630D15A002FEB37 /* UIKit.framework */,
+				754E95121630D15A002FEB37 /* Foundation.framework */,
+				754E95141630D15A002FEB37 /* CoreGraphics.framework */,
+				754E95341630D15A002FEB37 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		754E95161630D15A002FEB37 /* FuerzaAerea */ = {
+			isa = PBXGroup;
+			children = (
+				754E951F1630D15A002FEB37 /* AppDelegate.h */,
+				754E95201630D15A002FEB37 /* AppDelegate.m */,
+				754E95281630D15A002FEB37 /* MainStoryboard.storyboard */,
+				754E952B1630D15A002FEB37 /* ViewController.h */,
+				754E952C1630D15A002FEB37 /* ViewController.m */,
+				754E95171630D15A002FEB37 /* Supporting Files */,
+			);
+			path = FuerzaAerea;
+			sourceTree = "<group>";
+		};
+		754E95171630D15A002FEB37 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				754E95181630D15A002FEB37 /* FuerzaAerea-Info.plist */,
+				754E95191630D15A002FEB37 /* InfoPlist.strings */,
+				754E951C1630D15A002FEB37 /* main.m */,
+				754E951E1630D15A002FEB37 /* FuerzaAerea-Prefix.pch */,
+				754E95221630D15A002FEB37 /* Default.png */,
+				754E95241630D15A002FEB37 /* Default@2x.png */,
+				754E95261630D15A002FEB37 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		754E953A1630D15A002FEB37 /* FuerzaAereaTests */ = {
+			isa = PBXGroup;
+			children = (
+				754E95401630D15A002FEB37 /* FuerzaAereaTests.h */,
+				754E95411630D15A002FEB37 /* FuerzaAereaTests.m */,
+				754E953B1630D15A002FEB37 /* Supporting Files */,
+			);
+			path = FuerzaAereaTests;
+			sourceTree = "<group>";
+		};
+		754E953B1630D15A002FEB37 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				754E953C1630D15A002FEB37 /* FuerzaAereaTests-Info.plist */,
+				754E953D1630D15A002FEB37 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		754E950B1630D15A002FEB37 /* FuerzaAerea */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 754E95451630D15A002FEB37 /* Build configuration list for PBXNativeTarget "FuerzaAerea" */;
+			buildPhases = (
+				754E95081630D15A002FEB37 /* Sources */,
+				754E95091630D15A002FEB37 /* Frameworks */,
+				754E950A1630D15A002FEB37 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FuerzaAerea;
+			productName = FuerzaAerea;
+			productReference = 754E950C1630D15A002FEB37 /* FuerzaAerea.app */;
+			productType = "com.apple.product-type.application";
+		};
+		754E95321630D15A002FEB37 /* FuerzaAereaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 754E95481630D15A002FEB37 /* Build configuration list for PBXNativeTarget "FuerzaAereaTests" */;
+			buildPhases = (
+				754E952E1630D15A002FEB37 /* Sources */,
+				754E952F1630D15A002FEB37 /* Frameworks */,
+				754E95301630D15A002FEB37 /* Resources */,
+				754E95311630D15A002FEB37 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				754E95391630D15A002FEB37 /* PBXTargetDependency */,
+			);
+			name = FuerzaAereaTests;
+			productName = FuerzaAereaTests;
+			productReference = 754E95331630D15A002FEB37 /* FuerzaAereaTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		754E95031630D15A002FEB37 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Andres Abril";
+			};
+			buildConfigurationList = 754E95061630D15A002FEB37 /* Build configuration list for PBXProject "FuerzaAerea" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 754E95011630D15A002FEB37;
+			productRefGroup = 754E950D1630D15A002FEB37 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				754E950B1630D15A002FEB37 /* FuerzaAerea */,
+				754E95321630D15A002FEB37 /* FuerzaAereaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		754E950A1630D15A002FEB37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E951B1630D15A002FEB37 /* InfoPlist.strings in Resources */,
+				754E95231630D15A002FEB37 /* Default.png in Resources */,
+				754E95251630D15A002FEB37 /* Default@2x.png in Resources */,
+				754E95271630D15A002FEB37 /* Default-568h@2x.png in Resources */,
+				754E952A1630D15A002FEB37 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		754E95301630D15A002FEB37 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E953F1630D15A002FEB37 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		754E95311630D15A002FEB37 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		754E95081630D15A002FEB37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E951D1630D15A002FEB37 /* main.m in Sources */,
+				754E95211630D15A002FEB37 /* AppDelegate.m in Sources */,
+				754E952D1630D15A002FEB37 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		754E952E1630D15A002FEB37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754E95421630D15A002FEB37 /* FuerzaAereaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		754E95391630D15A002FEB37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 754E950B1630D15A002FEB37 /* FuerzaAerea */;
+			targetProxy = 754E95381630D15A002FEB37 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		754E95191630D15A002FEB37 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				754E951A1630D15A002FEB37 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		754E95281630D15A002FEB37 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				754E95291630D15A002FEB37 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		754E953D1630D15A002FEB37 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				754E953E1630D15A002FEB37 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		754E95431630D15A002FEB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		754E95441630D15A002FEB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		754E95461630D15A002FEB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
+				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		754E95471630D15A002FEB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
+				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		754E95491630D15A002FEB37 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FuerzaAerea.app/FuerzaAerea";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
+				INFOPLIST_FILE = "FuerzaAereaTests/FuerzaAereaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		754E954A1630D15A002FEB37 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FuerzaAerea.app/FuerzaAerea";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
+				INFOPLIST_FILE = "FuerzaAereaTests/FuerzaAereaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		754E95061630D15A002FEB37 /* Build configuration list for PBXProject "FuerzaAerea" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				754E95431630D15A002FEB37 /* Debug */,
+				754E95441630D15A002FEB37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		754E95451630D15A002FEB37 /* Build configuration list for PBXNativeTarget "FuerzaAerea" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				754E95461630D15A002FEB37 /* Debug */,
+				754E95471630D15A002FEB37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		754E95481630D15A002FEB37 /* Build configuration list for PBXNativeTarget "FuerzaAereaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				754E95491630D15A002FEB37 /* Debug */,
+				754E954A1630D15A002FEB37 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 754E95031630D15A002FEB37 /* Project object */;
+}
