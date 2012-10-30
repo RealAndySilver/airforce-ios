@@ -17,12 +17,14 @@
 		754E95251630D15A002FEB37 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754E95241630D15A002FEB37 /* Default@2x.png */; };
 		754E95271630D15A002FEB37 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 754E95261630D15A002FEB37 /* Default-568h@2x.png */; };
 		754E952A1630D15A002FEB37 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 754E95281630D15A002FEB37 /* MainStoryboard.storyboard */; };
-		754E952D1630D15A002FEB37 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E952C1630D15A002FEB37 /* RootViewController.m */; };
+		754E952D1630D15A002FEB37 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E952C1630D15A002FEB37 /* LoginViewController.m */; };
 		754E95351630D15A002FEB37 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95341630D15A002FEB37 /* SenTestingKit.framework */; };
 		754E95361630D15A002FEB37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95101630D15A002FEB37 /* UIKit.framework */; };
 		754E95371630D15A002FEB37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95121630D15A002FEB37 /* Foundation.framework */; };
 		754E953F1630D15A002FEB37 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 754E953D1630D15A002FEB37 /* InfoPlist.strings */; };
 		754E95421630D15A002FEB37 /* FuerzaAereaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E95411630D15A002FEB37 /* FuerzaAereaTests.m */; };
+		7552345C164045AE00D541DB /* ServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552345B164045AD00D541DB /* ServerCommunicator.m */; };
+		75523461164045C600D541DB /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75523460164045C600D541DB /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,14 +52,18 @@
 		754E95241630D15A002FEB37 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		754E95261630D15A002FEB37 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		754E95291630D15A002FEB37 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		754E952B1630D15A002FEB37 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		754E952C1630D15A002FEB37 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		754E952B1630D15A002FEB37 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		754E952C1630D15A002FEB37 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		754E95331630D15A002FEB37 /* FuerzaAereaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuerzaAereaTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		754E95341630D15A002FEB37 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		754E953C1630D15A002FEB37 /* FuerzaAereaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuerzaAereaTests-Info.plist"; sourceTree = "<group>"; };
 		754E953E1630D15A002FEB37 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		754E95401630D15A002FEB37 /* FuerzaAereaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FuerzaAereaTests.h; sourceTree = "<group>"; };
 		754E95411630D15A002FEB37 /* FuerzaAereaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuerzaAereaTests.m; sourceTree = "<group>"; };
+		7552345A164045AD00D541DB /* ServerCommunicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicator.h; sourceTree = "<group>"; };
+		7552345B164045AD00D541DB /* ServerCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunicator.m; sourceTree = "<group>"; };
+		7552345F164045C600D541DB /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		75523460164045C600D541DB /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +123,10 @@
 		754E95161630D15A002FEB37 /* FuerzaAerea */ = {
 			isa = PBXGroup;
 			children = (
-				754E951F1630D15A002FEB37 /* AppDelegate.h */,
-				754E95201630D15A002FEB37 /* AppDelegate.m */,
-				754E95281630D15A002FEB37 /* MainStoryboard.storyboard */,
-				754E952B1630D15A002FEB37 /* RootViewController.h */,
-				754E952C1630D15A002FEB37 /* RootViewController.m */,
+				7552345E164045B400D541DB /* ServerCommunicator */,
+				75523466164047BB00D541DB /* AppDelegate */,
+				75523468164047E000D541DB /* StoryBoards */,
+				75523467164047D300D541DB /* ViewControllers */,
 				754E95171630D15A002FEB37 /* Supporting Files */,
 			);
 			path = FuerzaAerea;
@@ -158,6 +163,43 @@
 				754E953D1630D15A002FEB37 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7552345E164045B400D541DB /* ServerCommunicator */ = {
+			isa = PBXGroup;
+			children = (
+				7552345A164045AD00D541DB /* ServerCommunicator.h */,
+				7552345B164045AD00D541DB /* ServerCommunicator.m */,
+				7552345F164045C600D541DB /* XMLReader.h */,
+				75523460164045C600D541DB /* XMLReader.m */,
+			);
+			name = ServerCommunicator;
+			sourceTree = "<group>";
+		};
+		75523466164047BB00D541DB /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				754E951F1630D15A002FEB37 /* AppDelegate.h */,
+				754E95201630D15A002FEB37 /* AppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		75523467164047D300D541DB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				754E952B1630D15A002FEB37 /* LoginViewController.h */,
+				754E952C1630D15A002FEB37 /* LoginViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		75523468164047E000D541DB /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				754E95281630D15A002FEB37 /* MainStoryboard.storyboard */,
+			);
+			name = StoryBoards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,7 +314,9 @@
 			files = (
 				754E951D1630D15A002FEB37 /* main.m in Sources */,
 				754E95211630D15A002FEB37 /* AppDelegate.m in Sources */,
-				754E952D1630D15A002FEB37 /* RootViewController.m in Sources */,
+				754E952D1630D15A002FEB37 /* LoginViewController.m in Sources */,
+				7552345C164045AE00D541DB /* ServerCommunicator.m in Sources */,
+				75523461164045C600D541DB /* XMLReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

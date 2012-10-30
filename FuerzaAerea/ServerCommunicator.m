@@ -1,9 +1,9 @@
 //
 //  ServerCommunicator.m
-//  PrizeKing
+//  Fuerza Aerea
 //
-//  Created by Andres Abril on 10/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Created by Andres Abril on 10/25/12.
+//  Copyright (c) 2012 iAmStudio SAS. All rights reserved.
 //
 
 #import "ServerCommunicator.h"
@@ -92,11 +92,8 @@
                                       objectForKey:@"SOAP-ENV:Body"]
                                      objectForKey:methodResponse]
                                     objectForKey:@"return"];
-        SBJSON *json=[[SBJSON alloc]init];
-        NSData *data=[[dictionary2 objectForKey:@"text"] dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
-        resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
+        
+        resDic=[[NSMutableDictionary alloc]initWithDictionary:dictionary2];
         NSLog(@"xml %@",resDic);
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }

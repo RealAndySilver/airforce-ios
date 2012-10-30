@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Andres Abril. All rights reserved.
 //
 
-#import "RootViewController.h"
+#import "LoginViewController.h"
 
-@interface RootViewController ()
+@interface LoginViewController ()
 
 @end
 
-@implementation RootViewController
+@implementation LoginViewController
 
 - (void)viewDidLoad
 {
