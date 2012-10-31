@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DashBoardViewController.h"
+#import "DeviceInfo.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController<UITextFieldDelegate>{
+    CGRect frameInicial;
+    CGRect frameFinal;
+    BOOL touchFlag;
+    
+    IBOutlet UIView *container;
+    IBOutlet UITextField *nombreTF;
+    IBOutlet UITextField *passTF;
+}
 
 @end

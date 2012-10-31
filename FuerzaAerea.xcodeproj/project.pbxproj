@@ -25,6 +25,9 @@
 		754E95421630D15A002FEB37 /* FuerzaAereaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 754E95411630D15A002FEB37 /* FuerzaAereaTests.m */; };
 		7552345C164045AE00D541DB /* ServerCommunicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7552345B164045AD00D541DB /* ServerCommunicator.m */; };
 		75523461164045C600D541DB /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 75523460164045C600D541DB /* XMLReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		75A746A916408FA700B30657 /* DashBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A746A816408FA700B30657 /* DashBoardViewController.m */; };
+		75A746AB1640B7D000B30657 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A746AA1640B7D000B30657 /* SystemConfiguration.framework */; };
+		75A746AF1640B93500B30657 /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A746AE1640B93500B30657 /* DeviceInfo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,11 @@
 		7552345B164045AD00D541DB /* ServerCommunicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunicator.m; sourceTree = "<group>"; };
 		7552345F164045C600D541DB /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		75523460164045C600D541DB /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		75A746A716408FA700B30657 /* DashBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashBoardViewController.h; sourceTree = "<group>"; };
+		75A746A816408FA700B30657 /* DashBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashBoardViewController.m; sourceTree = "<group>"; };
+		75A746AA1640B7D000B30657 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		75A746AD1640B93500B30657 /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		75A746AE1640B93500B30657 /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A746AB1640B7D000B30657 /* SystemConfiguration.framework in Frameworks */,
 				754E95111630D15A002FEB37 /* UIKit.framework in Frameworks */,
 				754E95131630D15A002FEB37 /* Foundation.framework in Frameworks */,
 				754E95151630D15A002FEB37 /* CoreGraphics.framework in Frameworks */,
@@ -93,6 +102,7 @@
 		754E95011630D15A002FEB37 = {
 			isa = PBXGroup;
 			children = (
+				75A746AA1640B7D000B30657 /* SystemConfiguration.framework */,
 				754E95161630D15A002FEB37 /* FuerzaAerea */,
 				754E953A1630D15A002FEB37 /* FuerzaAereaTests */,
 				754E950F1630D15A002FEB37 /* Frameworks */,
@@ -123,6 +133,7 @@
 		754E95161630D15A002FEB37 /* FuerzaAerea */ = {
 			isa = PBXGroup;
 			children = (
+				75A746AC1640B91D00B30657 /* Objetos */,
 				7552345E164045B400D541DB /* ServerCommunicator */,
 				75523466164047BB00D541DB /* AppDelegate */,
 				75523468164047E000D541DB /* StoryBoards */,
@@ -190,6 +201,8 @@
 			children = (
 				754E952B1630D15A002FEB37 /* LoginViewController.h */,
 				754E952C1630D15A002FEB37 /* LoginViewController.m */,
+				75A746A716408FA700B30657 /* DashBoardViewController.h */,
+				75A746A816408FA700B30657 /* DashBoardViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -200,6 +213,15 @@
 				754E95281630D15A002FEB37 /* MainStoryboard.storyboard */,
 			);
 			name = StoryBoards;
+			sourceTree = "<group>";
+		};
+		75A746AC1640B91D00B30657 /* Objetos */ = {
+			isa = PBXGroup;
+			children = (
+				75A746AD1640B93500B30657 /* DeviceInfo.h */,
+				75A746AE1640B93500B30657 /* DeviceInfo.m */,
+			);
+			name = Objetos;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,6 +339,8 @@
 				754E952D1630D15A002FEB37 /* LoginViewController.m in Sources */,
 				7552345C164045AE00D541DB /* ServerCommunicator.m in Sources */,
 				75523461164045C600D541DB /* XMLReader.m in Sources */,
+				75A746A916408FA700B30657 /* DashBoardViewController.m in Sources */,
+				75A746AF1640B93500B30657 /* DeviceInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

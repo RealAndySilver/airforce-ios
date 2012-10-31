@@ -17,13 +17,51 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
+    UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
+    [self.view addGestureRecognizer:dismissRecognizer];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    frameInicial=CGRectMake(256, 100, 512, 374);
+    frameFinal=CGRectMake(256, 187, 512, 374);
 
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma text delegates
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    touchFlag=YES;
+    [self animarHasta:frameInicial];
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    touchFlag=NO;
+    [self performSelector:@selector(delayed) withObject:nil afterDelay:0.01];
+}
+-(void)delayed{
+    if (!touchFlag) {
+        [self animarHasta:frameFinal];
+    }
+}
+#pragma mark animacion
+-(void)animarHasta:(CGRect)hasta{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.4];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    container.frame=hasta;
+    [UIView commitAnimations];
+}
+#pragma mark dismiss keyboard
+-(void)resignKeyboard{
+    [nombreTF resignFirstResponder];
+    [passTF resignFirstResponder];
+}
+#pragma mark acciones
+-(IBAction)irAlDashboard{
+    DashBoardViewController *dVC=[[DashBoardViewController alloc]init];
+    dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Dashboard"];
+    [self.navigationController pushViewController:dVC animated:YES];
+}
 @end
