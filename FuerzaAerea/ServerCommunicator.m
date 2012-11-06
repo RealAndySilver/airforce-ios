@@ -30,16 +30,16 @@
                              "xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\">\n"
                              "<soapenv:Header/>\n"
                              "<soapenv:Body>\n"
-                             "<%@>\n"
+                             "<ns2:%@ xmlns:ns2=\"http://InicioPackage/\">\n"
                              "%@\n"
-                             "</%@>\n"
+                             "</ns2:%@>\n"
                              "</soapenv:Body>\n"
                              "</soapenv:Envelope>\n",method,parameter,method];
     tempMethod=method;
 	//NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.ekoomedia.com.co/ekoobot3d/web/ws/bot_api?wsdl"]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://droidsecure.dglabs.com/app/service/UserService.php"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/WS_Inicio/WS_Inicio?WSDL"]];
 
-    NSString *soapAction=[NSString stringWithFormat:@"http://droidsecure.dglabs.com/app/service/"];
+    NSString *soapAction=[NSString stringWithFormat:@"http://InicioPackage/%@",method];
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];  
 	NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMessage length]];          
 	[theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];       
@@ -81,20 +81,20 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-	NSString *methodResponse=[NSString stringWithFormat:@"ns1:%@Response",tempMethod];
+	NSString *methodResponse=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
 	NSLog(@"Todos los datos recibidos");
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
 
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
-    
+    //NSLog(@"dic %@",dictionary1);
+    //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
-        NSDictionary * dictionary2=[[[[dictionary1 objectForKey:@"SOAP-ENV:Envelope"]
-                                      objectForKey:@"SOAP-ENV:Body"]
-                                     objectForKey:methodResponse]
-                                    objectForKey:@"return"];
+        NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]
+                                      objectForKey:@"S:Body"]
+                                     objectForKey:methodResponse];
         
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dictionary2];
-        NSLog(@"xml %@",resDic);
+        //NSLog(@"xml %@",resDic);
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }
 

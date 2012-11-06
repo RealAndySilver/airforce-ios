@@ -7,7 +7,10 @@
 //
 
 #import "LoginViewController.h"
-
+#define USERNAME @"omar"
+#define PASSWORD @"sinte"
+#define IMEI @"1qaz"
+#define SERIAL @"1234"
 @interface LoginViewController ()
 
 @end
@@ -20,6 +23,8 @@
     NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
     UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
     [self.view addGestureRecognizer:dismissRecognizer];
+    nombreTF.text=USERNAME;
+    passTF.text=PASSWORD;
 }
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(256, 100, 512, 374);
@@ -60,8 +65,20 @@
 }
 #pragma mark acciones
 -(IBAction)irAlDashboard{
-    DashBoardViewController *dVC=[[DashBoardViewController alloc]init];
-    dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Dashboard"];
-    [self.navigationController pushViewController:dVC animated:YES];
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><imei>%@</imei><serial>%@</serial>",nombreTF.text,passTF.text,IMEI,SERIAL];
+    [server callServerWithMethod:@"login" andParameter:params];
+    
+}
+#pragma mark server response
+-(void)receivedDataFromServer:(id)sender{
+    ServerCommunicator *server=sender;
+    NSLog(@"Sender %@",server.resDic);
+    if ([[server.resDic objectForKey:@"return"] isEqualToString:@"true"]) {
+        DashBoardViewController *dVC=[[DashBoardViewController alloc]init];
+        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Dashboard"];
+        [self.navigationController pushViewController:dVC animated:YES];
+    }
 }
 @end

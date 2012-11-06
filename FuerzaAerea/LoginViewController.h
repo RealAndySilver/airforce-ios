@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DashBoardViewController.h"
 #import "DeviceInfo.h"
+#import "ServerCommunicator.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>{
     CGRect frameInicial;
