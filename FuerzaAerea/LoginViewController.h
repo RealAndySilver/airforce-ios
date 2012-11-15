@@ -10,6 +10,7 @@
 #import "DashBoardViewController.h"
 #import "DeviceInfo.h"
 #import "ServerCommunicator.h"
+#import "SBJSON.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>{
     CGRect frameInicial;

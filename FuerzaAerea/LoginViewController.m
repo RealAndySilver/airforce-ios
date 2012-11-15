@@ -25,11 +25,11 @@
     [self.view addGestureRecognizer:dismissRecognizer];
     nombreTF.text=USERNAME;
     passTF.text=PASSWORD;
+    [self loadNextViewController];
 }
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(256, 100, 512, 374);
     frameFinal=CGRectMake(256, 187, 512, 374);
-
 }
 - (void)didReceiveMemoryWarning
 {
@@ -68,17 +68,19 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><imei>%@</imei><serial>%@</serial>",nombreTF.text,passTF.text,IMEI,SERIAL];
+    //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
     [server callServerWithMethod:@"login" andParameter:params];
-    
+}
+-(void)loadNextViewController{
+    DashBoardViewController *dVC=[[DashBoardViewController alloc]init];
+    dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Dashboard"];
+    [self.navigationController pushViewController:dVC animated:YES];
 }
 #pragma mark server response
 -(void)receivedDataFromServer:(id)sender{
     ServerCommunicator *server=sender;
-    NSLog(@"Sender %@",server.resDic);
-    if ([[server.resDic objectForKey:@"return"] isEqualToString:@"true"]) {
-        DashBoardViewController *dVC=[[DashBoardViewController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Dashboard"];
-        [self.navigationController pushViewController:dVC animated:YES];
+    if ([[server.resDic objectForKey:@"conexion"] isEqualToString:@"false"]) {
+        [self loadNextViewController];
     }
 }
 @end

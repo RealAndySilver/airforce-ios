@@ -7,14 +7,32 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate>{
+#import "DocumentViewerController.h"
+#import "ServerCommunicator.h"
+#import "ImageDownloader.h"
+#import "MBProgressHud.h"
+#import "InfoAeroViewController.h"
+#import <QuartzCore/QuartzCore.h>
+@interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
 
     IBOutlet UITextField *ovTF;
     IBOutlet UITextField *mtTF;
     
-    IBOutlet UISearchBar *leftSearchBar;
+    IBOutlet UISwitch *notamSwitch;
+    IBOutlet UISwitch *metarSwitch;
+    IBOutlet UISwitch *conservarSwitch;
+    
+    //IBOutlet UISearchDisplayController *leftSearchBar;
+
+    IBOutlet UITableView *leftTableView;
+    NSArray *leftTableArray;
+    NSMutableArray *leftTableResults;
+    NSArray *leftStaticArray;
+    
+    IBOutlet UITableView *rightTableView;
+    NSMutableArray *rightTableArray;
 
     CGRect frameInicialOV;
     CGRect frameFinalOV;
@@ -25,6 +43,11 @@
     CGRect searchFinalMT;
 
     BOOL touchFlag;
+    
+    MBProgressHUD *hud;
+    
 }
+@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
+@property (weak, nonatomic) IBOutlet UISearchBar *leftSearchBar;
 
 @end

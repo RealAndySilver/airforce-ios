@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XMLReader.h"
+#import "SBJSON.h"
 
 @interface ServerCommunicator : NSObject<UITextFieldDelegate,NSXMLParserDelegate>{
     id caller;

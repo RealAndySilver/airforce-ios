@@ -86,15 +86,19 @@
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
 
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
-    //NSLog(@"dic %@",dictionary1);
+    NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
         NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]
                                       objectForKey:@"S:Body"]
                                      objectForKey:methodResponse];
-        
-        resDic=[[NSMutableDictionary alloc]initWithDictionary:dictionary2];
-        //NSLog(@"xml %@",resDic);
+        SBJSON *json=[[SBJSON alloc]init];
+        NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
+        NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
+
+        resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
+        NSLog(@"xml %@",resDic);
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }
 
