@@ -30,16 +30,16 @@
                              "xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\">\n"
                              "<soapenv:Header/>\n"
                              "<soapenv:Body>\n"
-                             "<ns2:%@ xmlns:ns2=\"http://InicioPackage/\">\n"
+                             "<ns2:%@ xmlns:ns2=\"http://ws.sinte.co/\">\n"
                              "%@\n"
                              "</ns2:%@>\n"
                              "</soapenv:Body>\n"
                              "</soapenv:Envelope>\n",method,parameter,method];
     tempMethod=method;
 	//NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.ekoomedia.com.co/ekoobot3d/web/ws/bot_api?wsdl"]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/WS_Inicio/WS_Inicio?WSDL"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
 
-    NSString *soapAction=[NSString stringWithFormat:@"http://InicioPackage/%@",method];
+    NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];  
 	NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMessage length]];          
 	[theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];       
@@ -86,7 +86,7 @@
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
 
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
-    NSLog(@"dic %@",theXML);
+    //NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
         NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]

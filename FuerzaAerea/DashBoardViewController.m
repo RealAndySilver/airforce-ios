@@ -39,16 +39,18 @@
     //[leftTableArray addObject:@"pdf.pdf"];
     
     
-    rightTableArray = [[NSMutableArray alloc]init];
-    [rightTableArray addObject:@"SKBO A1947/12 STRIP RWY 13L/31R AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:40 2012"];
+    rightTableMetarArray = [[NSMutableArray alloc]init];
+    rightTableNotamArray = [[NSMutableArray alloc]init];
+
+    /*[rightTableArray addObject:@"SKBO A1947/12 STRIP RWY 13L/31R AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:40 2012"];
     [rightTableArray addObject:@"SKBO A1949/12 STRIP RWY 13R/31L AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:51 2012"];
     [rightTableArray addObject:@"SKBO A1950/12 STRIP TWY A AND F, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:06 2012 "];
     [rightTableArray addObject:@"SKBO A1955/12 STRIP TWY R AND TWY S, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:37 2012"];
     [rightTableArray addObject:@"SKBO A1956/12 STRIP TWY M, WIP EXER CTN. 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 01 JUL 05:59 2012"];
-    [rightTableArray addObject:@"SKBO A1957/12 STRIP TWY D BTN TWY A AND TWY M, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 05:01 2012"];
+    [rightTableArray addObject:@"SKBO A1957/12 STRIP TWY D BTN TWY A AND TWY M, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 05:01 2012"];*/
     
     
-    NSLog (@"%d subviews", [self.searchDisplayController.searchContentsController.view.subviews count]);
+    //NSLog (@"%d subviews", [self.searchDisplayController.searchContentsController.view.subviews count]);
     for (int i = 0; i < [self.searchDisplayController.searchContentsController.view.subviews count]; i++)
     {
         id view = [self.searchDisplayController.searchContentsController.view.subviews objectAtIndex:i];
@@ -157,6 +159,13 @@
         [self getImageFromServerWithNumber:@"3"];
     }
 }
+-(IBAction)cosultarMetarNotam:(id)sender{
+    [self getMetar];
+    //esta función ejecuta una reacción en cadena y llama a getNotam
+}
+-(IBAction)switcChangedNotamMetar:(id)sender{
+    [rightTableView reloadData];
+}
 #pragma mark external request
 -(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView{
     //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
@@ -188,7 +197,6 @@
     UIDocumentInteractionController *interactionController =
     [UIDocumentInteractionController interactionControllerWithURL: fileURL];
     interactionController.delegate = interactionDelegate;
-    
     return interactionController;
 }
 - (void)previewDocumentWithURL:(NSURL*)url
@@ -210,83 +218,122 @@
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando imagen", nil);
 }
+-(void)getMetar{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=4;
+    [server callServerWithMethod:@"Metar" andParameter:@""];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=NSLocalizedString(@"Cargando datos", nil);
+}
+-(void)getNotam{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=5;
+    [server callServerWithMethod:@"Notam" andParameter:@""];
+    //hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //hud.labelText=NSLocalizedString(@"Cargando datos", nil);
+}
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
-    //NSString *result=[sender.resDic objectForKey:@"url"];
+    NSString *result=[sender.resDic objectForKey:@"url"];
     if (sender.tag==1) {
-        //NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://www.worldpress.org/images/maps/world_600w.jpg" yTipo:@"imagenOne"];
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Vapor de Agua"];
         //NSLog(@"url %@",url);
 
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"vapordeagua.png" inView:nil];
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"vapordeagua.png" inView:nil];
 
     }
     else if(sender.tag==2){
-        //NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://3.bp.blogspot.com/-bT0csKe5NuQ/TzlXVff2ooI/AAAAAAAAAS8/vhgh3RBXyKw/s1600/Europe_on_The_World_map.jpg" yTipo:@"imagenTwo"];
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Visual"];
         //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"visual.png" inView:nil];
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"visual.png" inView:nil];
 
     }
     else if(sender.tag==3){
-        //NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://1.bp.blogspot.com/_7kmVJTlRj38/TBjjak80ujI/AAAAAAAABD0/4aV8kZ4MOMM/s1600/map1942world1600.jpg" yTipo:@"imagenThree"];
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
         //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"infrarojo.png" inView:nil];
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"infrarojo.png" inView:nil];
 
+    }
+    else if (sender.tag==4){
+        //NSLog(@"Metari %@",sender.resDic);
+        [rightTableMetarArray removeAllObjects];
+        NSArray *array=[sender.resDic objectForKey:@"metars"];
+        for (NSDictionary * dictionary in array) {
+            Metar *metar=[[Metar alloc]initWithDictionary:dictionary];
+            [rightTableMetarArray addObject:[metar buildChain]];
+        }
+        //[rightTableView reloadData];
+        [self getNotam];
+        return;
+    }
+    else if (sender.tag==5){
+        //NSLog(@"Metari %@",sender.resDic);
+        [rightTableNotamArray removeAllObjects];
+        NSArray *array=[sender.resDic objectForKey:@"metars"];
+        for (NSDictionary * dictionary in array) {
+            Notam *notam=[[Notam alloc]initWithDictionary:dictionary];
+            [rightTableNotamArray addObject:[notam buildChain]];
+        }
+        [rightTableView reloadData];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
-    //NSString *result=[sender.resDic objectForKey:@"url"];
+    NSString *result=[sender.resDic objectForKey:@"url"];
     if (sender.tag==1) {
-        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://www.worldpress.org/images/maps/world_600w.jpg" yTipo:@"imagenOne"];
-        NSLog(@"url %@",url);
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Vapor de Agua"];
+        //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
+        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Visual"];
+        //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"vapordeagua.png" inView:nil];
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"vapordeagua.png" inView:nil];
+        
     }
     else if(sender.tag==2){
-        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://3.bp.blogspot.com/-bT0csKe5NuQ/TzlXVff2ooI/AAAAAAAAAS8/vhgh3RBXyKw/s1600/Europe_on_The_World_map.jpg" yTipo:@"imagenTwo"];
-        NSLog(@"url %@",url);
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
+        //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
+        //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"visual.png" inView:nil];
-
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"visual.png" inView:nil];
+        
     }
     else if(sender.tag==3){
-        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:@"http://1.bp.blogspot.com/_7kmVJTlRj38/TBjjak80ujI/AAAAAAAABD0/4aV8kZ4MOMM/s1600/map1942world1600.jpg" yTipo:@"imagenThree"];
-        NSLog(@"url %@",url);
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"imagenThree"];
+        //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
+        //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
-        //[self loadDocument:url inView:nil];
-        [self loadLocalDocument:@"infrarojo.png" inView:nil];
-
+        [self loadDocument:url inView:nil];
+        //[self loadLocalDocument:@"infrarojo.png" inView:nil];
+        
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
@@ -297,16 +344,44 @@
         return @"Archivos";
     }
     else if(tableView.tag==10001){
-        return @"Información Aeronáutica";
+        if (metarSwitch.on && notamSwitch.on) {
+            if (section==0) {
+                return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+            }
+            else if(section==1){
+                return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+            }
+        }
+        else if (metarSwitch.on && !notamSwitch.on){
+            return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+        }
+        else if (!metarSwitch.on && notamSwitch.on){
+            return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+        }
+        else{
+            return @"";
+        }
     }
     else{
         return @"";
     }
+    return @"";
  }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
+    if (tableView.tag==10001) {
+        if (notamSwitch.on && metarSwitch.on) {
+            return 2;
+        }
+        else if(!notamSwitch.on && !metarSwitch.on){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+    }
     return 1;
 }
 
@@ -324,7 +399,25 @@
                 rows= leftTableArray.count;
             }
             else if(tableView.tag==10001){
-                rows= rightTableArray.count;
+                if (metarSwitch.on && notamSwitch.on) {
+                    if (section==0) {
+                        rows= rightTableMetarArray.count;
+                    }
+                    else if (section==1){
+                        rows= rightTableNotamArray.count;
+                    }
+                }
+                else if (metarSwitch.on && !notamSwitch.on){
+                    if (section==0) {
+                        rows= rightTableMetarArray.count;
+                    }
+                }
+                else if (!metarSwitch.on && notamSwitch.on){
+                    if (section==0) {
+                        rows= rightTableNotamArray.count;
+                    }
+                }
+                
             }
         }
 
@@ -332,7 +425,24 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView.tag==10001) {
-        return 80;
+        if (metarSwitch.on && notamSwitch.on) {
+            if (indexPath.section==0) {
+                return 40;
+            }
+            else if (indexPath.section==1){
+                return 60;
+            }
+        }
+        else if (metarSwitch.on && !notamSwitch.on){
+            if (indexPath.section==0) {
+                return 40;
+            }
+        }
+        else if (!metarSwitch.on && notamSwitch.on){
+            if (indexPath.section==0) {
+                return 60;
+            }
+        }
     }
     return 50;
 }
@@ -351,19 +461,39 @@
         //if (tableView.tag==1002) {
             celda.textLabel.text=[leftStaticArray objectAtIndex:indexPath.row];
         //}
-
     }
     else{
         if (tableView.tag==10000) {
             celda.textLabel.text=[leftTableArray objectAtIndex:indexPath.row];
         }
         else if(tableView.tag==10001){
-            celda.textLabel.text=[rightTableArray objectAtIndex:indexPath.row];
-            celda.textLabel.font=[UIFont systemFontOfSize:12];
-            celda.textLabel.numberOfLines=3;
+            if (metarSwitch.on && notamSwitch.on) {
+                if (indexPath.section==0) {
+                    celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    celda.textLabel.font=[UIFont systemFontOfSize:12];
+                    celda.textLabel.numberOfLines=3;
+                }
+                else if(indexPath.section==1){
+                    celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    celda.textLabel.font=[UIFont systemFontOfSize:12];
+                    celda.textLabel.numberOfLines=3;
+                }
+            }
+            else if (metarSwitch.on && !notamSwitch.on){
+                if (indexPath.section==0) {
+                    celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    celda.textLabel.font=[UIFont systemFontOfSize:12];
+                    celda.textLabel.numberOfLines=3;
+                }
+            }
+            else if (!metarSwitch.on && notamSwitch.on)
+                if (indexPath.section==0) {
+                    celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    celda.textLabel.font=[UIFont systemFontOfSize:12];
+                    celda.textLabel.numberOfLines=3;
+                }
         }
     }
-    
     return celda;
 }
 
@@ -385,7 +515,6 @@
 - (void)searchDisplayController:(UISearchDisplayController *)controller didShowSearchResultsTableView:(UITableView *)tableView  {
     searchDisplayController.searchResultsTableView.tag=10002;
     tableView.frame = leftTableView.frame;
-    
 }
 
 #pragma mark tableview delegate
@@ -397,10 +526,28 @@
     else if(tableView.tag==10001){
         InfoAeroViewController *iaVC=[[InfoAeroViewController alloc]init];
         iaVC=[self.storyboard instantiateViewControllerWithIdentifier:@"InfoAero"];
-        iaVC.delegatedString=[rightTableArray objectAtIndex:indexPath.row];
         iaVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         //iaVC.modalPresentationStyle = UIModalPresentationCurrentContext;
         iaVC.modalPresentationStyle = UIModalPresentationFormSheet;
+
+        if (metarSwitch.on && notamSwitch.on) {
+            if (indexPath.section==0) {
+                iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+            }
+            else if (indexPath.section==1){
+                iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+            }
+        }
+        else if (metarSwitch.on && !notamSwitch.on){
+            if (indexPath.section==0) {
+                iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+            }
+        }
+        else if(!metarSwitch.on && notamSwitch.on){
+            if (indexPath.section==0) {
+                iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+            }
+        }
 
         
         [self.navigationController presentViewController:iaVC animated:YES completion:nil];

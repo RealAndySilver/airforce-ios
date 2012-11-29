@@ -13,6 +13,8 @@
 #import "MBProgressHud.h"
 #import "InfoAeroViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Metar.h"
+#import "Notam.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
@@ -32,7 +34,9 @@
     NSArray *leftStaticArray;
     
     IBOutlet UITableView *rightTableView;
-    NSMutableArray *rightTableArray;
+    NSMutableArray *rightTableMetarArray;
+    NSMutableArray *rightTableNotamArray;
+
 
     CGRect frameInicialOV;
     CGRect frameFinalOV;

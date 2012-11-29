@@ -46,6 +46,8 @@
 		755F9F57165550AB0002266B /* visual.png in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F54165550AB0002266B /* visual.png */; };
 		755F9F5E16555F3D0002266B /* InfoAeroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F5D16555F3C0002266B /* InfoAeroViewController.m */; };
 		755F9F64165594560002266B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F9F63165594550002266B /* QuartzCore.framework */; };
+		75926CF2166419D100B3CDD5 /* Notam.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF1166419D100B3CDD5 /* Notam.m */; };
+		75926CF6166419E000B3CDD5 /* Metar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF5166419E000B3CDD5 /* Metar.m */; };
 		75A746A916408FA700B30657 /* DashBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A746A816408FA700B30657 /* DashBoardViewController.m */; };
 		75A746AB1640B7D000B30657 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A746AA1640B7D000B30657 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -120,6 +122,10 @@
 		755F9F5C16555F3C0002266B /* InfoAeroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoAeroViewController.h; sourceTree = "<group>"; };
 		755F9F5D16555F3C0002266B /* InfoAeroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoAeroViewController.m; sourceTree = "<group>"; };
 		755F9F63165594550002266B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		75926CF0166419D100B3CDD5 /* Notam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notam.h; sourceTree = "<group>"; };
+		75926CF1166419D100B3CDD5 /* Notam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notam.m; sourceTree = "<group>"; };
+		75926CF4166419E000B3CDD5 /* Metar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metar.h; sourceTree = "<group>"; };
+		75926CF5166419E000B3CDD5 /* Metar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Metar.m; sourceTree = "<group>"; };
 		75A746A716408FA700B30657 /* DashBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashBoardViewController.h; sourceTree = "<group>"; };
 		75A746A816408FA700B30657 /* DashBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashBoardViewController.m; sourceTree = "<group>"; };
 		75A746AA1640B7D000B30657 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -168,14 +174,11 @@
 		754E95011630D15A002FEB37 = {
 			isa = PBXGroup;
 			children = (
-				755F9F63165594550002266B /* QuartzCore.framework */,
 				755F9F5016554F450002266B /* icon@2x.png */,
 				755F9F4E16554E820002266B /* icon.png */,
-				755F9F3F16548A5B0002266B /* CoreTelephony.framework */,
-				75A746AA1640B7D000B30657 /* SystemConfiguration.framework */,
+				754E950F1630D15A002FEB37 /* Frameworks */,
 				754E95161630D15A002FEB37 /* FuerzaAerea */,
 				754E953A1630D15A002FEB37 /* FuerzaAereaTests */,
-				754E950F1630D15A002FEB37 /* Frameworks */,
 				754E950D1630D15A002FEB37 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -192,6 +195,9 @@
 		754E950F1630D15A002FEB37 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75A746AA1640B7D000B30657 /* SystemConfiguration.framework */,
+				755F9F3F16548A5B0002266B /* CoreTelephony.framework */,
+				755F9F63165594550002266B /* QuartzCore.framework */,
 				754E95101630D15A002FEB37 /* UIKit.framework */,
 				754E95121630D15A002FEB37 /* Foundation.framework */,
 				754E95141630D15A002FEB37 /* CoreGraphics.framework */,
@@ -318,6 +324,10 @@
 				755F9F2216534D6E0002266B /* ImageDownloader.m */,
 				755F9F3C16548A2B0002266B /* DeviceInfo.h */,
 				755F9F3D16548A2B0002266B /* DeviceInfo.m */,
+				75926CF0166419D100B3CDD5 /* Notam.h */,
+				75926CF1166419D100B3CDD5 /* Notam.m */,
+				75926CF4166419E000B3CDD5 /* Metar.h */,
+				75926CF5166419E000B3CDD5 /* Metar.m */,
 				755F9F4516548AD40002266B /* MBProgressHud.h */,
 				755F9F4616548AD40002266B /* MBProgressHud.m */,
 			);
@@ -459,6 +469,8 @@
 				755F9F3E16548A2B0002266B /* DeviceInfo.m in Sources */,
 				755F9F4716548AD40002266B /* MBProgressHud.m in Sources */,
 				755F9F5E16555F3D0002266B /* InfoAeroViewController.m in Sources */,
+				75926CF2166419D100B3CDD5 /* Notam.m in Sources */,
+				75926CF6166419E000B3CDD5 /* Metar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

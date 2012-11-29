@@ -23,9 +23,10 @@
     //label.center=CGPointMake(self.view.frame.size.height/2, self.view.frame.size.width/2);
     UITapGestureRecognizer *tapRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissView)];
     [self.view addGestureRecognizer:tapRecognizer];
-    
+    self.view.backgroundColor=[UIColor darkGrayColor];
     label.text=delegatedString;
-    label.numberOfLines=2;
+    label.backgroundColor=[UIColor darkGrayColor];
+    label.numberOfLines=6;
 }
 
 - (void)didReceiveMemoryWarning

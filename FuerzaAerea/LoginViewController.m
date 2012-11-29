@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #define USERNAME @"omar"
 #define PASSWORD @"sinte"
+//#define IMEI [DeviceInfo getUUDID]
+//#define SERIAL [DeviceInfo getMacAddress]
 #define IMEI @"1qaz"
 #define SERIAL @"1234"
 @interface LoginViewController ()
@@ -79,7 +81,7 @@
 #pragma mark server response
 -(void)receivedDataFromServer:(id)sender{
     ServerCommunicator *server=sender;
-    if ([[server.resDic objectForKey:@"conexion"] isEqualToString:@"false"]) {
+    if ([[server.resDic objectForKey:@"conexion"] isEqualToString:@"true"]) {
         [self loadNextViewController];
     }
 }

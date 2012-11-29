@@ -12,8 +12,8 @@
 +(NSString *)descargarImagenRetornarPathDesde:(NSString *)url yTipo:(NSString*)tipo{
     NSString *docDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *jpegFilePath = [NSString stringWithFormat:@"%@/%@.jpg",docDir,tipo];
-    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:jpegFilePath];
-    if (!fileExists) {
+    //BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:jpegFilePath];
+    //if (!fileExists) {
         NSLog(@"no existe %@",jpegFilePath);
         NSURL *urlImagen=[NSURL URLWithString:url];
         NSData *data=[NSData dataWithContentsOfURL:urlImagen];
@@ -25,9 +25,9 @@
             [data2 writeToFile:jpegFilePath atomically:YES];
         }
         return jpegFilePath;
-    }
+    /*}
     else {
         return jpegFilePath;
-    }
+    }*/
 }
 @end
