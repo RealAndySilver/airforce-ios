@@ -20,7 +20,7 @@
     }
     return self;
 }
--(void)callServerWithMethod:(NSString*)method 
+-(void)callServerWithMethod:(NSString*)method
                andParameter:(NSString*)parameter{
     NSString *soapMessage = [NSString stringWithFormat:
                              @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -38,11 +38,11 @@
     tempMethod=method;
 	//NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.ekoomedia.com.co/ekoobot3d/web/ws/bot_api?wsdl"]];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
-
+    
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
-	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];  
-	NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMessage length]];          
-	[theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];       
+	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+	NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMessage length]];
+	[theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
 	[theRequest addValue: soapAction forHTTPHeaderField:@"SOAPAction"];
 	[theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
 	[theRequest setHTTPMethod:@"POST"];
@@ -84,24 +84,29 @@
 	NSString *methodResponse=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
 	NSLog(@"Todos los datos recibidos");
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-
+    
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
     //NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
         NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]
-                                      objectForKey:@"S:Body"]
-                                     objectForKey:methodResponse];
+                                     objectForKey:@"S:Body"]
+                                    objectForKey:methodResponse];
         SBJSON *json=[[SBJSON alloc]init];
         NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
         NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        if ([tempMethod isEqualToString:@"ordenVuelo"]) {
+            
+            resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
+            [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
+            return;
+        }
         NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
-
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
-        NSLog(@"xml %@",resDic);
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }
-
+    
 }
 
 @end

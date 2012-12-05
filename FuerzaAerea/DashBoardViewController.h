@@ -15,6 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Metar.h"
 #import "Notam.h"
+#import "ModeladorDeOrdenDeVuelo.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;

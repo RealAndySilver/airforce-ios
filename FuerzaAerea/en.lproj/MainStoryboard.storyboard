@@ -342,6 +342,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="consultarOrdenDeVuelo:" destination="FmN-AU-Gz9" eventType="touchUpInside" id="Th8-yj-qql"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Orden de Vuelo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cE9-0J-0cv">
                                         <rect key="frame" x="20" y="31" width="180" height="21"/>
@@ -524,6 +527,7 @@
         <class className="DashBoardViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DashBoardViewController.h"/>
             <relationships>
+                <relationship kind="action" name="consultarOrdenDeVuelo:"/>
                 <relationship kind="action" name="cosultarMetarNotam:"/>
                 <relationship kind="action" name="showImage:" candidateClass="UIButton"/>
                 <relationship kind="action" name="switcChangedNotamMetar:"/>

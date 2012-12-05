@@ -75,6 +75,7 @@
     notamSwitch.onTintColor=[UIColor grayColor];
     metarSwitch.onTintColor=[UIColor grayColor];
     conservarSwitch.onTintColor=[UIColor grayColor];
+    ovTF.text=@"1472";
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -166,6 +167,9 @@
 -(IBAction)switcChangedNotamMetar:(id)sender{
     [rightTableView reloadData];
 }
+-(IBAction)consultarOrdenDeVuelo:(id)sender{
+    [self ordenDeVuelo];
+}
 #pragma mark external request
 -(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView{
     //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
@@ -234,6 +238,15 @@
     //hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     //hud.labelText=NSLocalizedString(@"Cargando datos", nil);
 }
+-(void)ordenDeVuelo{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=6;
+    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>4005</matricula>",ovTF.text];
+    [server callServerWithMethod:@"ordenVuelo" andParameter:params];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=NSLocalizedString(@"Cargando datos", nil);
+}
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
     NSString *result=[sender.resDic objectForKey:@"url"];
@@ -282,19 +295,25 @@
             [rightTableMetarArray addObject:[metar buildChain]];
         }
         //[rightTableView reloadData];
+        NSLog(@"Orden de vuelo response %@",sender.resDic);
         [self getNotam];
         return;
     }
     else if (sender.tag==5){
         //NSLog(@"Metari %@",sender.resDic);
         [rightTableNotamArray removeAllObjects];
-        NSArray *array=[sender.resDic objectForKey:@"metars"];
+        NSArray *array=[sender.resDic objectForKey:@"Notams"];
         for (NSDictionary * dictionary in array) {
             Notam *notam=[[Notam alloc]initWithDictionary:dictionary];
             [rightTableNotamArray addObject:[notam buildChain]];
         }
         [rightTableView reloadData];
     }
+    else if (sender.tag==6){
+        ModeladorDeOrdenDeVuelo *ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:sender.resDic];
+        NSLog(@"Orden de vuelo response %@",ordenDeVuelo.piernas.descripcionMision);
+    }
+
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
@@ -548,8 +567,6 @@
                 iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
             }
         }
-
-        
         [self.navigationController presentViewController:iaVC animated:YES completion:nil];
         //[self.navigationController pushViewController:iaVC animated:YES];
     }

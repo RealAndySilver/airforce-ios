@@ -50,6 +50,12 @@
 		75926CF6166419E000B3CDD5 /* Metar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF5166419E000B3CDD5 /* Metar.m */; };
 		75A746A916408FA700B30657 /* DashBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A746A816408FA700B30657 /* DashBoardViewController.m */; };
 		75A746AB1640B7D000B30657 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A746AA1640B7D000B30657 /* SystemConfiguration.framework */; };
+		75A95A1D166ED6F80012CFA5 /* Principal.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A1C166ED6F80012CFA5 /* Principal.m */; };
+		75A95A20166ED7030012CFA5 /* Tripulacion.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A1F166ED7030012CFA5 /* Tripulacion.m */; };
+		75A95A23166ED70A0012CFA5 /* Piernas.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A22166ED70A0012CFA5 /* Piernas.m */; };
+		75A95A26166ED7190012CFA5 /* Armamento.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A25166ED7190012CFA5 /* Armamento.m */; };
+		75A95A29166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A28166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m */; };
+		75A95A2C166EF7A00012CFA5 /* SerializadorOV.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +135,18 @@
 		75A746A716408FA700B30657 /* DashBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashBoardViewController.h; sourceTree = "<group>"; };
 		75A746A816408FA700B30657 /* DashBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashBoardViewController.m; sourceTree = "<group>"; };
 		75A746AA1640B7D000B30657 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		75A95A1B166ED6F80012CFA5 /* Principal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Principal.h; sourceTree = "<group>"; };
+		75A95A1C166ED6F80012CFA5 /* Principal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Principal.m; sourceTree = "<group>"; };
+		75A95A1E166ED7030012CFA5 /* Tripulacion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tripulacion.h; sourceTree = "<group>"; };
+		75A95A1F166ED7030012CFA5 /* Tripulacion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tripulacion.m; sourceTree = "<group>"; };
+		75A95A21166ED70A0012CFA5 /* Piernas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Piernas.h; sourceTree = "<group>"; };
+		75A95A22166ED70A0012CFA5 /* Piernas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Piernas.m; sourceTree = "<group>"; };
+		75A95A24166ED7190012CFA5 /* Armamento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Armamento.h; sourceTree = "<group>"; };
+		75A95A25166ED7190012CFA5 /* Armamento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Armamento.m; sourceTree = "<group>"; };
+		75A95A27166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeladorDeOrdenDeVuelo.h; sourceTree = "<group>"; };
+		75A95A28166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeladorDeOrdenDeVuelo.m; sourceTree = "<group>"; };
+		75A95A2A166EF7A00012CFA5 /* SerializadorOV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializadorOV.h; sourceTree = "<group>"; };
+		75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializadorOV.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,8 +348,28 @@
 				75926CF5166419E000B3CDD5 /* Metar.m */,
 				755F9F4516548AD40002266B /* MBProgressHud.h */,
 				755F9F4616548AD40002266B /* MBProgressHud.m */,
+				75A95A19166ED6E30012CFA5 /* OrdenDeVuelo */,
 			);
 			name = Objetos;
+			sourceTree = "<group>";
+		};
+		75A95A19166ED6E30012CFA5 /* OrdenDeVuelo */ = {
+			isa = PBXGroup;
+			children = (
+				75A95A27166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.h */,
+				75A95A28166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m */,
+				75A95A1B166ED6F80012CFA5 /* Principal.h */,
+				75A95A1C166ED6F80012CFA5 /* Principal.m */,
+				75A95A1E166ED7030012CFA5 /* Tripulacion.h */,
+				75A95A1F166ED7030012CFA5 /* Tripulacion.m */,
+				75A95A21166ED70A0012CFA5 /* Piernas.h */,
+				75A95A22166ED70A0012CFA5 /* Piernas.m */,
+				75A95A24166ED7190012CFA5 /* Armamento.h */,
+				75A95A25166ED7190012CFA5 /* Armamento.m */,
+				75A95A2A166EF7A00012CFA5 /* SerializadorOV.h */,
+				75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */,
+			);
+			name = OrdenDeVuelo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -471,6 +509,12 @@
 				755F9F5E16555F3D0002266B /* InfoAeroViewController.m in Sources */,
 				75926CF2166419D100B3CDD5 /* Notam.m in Sources */,
 				75926CF6166419E000B3CDD5 /* Metar.m in Sources */,
+				75A95A1D166ED6F80012CFA5 /* Principal.m in Sources */,
+				75A95A20166ED7030012CFA5 /* Tripulacion.m in Sources */,
+				75A95A23166ED70A0012CFA5 /* Piernas.m in Sources */,
+				75A95A26166ED7190012CFA5 /* Armamento.m in Sources */,
+				75A95A29166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m in Sources */,
+				75A95A2C166EF7A00012CFA5 /* SerializadorOV.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
