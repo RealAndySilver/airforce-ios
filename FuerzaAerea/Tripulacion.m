@@ -17,6 +17,7 @@
         grado = [dictionary objectForKey:@"grado"];
         idRegistro = [dictionary objectForKey:@"idRegistro"];
         persona = [dictionary objectForKey:@"persona"];
+        NSLog(@"Persona %@",persona);
     }
     return self;
 }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfoAeroViewController : UIViewController{
+@interface DetailViewController : UIViewController{
     IBOutlet UILabel *label;
 }
 @property(nonatomic,retain)NSString *delegatedString;

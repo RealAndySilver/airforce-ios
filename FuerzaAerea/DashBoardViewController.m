@@ -32,7 +32,9 @@
                             (self.view.frame.size.height/3)+12,
                             self.view.frame.size.height,
                             44);
-    leftTableArray=[[NSMutableArray alloc]initWithObjects:@"pptexample.ppt",@"docexample.doc",@"pdf.pdf", nil];
+    //leftTableArray=[[NSMutableArray alloc]initWithObjects:@"pptexample.ppt",@"docexample.doc",@"pdf.pdf", nil];
+    leftTableArray=[[NSMutableArray alloc]init];
+
     searchDisplayController.searchResultsTableView.frame=CGRectMake(0, 200, 300, 500);
     //[leftTableArray addObject:@"pptexample.ppt"];
     //[leftTableArray addObject:@"docexample.doc"];
@@ -40,7 +42,14 @@
     
     
     rightTableMetarArray = [[NSMutableArray alloc]init];
+    rightTableMetarArrayParcial = [[NSMutableArray alloc]init];
+    rightTableMetarArrayFijo = [[NSMutableArray alloc]init];
+
     rightTableNotamArray = [[NSMutableArray alloc]init];
+    rightTableNotamArrayParcial = [[NSMutableArray alloc]init];
+    rightTableNotamArrayFijo = [[NSMutableArray alloc]init];
+
+
 
     /*[rightTableArray addObject:@"SKBO A1947/12 STRIP RWY 13L/31R AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:40 2012"];
     [rightTableArray addObject:@"SKBO A1949/12 STRIP RWY 13R/31L AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:51 2012"];
@@ -76,6 +85,15 @@
     metarSwitch.onTintColor=[UIColor grayColor];
     conservarSwitch.onTintColor=[UIColor grayColor];
     ovTF.text=@"1472";
+    matriTF.text=@"4005";
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoSuccess:)
+												 name:@"ArchivosSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoError:)
+												 name:@"ArchivosError" object:nil];
+    Archivo *archivo=[[Archivo alloc]init];
+    NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+    [dic setObject:@"true" forKey:@"Offline"];
+    [archivo validarDiccionarioDeArchivos:dic];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -132,6 +150,7 @@
 #pragma mark dismiss keyboard
 -(void)resignKeyboard{
     [ovTF resignFirstResponder];
+    [matriTF resignFirstResponder];
 }
 #pragma mark button actions
 -(IBAction)showImage:(UIButton*)sender{
@@ -161,7 +180,17 @@
     }
 }
 -(IBAction)cosultarMetarNotam:(id)sender{
-    [self getMetar];
+    //[self getMetar];
+    if (ordenDeVuelo) {
+        [self actualizarTablaConPeticionDeString:mtTF.text];
+    }
+    else{
+        NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        NSLog(@"No existe orden de vuelo");
+    }
+    [mtTF resignFirstResponder];
     //esta función ejecuta una reacción en cadena y llama a getNotam
 }
 -(IBAction)switcChangedNotamMetar:(id)sender{
@@ -169,6 +198,24 @@
 }
 -(IBAction)consultarOrdenDeVuelo:(id)sender{
     [self ordenDeVuelo];
+}
+-(IBAction)actualizarTablaDeArchivos:(id)sender{
+    [self obtenerArchivosYmostrar];
+}
+-(IBAction)irAOrdenDeVuelo:(id)sender{
+    if (ordenDeVuelo) {
+        OrdenDeVueloMenuViewController *ovmVC=[[OrdenDeVueloMenuViewController alloc]init];
+        ovmVC=[self.storyboard instantiateViewControllerWithIdentifier:@"OrdenDeVueloMenu"];
+        ovmVC.ordenDeVuelo=ordenDeVuelo;
+        [self.navigationController pushViewController:ovmVC animated:YES];
+    }
+    else{
+        NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        NSLog(@"No existe orden de vuelo");
+    }
+
 }
 #pragma mark external request
 -(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView{
@@ -184,10 +231,10 @@
     [self previewDocumentWithURL:url];
 }
 -(void)loadLocalDocument:(NSString*)documentName inView:(UIWebView*)webView{
-    NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
+    //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
     //NSString *path = documentName;
     
-    NSURL *url = [NSURL fileURLWithPath:path];
+    NSURL *url = [NSURL fileURLWithPath:documentName];
     //NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //[webView loadRequest:request];
     //[self loadDocument:@"test.pdf" inView:nil];
@@ -207,6 +254,7 @@
 {
     UIDocumentInteractionController* preview = [UIDocumentInteractionController interactionControllerWithURL:url];
     preview.delegate = self;
+    preview.name=@"";
     [preview presentPreviewAnimated:YES];
 }
 -(UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller{
@@ -228,7 +276,7 @@
     server.tag=4;
     [server callServerWithMethod:@"Metar" andParameter:@""];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=NSLocalizedString(@"Cargando datos", nil);
+    hud.labelText=NSLocalizedString(@"Cargando Metars", nil);
 }
 -(void)getNotam{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
@@ -242,10 +290,18 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=6;
-    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>4005</matricula>",ovTF.text];
+    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",ovTF.text,matriTF.text];
     [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=NSLocalizedString(@"Cargando datos", nil);
+    hud.labelText=NSLocalizedString(@"Cargando Notams", nil);
+}
+-(void)obtenerArchivosYmostrar{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=10;
+    [server callServerWithMethod:@"documento" andParameter:@""];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=NSLocalizedString(@"Cargando archivos", nil);
 }
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
@@ -294,8 +350,8 @@
             Metar *metar=[[Metar alloc]initWithDictionary:dictionary];
             [rightTableMetarArray addObject:[metar buildChain]];
         }
-        //[rightTableView reloadData];
-        NSLog(@"Orden de vuelo response %@",sender.resDic);
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"metars"];
         [self getNotam];
         return;
     }
@@ -307,11 +363,32 @@
             Notam *notam=[[Notam alloc]initWithDictionary:dictionary];
             [rightTableNotamArray addObject:[notam buildChain]];
         }
-        [rightTableView reloadData];
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"Notams"];
+        [self actualizarTablaConPeticionDeString:mtTF.text];
     }
     else if (sender.tag==6){
-        ModeladorDeOrdenDeVuelo *ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:sender.resDic];
-        NSLog(@"Orden de vuelo response %@",ordenDeVuelo.piernas.descripcionMision);
+        if (ordenDeVuelo) {
+            ordenDeVuelo=nil;
+        }
+        if ([[sender.resDic objectForKey:@"Success"]isEqualToString:@"false"]) {
+            NSString *message=@"Por favor verifique el número de matrícula y consecutivo, y vuelva a intentarlo.";
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Información Incorrecta." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        else{
+            ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:sender.resDic];
+            FileSaver *save=[[FileSaver alloc]init];
+            [save setDictionary:sender.resDic withName:@"ordenDeVuelo"];
+            [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+            [self getMetar];
+            return;
+        }
+    }
+    else if (sender.tag==10){
+        Archivo *archivo=[[Archivo alloc]init];
+        [archivo validarDiccionarioDeArchivos:sender.resDic];
+        return;
     }
 
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -323,7 +400,7 @@
         //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Visual"];
+        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -331,7 +408,7 @@
         
     }
     else if(sender.tag==2){
-        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Visual"];
         //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
@@ -343,7 +420,7 @@
         
     }
     else if(sender.tag==3){
-        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"imagenThree"];
+        NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
         //NSLog(@"url %@",url);
         
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
@@ -353,6 +430,59 @@
         [self loadDocument:url inView:nil];
         //[self loadLocalDocument:@"infrarojo.png" inView:nil];
         
+    }
+    else if (sender.tag==4){
+        //NSLog(@"Metari %@",sender.resDic);
+        [rightTableMetarArray removeAllObjects];
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"metars"];
+        NSArray *array=[dic objectForKey:@"metars"];
+        for (NSDictionary * dictionary in array) {
+            Metar *metar=[[Metar alloc]initWithDictionary:dictionary];
+            [rightTableMetarArray addObject:[metar buildChain]];
+        }
+        
+        [self getNotam];
+        return;
+    }
+    else if (sender.tag==5){
+        //NSLog(@"Metari %@",sender.resDic);
+        [rightTableNotamArray removeAllObjects];
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"Notams"];
+        NSArray *array=[dic objectForKey:@"Notams"];
+        for (NSDictionary * dictionary in array) {
+            Notam *notam=[[Notam alloc]initWithDictionary:dictionary];
+            [rightTableNotamArray addObject:[notam buildChain]];
+        }
+        [self actualizarTablaConPeticionDeString:mtTF.text];
+    }
+    else if (sender.tag==6){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"ordenDeVuelo"];
+        if (ordenDeVuelo) {
+            ordenDeVuelo=nil;
+        }
+        ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:dic];
+        if ([ordenDeVuelo.principal.matricula isEqualToString:matriTF.text]) {
+            if ([ordenDeVuelo.principal.idConsecutivoUnidad isEqualToString:ovTF.text]) {
+                [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+                [self getMetar];
+                return;
+            }
+            else{
+                ordenDeVuelo=nil;
+                NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a internet y vuelva a intentarlo.";
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }
+    }
+    else if (sender.tag==10){
+        Archivo *archivo=[[Archivo alloc]init];
+        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+        [dic setObject:@"true" forKey:@"Offline"];
+        [archivo validarDiccionarioDeArchivos:dic];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
@@ -365,17 +495,24 @@
     else if(tableView.tag==10001){
         if (metarSwitch.on && notamSwitch.on) {
             if (section==0) {
-                return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+                //return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+                return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
             }
             else if(section==1){
-                return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+                //return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+                return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
+
             }
         }
         else if (metarSwitch.on && !notamSwitch.on){
-            return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+            //return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+            return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
+
         }
         else if (!metarSwitch.on && notamSwitch.on){
-            return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+            //return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+            return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
+
         }
         else{
             return @"";
@@ -386,6 +523,51 @@
     }
     return @"";
  }
+- (UIView *) tableView:(UITableView *)tableView
+viewForHeaderInSection:(NSInteger)section{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width, 30)];
+    [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.7]];
+    UILabel *titleHeader=[[UILabel alloc]initWithFrame:CGRectMake(10,0, 300, 20)];
+    if (tableView.tag==10000) {
+        titleHeader.text=@"Archivos";
+    }
+    else if(tableView.tag==10001){
+        if (metarSwitch.on && notamSwitch.on) {
+            if (section==0) {
+                //titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+                titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
+
+            }
+            else if(section==1){
+                //titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+                titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
+
+            }
+        }
+        else if (metarSwitch.on && !notamSwitch.on){
+            //titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
+            titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
+
+        }
+        else if (!metarSwitch.on && notamSwitch.on){
+            //titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
+            titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
+        }
+        else{
+            titleHeader.text=@"";
+        }
+    }
+    else{
+        titleHeader.text=@"";
+    }
+    
+    titleHeader.textColor=[UIColor whiteColor];
+    titleHeader.backgroundColor=[UIColor clearColor];
+    [headerView addSubview:titleHeader];
+    
+    return headerView;
+}
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -420,20 +602,24 @@
             else if(tableView.tag==10001){
                 if (metarSwitch.on && notamSwitch.on) {
                     if (section==0) {
-                        rows= rightTableMetarArray.count;
+                        //rows= rightTableMetarArray.count;
+                        rows= rightTableMetarArrayParcial.count;
                     }
                     else if (section==1){
-                        rows= rightTableNotamArray.count;
+                        //rows= rightTableNotamArray.count;
+                        rows= rightTableNotamArrayParcial.count;
                     }
                 }
                 else if (metarSwitch.on && !notamSwitch.on){
                     if (section==0) {
-                        rows= rightTableMetarArray.count;
+                        //rows= rightTableMetarArray.count;
+                        rows= rightTableMetarArrayParcial.count;
                     }
                 }
                 else if (!metarSwitch.on && notamSwitch.on){
                     if (section==0) {
-                        rows= rightTableNotamArray.count;
+                        //rows= rightTableNotamArray.count;
+                        rows= rightTableNotamArrayParcial.count;
                     }
                 }
                 
@@ -476,38 +662,59 @@
     [celda setSelectionStyle:UITableViewCellSelectionStyleGray];
 
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-        
-        //if (tableView.tag==1002) {
-            celda.textLabel.text=[leftStaticArray objectAtIndex:indexPath.row];
-        //}
+        celda.textLabel.text=[[[[[[leftStaticArray objectAtIndex:indexPath.row]stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
     }
     else{
         if (tableView.tag==10000) {
-            celda.textLabel.text=[leftTableArray objectAtIndex:indexPath.row];
+            celda.textLabel.textColor=[UIColor darkGrayColor];
+            Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
+            NSString *tempStringTruncated=[[[[[archivo.nombre stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
+            celda.textLabel.text=tempStringTruncated;
+            if ([archivo.mime isEqualToString:@".ppt"]) {
+                celda.imageView.image=[UIImage imageNamed:@"ppticon.png"];
+            }
+            else if ([archivo.mime isEqualToString:@".jpg"]){
+                celda.imageView.image=[UIImage imageNamed:@"jpg.png"];
+            }
+            else if ([archivo.mime isEqualToString:@".pptx"]){
+                celda.imageView.image=[UIImage imageNamed:@"ppticon.png"];
+            }
+            else if ([archivo.mime isEqualToString:@".doc"]){
+                celda.imageView.image=[UIImage imageNamed:@"docicon.png"];
+            }
+            else if ([archivo.mime isEqualToString:@".pdf"]){
+                celda.imageView.image=[UIImage imageNamed:@"pdficon.png"];
+            }
         }
         else if(tableView.tag==10001){
             if (metarSwitch.on && notamSwitch.on) {
                 if (indexPath.section==0) {
-                    celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    //celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    celda.textLabel.text=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
                 else if(indexPath.section==1){
-                    celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    //celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    celda.textLabel.text=[rightTableNotamArrayParcial objectAtIndex:indexPath.row];
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
             }
             else if (metarSwitch.on && !notamSwitch.on){
                 if (indexPath.section==0) {
-                    celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    //celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
+                    celda.textLabel.text=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
+
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
             }
             else if (!metarSwitch.on && notamSwitch.on)
                 if (indexPath.section==0) {
-                    celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    //celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
+                    celda.textLabel.text=[rightTableNotamArrayParcial objectAtIndex:indexPath.row];
+
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
@@ -519,7 +726,11 @@
 - (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope{
     NSPredicate *resultPredicate=[NSPredicate predicateWithFormat:@"SELF contains[cd] %@",searchText];
-    leftStaticArray = [leftTableArray filteredArrayUsingPredicate:resultPredicate];
+    NSMutableArray *arraySearch=[[NSMutableArray alloc]init];
+    for (Archivo *archivo in leftTableArray) {
+        [arraySearch addObject:archivo.nombre];
+    }
+    leftStaticArray = [arraySearch filteredArrayUsingPredicate:resultPredicate];
 }
 
 #pragma mark uisearchdisplay controller delegate
@@ -540,10 +751,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView.tag==10000||tableView.tag==10002) {
         NSLog(@"Touched cell in left tableview");
-        [self loadLocalDocument:[leftTableArray objectAtIndex:indexPath.row] inView:nil];
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        //Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
+        NSString *path=@"";
+        for (Archivo *archivo in leftTableArray) {
+            NSString *tempStringTruncated=[[[[[archivo.nombre stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
+            NSLog(@"Cell %@ vs archivo %@",cell.textLabel.text,tempStringTruncated);
+            if ([tempStringTruncated isEqualToString:cell.textLabel.text]) {
+                path=archivo.rutaLocal;
+                NSLog(@"Archivo ruta local %@",path);
+                break;
+            }
+        }
+        [self loadLocalDocument:path inView:nil];
     }
     else if(tableView.tag==10001){
-        InfoAeroViewController *iaVC=[[InfoAeroViewController alloc]init];
+        DetailViewController *iaVC=[[DetailViewController alloc]init];
         iaVC=[self.storyboard instantiateViewControllerWithIdentifier:@"InfoAero"];
         iaVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         //iaVC.modalPresentationStyle = UIModalPresentationCurrentContext;
@@ -551,25 +774,114 @@
 
         if (metarSwitch.on && notamSwitch.on) {
             if (indexPath.section==0) {
-                iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                //iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                iaVC.delegatedString=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
+
             }
             else if (indexPath.section==1){
-                iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                //iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                iaVC.delegatedString=[rightTableNotamArrayParcial objectAtIndex:indexPath.row];
             }
         }
         else if (metarSwitch.on && !notamSwitch.on){
             if (indexPath.section==0) {
-                iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                //iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                iaVC.delegatedString=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
             }
         }
         else if(!metarSwitch.on && notamSwitch.on){
             if (indexPath.section==0) {
-                iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                //iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                iaVC.delegatedString=[rightTableNotamArrayParcial objectAtIndex:indexPath.row];
             }
         }
         [self.navigationController presentViewController:iaVC animated:YES completion:nil];
         //[self.navigationController pushViewController:iaVC animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+#pragma mark notification center receiver
+-(void)archivoSuccess:(NSNotification*)notification{
+    NSDictionary *diccionario=notification.object;
+    [leftTableArray removeAllObjects];
+    for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
+        Archivo *archivo=[[Archivo alloc]initWithDictionary:dic];
+        [leftTableArray addObject:archivo];
+        NSLog(@"cantidad");
+    }
+    NSLog(@"Left array %@",diccionario);
+    [leftTableView reloadData];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+-(void)archivoError:(NSNotification*)notification{
+    NSLog(@"Error %@",notification.object);
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+#pragma mark delayed hud
+-(void)changeTextToHudAndHideWithDelay:(NSString*)text{
+    hud.labelText=text;
+    [self performSelector:@selector(hideHud) withObject:nil afterDelay:2.0];
+}
+-(void)hideHud{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+#pragma mark metarNotam verification
+-(void)actualizarTablaConPeticionDeString:(NSString*)stringBusqueda{
+    if (!conservarSwitch.on) {
+        [rightTableMetarArrayParcial removeAllObjects];
+        [rightTableNotamArrayParcial removeAllObjects];
+    }
+    for (NSString *string in rightTableMetarArray) {
+        NSLog(@"String es %@",string);
+        if ([string rangeOfString:stringBusqueda].location != NSNotFound) {
+            if (![rightTableMetarArrayParcial containsObject:string]) {
+                [rightTableMetarArrayParcial addObject:string];
+            }
+        }
+    }
+    for (NSString *string in rightTableMetarArray) {
+        for (Piernas *pierna in ordenDeVuelo.arregloDePiernas) {
+            if ([string rangeOfString:pierna.de].location != NSNotFound) {
+                if (![rightTableMetarArrayParcial containsObject:string]) {
+                    [rightTableMetarArrayParcial addObject:string];
+                }
+            }
+            if ([pierna.de isEqualToString:pierna.a]) {
+                break;
+            }
+            if ([string rangeOfString:pierna.a].location != NSNotFound) {
+                if (![rightTableMetarArrayParcial containsObject:string]) {
+                    [rightTableMetarArrayParcial addObject:string];
+                }
+            }
+        }
+    }
+    for (NSString *string in rightTableNotamArray) {
+        if ([string rangeOfString:stringBusqueda].location !=NSNotFound) {
+            if (![rightTableNotamArrayParcial containsObject:string]) {
+                [rightTableNotamArrayParcial addObject:string];
+            }
+        }
+    }
+    for (NSString *string in rightTableNotamArrayParcial) {
+        for (Piernas *pierna in ordenDeVuelo.arregloDePiernas) {
+            if ([string rangeOfString:pierna.de].location != NSNotFound) {
+                if (![rightTableNotamArrayParcial containsObject:string]) {
+                    [rightTableNotamArrayParcial addObject:string];
+                }
+            }
+            if ([pierna.de isEqualToString:pierna.a]) {
+                break;
+            }
+            if ([string rangeOfString:pierna.a].location != NSNotFound) {
+                if (![rightTableNotamArrayParcial containsObject:string]) {
+                    [rightTableNotamArrayParcial addObject:string];
+                }
+            }
+        }
+    }
+    [rightTableView reloadData];
+    [ovTF resignFirstResponder];
+    [matriTF resignFirstResponder];
 }
 @end

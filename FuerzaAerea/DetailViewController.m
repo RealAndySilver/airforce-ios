@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 Andres Abril. All rights reserved.
 //
 
-#import "InfoAeroViewController.h"
+#import "DetailViewController.h"
 
-@interface InfoAeroViewController ()
+@interface DetailViewController ()
 
 @end
 
-@implementation InfoAeroViewController
+@implementation DetailViewController
 @synthesize delegatedString;
 
 - (void)viewDidLoad
@@ -23,10 +23,11 @@
     //label.center=CGPointMake(self.view.frame.size.height/2, self.view.frame.size.width/2);
     UITapGestureRecognizer *tapRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissView)];
     [self.view addGestureRecognizer:tapRecognizer];
-    self.view.backgroundColor=[UIColor darkGrayColor];
+    self.view.backgroundColor=[UIColor blackColor];
     label.text=delegatedString;
-    label.backgroundColor=[UIColor darkGrayColor];
+    label.backgroundColor=[UIColor blackColor];
     label.numberOfLines=6;
+    label.textAlignment=NSTextAlignmentLeft;
 }
 
 - (void)didReceiveMemoryWarning

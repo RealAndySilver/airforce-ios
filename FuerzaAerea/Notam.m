@@ -19,49 +19,42 @@
         else{
             aerodromo=@"";
         }
-        
         if ([dictionary objectForKey:@"calificativo"]) {
             calificativo=[dictionary objectForKey:@"calificativo"];
         }
         else{
             calificativo=@"";
         }
-        
         if ([dictionary objectForKey:@"codigo"]) {
             codigo=[dictionary objectForKey:@"codigo"];
         }
         else{
             codigo=@"";
         }
-        
         if ([dictionary objectForKey:@"descripcionE"]) {
             descripcionE=[dictionary objectForKey:@"descripcionE"];
         }
         else{
             descripcionE=@"";
         }
-        
         if ([dictionary objectForKey:@"dinavNotamId"]) {
             dinavNotamId=[dictionary objectForKey:@"dinavNotamId"];
         }
         else{
             dinavNotamId=@"";
         }
-        
         if ([dictionary objectForKey:@"estado"]) {
             estado=[dictionary objectForKey:@"estado"];
         }
         else{
             estado=@"";
         }
-        
         if ([dictionary objectForKey:@"fechaB"]) {
             fechaB=[dictionary objectForKey:@"fechaB"];
         }
         else{
             fechaB=@"";
         }
-        
         if ([dictionary objectForKey:@"fechaC"]) {
             fechaC=[dictionary objectForKey:@"fechaC"];
         }

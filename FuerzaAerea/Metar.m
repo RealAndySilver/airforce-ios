@@ -8,19 +8,28 @@
 
 #import "Metar.h"
 @implementation Metar
-@synthesize estacion,fechaReporte,horaReporte,textoReporte,tipoReporte;
+@synthesize aerodromo,estacion,fechaReporte,horaReporte,textoReporte,tipoReporte;
 -(id)initWithDictionary:(NSDictionary *)dictionary{
     if (self=[super init]) {
         estacion=[dictionary objectForKey:@"estacion"];
         fechaReporte=[dictionary objectForKey:@"fechaReporte"];
         horaReporte=[dictionary objectForKey:@"horaReporte"];
-        textoReporte=[dictionary objectForKey:@"textoReporte"];
-        tipoReporte=@"";//[dictionary objectForKey:@"tipoReporte"];
+        NSString *fullString=[dictionary objectForKey:@"textoReporte"];
+        if ([fullString rangeOfString:@"CACOM"].location == NSNotFound) {
+            textoReporte=[fullString substringFromIndex:4];
+            tipoReporte=@"";//[dictionary objectForKey:@"tipoReporte"];
+            aerodromo=[fullString substringToIndex:4];
+        }
+        else{
+            textoReporte=[fullString substringFromIndex:6];
+            tipoReporte=@"";
+            aerodromo=[fullString substringToIndex:6];
+        }
     }
     return self;
 }
 -(NSString *)buildChain{
-    NSString *res=[NSString stringWithFormat:@"%@ %@ %@ %@ %@",estacion,fechaReporte,horaReporte,textoReporte,tipoReporte];
+    NSString *res=[NSString stringWithFormat:@"%@ %@ %@ %@ %@ %@",aerodromo,textoReporte,estacion,fechaReporte,horaReporte,tipoReporte];
     return res;
 }
 @end

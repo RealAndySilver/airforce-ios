@@ -95,7 +95,7 @@
         SBJSON *json=[[SBJSON alloc]init];
         NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
         NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
+        NSLog(@"Json %@",json_string);
         if ([tempMethod isEqualToString:@"ordenVuelo"]) {
             
             resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];

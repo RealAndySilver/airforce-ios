@@ -11,7 +11,9 @@
 #import "DeviceInfo.h"
 #import "ServerCommunicator.h"
 #import "SBJSON.h"
-
+#import <QuartzCore/QuartzCore.h>
+#import "MBProgressHud.h"
+#import "FileSaver.h"
 @interface LoginViewController : UIViewController<UITextFieldDelegate>{
     CGRect frameInicial;
     CGRect frameFinal;
@@ -20,6 +22,7 @@
     IBOutlet UIView *container;
     IBOutlet UITextField *nombreTF;
     IBOutlet UITextField *passTF;
+    MBProgressHUD *hud;
 }
 
 @end

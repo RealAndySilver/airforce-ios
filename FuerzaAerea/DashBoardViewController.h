@@ -11,16 +11,21 @@
 #import "ServerCommunicator.h"
 #import "ImageDownloader.h"
 #import "MBProgressHud.h"
-#import "InfoAeroViewController.h"
+#import "DetailViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Metar.h"
 #import "Notam.h"
+#import "FileSaver.h"
 #import "ModeladorDeOrdenDeVuelo.h"
+#import "OrdenDeVueloMenuViewController.h"
+#import "Archivo.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
 
     IBOutlet UITextField *ovTF;
+    IBOutlet UITextField *matriTF;
+
     IBOutlet UITextField *mtTF;
     
     IBOutlet UISwitch *notamSwitch;
@@ -30,14 +35,18 @@
     //IBOutlet UISearchDisplayController *leftSearchBar;
 
     IBOutlet UITableView *leftTableView;
-    NSArray *leftTableArray;
+    NSMutableArray *leftTableArray;
     NSMutableArray *leftTableResults;
     NSArray *leftStaticArray;
     
     IBOutlet UITableView *rightTableView;
     NSMutableArray *rightTableMetarArray;
-    NSMutableArray *rightTableNotamArray;
+    NSMutableArray *rightTableMetarArrayParcial;
+    NSMutableArray *rightTableMetarArrayFijo;
 
+    NSMutableArray *rightTableNotamArray;
+    NSMutableArray *rightTableNotamArrayParcial;
+    NSMutableArray *rightTableNotamArrayFijo;
 
     CGRect frameInicialOV;
     CGRect frameFinalOV;
@@ -50,6 +59,10 @@
     BOOL touchFlag;
     
     MBProgressHUD *hud;
+    
+    NSMutableArray *serverFileArray;
+    
+    ModeladorDeOrdenDeVuelo *ordenDeVuelo;
     
 }
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;

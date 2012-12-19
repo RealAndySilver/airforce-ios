@@ -9,7 +9,7 @@
 #import "Piernas.h"
 
 @implementation Piernas
-@synthesize descripcionMision,desdeAerodromo,entidad,entidadApoyada,hastaAerodromo,idOrden,operacion,operacionTipo,piernaNumero,plan;
+@synthesize descripcionMision,desdeAerodromo,entidad,entidadApoyada,hastaAerodromo,idOrden,operacion,operacionTipo,piernaNumero,plan,de,a;
 -(id)initWithDictionary:(NSDictionary *)dictionary{
     if (self=[super init]) {
         descripcionMision = [dictionary objectForKey:@"descripcionMision"];
@@ -19,9 +19,13 @@
         hastaAerodromo = [dictionary objectForKey:@"hastaAerodromo"];
         idOrden = [dictionary objectForKey:@"idOrden"];
         operacion = [dictionary objectForKey:@"operacion"];
-        operacionTipo=[dictionary objectForKey:@"operacionTipo"];
+        operacionTipo =[dictionary objectForKey:@"operacionTipo"];
         piernaNumero = [dictionary objectForKey:@"piernaNumero"];
         plan = [dictionary objectForKey:@"plan"];
+        de = [dictionary objectForKey:@"de"];
+        a = [dictionary objectForKey:@"a"];
+        //de = @"SKBO";
+        //a = @"SKBQ";
     }
     return self;
 }

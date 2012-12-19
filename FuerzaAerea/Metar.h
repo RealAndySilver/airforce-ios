@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Metar : NSObject
+@property(nonatomic,readonly)NSString *aerodromo;
 @property(nonatomic,readonly)NSString *estacion;
 @property(nonatomic,readonly)NSString *fechaReporte;
 @property(nonatomic,readonly)NSString *horaReporte;

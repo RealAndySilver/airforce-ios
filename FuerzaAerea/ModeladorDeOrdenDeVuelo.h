@@ -13,7 +13,7 @@
 #import "Armamento.h"
 @interface ModeladorDeOrdenDeVuelo : NSObject
 @property(nonatomic,readonly)Principal *principal;
-@property(nonatomic,readonly)Piernas *piernas;
+@property(nonatomic,readonly)NSMutableArray *arregloDePiernas;
 @property(nonatomic,readonly)NSMutableArray *arregloDeTripulacion;
 @property(nonatomic,readonly)NSMutableArray *arregloDeArmamento;
 -(id)initWithDictionary:(NSDictionary*)dictionary;
