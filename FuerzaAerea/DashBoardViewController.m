@@ -29,12 +29,12 @@
                             107);
     searchInicialMT=CGRectMake(0, 45, 298, 44);
     searchFinalMT=CGRectMake(0,
-                            (self.view.frame.size.height/3)+12,
-                            self.view.frame.size.height,
-                            44);
+                             (self.view.frame.size.height/3)+12,
+                             self.view.frame.size.height,
+                             44);
     //leftTableArray=[[NSMutableArray alloc]initWithObjects:@"pptexample.ppt",@"docexample.doc",@"pdf.pdf", nil];
     leftTableArray=[[NSMutableArray alloc]init];
-
+    
     searchDisplayController.searchResultsTableView.frame=CGRectMake(0, 200, 300, 500);
     //[leftTableArray addObject:@"pptexample.ppt"];
     //[leftTableArray addObject:@"docexample.doc"];
@@ -44,19 +44,22 @@
     rightTableMetarArray = [[NSMutableArray alloc]init];
     rightTableMetarArrayParcial = [[NSMutableArray alloc]init];
     rightTableMetarArrayFijo = [[NSMutableArray alloc]init];
-
+    
     rightTableNotamArray = [[NSMutableArray alloc]init];
     rightTableNotamArrayParcial = [[NSMutableArray alloc]init];
     rightTableNotamArrayFijo = [[NSMutableArray alloc]init];
-
-
+    
+    arrayFaseVuelo=[[NSMutableArray alloc]init];
+    arrayDepartamentos=[[NSMutableArray alloc]init];
+    arrayMunicipios=[[NSMutableArray alloc]init];
+    arrayArmamentos=[[NSMutableArray alloc]init];
 
     /*[rightTableArray addObject:@"SKBO A1947/12 STRIP RWY 13L/31R AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:40 2012"];
-    [rightTableArray addObject:@"SKBO A1949/12 STRIP RWY 13R/31L AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:51 2012"];
-    [rightTableArray addObject:@"SKBO A1950/12 STRIP TWY A AND F, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:06 2012 "];
-    [rightTableArray addObject:@"SKBO A1955/12 STRIP TWY R AND TWY S, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:37 2012"];
-    [rightTableArray addObject:@"SKBO A1956/12 STRIP TWY M, WIP EXER CTN. 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 01 JUL 05:59 2012"];
-    [rightTableArray addObject:@"SKBO A1957/12 STRIP TWY D BTN TWY A AND TWY M, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 05:01 2012"];*/
+     [rightTableArray addObject:@"SKBO A1949/12 STRIP RWY 13R/31L AND ASSOCIATED TWY, WIP EXER CTN. H24, 26 JUN 02:40 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 02:51 2012"];
+     [rightTableArray addObject:@"SKBO A1950/12 STRIP TWY A AND F, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:06 2012 "];
+     [rightTableArray addObject:@"SKBO A1955/12 STRIP TWY R AND TWY S, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 03:37 2012"];
+     [rightTableArray addObject:@"SKBO A1956/12 STRIP TWY M, WIP EXER CTN. 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 01 JUL 05:59 2012"];
+     [rightTableArray addObject:@"SKBO A1957/12 STRIP TWY D BTN TWY A AND TWY M, WIP EXER CTN. H24, 01 JUL 00:00 2012 UNTIL 31 DEC 23:59 2012. CREATED: 26 JUN 05:01 2012"];*/
     
     
     //NSLog (@"%d subviews", [self.searchDisplayController.searchContentsController.view.subviews count]);
@@ -84,8 +87,10 @@
     notamSwitch.onTintColor=[UIColor grayColor];
     metarSwitch.onTintColor=[UIColor grayColor];
     conservarSwitch.onTintColor=[UIColor grayColor];
-    ovTF.text=@"1472";
-    matriTF.text=@"4005";
+    //ovTF.text=@"1472";
+    //matriTF.text=@"4005";
+    ovTF.text=@"633";
+    matriTF.text=@"1010";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoSuccess:)
 												 name:@"ArchivosSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoError:)
@@ -97,6 +102,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -156,26 +164,26 @@
 -(IBAction)showImage:(UIButton*)sender{
     if (sender.tag==100) {
         /*DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
-        //[self.navigationController pushViewController:dVC animated:YES];
-        [self loadDocument:@"test.pdf" inView:nil];*/
+         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+         dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
+         //[self.navigationController pushViewController:dVC animated:YES];
+         [self loadDocument:@"test.pdf" inView:nil];*/
         [self getImageFromServerWithNumber:@"1"];
     }
     else if (sender.tag==101) {
         /*DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
-        //[self.navigationController pushViewController:dVC animated:YES];
-        [self loadDocument:@"test.pdf" inView:nil];*/
+         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+         dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
+         //[self.navigationController pushViewController:dVC animated:YES];
+         [self loadDocument:@"test.pdf" inView:nil];*/
         [self getImageFromServerWithNumber:@"2"];
     }
     else if (sender.tag==102) {
         /*DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
-        dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
-        //[self.navigationController pushViewController:dVC animated:YES];
-        [self loadDocument:@"test.pdf" inView:nil];*/
+         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+         dVC.path=[[NSBundle mainBundle] pathForResource:@"test.pdf" ofType:nil];
+         //[self.navigationController pushViewController:dVC animated:YES];
+         [self loadDocument:@"test.pdf" inView:nil];*/
         [self getImageFromServerWithNumber:@"3"];
     }
 }
@@ -188,7 +196,7 @@
         NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        NSLog(@"No existe orden de vuelo");
+        //NSLog(@"No existe orden de vuelo");
     }
     [mtTF resignFirstResponder];
     //esta función ejecuta una reacción en cadena y llama a getNotam
@@ -213,15 +221,39 @@
         NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
-        NSLog(@"No existe orden de vuelo");
+        //NSLog(@"No existe orden de vuelo");
     }
-
+    
+}
+-(IBAction)irARegistroDeVuelo:(id)sender{
+    if (ordenDeVuelo) {
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText=NSLocalizedString(@"Cargando Registro de Vuelo", nil);
+        [self performSelector:@selector(delayedAction) withObject:sender afterDelay:0.01];
+    }
+     else{
+     NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
+     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+     [alert show];
+     //NSLog(@"No existe orden de vuelo");
+     }
+    
+}
+-(void)delayedAction{
+    RegistroDeVueloViewController *rvmVC=[[RegistroDeVueloViewController alloc]init];
+    rvmVC=[self.storyboard instantiateViewControllerWithIdentifier:@"RegistroDeVuelo"];
+    rvmVC.ordenDeVuelo=ordenDeVuelo;
+    rvmVC.arrayFaseVuelo=arrayFaseVuelo;
+    rvmVC.arrayDepartamentos=arrayDepartamentos;
+    rvmVC.arrayArmamentos=arrayArmamentos;
+    
+    [self.navigationController pushViewController:rvmVC animated:YES];
 }
 #pragma mark external request
 -(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView{
     //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
     NSString *path = documentName;
-
+    
     NSURL *url = [NSURL fileURLWithPath:path];
     //NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //[webView loadRequest:request];
@@ -275,8 +307,8 @@
     server.caller=self;
     server.tag=4;
     [server callServerWithMethod:@"Metar" andParameter:@""];
-    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=NSLocalizedString(@"Cargando Metars", nil);
+    //hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //hud.labelText=NSLocalizedString(@"Cargando Metars", nil);
 }
 -(void)getNotam{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
@@ -293,7 +325,7 @@
     NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",ovTF.text,matriTF.text];
     [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=NSLocalizedString(@"Cargando Notams", nil);
+    hud.labelText=NSLocalizedString(@"Cargando Orden de Vuelo", nil);
 }
 -(void)obtenerArchivosYmostrar{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
@@ -303,20 +335,38 @@
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando archivos", nil);
 }
+-(void)obtenerFaseVuelo{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=20;
+    [server callServerWithMethod:@"faseVuelos" andParameter:@""];
+}
+-(void)obtenerDepartamentos{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=21;
+    [server callServerWithMethod:@"departamentos" andParameter:@""];
+}
+-(void)obtenerArmamentos{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=22;
+    [server callServerWithMethod:@"armamentos" andParameter:@""];
+}
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
     NSString *result=[sender.resDic objectForKey:@"url"];
     if (sender.tag==1) {
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Vapor de Agua"];
         //NSLog(@"url %@",url);
-
+        
         DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
         dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
         //[self loadLocalDocument:@"vapordeagua.png" inView:nil];
-
+        
     }
     else if(sender.tag==2){
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Visual"];
@@ -328,7 +378,7 @@
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
         //[self loadLocalDocument:@"visual.png" inView:nil];
-
+        
     }
     else if(sender.tag==3){
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
@@ -340,7 +390,7 @@
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
         //[self loadLocalDocument:@"infrarojo.png" inView:nil];
-
+        
     }
     else if (sender.tag==4){
         //NSLog(@"Metari %@",sender.resDic);
@@ -366,6 +416,9 @@
         FileSaver *save=[[FileSaver alloc]init];
         [save setDictionary:sender.resDic withName:@"Notams"];
         [self actualizarTablaConPeticionDeString:mtTF.text];
+        //[rightTableView reloadData];
+        [self obtenerFaseVuelo];
+        return;
     }
     else if (sender.tag==6){
         if (ordenDeVuelo) {
@@ -380,7 +433,7 @@
             ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:sender.resDic];
             FileSaver *save=[[FileSaver alloc]init];
             [save setDictionary:sender.resDic withName:@"ordenDeVuelo"];
-            [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+            //[self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
             [self getMetar];
             return;
         }
@@ -390,7 +443,44 @@
         [archivo validarDiccionarioDeArchivos:sender.resDic];
         return;
     }
-
+    else if (sender.tag==20){
+        NSMutableArray *array=[sender.resDic objectForKey:@"faseVuelo"];
+        for (int i=0; i<array.count; i++) {
+            FaseVuelo *faseVuelo=[[FaseVuelo alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayFaseVuelo addObject:faseVuelo];
+            FileSaver *save=[[FileSaver alloc]init];
+            [save setDictionary:sender.resDic withName:@"faseVuelo"];
+            //NSLog(@"Sender %@",faseVuelo.idFaseVuelo);
+        }
+        [self obtenerDepartamentos];
+        
+        return;
+    }
+    else if (sender.tag==21){
+        NSMutableArray *array=[sender.resDic objectForKey:@"departamentos"];
+        for (int i=0; i<array.count; i++) {
+            Departamentos *departamentos=[[Departamentos alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayDepartamentos addObject:departamentos];
+            FileSaver *save=[[FileSaver alloc]init];
+            [save setDictionary:sender.resDic withName:@"departamentos"];
+            //NSLog(@"Sender %@",departamentos.idDepartamento);
+        }
+        [self obtenerArmamentos];
+        return;
+    }
+    else if (sender.tag==22){
+        NSMutableArray *array=[sender.resDic objectForKey:@"armamentos"];
+        for (int i=0; i<array.count; i++) {
+            Armamentos *armamentos=[[Armamentos alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayArmamentos addObject:armamentos];
+            FileSaver *save=[[FileSaver alloc]init];
+            [save setDictionary:sender.resDic withName:@"armamentos"];
+            //NSLog(@"Arma %@",armamentos.armamento);
+        }
+        [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+        return;
+    }
+    
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
@@ -456,6 +546,8 @@
             [rightTableNotamArray addObject:[notam buildChain]];
         }
         [self actualizarTablaConPeticionDeString:mtTF.text];
+        [self obtenerFaseVuelo];
+        return;
     }
     else if (sender.tag==6){
         FileSaver *save=[[FileSaver alloc]init];
@@ -477,6 +569,12 @@
                 [alert show];
             }
         }
+        else if (!ordenDeVuelo.principal.matricula){
+            ordenDeVuelo=nil;
+            NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a internet y vuelva a intentarlo.";
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
     else if (sender.tag==10){
         Archivo *archivo=[[Archivo alloc]init];
@@ -484,8 +582,43 @@
         [dic setObject:@"true" forKey:@"Offline"];
         [archivo validarDiccionarioDeArchivos:dic];
     }
+    else if (sender.tag==20){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"faseVuelo"];
+        NSMutableArray *array=[dic objectForKey:@"faseVuelo"];
+        //NSLog(@"kkoo %@",dic);
+        for (int i=0; i<array.count; i++) {
+            FaseVuelo *faseVuelo=[[FaseVuelo alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayFaseVuelo addObject:faseVuelo];
+            //NSLog(@"Sender %@",faseVuelo.idFaseVuelo);
+        }
+        [self obtenerDepartamentos];
+        return;
+    }
+    else if (sender.tag==21){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"departamentos"];
+        NSMutableArray *array=[dic objectForKey:@"departamentos"];
+        for (int i=0; i<array.count; i++) {
+            Departamentos *departamentos=[[Departamentos alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayDepartamentos addObject:departamentos];
+            //NSLog(@"Sender %@",departamentos.idDepartamento);
+        }
+        [self obtenerArmamentos];
+        return;
+    }
+    else if (sender.tag==22){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"armamentos"];
+        NSMutableArray *array=[dic objectForKey:@"armamentos"];
+        for (int i=0; i<array.count; i++) {
+            Armamentos *armamentos=[[Armamentos alloc]initWithDictionary:[array objectAtIndex:i]];
+            [arrayArmamentos addObject:armamentos];
+            //NSLog(@"Arma %@",armamentos.armamento);
+        }
+    }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+    
 }
 #pragma mark - Table view data source
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -501,18 +634,18 @@
             else if(section==1){
                 //return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
                 return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
-
+                
             }
         }
         else if (metarSwitch.on && !notamSwitch.on){
             //return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
             return [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
-
+            
         }
         else if (!metarSwitch.on && notamSwitch.on){
             //return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
             return [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
-
+            
         }
         else{
             return @"";
@@ -522,7 +655,7 @@
         return @"";
     }
     return @"";
- }
+}
 - (UIView *) tableView:(UITableView *)tableView
 viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width, 30)];
@@ -536,18 +669,18 @@ viewForHeaderInSection:(NSInteger)section{
             if (section==0) {
                 //titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
                 titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
-
+                
             }
             else if(section==1){
                 //titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
                 titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArrayParcial.count];
-
+                
             }
         }
         else if (metarSwitch.on && !notamSwitch.on){
             //titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
             titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArrayParcial.count];
-
+            
         }
         else if (!metarSwitch.on && notamSwitch.on){
             //titleHeader.text= [NSString stringWithFormat:@"%i Notam disponibles",rightTableNotamArray.count];
@@ -590,42 +723,42 @@ viewForHeaderInSection:(NSInteger)section{
 {
     // Return the number of rows in the section.
     NSInteger rows=0;
-        if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-           // if (tableView.tag==1002) {
-                rows=[leftStaticArray count];
-            //}
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        // if (tableView.tag==1002) {
+        rows=[leftStaticArray count];
+        //}
+    }
+    else{
+        if (tableView.tag==10000) {
+            rows= leftTableArray.count;
         }
-        else{
-            if (tableView.tag==10000) {
-                rows= leftTableArray.count;
+        else if(tableView.tag==10001){
+            if (metarSwitch.on && notamSwitch.on) {
+                if (section==0) {
+                    //rows= rightTableMetarArray.count;
+                    rows= rightTableMetarArrayParcial.count;
+                }
+                else if (section==1){
+                    //rows= rightTableNotamArray.count;
+                    rows= rightTableNotamArrayParcial.count;
+                }
             }
-            else if(tableView.tag==10001){
-                if (metarSwitch.on && notamSwitch.on) {
-                    if (section==0) {
-                        //rows= rightTableMetarArray.count;
-                        rows= rightTableMetarArrayParcial.count;
-                    }
-                    else if (section==1){
-                        //rows= rightTableNotamArray.count;
-                        rows= rightTableNotamArrayParcial.count;
-                    }
+            else if (metarSwitch.on && !notamSwitch.on){
+                if (section==0) {
+                    //rows= rightTableMetarArray.count;
+                    rows= rightTableMetarArrayParcial.count;
                 }
-                else if (metarSwitch.on && !notamSwitch.on){
-                    if (section==0) {
-                        //rows= rightTableMetarArray.count;
-                        rows= rightTableMetarArrayParcial.count;
-                    }
-                }
-                else if (!metarSwitch.on && notamSwitch.on){
-                    if (section==0) {
-                        //rows= rightTableNotamArray.count;
-                        rows= rightTableNotamArrayParcial.count;
-                    }
-                }
-                
             }
+            else if (!metarSwitch.on && notamSwitch.on){
+                if (section==0) {
+                    //rows= rightTableNotamArray.count;
+                    rows= rightTableNotamArrayParcial.count;
+                }
+            }
+            
         }
-
+    }
+    
     return rows;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -660,7 +793,7 @@ viewForHeaderInSection:(NSInteger)section{
         celda = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     [celda setSelectionStyle:UITableViewCellSelectionStyleGray];
-
+    
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         celda.textLabel.text=[[[[[[leftStaticArray objectAtIndex:indexPath.row]stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
     }
@@ -705,7 +838,7 @@ viewForHeaderInSection:(NSInteger)section{
                 if (indexPath.section==0) {
                     //celda.textLabel.text=[rightTableMetarArray objectAtIndex:indexPath.row];
                     celda.textLabel.text=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
-
+                    
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
@@ -714,7 +847,7 @@ viewForHeaderInSection:(NSInteger)section{
                 if (indexPath.section==0) {
                     //celda.textLabel.text=[rightTableNotamArray objectAtIndex:indexPath.row];
                     celda.textLabel.text=[rightTableNotamArrayParcial objectAtIndex:indexPath.row];
-
+                    
                     celda.textLabel.font=[UIFont systemFontOfSize:12];
                     celda.textLabel.numberOfLines=3;
                 }
@@ -750,16 +883,16 @@ viewForHeaderInSection:(NSInteger)section{
 #pragma mark tableview delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView.tag==10000||tableView.tag==10002) {
-        NSLog(@"Touched cell in left tableview");
+        //NSLog(@"Touched cell in left tableview");
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         //Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
         NSString *path=@"";
         for (Archivo *archivo in leftTableArray) {
             NSString *tempStringTruncated=[[[[[archivo.nombre stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
-            NSLog(@"Cell %@ vs archivo %@",cell.textLabel.text,tempStringTruncated);
+            //NSLog(@"Cell %@ vs archivo %@",cell.textLabel.text,tempStringTruncated);
             if ([tempStringTruncated isEqualToString:cell.textLabel.text]) {
                 path=archivo.rutaLocal;
-                NSLog(@"Archivo ruta local %@",path);
+                //NSLog(@"Archivo ruta local %@",path);
                 break;
             }
         }
@@ -771,12 +904,12 @@ viewForHeaderInSection:(NSInteger)section{
         iaVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         //iaVC.modalPresentationStyle = UIModalPresentationCurrentContext;
         iaVC.modalPresentationStyle = UIModalPresentationFormSheet;
-
+        
         if (metarSwitch.on && notamSwitch.on) {
             if (indexPath.section==0) {
                 //iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
                 iaVC.delegatedString=[rightTableMetarArrayParcial objectAtIndex:indexPath.row];
-
+                
             }
             else if (indexPath.section==1){
                 //iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
@@ -807,14 +940,14 @@ viewForHeaderInSection:(NSInteger)section{
     for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
         Archivo *archivo=[[Archivo alloc]initWithDictionary:dic];
         [leftTableArray addObject:archivo];
-        NSLog(@"cantidad");
+        //NSLog(@"cantidad");
     }
-    NSLog(@"Left array %@",diccionario);
+    //NSLog(@"Left array %@",diccionario);
     [leftTableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)archivoError:(NSNotification*)notification{
-    NSLog(@"Error %@",notification.object);
+    //NSLog(@"Error %@",notification.object);
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 #pragma mark delayed hud
@@ -832,7 +965,7 @@ viewForHeaderInSection:(NSInteger)section{
         [rightTableNotamArrayParcial removeAllObjects];
     }
     for (NSString *string in rightTableMetarArray) {
-        NSLog(@"String es %@",string);
+        //NSLog(@"String es %@",string);
         if ([string rangeOfString:stringBusqueda].location != NSNotFound) {
             if (![rightTableMetarArrayParcial containsObject:string]) {
                 [rightTableMetarArrayParcial addObject:string];
@@ -863,7 +996,7 @@ viewForHeaderInSection:(NSInteger)section{
             }
         }
     }
-    for (NSString *string in rightTableNotamArrayParcial) {
+    for (NSString *string in rightTableNotamArray) {
         for (Piernas *pierna in ordenDeVuelo.arregloDePiernas) {
             if ([string rangeOfString:pierna.de].location != NSNotFound) {
                 if (![rightTableNotamArrayParcial containsObject:string]) {

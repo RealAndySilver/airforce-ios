@@ -36,6 +36,6 @@
     if (sender.tag==5) {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    NSLog(@"Button %i pressed",sender.tag);
+    //NSLog(@"Button %i pressed",sender.tag);
 }
 @end

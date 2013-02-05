@@ -98,7 +98,7 @@
     }
     if (errorFlag != NULL)
     {
-        NSLog(@"Error: %@", errorFlag);
+        //NSLog(@"Error: %@", errorFlag);
         return errorFlag;
     }
     interfaceMsgStruct = (struct if_msghdr *) msgBuffer;
@@ -167,7 +167,7 @@ static mach_msg_type_number_t numCpuInfo, numPrevCpuInfo;
         numCpuInfo = 0U;
         return dic;
     } else {
-        NSLog(@"Error!");
+        //NSLog(@"Error!");
         return dic;
         //[NSApp terminate:nil];
     }

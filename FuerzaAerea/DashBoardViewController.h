@@ -19,6 +19,11 @@
 #import "ModeladorDeOrdenDeVuelo.h"
 #import "OrdenDeVueloMenuViewController.h"
 #import "Archivo.h"
+#import "RegistroDeVueloViewController.h"
+#import "FaseVuelo.h"
+#import "Departamentos.h"
+#import "Armamentos.h"
+
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
@@ -64,6 +69,11 @@
     
     ModeladorDeOrdenDeVuelo *ordenDeVuelo;
     
+    NSMutableArray *arrayFaseVuelo;
+    NSMutableArray *arrayDepartamentos;
+    NSMutableArray *arrayMunicipios;
+    NSMutableArray *arrayArmamentos;
+
 }
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 @property (weak, nonatomic) IBOutlet UISearchBar *leftSearchBar;

@@ -33,7 +33,7 @@
     if (sender.tag==5) {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    NSLog(@"Button %i pressed",sender.tag);
+    //NSLog(@"Button %i pressed",sender.tag);
 }
 
 #pragma mark - Table view data source

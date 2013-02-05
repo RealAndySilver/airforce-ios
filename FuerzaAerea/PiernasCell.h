@@ -15,6 +15,8 @@
 @property(nonatomic,retain)IBOutlet UILabel *operacion;
 @property(nonatomic,retain)IBOutlet UILabel *desde;
 @property(nonatomic,retain)IBOutlet UILabel *hasta;
+@property(nonatomic,retain)IBOutlet UILabel *piernaNumero;
+
 
 @property(nonatomic,retain)IBOutlet UILabel *cargo;
 @property(nonatomic,retain)IBOutlet UILabel *grado;

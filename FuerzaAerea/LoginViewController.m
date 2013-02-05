@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
+    //NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
     UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
     [self.view addGestureRecognizer:dismissRecognizer];
     //nombreTF.text=USERNAME;
@@ -35,7 +35,7 @@
     nombreTF.text=[userDic objectForKey:@"username"];
     passTF.text=[userDic objectForKey:@"password"];
     
-    //[self loadNextViewController];
+    [self loadNextViewController];
 }
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(733, 187, 231, 173);

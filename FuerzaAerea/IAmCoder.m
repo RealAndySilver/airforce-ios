@@ -62,7 +62,7 @@ static const short _base64DecodingTable[256] = {
                     stringByReplacingOccurrencesOfString:@"#" withString:@""]
                     stringByReplacingOccurrencesOfString:@"%%" withString:@""];*/
     NSString *hash =[self base64EncodeData:HMAC];
-    NSLog(@"hash %@",hash);
+    //NSLog(@"hash %@",hash);
     return hash;
 }
 + (NSString *) base64EncodeString: (NSString *) strData {

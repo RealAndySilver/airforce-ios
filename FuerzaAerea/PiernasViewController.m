@@ -22,7 +22,7 @@
     unidadLabel.text=ordenDeVuelo.principal.unidad;
     unidadAsumeLabel.text=ordenDeVuelo.principal.unidadAsume;
     ordenLabel.text=ordenDeVuelo.principal.idOrdenVuelo;
-    NSLog(@"Piernas array %@",ordenDeVuelo.arregloDePiernas);
+    //NSLog(@"Piernas array %@",ordenDeVuelo.arregloDePiernas);
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,7 +35,7 @@
     if (sender.tag==5) {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    NSLog(@"Button %i pressed",sender.tag);
+    //NSLog(@"Button %i pressed",sender.tag);
 }
 #pragma mark - Table view data source
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -92,6 +92,7 @@ viewForFooterInSection:(NSInteger)section{
     [celda setSelectionStyle:UITableViewCellSelectionStyleGray];
     Piernas *pierna=[ordenDeVuelo.arregloDePiernas objectAtIndex:indexPath.row];
     celda.plan.text=pierna.plan;
+    celda.piernaNumero.text=pierna.piernaNumero;
     celda.operacionTipo.text=pierna.operacionTipo;
     celda.operacion.text=pierna.operacion;
     celda.desde.text=pierna.desdeAerodromo;

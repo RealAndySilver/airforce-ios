@@ -22,5 +22,6 @@
 @property(nonatomic,retain)NSString *unidad;
 @property(nonatomic,retain)NSString *unidadAsume;
 -(id)initWithDictionary:(NSDictionary*)dictionary;
+//aprobado, cumplido, imprimircola, registrada
 
 @end

@@ -20,7 +20,7 @@
     [super viewDidLoad];
     unidadLabel.text=ordenDeVuelo.principal.unidad;
     unidadAsumeLabel.text=ordenDeVuelo.principal.unidadAsume;
-    ordenLabel.text=ordenDeVuelo.principal.idOrdenVuelo;
+    ordenLabel.text=ordenDeVuelo.principal.idConsecutivoUnidad;
     fechaLabel.text=ordenDeVuelo.principal.fecha;
     horaDespegueLabel.text=ordenDeVuelo.principal.horaDespegue;
     noFacLabel.text=ordenDeVuelo.principal.matricula;
@@ -66,7 +66,7 @@
     else if (sender.tag==5) {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    NSLog(@"Button %i pressed",sender.tag);
+    //NSLog(@"Button %i pressed",sender.tag);
 }
 
 @end

@@ -36,8 +36,22 @@
                              "</soapenv:Body>\n"
                              "</soapenv:Envelope>\n",method,parameter,method];
     tempMethod=method;
-	//NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.ekoomedia.com.co/ekoobot3d/web/ws/bot_api?wsdl"]];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
+    NSURL *url=nil;
+    if ([method isEqualToString:@"faseVuelos"] || [method isEqualToString:@"departamentos"] || [method isEqualToString:@"armamentos"]) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
+
+    }
+    else{
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
+    }
+    /*if ([method isEqualToString:@"faseVuelos"] || [method isEqualToString:@"departamentos"] || [method isEqualToString:@"armamentos"]) {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://webservicesiioc2:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+        
+    }
+    else{
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://webservicesiioc2:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+    }*/
+    
     
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
@@ -95,7 +109,7 @@
         SBJSON *json=[[SBJSON alloc]init];
         NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
         NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"Json %@",json_string);
+        //NSLog(@"Json %@",json_string);
         if ([tempMethod isEqualToString:@"ordenVuelo"]) {
             
             resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];

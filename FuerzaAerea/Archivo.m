@@ -43,14 +43,14 @@
         nombre=[dictionary objectForKey:@"nombre"];
         tamano=[dictionary objectForKey:@"tamaño"];
         version=[dictionary objectForKey:@"version"];
-        NSLog(@"Mime en %@ es %@",nombre,mime);
+        //NSLog(@"Mime en %@ es %@",nombre,mime);
     }
     return self;
 }
 -(void)validarDiccionarioDeArchivos:(NSDictionary*)diccionario{
     FileSaver *file=[[FileSaver alloc]init];
     if ([[diccionario objectForKey:@"Offline"] isEqualToString:@"true"]) {
-        NSLog(@"Offline files incoming");
+        //NSLog(@"Offline files incoming");
         NSDictionary *dic=[file getDictionary:@"ArchivosGuardados"];
         if (dic){[[NSNotificationCenter defaultCenter]postNotificationName:@"ArchivosSuccess" object:dic];}
         else{[[NSNotificationCenter defaultCenter]postNotificationName:@"ArchivosError" object:dic];}
@@ -69,7 +69,7 @@
     
     //Si el archivo de referencia no existe en el sistema se va a intentar crearlo de acuerdo a las descargas exitosas
     if (![file getDictionary:@"ArchivosGuardados"]) {
-        NSLog(@"Resultado no existe %@ creando archivo",[file getDictionary:@"ArchivosGuardados"]);
+        //NSLog(@"Resultado no existe %@ creando archivo",[file getDictionary:@"ArchivosGuardados"]);
         for (Archivo *archivo in arregloDeServidor) {
             if ([FileDownloader descargarArchivoRetornarPathDesde:archivo.link nombre:archivo.rutaLocal]) {
                 
@@ -78,7 +78,7 @@
             }
             else{
                 //El archivo no descargó, por lo tanto esta referencia no se agrega el arreglo
-                NSLog(@"No descargó");
+                //NSLog(@"No descargó");
             }
         }
         
@@ -106,14 +106,14 @@
         
         //A continuación se intenta descargar el archivo, si es descargado sin problemas se agregará al arregloParaGuardarLocal
         for (Archivo *archivo in arregloDeFaltantes) {
-            NSLog(@"Link del archivo %@",archivo.link);
+            //NSLog(@"Link del archivo %@",archivo.link);
             if ([FileDownloader descargarArchivoRetornarPathDesde:archivo.link nombre:archivo.rutaLocal]) {
                 //El archivo fue descargado exitosamente y se puede proceder a ingresarlo al arreglo para posteriormente ser guardado
                 [arregloParaGuardarLocal addObject:[self convertirArchivoEnDiccionario:archivo]];
             }
             else{
                 //El archivo no descargó, por lo tanto esta referencia no se agrega el arreglo
-                NSLog(@"No descargó");
+                //NSLog(@"No descargó");
             }
         }
         //Guardamos el archivo final de referencia para ser enviado al viewcontroller y ser mostrado

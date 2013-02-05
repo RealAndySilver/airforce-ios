@@ -47,6 +47,9 @@
 		755F9F5116554F460002266B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F5016554F450002266B /* icon@2x.png */; };
 		755F9F5E16555F3D0002266B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F5D16555F3C0002266B /* DetailViewController.m */; };
 		755F9F64165594560002266B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F9F63165594550002266B /* QuartzCore.framework */; };
+		7573642216ADB85F00445CB0 /* RegistroDeVueloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573642116ADB85F00445CB0 /* RegistroDeVueloViewController.m */; };
+		7573642F16AF708300445CB0 /* CeldaItinerario.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573642E16AF708300445CB0 /* CeldaItinerario.m */; };
+		7573644816B5ACA800445CB0 /* CeldaCondiciones.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573644716B5ACA800445CB0 /* CeldaCondiciones.m */; };
 		7575CA4216729C510078E354 /* FileSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7575CA4116729C510078E354 /* FileSaver.m */; };
 		758711A61680142800FEC282 /* fuerza.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 758711A51680142800FEC282 /* fuerza.jpeg */; };
 		758711A91680C1B900FEC282 /* atras.png in Resources */ = {isa = PBXBuildFile; fileRef = 758711A81680C1B900FEC282 /* atras.png */; };
@@ -54,6 +57,14 @@
 		758711AD16814C7F00FEC282 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 758711AC16814C7E00FEC282 /* icon.png */; };
 		75926CF2166419D100B3CDD5 /* Notam.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF1166419D100B3CDD5 /* Notam.m */; };
 		75926CF6166419E000B3CDD5 /* Metar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF5166419E000B3CDD5 /* Metar.m */; };
+		75A1D2D516B9C6E60013B48A /* CeldaArmamento.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2D416B9C6E60013B48A /* CeldaArmamento.m */; };
+		75A1D2D916B9E4F30013B48A /* CeldaTripulacion.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2D816B9E4F30013B48A /* CeldaTripulacion.m */; };
+		75A1D2DD16BA1B080013B48A /* FaseVuelo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2DC16BA1B080013B48A /* FaseVuelo.m */; };
+		75A1D2E016BA2D030013B48A /* Departamentos.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2DF16BA2D030013B48A /* Departamentos.m */; };
+		75A1D2E716BA30E40013B48A /* Municipios.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2E616BA30E40013B48A /* Municipios.m */; };
+		75A1D2EB16BA32F90013B48A /* Armamentos.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2EA16BA32F90013B48A /* Armamentos.m */; };
+		75A1D2EE16BB14B60013B48A /* VistaListadoArmamento.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2ED16BB14B60013B48A /* VistaListadoArmamento.m */; };
+		75A1D2F216BB25B20013B48A /* CheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2F116BB25B20013B48A /* CheckView.m */; };
 		75A746A916408FA700B30657 /* DashBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A746A816408FA700B30657 /* DashBoardViewController.m */; };
 		75A746AB1640B7D000B30657 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A746AA1640B7D000B30657 /* SystemConfiguration.framework */; };
 		75A95A1D166ED6F80012CFA5 /* Principal.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A1C166ED6F80012CFA5 /* Principal.m */; };
@@ -144,6 +155,12 @@
 		755F9F5C16555F3C0002266B /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		755F9F5D16555F3C0002266B /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		755F9F63165594550002266B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7573642016ADB85F00445CB0 /* RegistroDeVueloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistroDeVueloViewController.h; sourceTree = "<group>"; };
+		7573642116ADB85F00445CB0 /* RegistroDeVueloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistroDeVueloViewController.m; sourceTree = "<group>"; };
+		7573642D16AF708300445CB0 /* CeldaItinerario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeldaItinerario.h; sourceTree = "<group>"; };
+		7573642E16AF708300445CB0 /* CeldaItinerario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeldaItinerario.m; sourceTree = "<group>"; };
+		7573644616B5ACA800445CB0 /* CeldaCondiciones.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeldaCondiciones.h; sourceTree = "<group>"; };
+		7573644716B5ACA800445CB0 /* CeldaCondiciones.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeldaCondiciones.m; sourceTree = "<group>"; };
 		7575CA4016729C510078E354 /* FileSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSaver.h; sourceTree = "<group>"; };
 		7575CA4116729C510078E354 /* FileSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSaver.m; sourceTree = "<group>"; };
 		758711A51680142800FEC282 /* fuerza.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fuerza.jpeg; sourceTree = "<group>"; };
@@ -154,6 +171,22 @@
 		75926CF1166419D100B3CDD5 /* Notam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notam.m; sourceTree = "<group>"; };
 		75926CF4166419E000B3CDD5 /* Metar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Metar.h; sourceTree = "<group>"; };
 		75926CF5166419E000B3CDD5 /* Metar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Metar.m; sourceTree = "<group>"; };
+		75A1D2D316B9C6E60013B48A /* CeldaArmamento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeldaArmamento.h; sourceTree = "<group>"; };
+		75A1D2D416B9C6E60013B48A /* CeldaArmamento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeldaArmamento.m; sourceTree = "<group>"; };
+		75A1D2D716B9E4F30013B48A /* CeldaTripulacion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeldaTripulacion.h; sourceTree = "<group>"; };
+		75A1D2D816B9E4F30013B48A /* CeldaTripulacion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CeldaTripulacion.m; sourceTree = "<group>"; };
+		75A1D2DB16BA1B080013B48A /* FaseVuelo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaseVuelo.h; sourceTree = "<group>"; };
+		75A1D2DC16BA1B080013B48A /* FaseVuelo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaseVuelo.m; sourceTree = "<group>"; };
+		75A1D2DE16BA2D030013B48A /* Departamentos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Departamentos.h; sourceTree = "<group>"; };
+		75A1D2DF16BA2D030013B48A /* Departamentos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Departamentos.m; sourceTree = "<group>"; };
+		75A1D2E516BA30E40013B48A /* Municipios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Municipios.h; sourceTree = "<group>"; };
+		75A1D2E616BA30E40013B48A /* Municipios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Municipios.m; sourceTree = "<group>"; };
+		75A1D2E916BA32F90013B48A /* Armamentos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Armamentos.h; sourceTree = "<group>"; };
+		75A1D2EA16BA32F90013B48A /* Armamentos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Armamentos.m; sourceTree = "<group>"; };
+		75A1D2EC16BB14B60013B48A /* VistaListadoArmamento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VistaListadoArmamento.h; sourceTree = "<group>"; };
+		75A1D2ED16BB14B60013B48A /* VistaListadoArmamento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VistaListadoArmamento.m; sourceTree = "<group>"; };
+		75A1D2F016BB25B20013B48A /* CheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckView.h; sourceTree = "<group>"; };
+		75A1D2F116BB25B20013B48A /* CheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckView.m; sourceTree = "<group>"; };
 		75A746A716408FA700B30657 /* DashBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DashBoardViewController.h; sourceTree = "<group>"; };
 		75A746A816408FA700B30657 /* DashBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DashBoardViewController.m; sourceTree = "<group>"; };
 		75A746AA1640B7D000B30657 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -271,8 +304,8 @@
 				75A746AC1640B91D00B30657 /* Objetos */,
 				7552345E164045B400D541DB /* ServerCommunicator */,
 				75523466164047BB00D541DB /* AppDelegate */,
-				75523468164047E000D541DB /* StoryBoards */,
 				75523467164047D300D541DB /* ViewControllers */,
+				75523468164047E000D541DB /* StoryBoards */,
 				7515A4C9164C310A00504C23 /* Resources */,
 				754E95171630D15A002FEB37 /* Supporting Files */,
 			);
@@ -343,6 +376,7 @@
 				7515A4CE164C327A00504C23 /* DocumentViewerController.m */,
 				755F9F5C16555F3C0002266B /* DetailViewController.h */,
 				755F9F5D16555F3C0002266B /* DetailViewController.m */,
+				7573641F16ADB11100445CB0 /* RegistroDeVuelo */,
 				75F0480016712A08002DB7B2 /* OrdenDeVueloMenu */,
 			);
 			name = ViewControllers;
@@ -376,6 +410,41 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		7573641F16ADB11100445CB0 /* RegistroDeVuelo */ = {
+			isa = PBXGroup;
+			children = (
+				7573642016ADB85F00445CB0 /* RegistroDeVueloViewController.h */,
+				7573642116ADB85F00445CB0 /* RegistroDeVueloViewController.m */,
+			);
+			name = RegistroDeVuelo;
+			sourceTree = "<group>";
+		};
+		75A1D2DA16BA1AF10013B48A /* ObjetosLista */ = {
+			isa = PBXGroup;
+			children = (
+				75A1D2DB16BA1B080013B48A /* FaseVuelo.h */,
+				75A1D2DC16BA1B080013B48A /* FaseVuelo.m */,
+				75A1D2DE16BA2D030013B48A /* Departamentos.h */,
+				75A1D2DF16BA2D030013B48A /* Departamentos.m */,
+				75A1D2E516BA30E40013B48A /* Municipios.h */,
+				75A1D2E616BA30E40013B48A /* Municipios.m */,
+				75A1D2E916BA32F90013B48A /* Armamentos.h */,
+				75A1D2EA16BA32F90013B48A /* Armamentos.m */,
+			);
+			name = ObjetosLista;
+			sourceTree = "<group>";
+		};
+		75A1D2EF16BB24E40013B48A /* ArmamentoPierna */ = {
+			isa = PBXGroup;
+			children = (
+				75A1D2D316B9C6E60013B48A /* CeldaArmamento.h */,
+				75A1D2D416B9C6E60013B48A /* CeldaArmamento.m */,
+				75A1D2EC16BB14B60013B48A /* VistaListadoArmamento.h */,
+				75A1D2ED16BB14B60013B48A /* VistaListadoArmamento.m */,
+			);
+			name = ArmamentoPierna;
+			sourceTree = "<group>";
+		};
 		75A746AC1640B91D00B30657 /* Objetos */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +466,7 @@
 				7575CA4116729C510078E354 /* FileSaver.m */,
 				7556FE70167A8FAA00891508 /* IAmCoder.h */,
 				7556FE71167A8FAA00891508 /* IAmCoder.m */,
+				75A1D2DA16BA1AF10013B48A /* ObjetosLista */,
 				75A95A19166ED6E30012CFA5 /* OrdenDeVuelo */,
 			);
 			name = Objetos;
@@ -449,8 +519,17 @@
 		75F048121671605F002DB7B2 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				75A1D2EF16BB24E40013B48A /* ArmamentoPierna */,
 				75F0481316716081002DB7B2 /* PiernasCell.h */,
 				75F0481416716081002DB7B2 /* PiernasCell.m */,
+				7573642D16AF708300445CB0 /* CeldaItinerario.h */,
+				7573642E16AF708300445CB0 /* CeldaItinerario.m */,
+				7573644616B5ACA800445CB0 /* CeldaCondiciones.h */,
+				7573644716B5ACA800445CB0 /* CeldaCondiciones.m */,
+				75A1D2D716B9E4F30013B48A /* CeldaTripulacion.h */,
+				75A1D2D816B9E4F30013B48A /* CeldaTripulacion.m */,
+				75A1D2F016BB25B20013B48A /* CheckView.h */,
+				75A1D2F116BB25B20013B48A /* CheckView.m */,
 			);
 			name = SubViews;
 			sourceTree = "<group>";
@@ -611,6 +690,17 @@
 				75DB41EC167962FA00F58DED /* Archivo.m in Sources */,
 				7556FE72167A8FAA00891508 /* IAmCoder.m in Sources */,
 				7556FE7A167AC86700891508 /* FileDownloader.m in Sources */,
+				7573642216ADB85F00445CB0 /* RegistroDeVueloViewController.m in Sources */,
+				7573642F16AF708300445CB0 /* CeldaItinerario.m in Sources */,
+				7573644816B5ACA800445CB0 /* CeldaCondiciones.m in Sources */,
+				75A1D2D516B9C6E60013B48A /* CeldaArmamento.m in Sources */,
+				75A1D2D916B9E4F30013B48A /* CeldaTripulacion.m in Sources */,
+				75A1D2DD16BA1B080013B48A /* FaseVuelo.m in Sources */,
+				75A1D2E016BA2D030013B48A /* Departamentos.m in Sources */,
+				75A1D2E716BA30E40013B48A /* Municipios.m in Sources */,
+				75A1D2EB16BA32F90013B48A /* Armamentos.m in Sources */,
+				75A1D2EE16BB14B60013B48A /* VistaListadoArmamento.m in Sources */,
+				75A1D2F216BB25B20013B48A /* CheckView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

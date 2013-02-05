@@ -14,14 +14,14 @@
     NSString *jpegFilePath = [NSString stringWithFormat:@"%@/%@.jpg",docDir,tipo];
     //BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:jpegFilePath];
     //if (!fileExists) {
-        NSLog(@"no existe %@",jpegFilePath);
+        //NSLog(@"no existe %@",jpegFilePath);
         NSURL *urlImagen=[NSURL URLWithString:url];
         NSData *data=[NSData dataWithContentsOfURL:urlImagen];
         UIImageView *proyectoImage = [[UIImageView alloc]init];
         proyectoImage.image = [UIImage imageWithData:data];
         NSData *data2 = [NSData dataWithData:UIImageJPEGRepresentation(proyectoImage.image, 1.0f)];
         if (proyectoImage.image) {
-            NSLog(@"Guardando");
+            //NSLog(@"Guardando");
             [data2 writeToFile:jpegFilePath atomically:YES];
         }
         return jpegFilePath;
