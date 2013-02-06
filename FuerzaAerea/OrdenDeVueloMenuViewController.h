@@ -12,7 +12,10 @@
 #import "PiernasViewController.h"
 #import "PrincipalViewController.h"
 #import "TripulacionViewController.h"
-@interface OrdenDeVueloMenuViewController : UIViewController{
+#import "PiernasTableSubView.h"
+#import "ArmamentoTableSubView.h"
+#import "TripulacionTableSubView.h"
+@interface OrdenDeVueloMenuViewController : UIViewController<UIScrollViewDelegate>{
     IBOutlet UILabel *unidadLabel;
     IBOutlet UILabel *unidadAsumeLabel;
     IBOutlet UILabel *ordenLabel;
@@ -29,6 +32,9 @@
     IBOutlet UIButton *piernasButton;
     IBOutlet UIButton *principalButton;
     IBOutlet UIButton *tripulacionButton;
+    
+    
+    IBOutlet UIScrollView *pageScrollView;
 
 
 }

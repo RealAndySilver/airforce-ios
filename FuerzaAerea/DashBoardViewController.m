@@ -213,7 +213,7 @@
 -(IBAction)irAOrdenDeVuelo:(id)sender{
     if (ordenDeVuelo) {
         OrdenDeVueloMenuViewController *ovmVC=[[OrdenDeVueloMenuViewController alloc]init];
-        ovmVC=[self.storyboard instantiateViewControllerWithIdentifier:@"OrdenDeVueloMenu"];
+        ovmVC=[self.storyboard instantiateViewControllerWithIdentifier:@"OrdenDeVueloMenu1"];
         ovmVC.ordenDeVuelo=ordenDeVuelo;
         [self.navigationController pushViewController:ovmVC animated:YES];
     }
