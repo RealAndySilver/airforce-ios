@@ -9,7 +9,7 @@
 #import "ServerCommunicator.h"
 
 @implementation ServerCommunicator
-@synthesize dictionary,tag,caller,objectDic,resDic;
+@synthesize dictionary,tag,caller,objectDic,resDic,methodName;
 -(id)init {
     self = [super init];
     if (self) {
@@ -36,13 +36,18 @@
                              "</soapenv:Body>\n"
                              "</soapenv:Envelope>\n",method,parameter,method];
     tempMethod=method;
+    methodName=method;
     NSURL *url=nil;
-    if ([method isEqualToString:@"faseVuelos"] || [method isEqualToString:@"departamentos"] || [method isEqualToString:@"armamentos"]) {
+    if ([method isEqualToString:@"faseVuelos"]||[method isEqualToString:@"departamentos"]||[method isEqualToString:@"armamentos"]||[method isEqualToString:@"listas"]||[method isEqualToString:@"enemigos"]||[method isEqualToString:@"objetivos"]||[method isEqualToString:@"joaOperaciones"]) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+
 
     }
     else{
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+
     }
     /*if ([method isEqualToString:@"faseVuelos"] || [method isEqualToString:@"departamentos"] || [method isEqualToString:@"armamentos"]) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://webservicesiioc2:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
@@ -116,11 +121,14 @@
             [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
             return;
         }
+        else if ([tempMethod isEqualToString:@"listas"]){
+            NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
+            json_string=[NSString stringWithFormat:@"{\"listas\":%@}",str];
+        }
         NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }
-    
 }
 
 @end

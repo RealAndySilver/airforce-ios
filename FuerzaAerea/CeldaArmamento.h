@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CeldaArmamento : UIView<UITextFieldDelegate>{
+#import "Lista.h"
+@interface CeldaArmamento : UIView<UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource>{
+    Lista *lista;
     
+    UIPickerView *pickerArmamento;
+    UIPickerView *pickerObjetivo;
+    UIPickerView *pickerDepartamento;
+    UIPickerView *pickerEnemigo;
+
 }
 @property(nonatomic,retain)UITextField *armamentoTextField;
 @property(nonatomic,retain)UITextField *cantidadTextiField;

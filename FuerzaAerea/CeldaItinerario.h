@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CheckView.h"
-@interface CeldaItinerario : UIView<UITextFieldDelegate>{
+#import "Lista.h"
+@interface CeldaItinerario : UIView<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
 
     UIDatePicker *datePicker;
     UIDatePicker *datePicker2;
@@ -16,6 +17,11 @@
     UIDatePicker *datePicker4;
     UILabel *tiempoAeronaveOverlay;
     UILabel *tiempoTripulacionOverlay;
+    
+    
+    UIPickerView *pickerTipoOperacion;
+    UIPickerView *pickerPlan;
+    UIPickerView *pickerOperacion;
     
 }
 @property(nonatomic,retain)UITextField *noVuelo;
@@ -25,6 +31,7 @@
 @property(nonatomic,retain)UITextField *horaApagado;
 @property(nonatomic,retain)UITextField *horaDecolaje;
 @property(nonatomic,retain)UITextField *horaAterrizaje;
+@property(nonatomic,retain)Lista *lista;
 
 @property(nonatomic,retain)UILabel *horaEncendidoOverlay;
 @property(nonatomic,retain)UILabel *horaApagadoOverlay;

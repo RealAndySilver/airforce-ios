@@ -13,7 +13,7 @@
 @end
 
 @implementation RegistroDeVueloViewController
-@synthesize ordenDeVuelo,arrayFaseVuelo,arrayDepartamentos,arrayMunicipios,arrayArmamentos,arrayLatitud,arrayLongitud;
+@synthesize ordenDeVuelo,arrayFaseVuelo,arrayDepartamentos,arrayMunicipios,arrayArmamentos,arrayLatitud,arrayLongitud,lista;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,7 +31,6 @@
     [self integrarInfoDeOrdenDeVueloEnLosTextfields];
     [self setAllPickers];
     [self checkIfSaved];
-    
 }
 -(void)integrarInfoDeOrdenDeVueloEnLosTextfields{
     ordenDeVueloTextfield.text=ordenDeVuelo.principal.idConsecutivoUnidad;
@@ -56,7 +55,7 @@
     pickerDepto.delegate=self;
     pickerDepto.showsSelectionIndicator = YES;
     pickerDepto.tag=2001;
-    if (arrayDepartamentos.count) {
+    if (lista.arregloDeDepartamentos.count) {
         impactadaDeptoTextField.inputView=pickerDepto;
     }
     
@@ -72,7 +71,7 @@
     pickerArmamentos.delegate=self;
     pickerArmamentos.showsSelectionIndicator = YES;
     pickerArmamentos.tag=2003;
-    if (arrayArmamentos.count) {
+    if (lista.arregloDeArmamentosImpactados.count) {
         impactadaArmamentoTextField.inputView=pickerArmamentos;
     }
     
@@ -96,6 +95,24 @@
     [arrayLongitud addObject:@"E"];
     impactadaLongitud1TextField.inputView=pickerLongitud;
     
+    pickerUnidad=[[UIPickerView alloc]init];
+    pickerUnidad.dataSource=self;
+    pickerUnidad.delegate=self;
+    pickerUnidad.showsSelectionIndicator = YES;
+    pickerUnidad.tag=2006;
+    if (lista.arregloDeUnidades.count) {
+        unidadQueCreaTextfield.inputView=pickerUnidad;
+    }
+    
+    pickerGrupo=[[UIPickerView alloc]init];
+    pickerGrupo.dataSource=self;
+    pickerGrupo.delegate=self;
+    pickerGrupo.showsSelectionIndicator = YES;
+    pickerGrupo.tag=2007;
+    if (lista.arregloDeGrupo.count) {
+        grupoTextfield.inputView=pickerGrupo;
+    }
+    
     datePicker=[[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(displayDate:) forControlEvents:UIControlEventAllEvents];
@@ -111,6 +128,7 @@
 
         if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
         if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
+            masterDic=[masterDic objectForKey:@"General"];
             noRegistroTextfield.text=[masterDic objectForKey:@"NoRegistro"];
             requerimientosTextfield.text=[masterDic objectForKey:@"Requerimientos"];
             observacionTextfield.text=[masterDic objectForKey:@"Observacion"];
@@ -118,20 +136,20 @@
             fechaTextfield.text=[masterDic objectForKey:@"Fecha"];
             unidadQueCreaTextfield.text=[masterDic objectForKey:@"UnidadQueCrea"];
 
-            impactadaImpactosTextField.text=[masterDic objectForKey:@"NoImpactos"];
-            impactadaDeptoTextField.text=[masterDic objectForKey:@"Depto"];
-            impactadaMunicipioTextField.text=[masterDic objectForKey:@"Municipio"];
-            impactadaArmamentoTextField.text=[masterDic objectForKey:@"Armamento"];
-            impactadaNoVueloTextField.text=[masterDic objectForKey:@"NoVuelo"];
-            impactadaFaseTextField.text=[masterDic objectForKey:@"Fase"];
-            impactadaLatitud1TextField.text=[masterDic objectForKey:@"Latitud1"];
-            impactadaLatitud2TextField.text=[masterDic objectForKey:@"Latitud2"];
-            impactadaLatitud3TextField.text=[masterDic objectForKey:@"Latitud3"];
-            impactadaLatitud4TextField.text=[masterDic objectForKey:@"Latitud4"];
-            impactadaLongitud1TextField.text=[masterDic objectForKey:@"Longitud1"];
-            impactadaLongitud2TextField.text=[masterDic objectForKey:@"Longitud2"];
-            impactadaLongitud3TextField.text=[masterDic objectForKey:@"Longitud3"];
-            impactadaLongitud4TextField.text=[masterDic objectForKey:@"Longitud4"];
+            impactadaImpactosTextField.text=[masterDic objectForKey:@"ImpactadaNoImpactos"];
+            impactadaDeptoTextField.text=[masterDic objectForKey:@"ImpactadaDepto"];
+            impactadaMunicipioTextField.text=[masterDic objectForKey:@"ImpactadaMunicipio"];
+            impactadaArmamentoTextField.text=[masterDic objectForKey:@"ImpactadaArmamento"];
+            impactadaNoVueloTextField.text=[masterDic objectForKey:@"ImpactadaNoVuelo"];
+            impactadaFaseTextField.text=[masterDic objectForKey:@"ImpactadaFase"];
+            impactadaLatitud1TextField.text=[masterDic objectForKey:@"ImpactadaLatitud1"];
+            impactadaLatitud2TextField.text=[masterDic objectForKey:@"ImpactadaLatitud2"];
+            impactadaLatitud3TextField.text=[masterDic objectForKey:@"ImpactadaLatitud3"];
+            impactadaLatitud4TextField.text=[masterDic objectForKey:@"ImpactadaLatitud4"];
+            impactadaLongitud1TextField.text=[masterDic objectForKey:@"ImpactadaLongitud1"];
+            impactadaLongitud2TextField.text=[masterDic objectForKey:@"ImpactadaLongitud2"];
+            impactadaLongitud3TextField.text=[masterDic objectForKey:@"ImpactadaLongitud3"];
+            impactadaLongitud4TextField.text=[masterDic objectForKey:@"ImpactadaLongitud4"];
             if ([[masterDic objectForKey:@"VueloNacionalSwitch"] isEqualToString:@"off"]) {
                 [vueloNacionalSwitch setOn:NO];
                 [self tipoDeVuelo:vueloNacionalSwitch];
@@ -486,7 +504,7 @@
         paginaTripulacion.contentSize=CGSizeMake(paginaTripulacion.frame.size.width, posFinalY);
     }
     for (int k=0; k<9; k++) {
-        CeldaTripulacion *celdaEntrenamiento=[[CeldaTripulacion alloc]initEntrenamientoWithFrame:CGRectMake(500, 33+33*k, 0, 0)];
+        CeldaTripulacion *celdaEntrenamiento=[[CeldaTripulacion alloc]initEntrenamientoWithFrame:CGRectMake(500, 33+33*k, 0, 0) andDelegate:lista];
         [paginaTripulacion addSubview:celdaEntrenamiento];
         [arregloEntrenamiento addObject:celdaEntrenamiento];
         [self checkIfEntrenamientoSavedWithCell:celdaEntrenamiento atIndex:k];
@@ -500,25 +518,29 @@
     int i=0;
     float posFinalY=0;
     for (Piernas *pierna in ordenDeVuelo.arregloDePiernas) {
-        CeldaItinerario *cell=[[CeldaItinerario alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:nil];
+        CeldaItinerario *cell=[[CeldaItinerario alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:lista];
         cell.noVuelo.text=pierna.piernaNumero;
         cell.de.text=pierna.de;
         cell.a.text=pierna.a;
+        cell.tipoOperacion.text=pierna.operacionTipo;
+        cell.plan.text=pierna.plan;
+        cell.operacion.text=pierna.operacion;
         [self checkIfItinerarioSavedWithCell:cell atIndex:i];
         //NSLog(@"Hora encendido omex %@",cell.horaEncendido.text);
         [paginaItinerario addSubview:cell];
         [arregloParaSumarItinerario addObject:cell];
         
-        CeldaCondiciones *cond=[[CeldaCondiciones alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:nil];
+        CeldaCondiciones *cond=[[CeldaCondiciones alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:lista];
         cond.entidadTextfield.text=pierna.entidad;
         [self checkIfCondicionesSavedWithCell:cond atIndex:i];
         [paginaCondicionesDeVuelo addSubview:cond];
         [arregloParaSumarCondiciones addObject:cond];
         
-        VistaListadoArmamento *vistaArmamentos=[[VistaListadoArmamento alloc]initWithFrame:CGRectMake(0, paginaArmamentoPierna.frame.size.height*i, 0, 0)];
+        VistaListadoArmamento *vistaArmamentos=[[VistaListadoArmamento alloc]initWithFrame:CGRectMake(0, paginaArmamentoPierna.frame.size.height*i, 0, 0) andDelegate:lista];
         paginaArmamentoPierna.contentSize=CGSizeMake(paginaArmamentoPierna.frame.size.width, (paginaArmamentoPierna.frame.size.height+paginaArmamentoPierna.frame.size.height*i)+1);
         [self checkIfArmamentoSavedWithCell:vistaArmamentos atIndex:i];
-        vistaArmamentos.noVuelo.text=[NSString stringWithFormat:@"Vuelo No.: %@",cell.noVuelo.text];
+        vistaArmamentos.stringNoVuelo=cell.noVuelo.text;
+        vistaArmamentos.noVuelo.text=[NSString stringWithFormat:@"Vuelo No.: %@",vistaArmamentos.stringNoVuelo];
         [paginaArmamentoPierna addSubview:vistaArmamentos];
         [arregloPaginasArmamento addObject:vistaArmamentos];
         
@@ -640,22 +662,28 @@
 #pragma mark - picker delegate
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     if (pickerView.tag==2000) {
-        return arrayFaseVuelo.count;
+        return lista.arregloDeFaseDeVuelo.count;
     }
     else if (pickerView.tag==2001){
-        return arrayDepartamentos.count;
+        return lista.arregloDeDepartamentos.count;
     }
     else if (pickerView.tag==2002){
         return arrayMunicipios.count;
     }
     else if (pickerView.tag==2003){
-        return arrayArmamentos.count;
+        return lista.arregloDeArmamentosImpactados.count;
     }
     else if (pickerView.tag==2004){
         return arrayLatitud.count;
     }
     else if (pickerView.tag==2005){
         return arrayLongitud.count;
+    }
+    else if (pickerView.tag==2006){
+        return lista.arregloDeUnidades.count;
+    }
+    else if (pickerView.tag==2007){
+        return lista.arregloDeGrupo.count;
     }
     else{
         return 0;
@@ -667,18 +695,18 @@
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
     if (component==0) {
         if (pickerView.tag==2000) {
-        FaseVuelo *result=[arrayFaseVuelo objectAtIndex:row];
+        FaseVuelo *result=[lista.arregloDeFaseDeVuelo objectAtIndex:row];
         NSString *strRes=result.faseVuelo;
         return strRes;
         }
         else if (pickerView.tag==2001){
-            Departamentos *result=[arrayDepartamentos objectAtIndex:row];
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
             NSString *strRes=result.departamento;
             return strRes;
         }
         else if (pickerView.tag==2003){
-            Armamentos *result=[arrayArmamentos objectAtIndex:row];
-            NSString *strRes=result.armamento;
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+            NSString *strRes=result.nombre;
             return strRes;
         }
         else if (pickerView.tag==2004){
@@ -688,6 +716,16 @@
         else if (pickerView.tag==2005){
             NSString *result=[arrayLongitud objectAtIndex:row];
             return result;
+        }
+        else if (pickerView.tag==2006){
+            Unidades *result=[lista.arregloDeUnidades objectAtIndex:row];
+            NSString *strRes=result.sigla;
+            return strRes;
+        }
+        else if (pickerView.tag==2007){
+            Grupo *result=[lista.arregloDeGrupo objectAtIndex:row];
+            NSString *strRes=result.nombreOrganizacion;
+            return strRes;
         }
     }
     else{
@@ -700,20 +738,20 @@
 {
     if (component == 0) {
         if (pickerView.tag==2000) {
-            FaseVuelo *result=[arrayFaseVuelo objectAtIndex:row];
+            FaseVuelo *result=[lista.arregloDeFaseDeVuelo objectAtIndex:row];
             NSString *strRes=result.faseVuelo;
             impactadaFaseTextField.text=strRes;
             return;
         }
         else if (pickerView.tag==2001){
-            Departamentos *result=[arrayDepartamentos objectAtIndex:row];
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
             NSString *strRes=result.departamento;
             impactadaDeptoTextField.text=strRes;
             return;
         }
         else if (pickerView.tag==2003){
-            Armamentos *result=[arrayArmamentos objectAtIndex:row];
-            NSString *strRes=result.armamento;
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+            NSString *strRes=result.nombre;
             impactadaArmamentoTextField.text=strRes;
             return;
         }
@@ -727,6 +765,18 @@
             impactadaLongitud1TextField.text=result;
             return;
         }
+        else if (pickerView.tag==2006){
+            Unidades *result=[lista.arregloDeUnidades objectAtIndex:row];
+            NSString *strRes=result.sigla;
+            unidadQueCreaTextfield.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2007){
+            Grupo *result=[lista.arregloDeGrupo objectAtIndex:row];
+            NSString *strRes=result.nombreOrganizacion;
+            grupoTextfield.text=strRes;
+            return;
+        }
         else if (pickerView.tag==2002){
             
         }
@@ -737,30 +787,39 @@
 #pragma mark - guardar
 -(IBAction)guardarRegistro{
     NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
-    if(noRegistroTextfield.text){[masterDic setObject:noRegistroTextfield.text forKey:@"NoRegistro"];}
-    if(requerimientosTextfield.text){[masterDic setObject:requerimientosTextfield.text forKey:@"Requerimientos"];}
-    if(observacionTextfield.text){[masterDic setObject:observacionTextfield.text forKey:@"Observacion"];}
-    if(grupoTextfield.text){[masterDic setObject:grupoTextfield.text forKey:@"Grupo"];}
-    if(fechaTextfield.text){[masterDic setObject:fechaTextfield.text forKey:@"Fecha"];}
-    if(unidadQueCreaTextfield.text){[masterDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
-    if(impactadaImpactosTextField.text){[masterDic setObject:impactadaImpactosTextField.text forKey:@"NoImpactos"];}
-    if(impactadaDeptoTextField.text){[masterDic setObject:impactadaDeptoTextField.text forKey:@"Depto"];}
-    if(impactadaMunicipioTextField.text){[masterDic setObject:impactadaMunicipioTextField.text forKey:@"Municipio"];}
-    if(impactadaArmamentoTextField.text){[masterDic setObject:impactadaArmamentoTextField.text forKey:@"Armamento"];}
-    if(impactadaNoVueloTextField.text){[masterDic setObject:impactadaNoVueloTextField.text forKey:@"NoVuelo"];}
-    if(impactadaFaseTextField.text){[masterDic setObject:impactadaFaseTextField.text forKey:@"Fase"];}
-    if(impactadaLatitud1TextField.text){[masterDic setObject:impactadaLatitud1TextField.text forKey:@"Latitud1"];}
-    if(impactadaLatitud2TextField.text){[masterDic setObject:impactadaLatitud2TextField.text forKey:@"Latitud2"];}
-    if(impactadaLatitud3TextField.text){[masterDic setObject:impactadaLatitud3TextField.text forKey:@"Latitud3"];}
-    if(impactadaLatitud4TextField.text){[masterDic setObject:impactadaLatitud4TextField.text forKey:@"Latitud4"];}
-    if(impactadaLongitud1TextField.text){[masterDic setObject:impactadaLongitud1TextField.text forKey:@"Longitud1"];}
-    if(impactadaLongitud2TextField.text){[masterDic setObject:impactadaLongitud2TextField.text forKey:@"Longitud2"];}
-    if(impactadaLongitud3TextField.text){[masterDic setObject:impactadaLongitud3TextField.text forKey:@"Longitud3"];}
-    if(impactadaLongitud4TextField.text){[masterDic setObject:impactadaLongitud4TextField.text forKey:@"Longitud4"];}
-    if(vueloNacionalSwitch.on){[masterDic setObject:@"on" forKey:@"VueloNacionalSwitch"];}
-    else{[masterDic setObject:@"off" forKey:@"VueloNacionalSwitch"];}
-    if(aeronaveImpactadaSwitch.on){[masterDic setObject:@"on" forKey:@"ImpactadaSwitch"];}
-    else{[masterDic setObject:@"off" forKey:@"ImpactadaSwitch"];}
+    NSMutableDictionary *generalDic=[[NSMutableDictionary alloc]init];
+    if(noRegistroTextfield.text){[generalDic setObject:noRegistroTextfield.text forKey:@"NoRegistro"];}
+    if(ordenDeVueloTextfield.text){[generalDic setObject:ordenDeVueloTextfield.text forKey:@"OVNo"];}
+    if(fechaTextfield.text){[generalDic setObject:fechaTextfield.text forKey:@"Fecha"];}
+    if(unidadAsumeTextfield.text){[generalDic setObject:unidadAsumeTextfield.text forKey:@"UnidadAsume"];}
+    if(aeronaveUnoTextfield.text){[generalDic setObject:aeronaveUnoTextfield.text forKey:@"AeronaveUno"];}
+    if(aeronaveDosTextfield.text){[generalDic setObject:aeronaveDosTextfield.text forKey:@"AeronaveDos"];}
+    if(grupoTextfield.text){[generalDic setObject:grupoTextfield.text forKey:@"Grupo"];}
+    if(unidadQueCreaTextfield.text){[generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
+
+    if(requerimientosTextfield.text){[generalDic setObject:requerimientosTextfield.text forKey:@"Requerimientos"];}
+    if(observacionTextfield.text){[generalDic setObject:observacionTextfield.text forKey:@"Observacion"];}
+    if(vueloNacionalSwitch.on){[generalDic setObject:@"on" forKey:@"VueloNacionalSwitch"];}
+    else{[generalDic setObject:@"off" forKey:@"VueloNacionalSwitch"];}
+    
+    if(aeronaveImpactadaSwitch.on){[generalDic setObject:@"on" forKey:@"ImpactadaSwitch"];}
+    else{[generalDic setObject:@"off" forKey:@"ImpactadaSwitch"];}
+    if(impactadaImpactosTextField.text){[generalDic setObject:impactadaImpactosTextField.text forKey:@"ImpactadaNoImpactos"];}
+    if(impactadaDeptoTextField.text){[generalDic setObject:impactadaDeptoTextField.text forKey:@"ImpactadaDepto"];}
+    if(impactadaMunicipioTextField.text){[generalDic setObject:impactadaMunicipioTextField.text forKey:@"ImpactadaMunicipio"];}
+    if(impactadaArmamentoTextField.text){[generalDic setObject:impactadaArmamentoTextField.text forKey:@"ImpactadaArmamento"];}
+    if(impactadaNoVueloTextField.text){[generalDic setObject:impactadaNoVueloTextField.text forKey:@"ImpactadaNoVuelo"];}
+    if(impactadaFaseTextField.text){[generalDic setObject:impactadaFaseTextField.text forKey:@"ImpactadaFase"];}
+    if(impactadaLatitud1TextField.text){[generalDic setObject:impactadaLatitud1TextField.text forKey:@"ImpactadaLatitud1"];}
+    if(impactadaLatitud2TextField.text){[generalDic setObject:impactadaLatitud2TextField.text forKey:@"ImpactadaLatitud2"];}
+    if(impactadaLatitud3TextField.text){[generalDic setObject:impactadaLatitud3TextField.text forKey:@"ImpactadaLatitud3"];}
+    if(impactadaLatitud4TextField.text){[generalDic setObject:impactadaLatitud4TextField.text forKey:@"ImpactadaLatitud4"];}
+    if(impactadaLongitud1TextField.text){[generalDic setObject:impactadaLongitud1TextField.text forKey:@"ImpactadaLongitud1"];}
+    if(impactadaLongitud2TextField.text){[generalDic setObject:impactadaLongitud2TextField.text forKey:@"ImpactadaLongitud2"];}
+    if(impactadaLongitud3TextField.text){[generalDic setObject:impactadaLongitud3TextField.text forKey:@"ImpactadaLongitud3"];}
+    if(impactadaLongitud4TextField.text){[generalDic setObject:impactadaLongitud4TextField.text forKey:@"ImpactadaLongitud4"];}
+    [masterDic setObject:generalDic forKey:@"General"];
+    
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
     for (CeldaItinerario *cell in arregloParaSumarItinerario) {
         NSMutableDictionary *itinerarioDic=[[NSMutableDictionary alloc]init];
@@ -806,6 +865,7 @@
         if (cell.cargaSubenTextfield.text) {[condicionesDic setObject:cell.cargaSubenTextfield.text forKey:@"CargaSuben"];}
         if (cell.cargaBajanTextfield.text) {[condicionesDic setObject:cell.cargaBajanTextfield.text forKey:@"CargaBajan"];}
         if (cell.entidadTextfield.text) {[condicionesDic setObject:cell.entidadTextfield.text forKey:@"Entidad"];}
+        
         [condicionesArray addObject:condicionesDic];
     }
     [masterDic setObject:condicionesArray forKey:@"ArregloCondiciones"];
@@ -822,6 +882,7 @@
             if (cell.coordenadaTextField.text) {[diccionarioCeldasArmamento setObject:cell.coordenadaTextField.text forKey:@"Coordenada"];}
             if (cell.departamentoTextfield.text) {[diccionarioCeldasArmamento setObject:cell.departamentoTextfield.text forKey:@"Departamento"];}
             if (cell.enemigoTextField.text) {[diccionarioCeldasArmamento setObject:cell.enemigoTextField.text forKey:@"Enemigo"];}
+            if (pag.stringNoVuelo) {[diccionarioCeldasArmamento setObject:pag.stringNoVuelo forKey:@"NoVuelo"];}
             [arregloCeldasArmamento addObject:diccionarioCeldasArmamento];
         }
         [armamentoArray addObject:arregloCeldasArmamento];
@@ -849,9 +910,23 @@
     }
     [masterDic setObject:entrenamientoArray forKey:@"ArregloEntrenamiento"];
     
+    
+    SBJSON *json=[[SBJSON alloc]init];
+    //NSMutableArray *arr=[[NSMutableArray alloc]init];
+    //for (int i=0; i<19; i++) {
+    //[arr addObject:[serverArray objectAtIndex:i]];
+    //}
+    
+    //NSString *str=[json stringWithObject:serverArray];
+    NSMutableDictionary *ultra=[[NSMutableDictionary alloc]init];
+    [ultra setObject:masterDic forKey:@"RegistroDeVuelo"];
+    NSString *str=[json stringWithObject:ultra];
+    NSLog(@"JSON %@",str);
+    
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"NoOrden"];
 
+    
     FileSaver *file=[[FileSaver alloc]init];
     [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
     [self.navigationController popViewControllerAnimated:YES];

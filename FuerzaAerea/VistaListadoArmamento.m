@@ -9,8 +9,8 @@
 #import "VistaListadoArmamento.h"
 
 @implementation VistaListadoArmamento
-@synthesize fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9,noVuelo,arregloDeFilasArmamento;
-- (id)initWithFrame:(CGRect)frame
+@synthesize fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9,noVuelo,arregloDeFilasArmamento,stringNoVuelo;
+- (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -37,7 +37,7 @@
         [self addSubview:fila8];*/
         
         for (int i=0; i<8; i++) {
-            CeldaArmamento *filaX=[[CeldaArmamento alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:nil];
+            CeldaArmamento *filaX=[[CeldaArmamento alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:myDelegate];
             [self addSubview:filaX];
             posFinalY=filaX.frame.origin.y+33;
             [arregloDeFilasArmamento addObject:filaX];
@@ -49,7 +49,7 @@
         noVuelo.textAlignment=NSTextAlignmentCenter;
         noVuelo.font=[UIFont boldSystemFontOfSize:30];
         noVuelo.textColor=[UIColor darkGrayColor];
-        noVuelo.text=@"No. Vuelo = 1";
+        //noVuelo.text=@"No. Vuelo = 1";
         [self addSubview:noVuelo];
     }
     return self;

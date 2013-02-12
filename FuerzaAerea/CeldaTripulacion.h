@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-@interface CeldaTripulacion : UIView<UITextFieldDelegate>{
-    
+#import "Lista.h"
+@interface CeldaTripulacion : UIView<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+    UIPickerView *pickerManiobra;
+    Lista *lista;
+
 }
 @property(nonatomic,retain)UITextField *cargoTextField;
 @property(nonatomic,retain)UITextField *nombreTextiField;
@@ -20,5 +23,5 @@
 
 -(id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 -(id)initHeaderWithFrame:(CGRect)frame;
--(id)initEntrenamientoWithFrame:(CGRect)frame;
+-(id)initEntrenamientoWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 @end

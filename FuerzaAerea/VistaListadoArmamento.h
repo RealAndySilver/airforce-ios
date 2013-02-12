@@ -20,8 +20,10 @@
 @property(nonatomic,retain)CeldaArmamento *fila8;
 @property(nonatomic,retain)CeldaArmamento *fila9;
 @property(nonatomic,retain)UILabel *noVuelo;
+@property(nonatomic,retain)NSString *stringNoVuelo;
+
 @property(nonatomic,retain)NSMutableArray *arregloDeFilasArmamento;
 
-
+- (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 
 @end

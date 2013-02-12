@@ -15,6 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        lista=myDelegate;
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, 964, 34);
         self.backgroundColor=[UIColor clearColor];
         int margen=7;
@@ -65,7 +66,9 @@
         coordenadaTextField.delegate=self;
         coordenadaTextField.textColor=[UIColor blackColor];
         coordenadaTextField.font=font;
+        coordenadaTextField.backgroundColor=[UIColor lightGrayColor];
         coordenadaTextField.tag=100;
+        [coordenadaTextField setUserInteractionEnabled:NO];
         [self addSubview:coordenadaTextField];
         
         departamentoTextfield=[[UITextField alloc]initWithFrame:CGRectMake(510+margen*6, 2, 140, 30)];
@@ -74,6 +77,8 @@
         departamentoTextfield.textColor=[UIColor blackColor];
         departamentoTextfield.font=font;
         departamentoTextfield.tag=100;
+        departamentoTextfield.backgroundColor=[UIColor lightGrayColor];
+        [departamentoTextfield setUserInteractionEnabled:NO];
         [self addSubview:departamentoTextfield];
         
         enemigoTextField=[[UITextField alloc]initWithFrame:CGRectMake(650+margen*7, 2, 200, 30)];
@@ -84,6 +89,43 @@
         enemigoTextField.tag=100;
         [self addSubview:enemigoTextField];
         
+        
+        pickerArmamento=[[UIPickerView alloc]init];
+        pickerArmamento.dataSource=self;
+        pickerArmamento.delegate=self;
+        pickerArmamento.showsSelectionIndicator = YES;
+        pickerArmamento.tag=2001;
+        if (lista.arregloDeArmamentos.count) {
+            armamentoTextField.inputView=pickerArmamento;
+        }
+        
+        
+        pickerDepartamento=[[UIPickerView alloc]init];
+        pickerDepartamento.dataSource=self;
+        pickerDepartamento.delegate=self;
+        pickerDepartamento.showsSelectionIndicator = YES;
+        pickerDepartamento.tag=2002;
+        if (lista.arregloDeDepartamentos.count) {
+         departamentoTextfield.inputView=pickerDepartamento;
+         }
+        
+        pickerEnemigo=[[UIPickerView alloc]init];
+        pickerEnemigo.dataSource=self;
+        pickerEnemigo.delegate=self;
+        pickerEnemigo.showsSelectionIndicator = YES;
+        pickerEnemigo.tag=2003;
+        if (lista.arregloDeEnemigo.count) {
+            enemigoTextField.inputView=pickerEnemigo;
+        }
+        
+        pickerObjetivo=[[UIPickerView alloc]init];
+        pickerObjetivo.dataSource=self;
+        pickerObjetivo.delegate=self;
+        pickerObjetivo.showsSelectionIndicator = YES;
+        pickerObjetivo.tag=2004;
+        if (lista.arregloDeObjetivo.count) {
+         objetivoTextField.inputView=pickerObjetivo;
+         }
         
     }
     return self;
@@ -166,6 +208,91 @@
         [self addSubview:enemigoLabel];
     }
     return self;
+}
+
+#pragma mark - picker delegate
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (pickerView.tag==2001) {
+        return lista.arregloDeArmamentos.count;
+    }
+    else if (pickerView.tag==2002){
+        return lista.arregloDeDepartamentos.count;
+    }
+    else if (pickerView.tag==2003){
+        return lista.arregloDeEnemigo.count;
+    }
+    else if (pickerView.tag==2004){
+        return lista.arregloDeObjetivo.count;
+    }
+    else{
+        return 0;
+    }
+    return 0;
+}
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component==0) {
+        if (pickerView.tag==2001) {
+            Armamentos *result=[lista.arregloDeArmamentos objectAtIndex:row];
+            NSString *strRes=result.armamento;
+            return strRes;
+        }
+        else if (pickerView.tag==2002){
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
+            NSString *strRes=result.departamento;
+            return strRes;
+        }
+        else if (pickerView.tag==2003){
+            Enemigo *result=[lista.arregloDeEnemigo objectAtIndex:row];
+             NSString *strRes=result.nombreOrganizacion;
+             return strRes;
+        }
+        else if (pickerView.tag==2004){
+            Objetivo *result=[lista.arregloDeObjetivo objectAtIndex:row];
+             NSString *strRes=result.objetivo;
+             return strRes;
+        }
+    }
+    else{
+        return nil;
+    }
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        if (pickerView.tag==2001) {
+            Armamentos *result=[lista.arregloDeArmamentos objectAtIndex:row];
+            NSString *strRes=result.armamento;
+            armamentoTextField.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2002){
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
+            NSString *strRes=result.departamento;
+            departamentoTextfield.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2003){
+            Enemigo *result=[lista.arregloDeEnemigo objectAtIndex:row];
+            NSString *strRes=result.nombreOrganizacion;
+            enemigoTextField.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2004){
+            Objetivo *result=[lista.arregloDeObjetivo objectAtIndex:row];
+            NSString *strRes=result.objetivo;
+            objetivoTextField.text=strRes;
+            departamentoTextfield.text=result.departamento;
+            coordenadaTextField.text=result.coordenadas;
+            return;
+        }
+    }
+    return;
+    
 }
 
 @end

@@ -35,7 +35,7 @@
     nombreTF.text=[userDic objectForKey:@"username"];
     passTF.text=[userDic objectForKey:@"password"];
     
-    [self loadNextViewController];
+    //[self loadNextViewController];
 }
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(733, 187, 231, 173);
@@ -91,11 +91,15 @@
 #pragma mark server response
 -(void)receivedDataFromServer:(id)sender{
     ServerCommunicator *server=sender;
-    if ([[server.resDic objectForKey:@"conexion"] isEqualToString:@"true"]) {
+    if (![[server.resDic objectForKey:@"conexion"] isEqualToString:@"true"]) {
         FileSaver *file=[[FileSaver alloc]init];
         NSMutableDictionary *userDic=[[NSMutableDictionary alloc]init];
-        [userDic setObject:nombreTF.text forKey:@"username"];
-        [userDic setObject:passTF.text forKey:@"password"];
+        if (nombreTF.text) {
+            [userDic setObject:nombreTF.text forKey:@"username"];
+        }
+        if (passTF.text) {
+            [userDic setObject:passTF.text forKey:@"password"];
+        }
         [file setDictionary:userDic withName:@"User"];
         [self loadNextViewController];
     }

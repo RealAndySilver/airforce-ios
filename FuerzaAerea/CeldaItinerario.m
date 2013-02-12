@@ -11,13 +11,14 @@
 @implementation CeldaItinerario
 @synthesize a,de,horaApagado,horaAterrizaje,horaDecolaje,horaEncendido,noVuelo,operacion,plan,tiempoAeronave,tiempoTripulacion,tipoOperacion;
 @synthesize segundosApagado,segundosAterrizaje,segundosDecolaje,segundosEncendido,checkDefensa;
-@synthesize horaApagadoOverlay,horaAterrizajeOverlay,horaDecolajeOverlay,horaEncendidoOverlay;
+@synthesize horaApagadoOverlay,horaAterrizajeOverlay,horaDecolajeOverlay,horaEncendidoOverlay,lista;
 
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
     self = [super initWithFrame:frame];
     if (self) {
         //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(dismissPicker) name:@"esconderPicker" object:nil];
+        lista=myDelegate;
         segundosAterrizaje=0;
         segundosApagado=0;
         segundosDecolaje=0;
@@ -45,6 +46,9 @@
         [datePicker4 setDatePickerMode:UIDatePickerModeDateAndTime];
         [datePicker4 addTarget:self action:@selector(displayDate4:) forControlEvents:UIControlEventValueChanged];
 
+        
+        
+        
         
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, 964, 34);
         self.backgroundColor=[UIColor clearColor];
@@ -176,17 +180,20 @@
         
         tipoOperacion=[[UITextField alloc]initWithFrame:CGRectMake(460+margen*9, 2, 100, 30)];
         tipoOperacion.borderStyle = UITextBorderStyleRoundedRect;
-        tipoOperacion.delegate=myDelegate;
+        tipoOperacion.delegate=self;
+        tipoOperacion.font=[UIFont fontWithName:@"Helvetica" size:8];
         [self addSubview:tipoOperacion];
         
         plan=[[UITextField alloc]initWithFrame:CGRectMake(560+margen*10, 2, 100, 30)];
         plan.borderStyle = UITextBorderStyleRoundedRect;
-        plan.delegate=myDelegate;
+        plan.delegate=self;
+        plan.font=[UIFont fontWithName:@"Helvetica" size:8];
         [self addSubview:plan];
         
         operacion=[[UITextField alloc]initWithFrame:CGRectMake(660+margen*11, 2, 100, 30)];
         operacion.borderStyle = UITextBorderStyleRoundedRect;
-        operacion.delegate=myDelegate;
+        operacion.delegate=self;
+        operacion.font=[UIFont fontWithName:@"Helvetica" size:8];
         [self addSubview:operacion];
         
         checkDefensa=[[CheckView alloc]initWithFrame:CGRectMake(770+margen*12, 2, 0,0)];
@@ -199,6 +206,34 @@
         validateButton.titleLabel.font=[UIFont fontWithName:@"Helvetica" size:10];
         [validateButton addTarget:self action:@selector(validar) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:validateButton];
+        
+        
+        pickerTipoOperacion=[[UIPickerView alloc]init];
+        pickerTipoOperacion.dataSource=self;
+        pickerTipoOperacion.delegate=self;
+        pickerTipoOperacion.showsSelectionIndicator = YES;
+        pickerTipoOperacion.tag=2001;
+        if (lista.arregloDeTipoOperacion.count) {
+            tipoOperacion.inputView=pickerTipoOperacion;
+        }
+        
+        pickerPlan=[[UIPickerView alloc]init];
+        pickerPlan.dataSource=self;
+        pickerPlan.delegate=self;
+        pickerPlan.showsSelectionIndicator = YES;
+        pickerPlan.tag=2002;
+        if (lista.arregloDePlan.count) {
+            plan.inputView=pickerPlan;
+        }
+        
+        pickerOperacion=[[UIPickerView alloc]init];
+        pickerOperacion.dataSource=self;
+        pickerOperacion.delegate=self;
+        pickerOperacion.showsSelectionIndicator = YES;
+        pickerOperacion.tag=2003;
+        if (lista.arregloDeOperacion.count) {
+            operacion.inputView=pickerOperacion;
+        }
     }
     return self;
 }
@@ -350,9 +385,6 @@
     //tiempoTripulacion.text=[NSString stringWithFormat:@"%i",[horaDecolaje.text intValue]+[horaAterrizaje.text intValue]];
 }
 
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    //NSLog(@"picker selected");
-}
 -(void)displayDate:(id)sender {
     if ([horaEncendido isEditing]) {
         NSDate * selected = [datePicker date];
@@ -362,7 +394,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
         
         NSString *strDate = [formatter stringFromDate:selected];
         
@@ -384,7 +416,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
         
@@ -404,7 +436,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
         
         NSString *strDate = [formatter stringFromDate:selected];
         
@@ -425,7 +457,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
         
@@ -553,4 +585,75 @@
     [horaDecolaje resignFirstResponder];
     [horaAterrizaje resignFirstResponder];
 }
+
+
+#pragma mark - picker delegate
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (pickerView.tag==2001) {
+        return lista.arregloDeTipoOperacion.count;
+    }
+    else if (pickerView.tag==2002){
+        return lista.arregloDePlan.count;
+    }
+    else if (pickerView.tag==2003){
+        return lista.arregloDeOperacion.count;
+    }
+    else{
+        return 0;
+    }
+    return 0;
+}
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component==0) {
+        if (pickerView.tag==2001) {
+            TipoOperacion *result=[lista.arregloDeTipoOperacion objectAtIndex:row];
+            NSString *strRes=result.tipoOperacion;
+            return strRes;
+        }
+        else if (pickerView.tag==2002){
+            Plan *result=[lista.arregloDePlan objectAtIndex:row];
+            NSString *strRes=result.descripcion;
+            return strRes;
+        }
+        else if (pickerView.tag==2003){
+            Operacion *result=[lista.arregloDeOperacion objectAtIndex:row];
+            NSString *strRes=result.descripcion;
+            return strRes;
+        }
+    }
+    else{
+        return nil;
+    }
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        if (pickerView.tag==2001) {
+            TipoOperacion *result=[lista.arregloDeTipoOperacion objectAtIndex:row];
+            NSString *strRes=result.tipoOperacion;
+            tipoOperacion.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2002){
+            Plan *result=[lista.arregloDePlan objectAtIndex:row];
+            NSString *strRes=result.descripcion;
+            plan.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2003){
+            Operacion *result=[lista.arregloDeOperacion objectAtIndex:row];
+            NSString *strRes=result.descripcion;
+            operacion.text=strRes;
+            return;
+        }
+    }
+    return;
+    
+}
+
 @end

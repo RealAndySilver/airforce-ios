@@ -23,6 +23,7 @@
 #import "FaseVuelo.h"
 #import "Departamentos.h"
 #import "Armamentos.h"
+#import "Lista.h"
 
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
@@ -73,6 +74,8 @@
     NSMutableArray *arrayDepartamentos;
     NSMutableArray *arrayMunicipios;
     NSMutableArray *arrayArmamentos;
+    
+    Lista *lista;
 
 }
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;

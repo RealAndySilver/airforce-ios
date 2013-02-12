@@ -16,7 +16,9 @@
 #import "Departamentos.h"
 #import "Armamentos.h"
 #import "FileSaver.h"
+#import "SBJSON.h"
 #import "VistaListadoArmamento.h"
+#import "Lista.h"
 
 @interface RegistroDeVueloViewController : UIViewController<UIScrollViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
     IBOutlet UIScrollView *pageScrollView;
@@ -65,7 +67,9 @@
     UIPickerView *pickerArmamentos;
     UIPickerView *pickerLatitud;
     UIPickerView *pickerLongitud;
-    
+    UIPickerView *pickerUnidad;
+    UIPickerView *pickerGrupo;
+
     UIDatePicker *datePicker;
 
     
@@ -89,6 +93,7 @@
     
 }
 @property(nonatomic,retain)ModeladorDeOrdenDeVuelo *ordenDeVuelo;
+@property(nonatomic,retain)Lista *lista;
 @property(nonatomic,retain)NSMutableArray *arrayFaseVuelo;
 @property(nonatomic,retain)NSMutableArray *arrayDepartamentos;
 @property(nonatomic,retain)NSMutableArray *arrayMunicipios;

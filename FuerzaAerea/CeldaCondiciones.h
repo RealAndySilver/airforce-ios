@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CeldaCondiciones :UIView<UITextFieldDelegate>{
-    
+#import "Lista.h"
+@interface CeldaCondiciones :UIView<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+    Lista *lista;
     UILabel *vfrHhOverlay;
     UILabel *vfrMiOverlay;
     UILabel *ifrHhOverlay;
@@ -47,6 +47,9 @@
     UILabel *cargaBajanHeader;
     UILabel *cargaTransitoHeader;
     UILabel *entidadHeader;
+    
+    UIPickerView *pickerEntidad;
+
     
 }
 @property(nonatomic,retain)UITextField *vfrHhTextfield;

@@ -25,6 +25,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        lista=myDelegate;
         //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(dismissPicker) name:@"esconderPicker" object:nil];
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, 964, 34);
         self.backgroundColor=[UIColor clearColor];
@@ -388,9 +389,9 @@
         entidadTextfield.borderStyle = UITextBorderStyleRoundedRect;
         entidadTextfield.delegate=self;
         entidadTextfield.font=font;
-        entidadTextfield.font=[UIFont fontWithName:@"Helvetica" size:10];
+        entidadTextfield.font=[UIFont fontWithName:@"Helvetica" size:8];
         entidadTextfield.keyboardType=UIKeyboardTypePhonePad;
-        [entidadTextfield setUserInteractionEnabled:NO];
+        [entidadTextfield setUserInteractionEnabled:YES];
         entidadTextfield.textAlignment=NSTextAlignmentCenter;
         entidadTextfield.textColor=[UIColor blackColor];
         entidadTextfield.tag=100;
@@ -403,19 +404,28 @@
         validateButton.titleLabel.font=[UIFont fontWithName:@"Helvetica" size:10];
         [validateButton addTarget:self action:@selector(validar) forControlEvents:UIControlEventTouchUpInside];
         //[self addSubview:validateButton];
+        
+        pickerEntidad=[[UIPickerView alloc]init];
+        pickerEntidad.dataSource=self;
+        pickerEntidad.delegate=self;
+        pickerEntidad.showsSelectionIndicator = YES;
+        pickerEntidad.tag=2001;
+        if (lista.arregloDeEntidades.count) {
+            entidadTextfield.inputView=pickerEntidad;
+        }
     }
     return self;
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCondiciones" object:nil];
     if (textField.tag==50 || textField.tag==51) {
-        paxTransitoOverlay.text=[NSString stringWithFormat:@"%i",[paxSubenTextfield.text intValue]+[paxBajanTextfield.text intValue]];
-        paxTransitoTextfield.text=[NSString stringWithFormat:@"%i",[paxSubenTextfield.text intValue]+[paxBajanTextfield.text intValue]];
+        paxTransitoOverlay.text=[NSString stringWithFormat:@"%i",[paxSubenTextfield.text intValue]-[paxBajanTextfield.text intValue]];
+        paxTransitoTextfield.text=[NSString stringWithFormat:@"%i",[paxSubenTextfield.text intValue]-[paxBajanTextfield.text intValue]];
         return;
     }
     if (textField.tag==60 || textField.tag==61) {
-        cargaTransitoOverlay.text=[NSString stringWithFormat:@"%i",[cargaSubenTextfield.text intValue]+[cargaBajanTextfield.text intValue]];
-        cargaTransitoTextfield.text=[NSString stringWithFormat:@"%i",[cargaSubenTextfield.text intValue]+[cargaBajanTextfield.text intValue]];
+        cargaTransitoOverlay.text=[NSString stringWithFormat:@"%i",[cargaSubenTextfield.text intValue]-[cargaBajanTextfield.text intValue]];
+        cargaTransitoTextfield.text=[NSString stringWithFormat:@"%i",[cargaSubenTextfield.text intValue]-[cargaBajanTextfield.text intValue]];
 
         return;
     }
@@ -868,4 +878,46 @@
     }
     return self;
 }
+
+#pragma mark - picker delegate
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (pickerView.tag==2001) {
+        return lista.arregloDeEntidades.count;
+    }
+    else{
+        return 0;
+    }
+    return 0;
+}
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component==0) {
+        if (pickerView.tag==2001) {
+            Entidad *result=[lista.arregloDeEntidades objectAtIndex:row];
+            NSString *strRes=result.nombreOrganizacion;
+            return strRes;
+        }
+    }
+    else{
+        return nil;
+    }
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        if (pickerView.tag==2001) {
+            Entidad *result=[lista.arregloDeEntidades objectAtIndex:row];
+            NSString *strRes=result.nombreOrganizacion;
+            entidadTextfield.text=strRes;
+            return;
+        }
+    }
+    return;
+    
+}
+
 @end

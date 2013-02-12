@@ -66,12 +66,15 @@
         gradoTextField.textAlignment=NSTextAlignmentCenter;
         [self addSubview:gradoTextField];
         
+        
+        
     }
     return self;
 }
--(id)initEntrenamientoWithFrame:(CGRect)frame{
+-(id)initEntrenamientoWithFrame:(CGRect)frame andDelegate:(id)myDelegate{
     self = [super initWithFrame:frame];
     if (self) {
+        lista=myDelegate;
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, 380, 34);
         self.backgroundColor=[UIColor clearColor];
         self.layer.borderWidth=1.0;
@@ -102,6 +105,15 @@
         cantidadTextfield.font=font;
         cantidadTextfield.tag=100;
         [self addSubview:cantidadTextfield];
+        
+        pickerManiobra=[[UIPickerView alloc]init];
+        pickerManiobra.dataSource=self;
+        pickerManiobra.delegate=self;
+        pickerManiobra.showsSelectionIndicator = YES;
+        pickerManiobra.tag=2001;
+        if (lista.arregloDeManiobra.count) {
+        maniobraTextField.inputView=pickerManiobra;
+        }
         
     }
     return self;
@@ -193,5 +205,88 @@
         [self addSubview:cantidadLabel];
     }
     return self;
+}
+
+#pragma mark - picker delegate
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (pickerView.tag==2001) {
+        return lista.arregloDeManiobra.count;
+    }
+    /*else if (pickerView.tag==2002){
+        return lista.arregloDeDepartamentos.count;
+    }
+    else if (pickerView.tag==2003){
+        //return lista.arregloDeTipoOperacion.count;
+    }
+    else if (pickerView.tag==2004){
+        //return lista.arregloDeTipoOperacion.count;
+    }*/
+    else{
+        return 0;
+    }
+    return 0;
+}
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component==0) {
+        if (pickerView.tag==2001) {
+            Maniobra *result=[lista.arregloDeManiobra objectAtIndex:row];
+            NSString *strRes=result.maniobra;
+            return strRes;
+        }
+        /*else if (pickerView.tag==2002){
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
+            NSString *strRes=result.departamento;
+            return strRes;
+        }
+        else if (pickerView.tag==2003){
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+             NSString *strRes=result.nombre;
+             return strRes;
+        }
+        else if (pickerView.tag==2004){
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+             NSString *strRes=result.nombre;
+             return strRes;
+        }*/
+    }
+    else{
+        return nil;
+    }
+    return nil;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        if (pickerView.tag==2001) {
+            Maniobra *result=[lista.arregloDeManiobra objectAtIndex:row];
+            NSString *strRes=result.maniobra;
+            maniobraTextField.text=strRes;
+            return;
+        }
+        /*else if (pickerView.tag==2002){
+            Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
+            NSString *strRes=result.departamento;
+            departamentoTextfield.text=strRes;
+            return;
+        }
+        else if (pickerView.tag==2003){
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+             NSString *strRes=result.nombre;
+             impactadaArmamentoTextField.text=strRes;
+             return;
+        }
+        else if (pickerView.tag==2004){
+            ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
+             NSString *strRes=result.nombre;
+             impactadaArmamentoTextField.text=strRes;
+             return;
+        }*/
+    }
+    return;
+    
 }
 @end

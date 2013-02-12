@@ -98,7 +98,7 @@
     Archivo *archivo=[[Archivo alloc]init];
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
     [dic setObject:@"true" forKey:@"Offline"];
-    [archivo validarDiccionarioDeArchivos:dic];
+    [archivo validarDiccionarioDeArchivos:dic];    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -246,6 +246,7 @@
     rvmVC.arrayFaseVuelo=arrayFaseVuelo;
     rvmVC.arrayDepartamentos=arrayDepartamentos;
     rvmVC.arrayArmamentos=arrayArmamentos;
+    rvmVC.lista=lista;
     
     [self.navigationController pushViewController:rvmVC animated:YES];
 }
@@ -335,23 +336,29 @@
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando archivos", nil);
 }
--(void)obtenerFaseVuelo{
+-(void)obtenerEnemigos{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=20;
-    [server callServerWithMethod:@"faseVuelos" andParameter:@""];
+    [server callServerWithMethod:@"enemigos" andParameter:@""];
 }
--(void)obtenerDepartamentos{
+-(void)obtenerObjetivos{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=21;
-    [server callServerWithMethod:@"departamentos" andParameter:@""];
+    [server callServerWithMethod:@"objetivos" andParameter:@""];
 }
--(void)obtenerArmamentos{
+-(void)obtenerOperaciones{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=22;
-    [server callServerWithMethod:@"armamentos" andParameter:@""];
+    [server callServerWithMethod:@"joaOperaciones" andParameter:@""];
+}
+-(void)obtenerListas{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=23;
+    [server callServerWithMethod:@"listas" andParameter:@""];
 }
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
@@ -417,7 +424,7 @@
         [save setDictionary:sender.resDic withName:@"Notams"];
         [self actualizarTablaConPeticionDeString:mtTF.text];
         //[rightTableView reloadData];
-        [self obtenerFaseVuelo];
+        [self obtenerListas];
         return;
     }
     else if (sender.tag==6){
@@ -444,40 +451,34 @@
         return;
     }
     else if (sender.tag==20){
-        NSMutableArray *array=[sender.resDic objectForKey:@"faseVuelo"];
-        for (int i=0; i<array.count; i++) {
-            FaseVuelo *faseVuelo=[[FaseVuelo alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayFaseVuelo addObject:faseVuelo];
-            FileSaver *save=[[FileSaver alloc]init];
-            [save setDictionary:sender.resDic withName:@"faseVuelo"];
-            //NSLog(@"Sender %@",faseVuelo.idFaseVuelo);
-        }
-        [self obtenerDepartamentos];
+        [lista agregarAlArregloRespectivo:sender.resDic];
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"enemigos"];
+        [self obtenerObjetivos];
         
         return;
     }
     else if (sender.tag==21){
-        NSMutableArray *array=[sender.resDic objectForKey:@"departamentos"];
-        for (int i=0; i<array.count; i++) {
-            Departamentos *departamentos=[[Departamentos alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayDepartamentos addObject:departamentos];
-            FileSaver *save=[[FileSaver alloc]init];
-            [save setDictionary:sender.resDic withName:@"departamentos"];
-            //NSLog(@"Sender %@",departamentos.idDepartamento);
-        }
-        [self obtenerArmamentos];
+        [lista agregarAlArregloRespectivo:sender.resDic];
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"objetivos"];
+        [self obtenerOperaciones];
         return;
     }
     else if (sender.tag==22){
-        NSMutableArray *array=[sender.resDic objectForKey:@"armamentos"];
-        for (int i=0; i<array.count; i++) {
-            Armamentos *armamentos=[[Armamentos alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayArmamentos addObject:armamentos];
-            FileSaver *save=[[FileSaver alloc]init];
-            [save setDictionary:sender.resDic withName:@"armamentos"];
-            //NSLog(@"Arma %@",armamentos.armamento);
-        }
+        [lista agregarAlArregloRespectivo:sender.resDic];
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"operaciones"];
         [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+        return;
+    }
+    else if (sender.tag==23){
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"lista"];
+        //lista=[[Lista alloc]initWithDictionary:sender.resDic];
+        lista=[[Lista alloc]init];
+
+        [self obtenerEnemigos];
         return;
     }
     
@@ -546,7 +547,7 @@
             [rightTableNotamArray addObject:[notam buildChain]];
         }
         [self actualizarTablaConPeticionDeString:mtTF.text];
-        [self obtenerFaseVuelo];
+        [self obtenerListas];
         return;
     }
     else if (sender.tag==6){
@@ -584,38 +585,29 @@
     }
     else if (sender.tag==20){
         FileSaver *save=[[FileSaver alloc]init];
-        NSDictionary *dic=[save getDictionary:@"faseVuelo"];
-        NSMutableArray *array=[dic objectForKey:@"faseVuelo"];
-        //NSLog(@"kkoo %@",dic);
-        for (int i=0; i<array.count; i++) {
-            FaseVuelo *faseVuelo=[[FaseVuelo alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayFaseVuelo addObject:faseVuelo];
-            //NSLog(@"Sender %@",faseVuelo.idFaseVuelo);
-        }
-        [self obtenerDepartamentos];
+        NSDictionary *dic=[save getDictionary:@"enemigos"];
+        [lista agregarAlArregloRespectivo:dic];
+        [self obtenerObjetivos];
         return;
     }
     else if (sender.tag==21){
         FileSaver *save=[[FileSaver alloc]init];
-        NSDictionary *dic=[save getDictionary:@"departamentos"];
-        NSMutableArray *array=[dic objectForKey:@"departamentos"];
-        for (int i=0; i<array.count; i++) {
-            Departamentos *departamentos=[[Departamentos alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayDepartamentos addObject:departamentos];
-            //NSLog(@"Sender %@",departamentos.idDepartamento);
-        }
-        [self obtenerArmamentos];
+        NSDictionary *dic=[save getDictionary:@"objetivos"];
+        [lista agregarAlArregloRespectivo:dic];
+        [self obtenerOperaciones];
         return;
     }
     else if (sender.tag==22){
         FileSaver *save=[[FileSaver alloc]init];
-        NSDictionary *dic=[save getDictionary:@"armamentos"];
-        NSMutableArray *array=[dic objectForKey:@"armamentos"];
-        for (int i=0; i<array.count; i++) {
-            Armamentos *armamentos=[[Armamentos alloc]initWithDictionary:[array objectAtIndex:i]];
-            [arrayArmamentos addObject:armamentos];
-            //NSLog(@"Arma %@",armamentos.armamento);
-        }
+        NSDictionary *dic=[save getDictionary:@"operaciones"];
+        [lista agregarAlArregloRespectivo:dic];
+    }
+    else if (sender.tag==23){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"lista"];
+        lista=[[Lista alloc]initWithDictionary:dic];
+        [self obtenerEnemigos];
+        return;
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     

@@ -1,0 +1,43 @@
+//
+//  Lista.h
+//  FuerzaAerea
+//
+//  Created by Andres Abril on 7/02/13.
+//  Copyright (c) 2013 Andres Abril. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "Armamentos.h"
+#import "ArmamentosImpactados.h"
+#import "Departamentos.h"
+#import "TipoOperacion.h"
+#import "Plan.h"
+#import "Unidades.h"
+#import "Maniobra.h"
+#import "FaseVuelo.h"
+#import "Grupo.h"
+#import "Enemigo.h"
+#import "Objetivo.h"
+#import "Operacion.h"
+#import "Entidad.h"
+@interface Lista : NSObject
+@property(nonatomic,readonly)NSMutableArray *arregloDeArmamentos;
+@property(nonatomic,readonly)NSMutableArray *arregloDeArmamentosImpactados;
+@property(nonatomic,readonly)NSMutableArray *arregloDeDepartamentos;
+@property(nonatomic,readonly)NSMutableArray *arregloDeTipoOperacion;
+@property(nonatomic,readonly)NSMutableArray *arregloDePlan;
+@property(nonatomic,readonly)NSMutableArray *arregloDeUnidades;
+@property(nonatomic,readonly)NSMutableArray *arregloDeManiobra;
+@property(nonatomic,readonly)NSMutableArray *arregloDeGrupo;
+@property(nonatomic,readonly)NSMutableArray *arregloDeFaseDeVuelo;
+@property(nonatomic,readonly)NSMutableArray *arregloDeEntidades;
+
+
+@property(nonatomic,readonly)NSMutableArray *arregloDeEnemigo;
+@property(nonatomic,readonly)NSMutableArray *arregloDeOperacion;
+@property(nonatomic,readonly)NSMutableArray *arregloDeObjetivo;
+
+
+-(id)initWithDictionary:(NSDictionary*)dictionary;
+-(void)agregarAlArregloRespectivo:(NSDictionary*)dictionary;
+@end

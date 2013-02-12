@@ -13,6 +13,17 @@
 		7512BF8C16C2149A00B222C0 /* ArmamentoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8B16C2149A00B222C0 /* ArmamentoCell.m */; };
 		7512BF8F16C2175B00B222C0 /* TripulacionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8E16C2175B00B222C0 /* TripulacionCell.m */; };
 		7512BF9216C217F800B222C0 /* TripulacionTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF9116C217F800B222C0 /* TripulacionTableSubView.m */; };
+		7512BFD316C4912000B222C0 /* ArmamentosImpactados.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFD216C4912000B222C0 /* ArmamentosImpactados.m */; };
+		7512BFD616C497EF00B222C0 /* TipoOperacion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFD516C497EE00B222C0 /* TipoOperacion.m */; };
+		7512BFD916C497FB00B222C0 /* Plan.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFD816C497FA00B222C0 /* Plan.m */; };
+		7512BFDC16C4982D00B222C0 /* Unidades.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFDB16C4982D00B222C0 /* Unidades.m */; };
+		7512BFDF16C4983F00B222C0 /* Maniobra.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFDE16C4983E00B222C0 /* Maniobra.m */; };
+		7512BFE216C4985200B222C0 /* Operacion.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFE116C4985100B222C0 /* Operacion.m */; };
+		7512BFE516C4998400B222C0 /* Lista.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFE416C4998300B222C0 /* Lista.m */; };
+		7512BFE816C4A57800B222C0 /* Grupo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFE716C4A57700B222C0 /* Grupo.m */; };
+		7512BFEB16C4B0C900B222C0 /* Enemigo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFEA16C4B0C800B222C0 /* Enemigo.m */; };
+		7512BFEE16C4B0D900B222C0 /* Objetivo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFED16C4B0D600B222C0 /* Objetivo.m */; };
+		7514A49716C548850093F58C /* Entidad.m in Sources */ = {isa = PBXBuildFile; fileRef = 7514A49616C548850093F58C /* Entidad.m */; };
 		7515A4CF164C327A00504C23 /* DocumentViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7515A4CE164C327A00504C23 /* DocumentViewerController.m */; };
 		754E95111630D15A002FEB37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95101630D15A002FEB37 /* UIKit.framework */; };
 		754E95131630D15A002FEB37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95121630D15A002FEB37 /* Foundation.framework */; };
@@ -111,6 +122,28 @@
 		7512BF8E16C2175B00B222C0 /* TripulacionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripulacionCell.m; sourceTree = "<group>"; };
 		7512BF9016C217F800B222C0 /* TripulacionTableSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripulacionTableSubView.h; sourceTree = "<group>"; };
 		7512BF9116C217F800B222C0 /* TripulacionTableSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripulacionTableSubView.m; sourceTree = "<group>"; };
+		7512BFD116C4911F00B222C0 /* ArmamentosImpactados.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmamentosImpactados.h; sourceTree = "<group>"; };
+		7512BFD216C4912000B222C0 /* ArmamentosImpactados.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArmamentosImpactados.m; sourceTree = "<group>"; };
+		7512BFD416C497EE00B222C0 /* TipoOperacion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TipoOperacion.h; sourceTree = "<group>"; };
+		7512BFD516C497EE00B222C0 /* TipoOperacion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TipoOperacion.m; sourceTree = "<group>"; };
+		7512BFD716C497FA00B222C0 /* Plan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plan.h; sourceTree = "<group>"; };
+		7512BFD816C497FA00B222C0 /* Plan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plan.m; sourceTree = "<group>"; };
+		7512BFDA16C4982D00B222C0 /* Unidades.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Unidades.h; sourceTree = "<group>"; };
+		7512BFDB16C4982D00B222C0 /* Unidades.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Unidades.m; sourceTree = "<group>"; };
+		7512BFDD16C4983E00B222C0 /* Maniobra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Maniobra.h; sourceTree = "<group>"; };
+		7512BFDE16C4983E00B222C0 /* Maniobra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Maniobra.m; sourceTree = "<group>"; };
+		7512BFE016C4985000B222C0 /* Operacion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Operacion.h; sourceTree = "<group>"; };
+		7512BFE116C4985100B222C0 /* Operacion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Operacion.m; sourceTree = "<group>"; };
+		7512BFE316C4998200B222C0 /* Lista.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lista.h; sourceTree = "<group>"; };
+		7512BFE416C4998300B222C0 /* Lista.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lista.m; sourceTree = "<group>"; };
+		7512BFE616C4A57500B222C0 /* Grupo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grupo.h; sourceTree = "<group>"; };
+		7512BFE716C4A57700B222C0 /* Grupo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grupo.m; sourceTree = "<group>"; };
+		7512BFE916C4B0C600B222C0 /* Enemigo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enemigo.h; sourceTree = "<group>"; };
+		7512BFEA16C4B0C800B222C0 /* Enemigo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Enemigo.m; sourceTree = "<group>"; };
+		7512BFEC16C4B0D500B222C0 /* Objetivo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Objetivo.h; sourceTree = "<group>"; };
+		7512BFED16C4B0D600B222C0 /* Objetivo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Objetivo.m; sourceTree = "<group>"; };
+		7514A49516C548850093F58C /* Entidad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entidad.h; sourceTree = "<group>"; };
+		7514A49616C548850093F58C /* Entidad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entidad.m; sourceTree = "<group>"; };
 		7515A4CD164C327A00504C23 /* DocumentViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentViewerController.h; sourceTree = "<group>"; };
 		7515A4CE164C327A00504C23 /* DocumentViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentViewerController.m; sourceTree = "<group>"; };
 		754E950C1630D15A002FEB37 /* FuerzaAerea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FuerzaAerea.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -468,14 +501,36 @@
 		75A1D2DA16BA1AF10013B48A /* ObjetosLista */ = {
 			isa = PBXGroup;
 			children = (
-				75A1D2DB16BA1B080013B48A /* FaseVuelo.h */,
-				75A1D2DC16BA1B080013B48A /* FaseVuelo.m */,
-				75A1D2DE16BA2D030013B48A /* Departamentos.h */,
-				75A1D2DF16BA2D030013B48A /* Departamentos.m */,
 				75A1D2E516BA30E40013B48A /* Municipios.h */,
 				75A1D2E616BA30E40013B48A /* Municipios.m */,
 				75A1D2E916BA32F90013B48A /* Armamentos.h */,
 				75A1D2EA16BA32F90013B48A /* Armamentos.m */,
+				7512BFD116C4911F00B222C0 /* ArmamentosImpactados.h */,
+				7512BFD216C4912000B222C0 /* ArmamentosImpactados.m */,
+				75A1D2DB16BA1B080013B48A /* FaseVuelo.h */,
+				75A1D2DC16BA1B080013B48A /* FaseVuelo.m */,
+				75A1D2DE16BA2D030013B48A /* Departamentos.h */,
+				75A1D2DF16BA2D030013B48A /* Departamentos.m */,
+				7512BFD416C497EE00B222C0 /* TipoOperacion.h */,
+				7512BFD516C497EE00B222C0 /* TipoOperacion.m */,
+				7512BFE616C4A57500B222C0 /* Grupo.h */,
+				7512BFE716C4A57700B222C0 /* Grupo.m */,
+				7512BFD716C497FA00B222C0 /* Plan.h */,
+				7512BFD816C497FA00B222C0 /* Plan.m */,
+				7512BFDA16C4982D00B222C0 /* Unidades.h */,
+				7512BFDB16C4982D00B222C0 /* Unidades.m */,
+				7512BFDD16C4983E00B222C0 /* Maniobra.h */,
+				7512BFDE16C4983E00B222C0 /* Maniobra.m */,
+				7514A49516C548850093F58C /* Entidad.h */,
+				7514A49616C548850093F58C /* Entidad.m */,
+				7512BFE316C4998200B222C0 /* Lista.h */,
+				7512BFE416C4998300B222C0 /* Lista.m */,
+				7512BFE916C4B0C600B222C0 /* Enemigo.h */,
+				7512BFEA16C4B0C800B222C0 /* Enemigo.m */,
+				7512BFEC16C4B0D500B222C0 /* Objetivo.h */,
+				7512BFED16C4B0D600B222C0 /* Objetivo.m */,
+				7512BFE016C4985000B222C0 /* Operacion.h */,
+				7512BFE116C4985100B222C0 /* Operacion.m */,
 			);
 			name = ObjetosLista;
 			sourceTree = "<group>";
@@ -753,6 +808,17 @@
 				7512BF8C16C2149A00B222C0 /* ArmamentoCell.m in Sources */,
 				7512BF8F16C2175B00B222C0 /* TripulacionCell.m in Sources */,
 				7512BF9216C217F800B222C0 /* TripulacionTableSubView.m in Sources */,
+				7512BFD316C4912000B222C0 /* ArmamentosImpactados.m in Sources */,
+				7512BFD616C497EF00B222C0 /* TipoOperacion.m in Sources */,
+				7512BFD916C497FB00B222C0 /* Plan.m in Sources */,
+				7512BFDC16C4982D00B222C0 /* Unidades.m in Sources */,
+				7512BFDF16C4983F00B222C0 /* Maniobra.m in Sources */,
+				7512BFE216C4985200B222C0 /* Operacion.m in Sources */,
+				7512BFE516C4998400B222C0 /* Lista.m in Sources */,
+				7512BFE816C4A57800B222C0 /* Grupo.m in Sources */,
+				7512BFEB16C4B0C900B222C0 /* Enemigo.m in Sources */,
+				7512BFEE16C4B0D900B222C0 /* Objetivo.m in Sources */,
+				7514A49716C548850093F58C /* Entidad.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,11 +923,15 @@
 		754E95461630D15A002FEB37 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andres Abril (534AS5H66B)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Andres Abril (534AS5H66B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
 				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8364E923-86B7-4071-9F0E-2510C79DD77B";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F3F0B0AF-F082-4543-89FB-31DB2CB0CB69";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -869,11 +939,13 @@
 		754E95471630D15A002FEB37 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andres Abril (534AS5H66B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
 				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8364E923-86B7-4071-9F0E-2510C79DD77B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
