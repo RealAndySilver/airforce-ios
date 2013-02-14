@@ -45,6 +45,11 @@
 @property(nonatomic,retain)UITextField *operacion;
 @property(nonatomic,retain)CheckView *checkDefensa;
 
+@property(nonatomic,retain)NSString *idTipoOperacion;
+@property(nonatomic,retain)NSString *idPlan;
+@property(nonatomic,retain)NSString *idOperacion;
+
+
 @property(nonatomic)double segundosEncendido;
 @property(nonatomic)double segundosApagado;
 @property(nonatomic)double segundosDecolaje;

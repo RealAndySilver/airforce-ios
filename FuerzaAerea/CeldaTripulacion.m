@@ -9,7 +9,7 @@
 #import "CeldaTripulacion.h"
 
 @implementation CeldaTripulacion
-@synthesize cantidadTextfield,cargoTextField,codigoTextField,gradoTextField,maniobraTextField,nombreTextiField;
+@synthesize cantidadTextfield,cargoTextField,codigoTextField,gradoTextField,maniobraTextField,nombreTextiField,idPersona,idManiobra;
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
     self = [super initWithFrame:frame];
@@ -75,7 +75,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         lista=myDelegate;
-        self.frame=CGRectMake(frame.origin.x, frame.origin.y, 380, 34);
+        self.frame=CGRectMake(frame.origin.x, frame.origin.y, 450, 34);
         self.backgroundColor=[UIColor clearColor];
         self.layer.borderWidth=1.0;
         int margen=7;
@@ -101,10 +101,19 @@
         cantidadTextfield=[[UITextField alloc]initWithFrame:CGRectMake(210+margen*2, 2, 150, 30)];
         cantidadTextfield.borderStyle = UITextBorderStyleRoundedRect;
         cantidadTextfield.delegate=self;
+        cantidadTextfield.keyboardType=UIKeyboardTypePhonePad;
         cantidadTextfield.textColor=[UIColor blackColor];
         cantidadTextfield.font=font;
         cantidadTextfield.tag=100;
         [self addSubview:cantidadTextfield];
+        
+        UIButton *validateButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [validateButton setBackgroundImage:[UIImage imageNamed:@"atras.png"] forState:UIControlStateNormal];
+        [validateButton setTitle:@"Borrar" forState:UIControlStateNormal];
+        validateButton.frame=CGRectMake(390, 2, 50, 30);
+        validateButton.titleLabel.font=[UIFont fontWithName:@"Helvetica" size:10];
+        [validateButton addTarget:self action:@selector(borrar) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:validateButton];
         
         pickerManiobra=[[UIPickerView alloc]init];
         pickerManiobra.dataSource=self;
@@ -265,6 +274,7 @@
             Maniobra *result=[lista.arregloDeManiobra objectAtIndex:row];
             NSString *strRes=result.maniobra;
             maniobraTextField.text=strRes;
+            idManiobra=result.idManiobra;
             return;
         }
         /*else if (pickerView.tag==2002){
@@ -288,5 +298,11 @@
     }
     return;
     
+}
+#pragma mark - borrar
+-(void)borrar{
+    maniobraTextField.text=@"";
+    cantidadTextfield.text=@"";
+    idManiobra=@"";
 }
 @end

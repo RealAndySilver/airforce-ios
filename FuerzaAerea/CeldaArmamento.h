@@ -25,6 +25,11 @@
 @property(nonatomic,retain)UITextField *departamentoTextfield;
 @property(nonatomic,retain)UITextField *enemigoTextField;
 
+@property(nonatomic,retain)NSString *idArmamento;
+@property(nonatomic,retain)NSString *idEnemigo;
+@property(nonatomic,retain)NSString *idObjetivo;
+
+
 -(id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 -(id)initHeaderWithFrame:(CGRect)frame;
 @end

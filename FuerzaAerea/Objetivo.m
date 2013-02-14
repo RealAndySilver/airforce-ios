@@ -15,7 +15,7 @@
         idBlanco=[dictionary objectForKey:@"idBlanco"];
         objetivo=[dictionary objectForKey:@"objetivo"];
         departamento=[dictionary objectForKey:@"departamento"];
-        coordenadas=[dictionary objectForKey:@"coordenadas"];
+        coordenadas=[[[[dictionary objectForKey:@"coordenadas"]stringByReplacingOccurrencesOfString:@"g" withString:@"º"] stringByReplacingOccurrencesOfString:@"m" withString:@"'"] stringByReplacingOccurrencesOfString:@"s" withString:@"\""];
 
     }
     return self;

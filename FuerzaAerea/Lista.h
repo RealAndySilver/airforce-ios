@@ -20,6 +20,7 @@
 #import "Objetivo.h"
 #import "Operacion.h"
 #import "Entidad.h"
+#import "Municipios.h"
 @interface Lista : NSObject
 @property(nonatomic,readonly)NSMutableArray *arregloDeArmamentos;
 @property(nonatomic,readonly)NSMutableArray *arregloDeArmamentosImpactados;
@@ -28,6 +29,7 @@
 @property(nonatomic,readonly)NSMutableArray *arregloDePlan;
 @property(nonatomic,readonly)NSMutableArray *arregloDeUnidades;
 @property(nonatomic,readonly)NSMutableArray *arregloDeManiobra;
+@property(nonatomic,readonly)NSMutableArray *arregloDeMunicipios;
 @property(nonatomic,readonly)NSMutableArray *arregloDeGrupo;
 @property(nonatomic,readonly)NSMutableArray *arregloDeFaseDeVuelo;
 @property(nonatomic,readonly)NSMutableArray *arregloDeEntidades;

@@ -27,7 +27,7 @@
         viewController=caller;
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
         UIView *header=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 30)];
-        header.backgroundColor=[UIColor colorWithRed:0.4 green:0.8 blue:0.9 alpha:1];
+        header.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0 alpha:1];
         [self addSubview:header];
         UITableView *tableView=[[UITableView alloc]initWithFrame:CGRectMake(0, 30, self.frame.size.width, self.frame.size.height-30)];
         tableView.delegate=self;

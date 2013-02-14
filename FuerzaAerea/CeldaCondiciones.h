@@ -92,6 +92,11 @@
 @property(nonatomic,retain)UITextField *cargaBajanTotal;
 @property(nonatomic,retain)UITextField *cargaTransitoTotal;
 
+@property(nonatomic,retain)NSString *noPiernaCondiciones;
+
+@property(nonatomic,retain)NSString *idEntidad;
+
+
 
 @property(nonatomic)double segundosEncendido;
 @property(nonatomic)double segundosApagado;

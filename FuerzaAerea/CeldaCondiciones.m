@@ -11,7 +11,7 @@
 @implementation CeldaCondiciones
 @synthesize aterrizajesTextfield,cargaBajanTextfield,cargaSubenTextfield,cargaTransitoTextfield,entidadTextfield,heridosTextfield,ifrHhTextfield,ifrMiTextfield,muertosTextfield,nocHhTextfield,nocMiTextfield,nvgHhTextfield,nvgMiTextfield,paxBajanTextfield,paxSubenTextfield,paxTransitoTextfield,vfrMiTextfield,vfrHhTextfield;
 @synthesize aterrizajesTotal,cargaBajanTotal,cargaSubenTotal,cargaTransitoTotal,heridosTotal,ifrHhTotal,ifrMiTotal,muertosTotal,nocHhTotal,nocMiTotal,nvgHhTotal,nvgMiTotal,paxBajanTotal,paxSubenTotal,paxTransitoTotal,segundosApagado,segundosAterrizaje,segundosDecolaje,segundosEncendido,vfrHhTotal,vfrMiTotal;
-@synthesize paxTransitoOverlay,cargaTransitoOverlay;
+@synthesize paxTransitoOverlay,cargaTransitoOverlay,noPiernaCondiciones,idEntidad;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -38,9 +38,9 @@
         bordeInferior.backgroundColor=[UIColor blackColor];
         [self addSubview:bordeInferior];
         
-        UIFont *font=[UIFont fontWithName:@"Helvetica" size:8];
+        UIFont *font=[UIFont fontWithName:@"Helvetica" size:14];
         
-        vfrHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(10, 2, 30, 30)];
+        vfrHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(10, 2, 40, 30)];
         vfrHhTextfield.borderStyle = UITextBorderStyleRoundedRect;
         vfrHhTextfield.backgroundColor=[UIColor whiteColor];
         vfrHhTextfield.delegate=self;
@@ -52,7 +52,7 @@
         vfrHhTextfield.tag=100;
         [self addSubview:vfrHhTextfield];
         
-        vfrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(10, 2, 30, 30)];
+        vfrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(10, 2, 40, 30)];
         vfrHhOverlay.numberOfLines=1;
         vfrHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [vfrHhOverlay setUserInteractionEnabled:YES];
@@ -60,7 +60,7 @@
         UITapGestureRecognizer *tap2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [vfrHhOverlay addGestureRecognizer:tap2];
         
-        vfrMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(40+margen*1, 2, 30, 30)];
+        vfrMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(55, 2, 40, 30)];
         vfrMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         vfrMiTextfield.delegate=self;
         vfrMiTextfield.font=font;
@@ -71,7 +71,7 @@
         vfrMiTextfield.tag=100;
         [self addSubview:vfrMiTextfield];
         
-        vfrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(40+margen*1, 2, 30, 30)];
+        vfrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(55, 2, 40, 30)];
         vfrMiOverlay.numberOfLines=1;
         vfrMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [vfrMiOverlay setUserInteractionEnabled:YES];
@@ -79,7 +79,7 @@
         UITapGestureRecognizer *tap3=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [vfrMiOverlay addGestureRecognizer:tap3];
         
-        ifrHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(70+margen*2, 2, 30, 30)];
+        ifrHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100, 2, 40, 30)];
         ifrHhTextfield.borderStyle = UITextBorderStyleRoundedRect;
         ifrHhTextfield.delegate=self;
         ifrHhTextfield.font=font;
@@ -90,7 +90,7 @@
         ifrHhTextfield.tag=100;
         [self addSubview:ifrHhTextfield];
         
-        ifrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(70+margen*2, 2, 30, 30)];
+        ifrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(100, 2, 40, 30)];
         ifrHhOverlay.numberOfLines=1;
         ifrHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [ifrHhOverlay setUserInteractionEnabled:YES];
@@ -98,7 +98,7 @@
         UITapGestureRecognizer *tap4=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [ifrHhOverlay addGestureRecognizer:tap4];
         
-        ifrMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(100+margen*3, 2, 30, 30)];
+        ifrMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(145, 2, 40, 30)];
         ifrMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         ifrMiTextfield.delegate=self;
         ifrMiTextfield.font=font;
@@ -109,7 +109,7 @@
         ifrMiTextfield.tag=100;
         [self addSubview:ifrMiTextfield];
         
-        ifrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(100+margen*3, 2, 30, 30)];
+        ifrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(145, 2, 40, 30)];
         ifrMiOverlay.numberOfLines=1;
         ifrMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [ifrMiOverlay setUserInteractionEnabled:YES];
@@ -117,7 +117,7 @@
         UITapGestureRecognizer *tap5=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [ifrHhOverlay addGestureRecognizer:tap5];
         
-        nocHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(130+margen*4, 2, 30, 30)];
+        nocHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(190, 2, 40, 30)];
         nocHhTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nocHhTextfield.delegate=self;
         nocHhTextfield.font=font;
@@ -128,7 +128,7 @@
         nocHhTextfield.tag=100;
         [self addSubview:nocHhTextfield];
         
-        nocHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(130+margen*4, 2, 30, 30)];
+        nocHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(190, 2, 40, 30)];
         nocHhOverlay.numberOfLines=1;
         nocHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nocHhOverlay setUserInteractionEnabled:YES];
@@ -136,7 +136,7 @@
         UITapGestureRecognizer *tap6=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nocHhOverlay addGestureRecognizer:tap6];
         
-        nocMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(160+margen*5, 2, 30, 30)];
+        nocMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(235, 2, 40, 30)];
         nocMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nocMiTextfield.delegate=self;
         nocMiTextfield.font=font;
@@ -147,7 +147,7 @@
         nocMiTextfield.tag=100;
         [self addSubview:nocMiTextfield];
         
-        nocMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(160+margen*5, 2, 30, 30)];
+        nocMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(235, 2, 40, 30)];
         nocMiOverlay.numberOfLines=1;
         nocMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nocMiOverlay setUserInteractionEnabled:YES];
@@ -155,7 +155,7 @@
         UITapGestureRecognizer *tap7=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nocHhOverlay addGestureRecognizer:tap7];
         
-        nvgHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(190+margen*6, 2, 30, 30)];
+        nvgHhTextfield=[[UITextField alloc]initWithFrame:CGRectMake(280, 2, 40, 30)];
         nvgHhTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nvgHhTextfield.delegate=self;
         nvgHhTextfield.font=font;
@@ -166,7 +166,7 @@
         nvgHhTextfield.tag=100;
         [self addSubview:nvgHhTextfield];
         
-        nvgHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(190+margen*6, 2, 30, 30)];
+        nvgHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(280, 2, 40, 30)];
         nvgHhOverlay.numberOfLines=1;
         nvgHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nvgHhOverlay setUserInteractionEnabled:YES];
@@ -174,7 +174,7 @@
         UITapGestureRecognizer *tap8=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nvgHhOverlay addGestureRecognizer:tap8];
         
-        nvgMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(220+margen*7, 2, 30, 30)];
+        nvgMiTextfield=[[UITextField alloc]initWithFrame:CGRectMake(325, 2, 40, 30)];
         nvgMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nvgMiTextfield.delegate=self;
         nvgMiTextfield.font=font;
@@ -185,7 +185,7 @@
         nvgMiTextfield.tag=100;
         [self addSubview:nvgMiTextfield];
         
-        nvgMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(220+margen*7, 2, 30, 30)];
+        nvgMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(325, 2, 40, 30)];
         nvgMiOverlay.numberOfLines=1;
         nvgMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nvgMiOverlay setUserInteractionEnabled:YES];
@@ -193,7 +193,7 @@
         UITapGestureRecognizer *tap9=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nvgMiOverlay addGestureRecognizer:tap9];
         
-        aterrizajesTextfield=[[UITextField alloc]initWithFrame:CGRectMake(250+margen*8, 2, 50, 30)];
+        aterrizajesTextfield=[[UITextField alloc]initWithFrame:CGRectMake(370, 2, 40, 30)];
         aterrizajesTextfield.borderStyle = UITextBorderStyleRoundedRect;
         aterrizajesTextfield.delegate=self;
         aterrizajesTextfield.font=font;
@@ -204,7 +204,7 @@
         aterrizajesTextfield.tag=100;
         [self addSubview:aterrizajesTextfield];
         
-        aterrizajesOverlay=[[UILabel alloc]initWithFrame:CGRectMake(250+margen*8, 2, 50, 30)];
+        aterrizajesOverlay=[[UILabel alloc]initWithFrame:CGRectMake(370, 2, 40, 30)];
         aterrizajesOverlay.numberOfLines=1;
         aterrizajesOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [aterrizajesOverlay setUserInteractionEnabled:YES];
@@ -212,7 +212,7 @@
         UITapGestureRecognizer *tap10=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [aterrizajesOverlay addGestureRecognizer:tap10];
         
-        heridosTextfield=[[UITextField alloc]initWithFrame:CGRectMake(300+margen*9, 2, 50, 30)];
+        heridosTextfield=[[UITextField alloc]initWithFrame:CGRectMake(415, 2, 40, 30)];
         heridosTextfield.borderStyle = UITextBorderStyleRoundedRect;
         heridosTextfield.keyboardType=UIKeyboardTypePhonePad;
         heridosTextfield.delegate=self;
@@ -223,7 +223,7 @@
         heridosTextfield.tag=100;
         [self addSubview:heridosTextfield];
         
-        heridosOverlay=[[UILabel alloc]initWithFrame:CGRectMake(300+margen*9, 2, 50, 30)];
+        heridosOverlay=[[UILabel alloc]initWithFrame:CGRectMake(415, 2, 40, 30)];
         heridosOverlay.numberOfLines=1;
         heridosOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [heridosOverlay setUserInteractionEnabled:YES];
@@ -231,7 +231,7 @@
         UITapGestureRecognizer *tap11=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [heridosOverlay addGestureRecognizer:tap11];
         
-        muertosTextfield=[[UITextField alloc]initWithFrame:CGRectMake(350+margen*10, 2, 50, 30)];
+        muertosTextfield=[[UITextField alloc]initWithFrame:CGRectMake(460, 2, 40, 30)];
         muertosTextfield.borderStyle = UITextBorderStyleRoundedRect;
         muertosTextfield.delegate=self;
         muertosTextfield.font=font;
@@ -242,7 +242,7 @@
         muertosTextfield.tag=100;
         [self addSubview:muertosTextfield];
         
-        muertosOverlay=[[UILabel alloc]initWithFrame:CGRectMake(350+margen*10, 2, 50, 30)];
+        muertosOverlay=[[UILabel alloc]initWithFrame:CGRectMake(460, 2, 40, 30)];
         muertosOverlay.numberOfLines=1;
         muertosOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [muertosOverlay setUserInteractionEnabled:YES];
@@ -250,7 +250,7 @@
         UITapGestureRecognizer *tap12=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [muertosOverlay addGestureRecognizer:tap12];
         
-        paxSubenTextfield=[[UITextField alloc]initWithFrame:CGRectMake(410+margen*11, 2, 30, 30)];
+        paxSubenTextfield=[[UITextField alloc]initWithFrame:CGRectMake(505, 2, 40, 30)];
         paxSubenTextfield.borderStyle = UITextBorderStyleRoundedRect;
         paxSubenTextfield.delegate=self;
         paxSubenTextfield.font=font;
@@ -261,7 +261,7 @@
         paxSubenTextfield.tag=50;
         [self addSubview:paxSubenTextfield];
         
-        paxSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(410+margen*11, 2, 30, 30)];
+        paxSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(505, 2, 40, 30)];
         paxSubenOverlay.numberOfLines=1;
         paxSubenOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [paxSubenOverlay setUserInteractionEnabled:YES];
@@ -269,7 +269,7 @@
         UITapGestureRecognizer *tap13=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [paxSubenOverlay addGestureRecognizer:tap13];
         
-        paxBajanTextfield=[[UITextField alloc]initWithFrame:CGRectMake(440+margen*12, 2, 30, 30)];
+        paxBajanTextfield=[[UITextField alloc]initWithFrame:CGRectMake(550, 2, 40, 30)];
         paxBajanTextfield.borderStyle = UITextBorderStyleRoundedRect;
         paxBajanTextfield.delegate=self;
         paxBajanTextfield.font=font;
@@ -280,7 +280,7 @@
         paxBajanTextfield.tag=51;
         [self addSubview:paxBajanTextfield];
         
-        paxBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(440+margen*12, 2, 30, 30)];
+        paxBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(550, 2, 40, 30)];
         paxBajanOverlay.numberOfLines=1;
         paxBajanOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [paxBajanOverlay setUserInteractionEnabled:YES];
@@ -288,7 +288,7 @@
         UITapGestureRecognizer *tap14=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [paxBajanOverlay addGestureRecognizer:tap14];
         
-        paxTransitoTextfield=[[UITextField alloc]initWithFrame:CGRectMake(470+margen*13, 2, 30, 30)];
+        paxTransitoTextfield=[[UITextField alloc]initWithFrame:CGRectMake(595, 2, 40, 30)];
         paxTransitoTextfield.borderStyle = UITextBorderStyleLine;
         paxTransitoTextfield.delegate=self;
         paxTransitoTextfield.font=font;
@@ -299,15 +299,15 @@
         paxTransitoTextfield.tag=52;
         [self addSubview:paxTransitoTextfield];
         
-        paxTransitoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(470+margen*13, 2, 30, 30)];
+        paxTransitoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(595, 2, 40, 30)];
         paxTransitoOverlay.numberOfLines=1;
-        paxTransitoOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
+        paxTransitoOverlay.font=[UIFont fontWithName:@"Helvetica" size:15];
         paxTransitoOverlay.backgroundColor=[UIColor colorWithWhite:0.8 alpha:1];
         [paxTransitoOverlay setUserInteractionEnabled:YES];
         paxTransitoOverlay.textAlignment=NSTextAlignmentCenter;
         [self addSubview:paxTransitoOverlay];
         
-        cargaSubenTextfield=[[UITextField alloc]initWithFrame:CGRectMake(505+margen*14, 2, 30, 30)];
+        cargaSubenTextfield=[[UITextField alloc]initWithFrame:CGRectMake(640, 2, 40, 30)];
         cargaSubenTextfield.borderStyle = UITextBorderStyleRoundedRect;
         cargaSubenTextfield.delegate=self;
         cargaSubenTextfield.font=font;
@@ -318,7 +318,7 @@
         cargaSubenTextfield.tag=60;
         [self addSubview:cargaSubenTextfield];
         
-        cargaSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(505+margen*14, 2, 30, 30)];
+        cargaSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(640, 2, 40, 30)];
         cargaSubenOverlay.numberOfLines=1;
         cargaSubenOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [cargaSubenOverlay setUserInteractionEnabled:YES];
@@ -327,7 +327,7 @@
         [cargaSubenOverlay addGestureRecognizer:tap15];
         
         
-        cargaBajanTextfield=[[UITextField alloc]initWithFrame:CGRectMake(535+margen*15, 2, 30, 30)];
+        cargaBajanTextfield=[[UITextField alloc]initWithFrame:CGRectMake(685, 2, 40, 30)];
         cargaBajanTextfield.borderStyle = UITextBorderStyleRoundedRect;
         cargaBajanTextfield.delegate=self;
         cargaBajanTextfield.font=font;
@@ -338,7 +338,7 @@
         cargaBajanTextfield.tag=61;
         [self addSubview:cargaBajanTextfield];
         
-        cargaBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(535+margen*15, 2, 30, 30)];
+        cargaBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(685, 2, 40, 30)];
         cargaBajanOverlay.numberOfLines=1;
         cargaBajanOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [cargaBajanOverlay setUserInteractionEnabled:YES];
@@ -346,7 +346,7 @@
         UITapGestureRecognizer *tap16=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [cargaBajanOverlay addGestureRecognizer:tap16];
         
-        cargaTransitoTextfield=[[UITextField alloc]initWithFrame:CGRectMake(565+margen*16, 2, 30, 30)];
+        cargaTransitoTextfield=[[UITextField alloc]initWithFrame:CGRectMake(730, 2, 40, 30)];
         cargaTransitoTextfield.delegate=self;
         cargaTransitoTextfield.font=font;
         cargaTransitoTextfield.backgroundColor=[UIColor whiteColor];
@@ -357,27 +357,16 @@
         cargaTransitoTextfield.tag=62;
         [self addSubview:cargaTransitoTextfield];
         
-        cargaTransitoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(565+margen*16, 2, 30, 30)];
+        cargaTransitoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(730, 2, 40, 30)];
         cargaTransitoOverlay.numberOfLines=1;
-        cargaTransitoOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
+        cargaTransitoOverlay.font=[UIFont fontWithName:@"Helvetica" size:15];
         cargaTransitoOverlay.backgroundColor=[UIColor colorWithWhite:0.8 alpha:1];
         cargaTransitoOverlay.textAlignment=NSTextAlignmentCenter;
         [cargaTransitoOverlay setUserInteractionEnabled:YES];
         [self addSubview:cargaTransitoOverlay];
         
-        entidadTextfield=[[UITextField alloc]initWithFrame:CGRectMake(605+margen*17, 2, 180, 30)];
-        entidadTextfield.borderStyle = UITextBorderStyleRoundedRect;
-        entidadTextfield.delegate=self;
-        entidadTextfield.font=font;
-        entidadTextfield.font=[UIFont fontWithName:@"Helvetica" size:10];
-        entidadTextfield.keyboardType=UIKeyboardTypePhonePad;
-        [entidadTextfield setUserInteractionEnabled:NO];
-        entidadTextfield.textAlignment=NSTextAlignmentCenter;
-        entidadTextfield.textColor=[UIColor blackColor];
-        entidadTextfield.tag=100;
-        [self addSubview:entidadTextfield];
         
-        entidadOverlay=[[UILabel alloc]initWithFrame:CGRectMake(605+margen*17, 2, 180, 30)];
+        entidadOverlay=[[UILabel alloc]initWithFrame:CGRectMake(775, 2, 180, 30)];
         entidadOverlay.numberOfLines=1;
         entidadOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [entidadOverlay setUserInteractionEnabled:NO];
@@ -385,7 +374,7 @@
         UITapGestureRecognizer *tap17=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [entidadOverlay addGestureRecognizer:tap17];
         
-        entidadTextfield=[[UITextField alloc]initWithFrame:CGRectMake(605+margen*17, 2, 180, 30)];
+        entidadTextfield=[[UITextField alloc]initWithFrame:CGRectMake(775, 2, 180, 30)];
         entidadTextfield.borderStyle = UITextBorderStyleRoundedRect;
         entidadTextfield.delegate=self;
         entidadTextfield.font=font;
@@ -447,7 +436,7 @@
 
         UIColor *fontColor=[UIColor blackColor];
         
-        vfrHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(10, 2, 30, 30)];
+        vfrHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(10, 2, 40, 30)];
         vfrHhHeader.numberOfLines=2;
         vfrHhHeader.textAlignment=alignment;
         vfrHhHeader.font=font;
@@ -456,7 +445,7 @@
         vfrHhHeader.text=@"Vfr \nHh";
         [self addSubview:vfrHhHeader];
         
-        vfrMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(38+margen*1, 2, 30, 30)];
+        vfrMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(55, 2, 40, 30)];
         vfrMiHeader.numberOfLines=2;
         vfrMiHeader.text=@"Vfr \nMi";
         vfrMiHeader.textAlignment=alignment;
@@ -465,7 +454,7 @@
         vfrMiHeader.backgroundColor=bgColor;
         [self addSubview:vfrMiHeader];
         
-        ifrHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(65+margen*2, 2, 30, 30)];
+        ifrHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(100, 2, 40, 30)];
         ifrHhHeader.numberOfLines=2;
         ifrHhHeader.text=@"Ifr \nHh";
         ifrHhHeader.textAlignment=alignment;
@@ -474,7 +463,7 @@
         ifrHhHeader.backgroundColor=bgColor;
         [self addSubview:ifrHhHeader];
         
-        ifrMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(95+margen*3, 2, 30, 30)];
+        ifrMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(145, 2, 40, 30)];
         ifrMiHeader.numberOfLines=2;
         ifrMiHeader.text=@"Ifr \nMi";
         ifrMiHeader.textAlignment=alignment;
@@ -483,7 +472,7 @@
         ifrMiHeader.backgroundColor=bgColor;
         [self addSubview:ifrMiHeader];
         
-        nocHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(123+margen*4, 2, 30, 30)];
+        nocHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(190, 2, 40, 30)];
         nocHhHeader.numberOfLines=2;
         nocHhHeader.text=@"Noc \nHh";
         nocHhHeader.textAlignment=alignment;
@@ -492,7 +481,7 @@
         nocHhHeader.backgroundColor=bgColor;
         [self addSubview:nocHhHeader];
                 
-        nocMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(151+margen*5, 2, 30, 30)];
+        nocMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(235, 2, 40, 30)];
         nocMiHeader.numberOfLines=2;
         nocMiHeader.text=@"Noc \nMi";
         nocMiHeader.textAlignment=alignment;
@@ -501,7 +490,7 @@
         nocMiHeader.backgroundColor=bgColor;
         [self addSubview:nocMiHeader];
         
-        nvgHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(179+margen*6, 2, 30, 30)];
+        nvgHhHeader=[[UILabel alloc]initWithFrame:CGRectMake(280, 2, 40, 30)];
         nvgHhHeader.numberOfLines=2;
         nvgHhHeader.text=@"Nvg \nHh";
         nvgHhHeader.textAlignment=alignment;
@@ -510,7 +499,7 @@
         nvgHhHeader.backgroundColor=bgColor;
         [self addSubview:nvgHhHeader];
         
-        nvgMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(207+margen*7, 2, 30, 30)];
+        nvgMiHeader=[[UILabel alloc]initWithFrame:CGRectMake(325, 2, 40, 30)];
         nvgMiHeader.numberOfLines=2;
         nvgMiHeader.text=@"Nvg \nMi";
         nvgMiHeader.textAlignment=alignment;
@@ -519,16 +508,16 @@
         nvgMiHeader.backgroundColor=bgColor;
         [self addSubview:nvgMiHeader];
         
-        aterrizajesHeader=[[UILabel alloc]initWithFrame:CGRectMake(233+margen*8, 2, 50, 30)];
+        aterrizajesHeader=[[UILabel alloc]initWithFrame:CGRectMake(365, 2, 50, 30)];
         aterrizajesHeader.numberOfLines=1;
-        aterrizajesHeader.text=@"Aterrizaje";
+        aterrizajesHeader.text=@"Aterrizajes";
         aterrizajesHeader.textAlignment=alignment;
         aterrizajesHeader.font=font;
         aterrizajesHeader.textColor=textColor;
         aterrizajesHeader.backgroundColor=bgColor;
         [self addSubview:aterrizajesHeader];
         
-        heridosHeader=[[UILabel alloc]initWithFrame:CGRectMake(282+margen*9, 2, 50, 30)];
+        heridosHeader=[[UILabel alloc]initWithFrame:CGRectMake(415, 2, 40, 30)];
         heridosHeader.numberOfLines=2;
         heridosHeader.text=@"No. Heridos";
         heridosHeader.textAlignment=alignment;
@@ -537,7 +526,7 @@
         heridosHeader.backgroundColor=bgColor;
         [self addSubview:heridosHeader];
         
-        muertosHeader=[[UILabel alloc]initWithFrame:CGRectMake(329+margen*10, 2, 50, 30)];
+        muertosHeader=[[UILabel alloc]initWithFrame:CGRectMake(460, 2, 40, 30)];
         muertosHeader.numberOfLines=2;
         muertosHeader.text=@"No. muertos";
         muertosHeader.textAlignment=alignment;
@@ -546,7 +535,7 @@
         muertosHeader.backgroundColor=bgColor;
         [self addSubview:muertosHeader];
         
-        UILabel *paxHeader=[[UILabel alloc]initWithFrame:CGRectMake(408+margen*11, -8, 30, 30)];
+        UILabel *paxHeader=[[UILabel alloc]initWithFrame:CGRectMake(505, -8, 40, 30)];
         paxHeader.numberOfLines=1;
         paxHeader.text=@"Pax";
         paxHeader.textAlignment=alignment;
@@ -555,7 +544,7 @@
         paxHeader.backgroundColor=bgColor;
         [self addSubview:paxHeader];
         
-        paxSubenHeader=[[UILabel alloc]initWithFrame:CGRectMake(388+margen*11, 2, 30, 30)];
+        paxSubenHeader=[[UILabel alloc]initWithFrame:CGRectMake(505, 2, 40, 30)];
         paxSubenHeader.numberOfLines=1;
         paxSubenHeader.text=@"Suben";
         paxSubenHeader.textAlignment=alignment;
@@ -564,7 +553,7 @@
         paxSubenHeader.backgroundColor=bgColor;
         [self addSubview:paxSubenHeader];
         
-        paxBajanHeader=[[UILabel alloc]initWithFrame:CGRectMake(415+margen*12, 2, 30, 30)];
+        paxBajanHeader=[[UILabel alloc]initWithFrame:CGRectMake(550, 2, 40, 30)];
         paxBajanHeader.numberOfLines=1;
         paxBajanHeader.text=@"Bajan";
         paxBajanHeader.textAlignment=alignment;
@@ -573,7 +562,7 @@
         paxBajanHeader.backgroundColor=bgColor;
         [self addSubview:paxBajanHeader];
         
-        paxTransitoHeader=[[UILabel alloc]initWithFrame:CGRectMake(438+margen*13, 2, 40, 30)];
+        paxTransitoHeader=[[UILabel alloc]initWithFrame:CGRectMake(595, 2, 40, 30)];
         paxTransitoHeader.numberOfLines=1;
         paxTransitoHeader.text=@"Tránsito";
         paxTransitoHeader.textAlignment=alignment;
@@ -582,7 +571,7 @@
         paxTransitoHeader.backgroundColor=bgColor;
         [self addSubview:paxTransitoHeader];
         
-        UILabel *cargaHeader=[[UILabel alloc]initWithFrame:CGRectMake(508+margen*11, -8, 30, 30)];
+        UILabel *cargaHeader=[[UILabel alloc]initWithFrame:CGRectMake(640, -8, 40, 30)];
         cargaHeader.numberOfLines=1;
         cargaHeader.text=@"Carga";
         cargaHeader.textAlignment=alignment;
@@ -591,7 +580,7 @@
         cargaHeader.backgroundColor=bgColor;
         [self addSubview:cargaHeader];
         
-        cargaSubenHeader=[[UILabel alloc]initWithFrame:CGRectMake(476+margen*14, 2, 30, 30)];
+        cargaSubenHeader=[[UILabel alloc]initWithFrame:CGRectMake(640, 2, 40, 30)];
         cargaSubenHeader.numberOfLines=1;
         cargaSubenHeader.text=@"Sube";
         cargaSubenHeader.textAlignment=alignment;
@@ -600,7 +589,7 @@
         cargaSubenHeader.backgroundColor=bgColor;
         [self addSubview:cargaSubenHeader];
         
-        cargaBajanHeader=[[UILabel alloc]initWithFrame:CGRectMake(503+margen*15, 2, 30, 30)];
+        cargaBajanHeader=[[UILabel alloc]initWithFrame:CGRectMake(685, 2, 40, 30)];
         cargaBajanHeader.numberOfLines=1;
         cargaBajanHeader.text=@"Baja";
         cargaBajanHeader.textAlignment=alignment;
@@ -609,7 +598,7 @@
         cargaBajanHeader.backgroundColor=bgColor;
         [self addSubview:cargaBajanHeader];
         
-        cargaTransitoHeader=[[UILabel alloc]initWithFrame:CGRectMake(526+margen*16, 2, 40, 30)];
+        cargaTransitoHeader=[[UILabel alloc]initWithFrame:CGRectMake(730, 2, 40, 30)];
         cargaTransitoHeader.numberOfLines=1;
         cargaTransitoHeader.text=@"Tránsito";
         cargaTransitoHeader.textAlignment=alignment;
@@ -618,7 +607,7 @@
         cargaTransitoHeader.backgroundColor=bgColor;
         [self addSubview:cargaTransitoHeader];
         
-        entidadHeader=[[UILabel alloc]initWithFrame:CGRectMake(568+margen*17, 2, 180, 30)];
+        entidadHeader=[[UILabel alloc]initWithFrame:CGRectMake(775, 2, 180, 30)];
         entidadHeader.numberOfLines=1;
         entidadHeader.text=@"Entidad";
         entidadHeader.textAlignment=alignment;
@@ -634,7 +623,7 @@
         validarLabel.font=font;
         validarLabel.textAlignment=NSTextAlignmentCenter;
         validarLabel.textColor=fontColor;
-        [self addSubview:validarLabel];
+        //[self addSubview:validarLabel];
     }
     return self;
 }
@@ -652,9 +641,9 @@
         bordeInferior.backgroundColor=[UIColor blackColor];
         [self addSubview:bordeInferior];
         
-        UIFont *font=[UIFont fontWithName:@"Helvetica" size:8];
+        UIFont *font=[UIFont fontWithName:@"Helvetica" size:15];
         
-        vfrHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(10, 2, 30, 30)];
+        vfrHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(10, 2, 40, 30)];
         vfrHhTotal.borderStyle = UITextBorderStyleBezel;
         vfrHhTotal.backgroundColor=[UIColor whiteColor];
         vfrHhTotal.delegate=self;
@@ -666,7 +655,7 @@
         [self addSubview:vfrHhTotal];
         
                 
-        vfrMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(40+margen*1, 2, 30, 30)];
+        vfrMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(55, 2, 40, 30)];
         vfrMiTotal.borderStyle = UITextBorderStyleBezel;
         vfrMiTotal.backgroundColor=[UIColor whiteColor];
         vfrMiTotal.delegate=self;
@@ -679,7 +668,7 @@
         [self addSubview:vfrMiTotal];
         
                 
-        ifrHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(70+margen*2, 2, 30, 30)];
+        ifrHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(100, 2, 40, 30)];
         ifrHhTotal.borderStyle = UITextBorderStyleBezel;
         ifrHhTotal.backgroundColor=[UIColor whiteColor];
         ifrHhTotal.delegate=self;
@@ -692,7 +681,7 @@
         [self addSubview:ifrHhTotal];
         
                 
-        ifrMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(100+margen*3, 2, 30, 30)];
+        ifrMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(145, 2, 40, 30)];
         ifrMiTotal.borderStyle = UITextBorderStyleBezel;
         ifrMiTotal.backgroundColor=[UIColor whiteColor];
         ifrMiTotal.delegate=self;
@@ -705,7 +694,7 @@
         [self addSubview:ifrMiTotal];
         
                 
-        nocHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(130+margen*4, 2, 30, 30)];
+        nocHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(190, 2, 40, 30)];
         nocHhTotal.borderStyle = UITextBorderStyleBezel;
         nocHhTotal.backgroundColor=[UIColor whiteColor];
         nocHhTotal.delegate=self;
@@ -718,7 +707,7 @@
         [self addSubview:nocHhTotal];
         
                 
-        nocMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(160+margen*5, 2, 30, 30)];
+        nocMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(235, 2, 40, 30)];
         nocMiTotal.borderStyle = UITextBorderStyleBezel;
         nocMiTotal.backgroundColor=[UIColor whiteColor];
         nocMiTotal.delegate=self;
@@ -731,7 +720,7 @@
         [self addSubview:nocMiTotal];
         
                 
-        nvgHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(190+margen*6, 2, 30, 30)];
+        nvgHhTotal=[[UITextField alloc]initWithFrame:CGRectMake(280, 2, 40, 30)];
         nvgHhTotal.borderStyle = UITextBorderStyleBezel;
         nvgHhTotal.backgroundColor=[UIColor whiteColor];
         nvgHhTotal.delegate=self;
@@ -744,7 +733,7 @@
         [self addSubview:nvgHhTotal];
         
                 
-        nvgMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(220+margen*7, 2, 30, 30)];
+        nvgMiTotal=[[UITextField alloc]initWithFrame:CGRectMake(325, 2, 40, 30)];
         nvgMiTotal.borderStyle = UITextBorderStyleBezel;
         nvgMiTotal.backgroundColor=[UIColor whiteColor];
         nvgMiTotal.delegate=self;
@@ -757,7 +746,7 @@
         [self addSubview:nvgMiTotal];
         
                 
-        aterrizajesTotal=[[UITextField alloc]initWithFrame:CGRectMake(250+margen*8, 2, 50, 30)];
+        aterrizajesTotal=[[UITextField alloc]initWithFrame:CGRectMake(370, 2, 40, 30)];
         aterrizajesTotal.borderStyle = UITextBorderStyleBezel;
         aterrizajesTotal.backgroundColor=[UIColor whiteColor];
         aterrizajesTotal.delegate=self;
@@ -770,7 +759,7 @@
         [self addSubview:aterrizajesTotal];
         
                 
-        heridosTotal=[[UITextField alloc]initWithFrame:CGRectMake(300+margen*9, 2, 50, 30)];
+        heridosTotal=[[UITextField alloc]initWithFrame:CGRectMake(415, 2, 40, 30)];
         heridosTotal.borderStyle = UITextBorderStyleBezel;
         heridosTotal.backgroundColor=[UIColor whiteColor];
         heridosTotal.keyboardType=UIKeyboardTypePhonePad;
@@ -783,7 +772,7 @@
         [self addSubview:heridosTotal];
         
                 
-        muertosTotal=[[UITextField alloc]initWithFrame:CGRectMake(350+margen*10, 2, 50, 30)];
+        muertosTotal=[[UITextField alloc]initWithFrame:CGRectMake(460, 2, 40, 30)];
         muertosTotal.borderStyle = UITextBorderStyleBezel;
         muertosTotal.backgroundColor=[UIColor whiteColor];
         muertosTotal.delegate=self;
@@ -796,7 +785,7 @@
         [self addSubview:muertosTotal];
         
                 
-        paxSubenTotal=[[UITextField alloc]initWithFrame:CGRectMake(410+margen*11, 2, 30, 30)];
+        paxSubenTotal=[[UITextField alloc]initWithFrame:CGRectMake(505, 2, 40, 30)];
         paxSubenTotal.borderStyle = UITextBorderStyleBezel;
         paxSubenTotal.backgroundColor=[UIColor whiteColor];
         paxSubenTotal.delegate=self;
@@ -809,7 +798,7 @@
         [self addSubview:paxSubenTotal];
         
                 
-        paxBajanTotal=[[UITextField alloc]initWithFrame:CGRectMake(440+margen*12, 2, 30, 30)];
+        paxBajanTotal=[[UITextField alloc]initWithFrame:CGRectMake(550, 2, 40, 30)];
         paxBajanTotal.borderStyle = UITextBorderStyleBezel;
         paxBajanTotal.backgroundColor=[UIColor whiteColor];
         paxBajanTotal.delegate=self;
@@ -822,7 +811,7 @@
         [self addSubview:paxBajanTotal];
         
                 
-        paxTransitoTotal=[[UITextField alloc]initWithFrame:CGRectMake(470+margen*13, 2, 30, 30)];
+        paxTransitoTotal=[[UITextField alloc]initWithFrame:CGRectMake(595, 2, 40, 30)];
         paxTransitoTotal.borderStyle = UITextBorderStyleBezel;
         paxTransitoTotal.backgroundColor=[UIColor whiteColor];
         paxTransitoTotal.delegate=self;
@@ -835,7 +824,7 @@
         [self addSubview:paxTransitoTotal];
         
                 
-        cargaSubenTotal=[[UITextField alloc]initWithFrame:CGRectMake(505+margen*14, 2, 30, 30)];
+        cargaSubenTotal=[[UITextField alloc]initWithFrame:CGRectMake(640, 2, 40, 30)];
         cargaSubenTotal.borderStyle = UITextBorderStyleBezel;
         cargaSubenTotal.backgroundColor=[UIColor whiteColor];
         cargaSubenTotal.delegate=self;
@@ -849,7 +838,7 @@
         
                 
         
-        cargaBajanTotal=[[UITextField alloc]initWithFrame:CGRectMake(535+margen*15, 2, 30, 30)];
+        cargaBajanTotal=[[UITextField alloc]initWithFrame:CGRectMake(685, 2, 40, 30)];
         cargaBajanTotal.borderStyle = UITextBorderStyleBezel;
         cargaBajanTotal.backgroundColor=[UIColor whiteColor];
         cargaBajanTotal.delegate=self;
@@ -862,7 +851,7 @@
         [self addSubview:cargaBajanTotal];
         
                 
-        cargaTransitoTotal=[[UITextField alloc]initWithFrame:CGRectMake(565+margen*16, 2, 30, 30)];
+        cargaTransitoTotal=[[UITextField alloc]initWithFrame:CGRectMake(730, 2, 40, 30)];
         cargaTransitoTotal.borderStyle = UITextBorderStyleBezel;
         cargaTransitoTotal.backgroundColor=[UIColor whiteColor];
         cargaTransitoTotal.delegate=self;
@@ -913,6 +902,7 @@
             Entidad *result=[lista.arregloDeEntidades objectAtIndex:row];
             NSString *strRes=result.nombreOrganizacion;
             entidadTextfield.text=strRes;
+            idEntidad=result.idOrganizacion;
             return;
         }
     }

@@ -38,7 +38,7 @@
     tempMethod=method;
     methodName=method;
     NSURL *url=nil;
-    if ([method isEqualToString:@"faseVuelos"]||[method isEqualToString:@"departamentos"]||[method isEqualToString:@"armamentos"]||[method isEqualToString:@"listas"]||[method isEqualToString:@"enemigos"]||[method isEqualToString:@"objetivos"]||[method isEqualToString:@"joaOperaciones"]) {
+    if ([method isEqualToString:@"faseVuelos"]||[method isEqualToString:@"departamentos"]||[method isEqualToString:@"armamentos"]||[method isEqualToString:@"listas"]||[method isEqualToString:@"enemigos"]||[method isEqualToString:@"objetivos"]||[method isEqualToString:@"joaOperaciones"]||[method isEqualToString:@"municipios"]) {
         url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
 
@@ -88,7 +88,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
 	[webData appendData:data];
-	NSLog(@"didReceiveData");
+	//NSLog(@"didReceiveData");
     
 }
 

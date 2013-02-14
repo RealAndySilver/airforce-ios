@@ -64,8 +64,9 @@
     pickerMunicipio.delegate=self;
     pickerMunicipio.showsSelectionIndicator = YES;
     pickerMunicipio.tag=2002;
-    //impactadaMunicipioTextField.inputView=pickerMunicipio;
-    
+    if (lista.arregloDeMunicipios.count) {
+        impactadaMunicipioTextField.inputView=pickerMunicipio;
+    }
     pickerArmamentos=[[UIPickerView alloc]init];
     pickerArmamentos.dataSource=self;
     pickerArmamentos.delegate=self;
@@ -129,6 +130,16 @@
         if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
         if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
             masterDic=[masterDic objectForKey:@"General"];
+            
+            
+            
+            idMunicipio=[masterDic objectForKey:@"id_municipio"];
+            idDepartamento=[masterDic objectForKey:@"id_departamento"];
+            idArmamentoImpactado=[masterDic objectForKey:@"id_armamento_impactado"];
+            idGrupo=[masterDic objectForKey:@"id_grupo"];
+            
+            
+            
             noRegistroTextfield.text=[masterDic objectForKey:@"NoRegistro"];
             requerimientosTextfield.text=[masterDic objectForKey:@"Requerimientos"];
             observacionTextfield.text=[masterDic objectForKey:@"Observacion"];
@@ -142,19 +153,19 @@
             impactadaArmamentoTextField.text=[masterDic objectForKey:@"ImpactadaArmamento"];
             impactadaNoVueloTextField.text=[masterDic objectForKey:@"ImpactadaNoVuelo"];
             impactadaFaseTextField.text=[masterDic objectForKey:@"ImpactadaFase"];
-            impactadaLatitud1TextField.text=[masterDic objectForKey:@"ImpactadaLatitud1"];
-            impactadaLatitud2TextField.text=[masterDic objectForKey:@"ImpactadaLatitud2"];
-            impactadaLatitud3TextField.text=[masterDic objectForKey:@"ImpactadaLatitud3"];
-            impactadaLatitud4TextField.text=[masterDic objectForKey:@"ImpactadaLatitud4"];
-            impactadaLongitud1TextField.text=[masterDic objectForKey:@"ImpactadaLongitud1"];
-            impactadaLongitud2TextField.text=[masterDic objectForKey:@"ImpactadaLongitud2"];
-            impactadaLongitud3TextField.text=[masterDic objectForKey:@"ImpactadaLongitud3"];
-            impactadaLongitud4TextField.text=[masterDic objectForKey:@"ImpactadaLongitud4"];
-            if ([[masterDic objectForKey:@"VueloNacionalSwitch"] isEqualToString:@"off"]) {
+            impactadaLatitud1TextField.text=[masterDic objectForKey:@"ImpactadaLatitud"];
+            impactadaLatitud2TextField.text=[masterDic objectForKey:@"ImpactadaLatitudGrados"];
+            impactadaLatitud3TextField.text=[masterDic objectForKey:@"ImpactadaLatitudMinutos"];
+            impactadaLatitud4TextField.text=[masterDic objectForKey:@"ImpactadaLatitudSegundos"];
+            impactadaLongitud1TextField.text=[masterDic objectForKey:@"ImpactadaLongitud"];
+            impactadaLongitud2TextField.text=[masterDic objectForKey:@"ImpactadaLongitudGrados"];
+            impactadaLongitud3TextField.text=[masterDic objectForKey:@"ImpactadaLongitudMinutos"];
+            impactadaLongitud4TextField.text=[masterDic objectForKey:@"ImpactadaLongitudSegundos"];
+            if ([[masterDic objectForKey:@"VueloNacionalSwitch"] isEqualToString:@"0"]) {
                 [vueloNacionalSwitch setOn:NO];
                 [self tipoDeVuelo:vueloNacionalSwitch];
             }
-            if ([[masterDic objectForKey:@"ImpactadaSwitch"] isEqualToString:@"on"]) {
+            if ([[masterDic objectForKey:@"aeronave_impactada"] isEqualToString:@"S"]) {
                 [aeronaveImpactadaSwitch setOn:YES];
                 [self fadeInAeronaveImpactada:aeronaveImpactadaSwitch];
             }
@@ -196,7 +207,12 @@
                 cell.tipoOperacion.text=[dic objectForKey:@"TipoOperacion"];
                 cell.plan.text=[dic objectForKey:@"Plan"];
                 cell.operacion.text=[dic objectForKey:@"Operacion"];
-                if ([[dic objectForKey:@"CheckDefensa"]isEqualToString:@"on"]) {
+            
+                cell.idOperacion=[dic objectForKey:@"id_operacion"];
+                cell.idPlan=[dic objectForKey:@"id_plan"];
+                cell.idTipoOperacion=[dic objectForKey:@"id_operacion_tipo"];
+
+                if ([[dic objectForKey:@"CheckDefensa"]isEqualToString:@"S"]) {
                     [cell.checkDefensa changeState];
                 //}
             }
@@ -215,6 +231,9 @@
             //NSLog(@"EEll Array %@",array);
             //for (int i=0; i<array.count; i++) {
             NSDictionary *dic=[array objectAtIndex:i];
+            
+            cell.idEntidad=[dic objectForKey:@"id_entidad"];
+            
             cell.vfrHhTextfield.text=[dic objectForKey:@"VfrHh"];
             cell.vfrMiTextfield.text=[dic objectForKey:@"VfrMi"];
             cell.ifrHhTextfield.text=[dic objectForKey:@"IfrHh"];
@@ -253,6 +272,10 @@
                 cell.coordenadaTextField.text=[dic objectForKey:@"Coordenada"];
                 cell.departamentoTextfield.text=[dic objectForKey:@"Departamento"];
                 cell.enemigoTextField.text=[dic objectForKey:@"Enemigo"];
+                
+                cell.idArmamento=[dic objectForKey:@"id_armamento"];
+                cell.idObjetivo=[dic objectForKey:@"id_blanco"];
+                cell.idEnemigo=[dic objectForKey:@"id_enemigo"];
             }
         }
     }
@@ -270,6 +293,8 @@
             cell.nombreTextiField.text=[dic objectForKey:@"Nombre"];
             cell.codigoTextField.text=[dic objectForKey:@"Codigo"];
             cell.gradoTextField.text=[dic objectForKey:@"Grado"];
+            
+            cell.idPersona=[dic objectForKey:@"id_persona"];
         }
     }
 }
@@ -280,10 +305,12 @@
         NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];        if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
 
         if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
-                NSArray *array=[masterDic objectForKey:@"ArregloEntrenamiento"];
-                NSDictionary *dic=[array objectAtIndex:i];
-                cell.maniobraTextField.text=[dic objectForKey:@"Maniobra"];
-                cell.cantidadTextfield.text=[dic objectForKey:@"Cantidad"];
+            NSArray *array=[masterDic objectForKey:@"ArregloEntrenamiento"];
+            NSDictionary *dic=[array objectAtIndex:i];
+            cell.maniobraTextField.text=[dic objectForKey:@"Maniobra"];
+            cell.cantidadTextfield.text=[dic objectForKey:@"Cantidad"];
+            
+            cell.idManiobra=[dic objectForKey:@"id_maniobra"];
         }
     }
 }
@@ -354,7 +381,8 @@
 #pragma mark - hilight method
 -(void)seleccionarBoton:(int)numeroDeBoton{
     UIColor *colorNormal=[UIColor grayColor];
-    UIColor *colorHilight=[UIColor blueColor];
+    UIColor *colorHilight=[UIColor colorWithRed:0 green:0 blue:0.3 alpha:1];
+    [self callForeignDismisser];
     switch (numeroDeBoton) {
         case 1:
             [botonItinerario setBackgroundColor:colorHilight];
@@ -494,6 +522,7 @@
         tripCell.nombreTextiField.text=tripulacion.persona;
         tripCell.codigoTextField.text=tripulacion.codigo;
         tripCell.gradoTextField.text=tripulacion.grado;
+        tripCell.idPersona=tripulacion.idPersona;
         [paginaTripulacion addSubview:tripCell];
         [arregloTripulacion addObject:tripCell];
         h++;
@@ -525,6 +554,11 @@
         cell.tipoOperacion.text=pierna.operacionTipo;
         cell.plan.text=pierna.plan;
         cell.operacion.text=pierna.operacion;
+        
+        cell.idOperacion=pierna.idOperacion;
+        cell.idPlan=pierna.idPlan;
+        cell.idTipoOperacion=pierna.idOperacionTipo;
+        
         [self checkIfItinerarioSavedWithCell:cell atIndex:i];
         //NSLog(@"Hora encendido omex %@",cell.horaEncendido.text);
         [paginaItinerario addSubview:cell];
@@ -532,6 +566,9 @@
         
         CeldaCondiciones *cond=[[CeldaCondiciones alloc]initWithFrame:CGRectMake(0, 33+33*i, 0,0) andDelegate:lista];
         cond.entidadTextfield.text=pierna.entidad;
+        cond.noPiernaCondiciones=pierna.piernaNumero;
+        cond.idEntidad=pierna.idEntidad;
+        
         [self checkIfCondicionesSavedWithCell:cond atIndex:i];
         [paginaCondicionesDeVuelo addSubview:cond];
         [arregloParaSumarCondiciones addObject:cond];
@@ -658,6 +695,7 @@
     CGRect frame=[[UIScreen mainScreen] applicationFrame];
     float roundedValue = round(pageScrollView.contentOffset.x / frame.size.height);
     [self seleccionarBoton:roundedValue+1];
+    [self callForeignDismisser];
 }
 #pragma mark - picker delegate
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
@@ -668,7 +706,7 @@
         return lista.arregloDeDepartamentos.count;
     }
     else if (pickerView.tag==2002){
-        return arrayMunicipios.count;
+        return lista.arregloDeMunicipios.count;
     }
     else if (pickerView.tag==2003){
         return lista.arregloDeArmamentosImpactados.count;
@@ -702,6 +740,11 @@
         else if (pickerView.tag==2001){
             Departamentos *result=[lista.arregloDeDepartamentos objectAtIndex:row];
             NSString *strRes=result.departamento;
+            return strRes;
+        }
+        else if (pickerView.tag==2002){
+            Municipios *result=[lista.arregloDeMunicipios objectAtIndex:row];
+            NSString *strRes=result.municipio;
             return strRes;
         }
         else if (pickerView.tag==2003){
@@ -749,10 +792,20 @@
             impactadaDeptoTextField.text=strRes;
             return;
         }
+        else if (pickerView.tag==2002){
+            Municipios *result=[lista.arregloDeMunicipios objectAtIndex:row];
+            NSString *strRes=result.municipio;
+            impactadaMunicipioTextField.text=strRes;
+            impactadaDeptoTextField.text=result.departamento.departamento;
+            idMunicipio=result.idMunicipio;
+            idDepartamento=result.departamento.idDepartamento;
+            return;
+        }
         else if (pickerView.tag==2003){
             ArmamentosImpactados *result=[lista.arregloDeArmamentosImpactados objectAtIndex:row];
             NSString *strRes=result.nombre;
             impactadaArmamentoTextField.text=strRes;
+            idArmamentoImpactado=result.idArmamentoImpactado;
             return;
         }
         else if (pickerView.tag==2004){
@@ -775,6 +828,7 @@
             Grupo *result=[lista.arregloDeGrupo objectAtIndex:row];
             NSString *strRes=result.nombreOrganizacion;
             grupoTextfield.text=strRes;
+            idGrupo=result.idOrganizacion;
             return;
         }
         else if (pickerView.tag==2002){
@@ -785,39 +839,53 @@
     
 }
 #pragma mark - guardar
--(IBAction)guardarRegistro{
+-(IBAction)guardarRegistro:(UIButton*)sender{
+    
     NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary *generalDic=[[NSMutableDictionary alloc]init];
+    
+    if(idGrupo){[generalDic setObject:idGrupo forKey:@"id_grupo"];}
+    if(idMunicipio){[generalDic setObject:idMunicipio forKey:@"id_municipio"];}
+    if(idDepartamento){[generalDic setObject:idDepartamento forKey:@"id_departamento"];}
+    if(idArmamentoImpactado){[generalDic setObject:idArmamentoImpactado forKey:@"id_armamento_impactado"];}
+    
+    if(ordenDeVuelo.principal.idConsecutivoUnidad){[generalDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"id_consecutivo_unidad"];}
+    if(ordenDeVuelo.principal.idOrdenVuelo){[generalDic setObject:ordenDeVuelo.principal.idOrdenVuelo forKey:@"id_orden_vuelo"];}
+    
+    
+    
     if(noRegistroTextfield.text){[generalDic setObject:noRegistroTextfield.text forKey:@"NoRegistro"];}
     if(ordenDeVueloTextfield.text){[generalDic setObject:ordenDeVueloTextfield.text forKey:@"OVNo"];}
     if(fechaTextfield.text){[generalDic setObject:fechaTextfield.text forKey:@"Fecha"];}
     if(unidadAsumeTextfield.text){[generalDic setObject:unidadAsumeTextfield.text forKey:@"UnidadAsume"];}
-    if(aeronaveUnoTextfield.text){[generalDic setObject:aeronaveUnoTextfield.text forKey:@"AeronaveUno"];}
-    if(aeronaveDosTextfield.text){[generalDic setObject:aeronaveDosTextfield.text forKey:@"AeronaveDos"];}
+    if(aeronaveUnoTextfield.text){[generalDic setObject:aeronaveUnoTextfield.text forKey:@"Matricula"];}
+    if(aeronaveDosTextfield.text){[generalDic setObject:aeronaveDosTextfield.text forKey:@"Alias"];}
     if(grupoTextfield.text){[generalDic setObject:grupoTextfield.text forKey:@"Grupo"];}
     if(unidadQueCreaTextfield.text){[generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
-
+    
+    
     if(requerimientosTextfield.text){[generalDic setObject:requerimientosTextfield.text forKey:@"Requerimientos"];}
     if(observacionTextfield.text){[generalDic setObject:observacionTextfield.text forKey:@"Observacion"];}
-    if(vueloNacionalSwitch.on){[generalDic setObject:@"on" forKey:@"VueloNacionalSwitch"];}
-    else{[generalDic setObject:@"off" forKey:@"VueloNacionalSwitch"];}
+    if(vueloNacionalSwitch.on){[generalDic setObject:@"1" forKey:@"VueloNacionalSwitch"];}
+    else{[generalDic setObject:@"0" forKey:@"VueloNacionalSwitch"];}
     
-    if(aeronaveImpactadaSwitch.on){[generalDic setObject:@"on" forKey:@"ImpactadaSwitch"];}
-    else{[generalDic setObject:@"off" forKey:@"ImpactadaSwitch"];}
+    if(aeronaveImpactadaSwitch.on){[generalDic setObject:@"S" forKey:@"aeronave_impactada"];}
+    else{[generalDic setObject:@"N" forKey:@"aeronave_impactada"];}
     if(impactadaImpactosTextField.text){[generalDic setObject:impactadaImpactosTextField.text forKey:@"ImpactadaNoImpactos"];}
     if(impactadaDeptoTextField.text){[generalDic setObject:impactadaDeptoTextField.text forKey:@"ImpactadaDepto"];}
     if(impactadaMunicipioTextField.text){[generalDic setObject:impactadaMunicipioTextField.text forKey:@"ImpactadaMunicipio"];}
+
     if(impactadaArmamentoTextField.text){[generalDic setObject:impactadaArmamentoTextField.text forKey:@"ImpactadaArmamento"];}
     if(impactadaNoVueloTextField.text){[generalDic setObject:impactadaNoVueloTextField.text forKey:@"ImpactadaNoVuelo"];}
     if(impactadaFaseTextField.text){[generalDic setObject:impactadaFaseTextField.text forKey:@"ImpactadaFase"];}
-    if(impactadaLatitud1TextField.text){[generalDic setObject:impactadaLatitud1TextField.text forKey:@"ImpactadaLatitud1"];}
-    if(impactadaLatitud2TextField.text){[generalDic setObject:impactadaLatitud2TextField.text forKey:@"ImpactadaLatitud2"];}
-    if(impactadaLatitud3TextField.text){[generalDic setObject:impactadaLatitud3TextField.text forKey:@"ImpactadaLatitud3"];}
-    if(impactadaLatitud4TextField.text){[generalDic setObject:impactadaLatitud4TextField.text forKey:@"ImpactadaLatitud4"];}
-    if(impactadaLongitud1TextField.text){[generalDic setObject:impactadaLongitud1TextField.text forKey:@"ImpactadaLongitud1"];}
-    if(impactadaLongitud2TextField.text){[generalDic setObject:impactadaLongitud2TextField.text forKey:@"ImpactadaLongitud2"];}
-    if(impactadaLongitud3TextField.text){[generalDic setObject:impactadaLongitud3TextField.text forKey:@"ImpactadaLongitud3"];}
-    if(impactadaLongitud4TextField.text){[generalDic setObject:impactadaLongitud4TextField.text forKey:@"ImpactadaLongitud4"];}
+    if(impactadaLatitud1TextField.text){[generalDic setObject:impactadaLatitud1TextField.text forKey:@"ImpactadaLatitud"];}
+    if(impactadaLatitud2TextField.text){[generalDic setObject:impactadaLatitud2TextField.text forKey:@"ImpactadaLatitudGrados"];}
+    if(impactadaLatitud3TextField.text){[generalDic setObject:impactadaLatitud3TextField.text forKey:@"ImpactadaLatitudMinutos"];}
+    if(impactadaLatitud4TextField.text){[generalDic setObject:impactadaLatitud4TextField.text forKey:@"ImpactadaLatitudSegundos"];}
+    if(impactadaLongitud1TextField.text){[generalDic setObject:impactadaLongitud1TextField.text forKey:@"ImpactadaLongitud"];}
+    if(impactadaLongitud2TextField.text){[generalDic setObject:impactadaLongitud2TextField.text forKey:@"ImpactadaLongitudGrados"];}
+    if(impactadaLongitud3TextField.text){[generalDic setObject:impactadaLongitud3TextField.text forKey:@"ImpactadaLongitudMinutos"];}
+    if(impactadaLongitud4TextField.text){[generalDic setObject:impactadaLongitud4TextField.text forKey:@"ImpactadaLongitudSegundos"];}
     [masterDic setObject:generalDic forKey:@"General"];
     
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
@@ -827,21 +895,45 @@
         if(cell.noVuelo.text){[itinerarioDic setObject:cell.noVuelo.text forKey:@"NoVuelo"];}
         if(cell.de.text){[itinerarioDic setObject:cell.de.text forKey:@"De"];}
         if(cell.a.text){[itinerarioDic setObject:cell.a.text forKey:@"A"];}
-        if(cell.segundosEncendido){[itinerarioDic setObject:[NSString stringWithFormat:@"%f",cell.segundosEncendido] forKey:@"HoraEncendido"];}
-        if(cell.segundosApagado){[itinerarioDic setObject:[NSString stringWithFormat:@"%f",cell.segundosApagado] forKey:@"HoraApagado"];}
-        if(cell.segundosDecolaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%f",cell.segundosDecolaje] forKey:@"HoraDecolaje"];}
-        if(cell.segundosAterrizaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%f",cell.segundosAterrizaje] forKey:@"HoraAterrizaje"];}
+        if(cell.segundosEncendido){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosEncendido] forKey:@"HoraEncendido"];}
+        if(cell.segundosApagado){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosApagado] forKey:@"HoraApagado"];}
+        if(cell.segundosDecolaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosDecolaje] forKey:@"HoraDecolaje"];}
+        if(cell.segundosAterrizaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosAterrizaje] forKey:@"HoraAterrizaje"];}
         
         if(cell.horaEncendidoOverlay.text){[itinerarioDic setObject:cell.horaEncendidoOverlay.text forKey:@"HoraEncendidoOverlay"];}
         if(cell.horaApagadoOverlay.text){[itinerarioDic setObject:cell.horaApagadoOverlay.text forKey:@"HoraApagadoOverlay"];}
         if(cell.horaDecolajeOverlay.text){[itinerarioDic setObject:cell.horaDecolajeOverlay.text forKey:@"HoraDecolajeOverlay"];}
         if(cell.horaAterrizajeOverlay.text){[itinerarioDic setObject:cell.horaAterrizajeOverlay.text forKey:@"HoraAterrizajeOverlay"];}
         
+        if(cell.segundosEncendido && cell.segundosApagado){
+            double ap=cell.segundosApagado;
+            double enc=cell.segundosEncendido;
+            double res=ap-enc;
+            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_aeronave"];
+        }
+        else{
+            [itinerarioDic setObject:@"0.00" forKey:@"tiempo_aeronave"];
+        }
+        if(cell.horaDecolaje.text && cell.horaAterrizaje.text){
+            double ap=cell.segundosAterrizaje;
+            double enc=cell.segundosDecolaje;
+            double res=ap-enc;
+            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_tripulacion"];
+        }
+        else{
+            [itinerarioDic setObject:@"0.00" forKey:@"tiempo_aeronave"];
+        }
+        
         if(cell.tipoOperacion.text){[itinerarioDic setObject:cell.tipoOperacion.text forKey:@"TipoOperacion"];}
         if(cell.plan.text){[itinerarioDic setObject:cell.plan.text forKey:@"Plan"];}
         if(cell.operacion.text){[itinerarioDic setObject:cell.operacion.text forKey:@"Operacion"];}
-        if(cell.checkDefensa.isOn){[itinerarioDic setObject:@"on" forKey:@"CheckDefensa"];}
-        else{[itinerarioDic setObject:@"off" forKey:@"CheckDefensa"];}
+        
+        if(cell.idOperacion){[itinerarioDic setObject:cell.idOperacion forKey:@"id_operacion"];}
+        if(cell.idPlan){[itinerarioDic setObject:cell.idPlan forKey:@"id_plan"];}
+        if(cell.idTipoOperacion){[itinerarioDic setObject:cell.idTipoOperacion forKey:@"id_operacion_tipo"];}
+        
+        if(cell.checkDefensa.isOn){[itinerarioDic setObject:@"S" forKey:@"CheckDefensa"];}
+        else{[itinerarioDic setObject:@"N" forKey:@"CheckDefensa"];}
         [itinerarioArray addObject:itinerarioDic];
     }
     [masterDic setObject:itinerarioArray forKey:@"ArregloItinerario"];
@@ -849,6 +941,9 @@
     NSMutableArray *condicionesArray=[[NSMutableArray alloc]init];
     for (CeldaCondiciones *cell in arregloParaSumarCondiciones) {
         NSMutableDictionary *condicionesDic=[[NSMutableDictionary alloc]init];
+        
+        if (cell.idEntidad) {[condicionesDic setObject:cell.idEntidad forKey:@"id_entidad"];}
+        
         if (cell.vfrHhTextfield.text) {[condicionesDic setObject:cell.vfrHhTextfield.text forKey:@"VfrHh"];}
         if (cell.vfrMiTextfield.text) {[condicionesDic setObject:cell.vfrMiTextfield.text forKey:@"VfrMi"];}
         if (cell.ifrHhTextfield.text) {[condicionesDic setObject:cell.ifrHhTextfield.text forKey:@"IfrHh"];}
@@ -865,7 +960,27 @@
         if (cell.cargaSubenTextfield.text) {[condicionesDic setObject:cell.cargaSubenTextfield.text forKey:@"CargaSuben"];}
         if (cell.cargaBajanTextfield.text) {[condicionesDic setObject:cell.cargaBajanTextfield.text forKey:@"CargaBajan"];}
         if (cell.entidadTextfield.text) {[condicionesDic setObject:cell.entidadTextfield.text forKey:@"Entidad"];}
+        if (cell.noPiernaCondiciones) {[condicionesDic setObject:cell.noPiernaCondiciones forKey:@"NoVueloCondiciones"];}
         
+        if(cell.cargaSubenTextfield.text && cell.cargaBajanTextfield.text){
+            int ap=[cell.cargaSubenTextfield.text intValue];
+            int enc=[cell.cargaBajanTextfield.text intValue];
+            int res=ap-enc;
+            [condicionesDic setObject:[NSString stringWithFormat:@"%i",res] forKey:@"carga_transito"];
+        }
+        else{
+            [condicionesDic setObject:@"0" forKey:@"carga_transito"];
+        }
+        if(cell.paxSubenTextfield.text && cell.paxBajanTextfield.text){
+            int ap=[cell.paxSubenTextfield.text intValue];
+            int enc=[cell.paxBajanTextfield.text intValue];
+            int res=ap-enc;
+            [condicionesDic setObject:[NSString stringWithFormat:@"%i",res] forKey:@"pax_transito"];
+        }
+        else{
+            [condicionesDic setObject:@"0" forKey:@"pax_transito"];
+        }
+
         [condicionesArray addObject:condicionesDic];
     }
     [masterDic setObject:condicionesArray forKey:@"ArregloCondiciones"];
@@ -883,6 +998,11 @@
             if (cell.departamentoTextfield.text) {[diccionarioCeldasArmamento setObject:cell.departamentoTextfield.text forKey:@"Departamento"];}
             if (cell.enemigoTextField.text) {[diccionarioCeldasArmamento setObject:cell.enemigoTextField.text forKey:@"Enemigo"];}
             if (pag.stringNoVuelo) {[diccionarioCeldasArmamento setObject:pag.stringNoVuelo forKey:@"NoVuelo"];}
+            
+            if(cell.idObjetivo){[diccionarioCeldasArmamento setObject:cell.idObjetivo forKey:@"id_blanco"];}
+            if(cell.idEnemigo){[diccionarioCeldasArmamento setObject:cell.idEnemigo forKey:@"id_enemigo"];}
+            if(cell.idArmamento){[diccionarioCeldasArmamento setObject:cell.idArmamento forKey:@"id_armamento"];}
+            
             [arregloCeldasArmamento addObject:diccionarioCeldasArmamento];
         }
         [armamentoArray addObject:arregloCeldasArmamento];
@@ -896,6 +1016,9 @@
         if (cell.nombreTextiField.text) {[tripulacionDic setObject:cell.nombreTextiField.text forKey:@"Nombre"];}
         if (cell.codigoTextField.text) {[tripulacionDic setObject:cell.codigoTextField.text forKey:@"Codigo"];}
         if (cell.gradoTextField.text) {[tripulacionDic setObject:cell.gradoTextField.text forKey:@"Grado"];}
+        
+        if (cell.idPersona){[tripulacionDic setObject:cell.idPersona forKey:@"id_persona"];}
+        
         [tripulacionArray addObject:tripulacionDic];
     }
     [masterDic setObject:tripulacionArray forKey:@"ArregloTripulacion"];
@@ -906,6 +1029,8 @@
         if (cell.maniobraTextField.text) {[entrenamientoDic setObject:cell.maniobraTextField.text forKey:@"Maniobra"];}
         if (cell.cantidadTextfield.text) {[entrenamientoDic setObject:cell.cantidadTextfield.text forKey:@"Cantidad"];}
 
+        if (cell.idManiobra) {[entrenamientoDic setObject:cell.idManiobra forKey:@"id_maniobra"];}
+        
         [entrenamientoArray addObject:entrenamientoDic];
     }
     [masterDic setObject:entrenamientoArray forKey:@"ArregloEntrenamiento"];
@@ -923,13 +1048,21 @@
     NSString *str=[json stringWithObject:ultra];
     NSLog(@"JSON %@",str);
     
+    
+    
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"NoOrden"];
 
     
-    FileSaver *file=[[FileSaver alloc]init];
-    [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (sender.tag==10) {
+        FileSaver *file=[[FileSaver alloc]init];
+        [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if (sender.tag==11){
+        [self sincronizarDataConServer:str];
+        NSLog(@"Diccionario %@",masterDic);
+    }
 }
 #pragma mark - fecha
 -(void)displayDate:(id)sender {
@@ -940,5 +1073,25 @@
     
     NSString *strDate = [formatter stringFromDate:selected];
     fechaTextfield.text = strDate;
+}
+#pragma mark - server communication
+-(void)sincronizarDataConServer:(NSString*)data{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=1;
+    [server callServerWithMethod:@"XX" andParameter:data];
+}
+#pragma mark - server response
+-(void)receivedDataFromServer:(ServerCommunicator*)sender{
+    if (sender.tag==1) {
+    }
+}
+-(void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
+    if (sender.tag==1) {
+        NSString *titulo=@"Error al enviar registro de vuelo";
+        NSString *mensaje=@"Su registro no pudo ser enviado. Compruebe la conexión a internet y vuelva a intentarlo.";
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 @end

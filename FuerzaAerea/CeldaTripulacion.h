@@ -21,6 +21,10 @@
 @property(nonatomic,retain)UITextField *maniobraTextField;
 @property(nonatomic,retain)UITextField *cantidadTextfield;
 
+@property(nonatomic,retain)NSString *idPersona;
+@property(nonatomic,retain)NSString *idManiobra;
+
+
 -(id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 -(id)initHeaderWithFrame:(CGRect)frame;
 -(id)initEntrenamientoWithFrame:(CGRect)frame andDelegate:(id)myDelegate;

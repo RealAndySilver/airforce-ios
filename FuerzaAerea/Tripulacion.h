@@ -14,5 +14,7 @@
 @property(nonatomic,retain)NSString *grado;
 @property(nonatomic,retain)NSString *idRegistro;
 @property(nonatomic,retain)NSString *persona;
+@property(nonatomic,retain)NSString *idPersona;
+
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 @end

@@ -84,9 +84,9 @@
     containerMetar.layer.cornerRadius=10;
     containerMetar.layer.borderWidth=2;
     
-    notamSwitch.onTintColor=[UIColor grayColor];
-    metarSwitch.onTintColor=[UIColor grayColor];
-    conservarSwitch.onTintColor=[UIColor grayColor];
+    //notamSwitch.onTintColor=[UIColor grayColor];
+    //metarSwitch.onTintColor=[UIColor grayColor];
+    //conservarSwitch.onTintColor=[UIColor grayColor];
     //ovTF.text=@"1472";
     //matriTF.text=@"4005";
     ovTF.text=@"633";
@@ -354,6 +354,12 @@
     server.tag=22;
     [server callServerWithMethod:@"joaOperaciones" andParameter:@""];
 }
+-(void)obtenerMunicipios{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=24;
+    [server callServerWithMethod:@"municipios" andParameter:@""];
+}
 -(void)obtenerListas{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
@@ -469,15 +475,20 @@
         [lista agregarAlArregloRespectivo:sender.resDic];
         FileSaver *save=[[FileSaver alloc]init];
         [save setDictionary:sender.resDic withName:@"operaciones"];
+        [self obtenerMunicipios];
+        return;
+    }
+    else if (sender.tag==24){
+        [lista agregarAlArregloRespectivo:sender.resDic];
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"municipios"];
         [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
         return;
     }
     else if (sender.tag==23){
         FileSaver *save=[[FileSaver alloc]init];
         [save setDictionary:sender.resDic withName:@"lista"];
-        //lista=[[Lista alloc]initWithDictionary:sender.resDic];
-        lista=[[Lista alloc]init];
-
+        lista=[[Lista alloc]initWithDictionary:sender.resDic];
         [self obtenerEnemigos];
         return;
     }
@@ -601,6 +612,13 @@
         FileSaver *save=[[FileSaver alloc]init];
         NSDictionary *dic=[save getDictionary:@"operaciones"];
         [lista agregarAlArregloRespectivo:dic];
+        [self obtenerMunicipios];
+        return;
+    }
+    else if (sender.tag==24){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"municipios"];
+        [lista agregarAlArregloRespectivo:dic];
     }
     else if (sender.tag==23){
         FileSaver *save=[[FileSaver alloc]init];
@@ -651,7 +669,7 @@
 - (UIView *) tableView:(UITableView *)tableView
 viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width, 30)];
-    [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.7]];
+    [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.6 alpha:0.8]];
     UILabel *titleHeader=[[UILabel alloc]initWithFrame:CGRectMake(10,0, 300, 20)];
     if (tableView.tag==10000) {
         titleHeader.text=@"Archivos";
@@ -775,6 +793,40 @@ viewForHeaderInSection:(NSInteger)section{
         }
     }
     return 50;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (metarSwitch.on && notamSwitch.on) {
+            if (indexPath.section==0) {
+                //iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                [rightTableMetarArrayParcial removeObjectAtIndex:indexPath.row];
+                
+            }
+            else if (indexPath.section==1){
+                //iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                [rightTableNotamArrayParcial removeObjectAtIndex:indexPath.row];
+            }
+        }
+        else if (metarSwitch.on && !notamSwitch.on){
+            if (indexPath.section==0) {
+                //iaVC.delegatedString=[rightTableMetarArray objectAtIndex:indexPath.row];
+                [rightTableMetarArrayParcial removeObjectAtIndex:indexPath.row];
+            }
+        }
+        else if(!metarSwitch.on && notamSwitch.on){
+            if (indexPath.section==0) {
+                //iaVC.delegatedString=[rightTableNotamArray objectAtIndex:indexPath.row];
+                [rightTableNotamArrayParcial removeObjectAtIndex:indexPath.row];
+            }
+        }
+        [tableView reloadData];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

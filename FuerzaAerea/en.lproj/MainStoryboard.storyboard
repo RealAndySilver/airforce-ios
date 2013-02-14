@@ -328,6 +328,7 @@
                                             <switch opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="9zc-6O-ZUM">
                                                 <rect key="frame" x="131" y="36" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="onTintColor" red="0.0" green="0.0049499043899999999" blue="0.47142059949999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="switcChangedNotamMetar:" destination="FmN-AU-Gz9" eventType="valueChanged" id="a4j-af-7tj"/>
                                                 </connections>
@@ -335,6 +336,7 @@
                                             <switch opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Vwz-l3-Pke">
                                                 <rect key="frame" x="131" y="71" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="onTintColor" red="0.0" green="0.0049499043899999999" blue="0.47142059949999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="switcChangedNotamMetar:" destination="FmN-AU-Gz9" eventType="valueChanged" id="2RT-VU-r7f"/>
                                                 </connections>
@@ -356,6 +358,7 @@
                                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="YqV-tj-No2">
                                                 <rect key="frame" x="599" y="51" width="79" height="27"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="onTintColor" red="0.0" green="0.0049499043899999999" blue="0.47142059949999998" alpha="1" colorSpace="calibratedRGB"/>
                                             </switch>
                                         </subviews>
                                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
@@ -1944,7 +1947,7 @@
                                         <rect key="frame" x="0.0" y="412" width="1024" height="40"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uhe-IY-ORq">
+                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uhe-IY-ORq">
                                                 <rect key="frame" x="430" y="0.0" width="164" height="42"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -1956,6 +1959,9 @@
                                                 <state key="highlighted">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="0Qe-I9-ATN"/>
+                                                </connections>
                                             </button>
                                             <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P4S-yr-ccn">
                                                 <rect key="frame" x="783" y="0.0" width="164" height="42"/>
@@ -2241,6 +2247,7 @@
                                     <switch opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="KMC-ms-ydG">
                                         <rect key="frame" x="856" y="92" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="onTintColor" red="0.0" green="0.0049499043898638155" blue="0.47142059948979587" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="tipoDeVuelo:" destination="MgK-cT-A3I" eventType="valueChanged" id="7ru-eq-nRs"/>
                                         </connections>
@@ -2248,6 +2255,7 @@
                                     <switch opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="6sF-2Z-hoc">
                                         <rect key="frame" x="856" y="126" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="onTintColor" red="0.0" green="0.0049499043899999999" blue="0.47142059949999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="tipoDeVuelo:" destination="MgK-cT-A3I" eventType="valueChanged" id="XJZ-OG-qtA"/>
                                         </connections>
@@ -2285,9 +2293,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="F7J-TM-HAk">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="F7J-TM-HAk">
                                         <rect key="frame" x="88" y="54" width="138" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -2421,6 +2430,7 @@
                             <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="2dX-6R-qXp">
                                 <rect key="frame" x="88" y="226" width="79" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="onTintColor" red="0.0" green="0.0049499043899999999" blue="0.47142059949999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="fadeInAeronaveImpactada:" destination="MgK-cT-A3I" eventType="valueChanged" id="kqh-qZ-d6U"/>
                                 </connections>
@@ -2485,7 +2495,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HN4-nS-V81">
+                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HN4-nS-V81">
                                 <rect key="frame" x="10" y="4" width="164" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -2498,7 +2508,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="guardarRegistro" destination="MgK-cT-A3I" eventType="touchUpInside" id="8j5-3G-5KP"/>
+                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="thW-zH-O3n"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" id="Nw4-er-tux">
@@ -2640,7 +2650,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0026302184069999998" blue="0.52138472579999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" id="9Gn-ZS-G3H">
                                 <rect key="frame" x="0.0" y="46" width="1024" height="96"/>
@@ -2701,12 +2711,12 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.91317860399999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.002630218407435477" blue="0.52138472576530615" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view alpha="0.69999998807907104" contentMode="scaleToFill" id="Bld-Fi-MKr">
                                 <rect key="frame" x="0.0" y="141" width="1024" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0054157235820442859" blue="0.51578443877551017" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fecha:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TFI-2T-reO">
                                 <rect key="frame" x="20" y="85" width="67" height="21"/>
@@ -2739,9 +2749,9 @@
                                 <rect key="frame" x="104" y="141" width="900" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Combustible:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UmH-BF-O3j">
@@ -2826,7 +2836,7 @@
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="hora.input" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m0H-if-js5">
-                                <rect key="frame" x="411" y="85" width="160" height="21"/>
+                                <rect key="frame" x="421" y="85" width="160" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.91748403280000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -2923,7 +2933,7 @@
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0026302184069999998" blue="0.52138472579999995" alpha="1" colorSpace="calibratedRGB"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -2960,7 +2970,6 @@
         <class className="ArmamentoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ArmamentoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
@@ -3067,6 +3076,7 @@
                 <relationship kind="action" name="back:"/>
                 <relationship kind="action" name="condicionesDeVuelo:"/>
                 <relationship kind="action" name="fadeInAeronaveImpactada:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="guardarRegistro:" candidateClass="UIButton"/>
                 <relationship kind="action" name="itinerario:"/>
                 <relationship kind="action" name="tipoDeVuelo:" candidateClass="UISwitch"/>
                 <relationship kind="action" name="tripulacion:"/>
@@ -3108,6 +3118,7 @@
         <class className="TripulacionViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TripulacionViewController.h"/>
             <relationships>
+                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>

@@ -10,6 +10,7 @@
 
 @implementation CeldaArmamento
 @synthesize armamentoTextField,cantidadFallidoTextField,cantidadTextiField,coordenadaTextField,departamentoTextfield,enemigoTextField,objetivoTextField;
+@synthesize idArmamento,idEnemigo,idObjetivo;
 
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
@@ -40,6 +41,7 @@
         cantidadTextiField=[[UITextField alloc]initWithFrame:CGRectMake(130+margen*2, 2, 50, 30)];
         cantidadTextiField.borderStyle = UITextBorderStyleRoundedRect;
         cantidadTextiField.delegate=self;
+        cantidadTextiField.keyboardType=UIKeyboardTypePhonePad;
         cantidadTextiField.textColor=[UIColor blackColor];
         cantidadTextiField.font=font;
         cantidadTextiField.tag=100;
@@ -48,6 +50,7 @@
         cantidadFallidoTextField=[[UITextField alloc]initWithFrame:CGRectMake(177+margen*3, 2, 50, 30)];
         cantidadFallidoTextField.borderStyle = UITextBorderStyleRoundedRect;
         cantidadFallidoTextField.delegate=self;
+        cantidadFallidoTextField.keyboardType=UIKeyboardTypePhonePad;
         cantidadFallidoTextField.textColor=[UIColor blackColor];
         cantidadFallidoTextField.font=font;
         cantidadFallidoTextField.tag=100;
@@ -89,6 +92,14 @@
         enemigoTextField.tag=100;
         [self addSubview:enemigoTextField];
         
+        UIButton *validateButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        [validateButton setBackgroundImage:[UIImage imageNamed:@"atras.png"] forState:UIControlStateNormal];
+        [validateButton setTitle:@"Borrar" forState:UIControlStateNormal];
+        validateButton.frame=CGRectMake(830+margen*11, 2, 50, 30);
+        validateButton.titleLabel.font=[UIFont fontWithName:@"Helvetica" size:10];
+        [validateButton addTarget:self action:@selector(borrar) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:validateButton];
+        
         
         pickerArmamento=[[UIPickerView alloc]init];
         pickerArmamento.dataSource=self;
@@ -125,8 +136,7 @@
         pickerObjetivo.tag=2004;
         if (lista.arregloDeObjetivo.count) {
          objetivoTextField.inputView=pickerObjetivo;
-         }
-        
+         }        
     }
     return self;
 }
@@ -268,6 +278,7 @@
             Armamentos *result=[lista.arregloDeArmamentos objectAtIndex:row];
             NSString *strRes=result.armamento;
             armamentoTextField.text=strRes;
+            idArmamento=result.idArmamento;
             return;
         }
         else if (pickerView.tag==2002){
@@ -280,6 +291,7 @@
             Enemigo *result=[lista.arregloDeEnemigo objectAtIndex:row];
             NSString *strRes=result.nombreOrganizacion;
             enemigoTextField.text=strRes;
+            idEnemigo=result.idOrganizacion;
             return;
         }
         else if (pickerView.tag==2004){
@@ -288,11 +300,24 @@
             objetivoTextField.text=strRes;
             departamentoTextfield.text=result.departamento;
             coordenadaTextField.text=result.coordenadas;
+            idObjetivo=result.idBlanco;
             return;
         }
     }
     return;
     
 }
-
+#pragma mark - borrar
+-(void)borrar{
+    armamentoTextField.text=@"";
+    cantidadFallidoTextField.text=@"";
+    cantidadTextiField.text=@"";
+    objetivoTextField.text=@"";
+    coordenadaTextField.text=@"";
+    departamentoTextfield.text=@"";
+    enemigoTextField.text=@"";
+    idArmamento=@"";
+    idEnemigo=@"";
+    idObjetivo=@"";
+}
 @end

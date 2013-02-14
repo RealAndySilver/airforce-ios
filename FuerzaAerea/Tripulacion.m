@@ -9,13 +9,14 @@
 #import "Tripulacion.h"
 
 @implementation Tripulacion
-@synthesize cargo,codigo,grado,idRegistro,persona;
+@synthesize cargo,codigo,grado,idRegistro,persona,idPersona;
 -(id)initWithDictionary:(NSDictionary*)dictionary{
     if (self=[super init]) {
         cargo = [dictionary objectForKey:@"cargo"];
         codigo = [dictionary objectForKey:@"codigo"];
         grado = [dictionary objectForKey:@"grado"];
         idRegistro = [dictionary objectForKey:@"idRegistro"];
+        idPersona = [dictionary objectForKey:@"id_persona"];
         persona = [dictionary objectForKey:@"persona"];
         //NSLog(@"Persona %@",persona);
     }

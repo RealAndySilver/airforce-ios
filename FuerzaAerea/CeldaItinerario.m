@@ -12,7 +12,7 @@
 @synthesize a,de,horaApagado,horaAterrizaje,horaDecolaje,horaEncendido,noVuelo,operacion,plan,tiempoAeronave,tiempoTripulacion,tipoOperacion;
 @synthesize segundosApagado,segundosAterrizaje,segundosDecolaje,segundosEncendido,checkDefensa;
 @synthesize horaApagadoOverlay,horaAterrizajeOverlay,horaDecolajeOverlay,horaEncendidoOverlay,lista;
-
+@synthesize idOperacion,idPlan,idTipoOperacion;
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
     self = [super initWithFrame:frame];
@@ -85,19 +85,19 @@
         [self addSubview:a];
         
         
-        
+        UIFont *fontHoras=[UIFont fontWithName:@"Helvetica" size:13];
         horaEncendido=[[UITextField alloc]initWithFrame:CGRectMake(140+margen*3, 2, 50, 30)];
         horaEncendido.borderStyle = UITextBorderStyleLine;
         horaEncendido.delegate=self;
         horaEncendido.inputView=datePicker;
-        horaEncendido.font=[UIFont fontWithName:@"Helvetica" size:7];
+        horaEncendido.font=fontHoras;
         horaEncendido.tag=1;
         [self addSubview:horaEncendido];
         
         horaEncendidoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(140+margen*3, 2, 50, 30)];
         horaEncendidoOverlay.numberOfLines=3;
         [horaEncendidoOverlay setUserInteractionEnabled:YES];
-        horaEncendidoOverlay.font=[UIFont fontWithName:@"Helvetica" size:7];
+        horaEncendidoOverlay.font=fontHoras;
         [self addSubview:horaEncendidoOverlay];
         UITapGestureRecognizer *tap1=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(first)];
         [horaEncendidoOverlay addGestureRecognizer:tap1];
@@ -106,13 +106,13 @@
         horaApagado.borderStyle = UITextBorderStyleRoundedRect;
         horaApagado.delegate=self;
         horaApagado.inputView=datePicker2;
-        horaApagado.font=[UIFont fontWithName:@"Helvetica" size:9];
+        horaApagado.font=fontHoras;
         horaApagado.tag=2;
         [self addSubview:horaApagado];
         
         horaApagadoOverlay=[[UILabel alloc]initWithFrame:CGRectMake(197+margen*3, 2, 50, 30)];
         horaApagadoOverlay.numberOfLines=3;
-        horaApagadoOverlay.font=[UIFont fontWithName:@"Helvetica" size:7];
+        horaApagadoOverlay.font=fontHoras;
         [horaApagadoOverlay setUserInteractionEnabled:YES];
         [self addSubview:horaApagadoOverlay];
         UITapGestureRecognizer *tap2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
@@ -122,13 +122,13 @@
         horaDecolaje.borderStyle = UITextBorderStyleRoundedRect;
         horaDecolaje.delegate=self;
         horaDecolaje.inputView=datePicker3;
-        horaDecolaje.font=[UIFont fontWithName:@"Helvetica" size:9];
+        horaDecolaje.font=fontHoras;
         horaDecolaje.tag=3;
         [self addSubview:horaDecolaje];
         
         horaDecolajeOverlay=[[UILabel alloc]initWithFrame:CGRectMake(254+margen*3, 2, 50, 30)];
         horaDecolajeOverlay.numberOfLines=3;
-        horaDecolajeOverlay.font=[UIFont fontWithName:@"Helvetica" size:7];
+        horaDecolajeOverlay.font=fontHoras;
         [self addSubview:horaDecolajeOverlay];
         [horaDecolajeOverlay setUserInteractionEnabled:YES];
         UITapGestureRecognizer *tap3=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(third)];
@@ -138,13 +138,13 @@
         horaAterrizaje.borderStyle = UITextBorderStyleRoundedRect;
         horaAterrizaje.delegate=self;
         horaAterrizaje.inputView=datePicker4;
-        horaAterrizaje.font=[UIFont fontWithName:@"Helvetica" size:9];
+        horaAterrizaje.font=fontHoras;
         horaAterrizaje.tag=4;
         [self addSubview:horaAterrizaje];
         
         horaAterrizajeOverlay=[[UILabel alloc]initWithFrame:CGRectMake(311+margen*3, 2, 50, 30)];
         horaAterrizajeOverlay.numberOfLines=3;
-        horaAterrizajeOverlay.font=[UIFont fontWithName:@"Helvetica" size:7];
+        horaAterrizajeOverlay.font=fontHoras;
         [self addSubview:horaAterrizajeOverlay];
         [horaAterrizajeOverlay setUserInteractionEnabled:YES];
         UITapGestureRecognizer *tap4=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fourth)];
@@ -154,27 +154,27 @@
         //tiempoAeronave.borderStyle = UITextBorderStyleRoundedRect;
         //tiempoAeronave.delegate=myDelegate;
         tiempoAeronave.textAlignment=NSTextAlignmentCenter;
-        tiempoAeronave.font=[UIFont fontWithName:@"Helvetica" size:9];
+        tiempoAeronave.font=fontHoras;
         [tiempoAeronave setUserInteractionEnabled:NO];
         [self addSubview:tiempoAeronave];
         
         tiempoAeronaveOverlay=[[UILabel alloc]initWithFrame:CGRectMake(340+margen*7, 2, 60, 30)];
         tiempoAeronaveOverlay.textAlignment=NSTextAlignmentCenter;
         tiempoAeronaveOverlay.backgroundColor=[UIColor grayColor];
-        tiempoAeronaveOverlay.font=[UIFont fontWithName:@"Helvetica" size:9];
+        tiempoAeronaveOverlay.font=fontHoras;
         [tiempoAeronaveOverlay setUserInteractionEnabled:NO];
         [self addSubview:tiempoAeronaveOverlay];
         
         tiempoTripulacion=[[UILabel alloc]initWithFrame:CGRectMake(400+margen*8, 2, 60, 30)];
         tiempoTripulacion.textAlignment=NSTextAlignmentCenter;
-        tiempoTripulacion.font=[UIFont fontWithName:@"Helvetica" size:9];
+        tiempoTripulacion.font=fontHoras;
         [tiempoTripulacion setUserInteractionEnabled:NO];
         [self addSubview:tiempoTripulacion];
         
         tiempoTripulacionOverlay=[[UILabel alloc]initWithFrame:CGRectMake(400+margen*8, 2, 60, 30)];
         tiempoTripulacionOverlay.textAlignment=NSTextAlignmentCenter;
         tiempoTripulacionOverlay.backgroundColor=[UIColor grayColor];
-        tiempoTripulacionOverlay.font=[UIFont fontWithName:@"Helvetica" size:9];
+        tiempoTripulacionOverlay.font=fontHoras;
         [tiempoTripulacionOverlay setUserInteractionEnabled:NO];
         [self addSubview:tiempoTripulacionOverlay];
         
@@ -394,7 +394,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
+        [formatter setDateFormat:@"dd-MM HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected];
         
@@ -416,7 +416,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
+        [formatter setDateFormat:@"dd-MM HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
         
@@ -436,7 +436,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
+        [formatter setDateFormat:@"dd-MM HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected];
         
@@ -457,7 +457,7 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM-yyyy HH:mm aa"];
+        [formatter setDateFormat:@"dd-MM HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
         
@@ -637,18 +637,21 @@
             TipoOperacion *result=[lista.arregloDeTipoOperacion objectAtIndex:row];
             NSString *strRes=result.tipoOperacion;
             tipoOperacion.text=strRes;
+            idTipoOperacion=result.codigoNumerico;
             return;
         }
         else if (pickerView.tag==2002){
             Plan *result=[lista.arregloDePlan objectAtIndex:row];
             NSString *strRes=result.descripcion;
             plan.text=strRes;
+            idPlan=result.idReferencia;
             return;
         }
         else if (pickerView.tag==2003){
             Operacion *result=[lista.arregloDeOperacion objectAtIndex:row];
             NSString *strRes=result.descripcion;
             operacion.text=strRes;
+            idOperacion=result.codigo;
             return;
         }
     }

@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Departamentos.h"
 @interface Municipios : NSObject
-
+@property(nonatomic,retain)NSString *idMunicipio;
+@property(nonatomic,retain)NSString *municipio;
+@property(nonatomic,retain)Departamentos *departamento;
+-(id)initWithDictionary:(NSDictionary*)dictionary;
 @end

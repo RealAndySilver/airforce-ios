@@ -19,6 +19,7 @@
 #import "SBJSON.h"
 #import "VistaListadoArmamento.h"
 #import "Lista.h"
+#import "ServerCommunicator.h"
 
 @interface RegistroDeVueloViewController : UIViewController<UIScrollViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
     IBOutlet UIScrollView *pageScrollView;
@@ -87,7 +88,10 @@
     NSMutableArray *arregloTripulacion;
     NSMutableArray *arregloEntrenamiento;
 
-
+    NSString *idGrupo;
+    NSString *idArmamentoImpactado;
+    NSString *idMunicipio;
+    NSString *idDepartamento;
     
     CeldaCondiciones *condicionesTotal;
     

@@ -88,7 +88,7 @@
     view.backgroundColor=[UIColor clearColor];
     [pageScrollView addSubview:view];
     UIView *header=[[UIView alloc]initWithFrame:CGRectMake(0, 0, view.frame.size.width, 30)];
-    header.backgroundColor=[UIColor colorWithRed:0.4 green:0.8 blue:0.9 alpha:1];
+    header.backgroundColor=[UIColor colorWithRed:0 green:0 blue:0.0 alpha:1];
     [view addSubview:header];
 
     UITextView *tf=[[UITextView alloc]initWithFrame:CGRectMake(0, 30, pageScrollView.frame.size.width-0, pageScrollView.frame.size.height-30)];
@@ -133,7 +133,7 @@
 #pragma mark - hilight method
 -(void)seleccionarBoton:(int)numeroDeBoton{
     UIColor *colorNormal=[UIColor grayColor];
-    UIColor *colorHilight=[UIColor blueColor];
+    UIColor *colorHilight=[UIColor colorWithRed:0 green:0 blue:0.3 alpha:1];
     switch (numeroDeBoton) {
         case 1:
             [principalButton setBackgroundColor:colorHilight];

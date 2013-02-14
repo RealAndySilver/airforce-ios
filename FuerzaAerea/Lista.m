@@ -10,7 +10,7 @@
 
 @implementation Lista
 
-@synthesize arregloDeArmamentos,arregloDeArmamentosImpactados,arregloDeDepartamentos,arregloDeManiobra,arregloDePlan,arregloDeTipoOperacion,arregloDeUnidades,arregloDeFaseDeVuelo,arregloDeGrupo,arregloDeEnemigo,arregloDeObjetivo,arregloDeOperacion,arregloDeEntidades;
+@synthesize arregloDeArmamentos,arregloDeArmamentosImpactados,arregloDeDepartamentos,arregloDeManiobra,arregloDePlan,arregloDeTipoOperacion,arregloDeUnidades,arregloDeFaseDeVuelo,arregloDeGrupo,arregloDeEnemigo,arregloDeObjetivo,arregloDeOperacion,arregloDeEntidades,arregloDeMunicipios;
 -(id)initWithDictionary:(NSDictionary*)dictionary{
     if (self =[super init]) {
         
@@ -148,13 +148,20 @@
             arregloDeObjetivo=[[NSMutableArray alloc]init];
             for (int i=0; i<tempArregloDeObjetivos.count; i++) {
                 Objetivo *obj=[[Objetivo alloc]initWithDictionary:[tempArregloDeObjetivos objectAtIndex:i]];
-                if ([obj.objetivo isKindOfClass:[NSNull class]]) {
-                    obj.objetivo=@"N/A";
+                if ([obj.objetivo isKindOfClass:[NSNull class]] ||[obj.coordenadas isKindOfClass:[NSNull class]]||[obj.departamento isKindOfClass:[NSNull class]]||[obj.idBlanco isKindOfClass:[NSNull class]] ) {
+                    //obj.objetivo=@"N/A";
                 }
-                [arregloDeObjetivo addObject:obj];
+                else{
+                    if (![obj isKindOfClass:[NSNull class]]) {
+                        if (arregloDeObjetivo.count<5000) {
+                            [arregloDeObjetivo addObject:obj];
+                        }
+                    }
+                }
             }
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"objetivo" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             [arregloDeObjetivo sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+            NSLog(@"Objetivos count %i",arregloDeObjetivo.count);
         }
     }
     else if ([dictionary objectForKey:@"joaOperaciones"]) {
@@ -167,6 +174,18 @@
             }
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"descripcion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             [arregloDeOperacion sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+    }
+    else if ([dictionary objectForKey:@"municipios"]) {
+        NSArray *tempArregloDeMunicipios=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"municipios"]];
+        if (tempArregloDeMunicipios.count) {
+            arregloDeMunicipios=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeMunicipios.count; i++) {
+                Municipios *op=[[Municipios alloc]initWithDictionary:[tempArregloDeMunicipios objectAtIndex:i]];
+                [arregloDeMunicipios addObject:op];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"municipio" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeMunicipios sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
         }
     }
 }

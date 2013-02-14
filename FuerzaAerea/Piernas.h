@@ -23,6 +23,11 @@
 @property(nonatomic,retain)NSString *de;
 @property(nonatomic,retain)NSString *a;
 
+@property(nonatomic,retain)NSString *idOperacion;
+@property(nonatomic,retain)NSString *idOperacionTipo;
+@property(nonatomic,retain)NSString *idPlan;
+@property(nonatomic,retain)NSString *idEntidad;
+
 
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 @end
