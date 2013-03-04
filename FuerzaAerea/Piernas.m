@@ -10,7 +10,7 @@
 
 @implementation Piernas
 @synthesize descripcionMision,desdeAerodromo,entidad,entidadApoyada,hastaAerodromo,idOrden,operacion,operacionTipo,piernaNumero,plan,de,a;
-@synthesize idEntidad,idPlan,idOperacion,idOperacionTipo;
+@synthesize idEntidad,idPlan,idOperacion,idOperacionTipo,idA,idDe;
 -(id)initWithDictionary:(NSDictionary *)dictionary{
     if (self=[super init]) {
         descripcionMision = [dictionary objectForKey:@"descripcionMision"];
@@ -26,6 +26,9 @@
         de = [dictionary objectForKey:@"de"];
         a = [dictionary objectForKey:@"a"];
         
+        idDe=[dictionary objectForKey:@"idDe"];
+        idA=[dictionary objectForKey:@"idA"];
+
         idEntidad= [dictionary objectForKey:@"id_entidad"];
         idPlan= [dictionary objectForKey:@"id_plan"];
         idOperacionTipo= [dictionary objectForKey:@"id_operacionTipo"];

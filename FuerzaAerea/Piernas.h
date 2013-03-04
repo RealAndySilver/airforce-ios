@@ -20,6 +20,9 @@
 @property(nonatomic,retain)NSString *piernaNumero;
 @property(nonatomic,retain)NSString *plan;
 
+@property(nonatomic,retain)NSString *idDe;
+@property(nonatomic,retain)NSString *idA;
+
 @property(nonatomic,retain)NSString *de;
 @property(nonatomic,retain)NSString *a;
 

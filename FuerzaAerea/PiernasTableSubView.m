@@ -137,7 +137,12 @@ viewForFooterInSection:(NSInteger)section{
     iAVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     //iaVC.modalPresentationStyle = UIModalPresentationCurrentContext;
     iAVC.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    
     [ovVC presentViewController:iAVC animated:YES completion:nil];
+    //iAVC.view.superview.frame = CGRectMake(0, 0, 900, 700);
+    //iAVC.view.superview.center = ovVC.view.center;
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

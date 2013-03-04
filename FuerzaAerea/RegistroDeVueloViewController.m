@@ -137,7 +137,7 @@
             idDepartamento=[masterDic objectForKey:@"id_departamento"];
             idArmamentoImpactado=[masterDic objectForKey:@"id_armamento_impactado"];
             idGrupo=[masterDic objectForKey:@"id_grupo"];
-            
+            idUnidadAsume=[masterDic objectForKey:@"id_unidad_asume"];
             
             
             noRegistroTextfield.text=[masterDic objectForKey:@"NoRegistro"];
@@ -146,6 +146,7 @@
             grupoTextfield.text=[masterDic objectForKey:@"Grupo"];
             fechaTextfield.text=[masterDic objectForKey:@"Fecha"];
             unidadQueCreaTextfield.text=[masterDic objectForKey:@"UnidadQueCrea"];
+            idUnidad=[masterDic objectForKey:@"id_unidad"];
 
             impactadaImpactosTextField.text=[masterDic objectForKey:@"ImpactadaNoImpactos"];
             impactadaDeptoTextField.text=[masterDic objectForKey:@"ImpactadaDepto"];
@@ -190,11 +191,16 @@
                 cell.de.text=[dic objectForKey:@"De"];
                 cell.a.text=[dic objectForKey:@"A"];
                 
-                cell.segundosEncendido=[[dic objectForKey:@"HoraEncendido"] intValue];
-                cell.segundosApagado=[[dic objectForKey:@"HoraApagado"]intValue];
-                cell.segundosDecolaje=[[dic objectForKey:@"HoraDecolaje"]intValue];
-                cell.segundosAterrizaje=[[dic objectForKey:@"HoraAterrizaje"]intValue];
-                
+                cell.segundosEncendido=[[dic objectForKey:@"HoraEncendidoSegundos"] intValue];
+                cell.segundosApagado=[[dic objectForKey:@"HoraApagadoSegundos"]intValue];
+                cell.segundosDecolaje=[[dic objectForKey:@"HoraDecolajeSegundos"]intValue];
+                cell.segundosAterrizaje=[[dic objectForKey:@"HoraAterrizajeSegundos"]intValue];
+            
+                cell.horaEncendidoFormateado=[dic objectForKey:@"HoraEncendido"];
+                cell.horaApagadoFormateado=[dic objectForKey:@"HoraApagado"];
+                cell.horaDecolajeFormateado=[dic objectForKey:@"HoraDecolaje"];
+                cell.horaAterrizajeFormateado=[dic objectForKey:@"HoraAterrizaje"];
+            
                 cell.horaEncendido.text=[NSString stringWithFormat:@"%f",cell.segundosEncendido];
                 cell.horaApagado.text=[NSString stringWithFormat:@"%f",cell.segundosApagado];
                 cell.horaDecolaje.text=[NSString stringWithFormat:@"%f",cell.segundosDecolaje];
@@ -211,6 +217,9 @@
                 cell.idOperacion=[dic objectForKey:@"id_operacion"];
                 cell.idPlan=[dic objectForKey:@"id_plan"];
                 cell.idTipoOperacion=[dic objectForKey:@"id_operacion_tipo"];
+            
+                cell.idDe=[dic objectForKey:@"id_de"];
+                cell.idA=[dic objectForKey:@"id_a"];
 
                 if ([[dic objectForKey:@"CheckDefensa"]isEqualToString:@"S"]) {
                     [cell.checkDefensa changeState];
@@ -269,7 +278,7 @@
                 cell.cantidadTextiField.text=[dic objectForKey:@"Cantidad"];
                 cell.cantidadFallidoTextField.text=[dic objectForKey:@"CantidadFallido"];
                 cell.objetivoTextField.text=[dic objectForKey:@"Objetivo"];
-                cell.coordenadaTextField.text=[dic objectForKey:@"Coordenada"];
+                cell.coordenadaTextField.text=[IAmCoder encodeCoordinate:[dic objectForKey:@"Coordenada"]];
                 cell.departamentoTextfield.text=[dic objectForKey:@"Departamento"];
                 cell.enemigoTextField.text=[dic objectForKey:@"Enemigo"];
                 
@@ -559,6 +568,9 @@
         cell.idPlan=pierna.idPlan;
         cell.idTipoOperacion=pierna.idOperacionTipo;
         
+        cell.idDe=pierna.idDe;
+        cell.idA=pierna.idA;
+        
         [self checkIfItinerarioSavedWithCell:cell atIndex:i];
         //NSLog(@"Hora encendido omex %@",cell.horaEncendido.text);
         [paginaItinerario addSubview:cell];
@@ -744,7 +756,7 @@
         }
         else if (pickerView.tag==2002){
             Municipios *result=[lista.arregloDeMunicipios objectAtIndex:row];
-            NSString *strRes=result.municipio;
+            NSString *strRes=[NSString stringWithFormat:@"%@ - %@",result.municipio,result.departamento.departamento];
             return strRes;
         }
         else if (pickerView.tag==2003){
@@ -822,6 +834,7 @@
             Unidades *result=[lista.arregloDeUnidades objectAtIndex:row];
             NSString *strRes=result.sigla;
             unidadQueCreaTextfield.text=strRes;
+            idUnidad=result.idOrganizacion;
             return;
         }
         else if (pickerView.tag==2007){
@@ -848,11 +861,11 @@
     if(idMunicipio){[generalDic setObject:idMunicipio forKey:@"id_municipio"];}
     if(idDepartamento){[generalDic setObject:idDepartamento forKey:@"id_departamento"];}
     if(idArmamentoImpactado){[generalDic setObject:idArmamentoImpactado forKey:@"id_armamento_impactado"];}
+    if(idUnidad){[generalDic setObject:idUnidad forKey:@"id_unidad"];}
     
     if(ordenDeVuelo.principal.idConsecutivoUnidad){[generalDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"id_consecutivo_unidad"];}
     if(ordenDeVuelo.principal.idOrdenVuelo){[generalDic setObject:ordenDeVuelo.principal.idOrdenVuelo forKey:@"id_orden_vuelo"];}
-    
-    
+    if(ordenDeVuelo.principal.idUnidadAsume){[generalDic setObject:ordenDeVuelo.principal.idUnidadAsume forKey:@"id_unidad_asume"];}
     
     if(noRegistroTextfield.text){[generalDic setObject:noRegistroTextfield.text forKey:@"NoRegistro"];}
     if(ordenDeVueloTextfield.text){[generalDic setObject:ordenDeVueloTextfield.text forKey:@"OVNo"];}
@@ -895,10 +908,16 @@
         if(cell.noVuelo.text){[itinerarioDic setObject:cell.noVuelo.text forKey:@"NoVuelo"];}
         if(cell.de.text){[itinerarioDic setObject:cell.de.text forKey:@"De"];}
         if(cell.a.text){[itinerarioDic setObject:cell.a.text forKey:@"A"];}
-        if(cell.segundosEncendido){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosEncendido] forKey:@"HoraEncendido"];}
-        if(cell.segundosApagado){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosApagado] forKey:@"HoraApagado"];}
-        if(cell.segundosDecolaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosDecolaje] forKey:@"HoraDecolaje"];}
-        if(cell.segundosAterrizaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosAterrizaje] forKey:@"HoraAterrizaje"];}
+        
+        if(cell.segundosEncendido){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosEncendido] forKey:@"HoraEncendidoSegundos"];}
+        if(cell.segundosApagado){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosApagado] forKey:@"HoraApagadoSegundos"];}
+        if(cell.segundosDecolaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosDecolaje] forKey:@"HoraDecolajeSegundos"];}
+        if(cell.segundosAterrizaje){[itinerarioDic setObject:[NSString stringWithFormat:@"%.0f",cell.segundosAterrizaje] forKey:@"HoraAterrizajeSegundos"];}
+        
+        if(cell.horaEncendidoFormateado){[itinerarioDic setObject:[NSString stringWithFormat:@"%@",cell.horaEncendidoFormateado] forKey:@"HoraEncendido"];}
+        if(cell.horaApagadoFormateado){[itinerarioDic setObject:[NSString stringWithFormat:@"%@",cell.horaApagadoFormateado] forKey:@"HoraApagado"];}
+        if(cell.horaDecolajeFormateado){[itinerarioDic setObject:[NSString stringWithFormat:@"%@",cell.horaDecolajeFormateado] forKey:@"HoraDecolaje"];}
+        if(cell.horaAterrizajeFormateado){[itinerarioDic setObject:[NSString stringWithFormat:@"%@",cell.horaAterrizajeFormateado] forKey:@"HoraAterrizaje"];}
         
         if(cell.horaEncendidoOverlay.text){[itinerarioDic setObject:cell.horaEncendidoOverlay.text forKey:@"HoraEncendidoOverlay"];}
         if(cell.horaApagadoOverlay.text){[itinerarioDic setObject:cell.horaApagadoOverlay.text forKey:@"HoraApagadoOverlay"];}
@@ -909,16 +928,16 @@
             double ap=cell.segundosApagado;
             double enc=cell.segundosEncendido;
             double res=ap-enc;
-            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_aeronave"];
+            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_tripulacion"];
         }
         else{
-            [itinerarioDic setObject:@"0.00" forKey:@"tiempo_aeronave"];
+            [itinerarioDic setObject:@"0.00" forKey:@"tiempo_tripulacion"];
         }
         if(cell.horaDecolaje.text && cell.horaAterrizaje.text){
             double ap=cell.segundosAterrizaje;
             double enc=cell.segundosDecolaje;
             double res=ap-enc;
-            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_tripulacion"];
+            [itinerarioDic setObject:[NSString stringWithFormat:@"%.2f",res] forKey:@"tiempo_aeronave"];
         }
         else{
             [itinerarioDic setObject:@"0.00" forKey:@"tiempo_aeronave"];
@@ -931,6 +950,10 @@
         if(cell.idOperacion){[itinerarioDic setObject:cell.idOperacion forKey:@"id_operacion"];}
         if(cell.idPlan){[itinerarioDic setObject:cell.idPlan forKey:@"id_plan"];}
         if(cell.idTipoOperacion){[itinerarioDic setObject:cell.idTipoOperacion forKey:@"id_operacion_tipo"];}
+        
+        if(cell.idDe){[itinerarioDic setObject:cell.idDe forKey:@"id_de"];}
+        if(cell.idA){[itinerarioDic setObject:cell.idA forKey:@"id_a"];}
+
         
         if(cell.checkDefensa.isOn){[itinerarioDic setObject:@"S" forKey:@"CheckDefensa"];}
         else{[itinerarioDic setObject:@"N" forKey:@"CheckDefensa"];}
@@ -994,7 +1017,10 @@
             if (cell.cantidadTextiField.text) {[diccionarioCeldasArmamento setObject:cell.cantidadTextiField.text forKey:@"Cantidad"];}
             if (cell.cantidadFallidoTextField.text) {[diccionarioCeldasArmamento setObject:cell.cantidadFallidoTextField.text forKey:@"CantidadFallido"];}
             if (cell.objetivoTextField.text) {[diccionarioCeldasArmamento setObject:cell.objetivoTextField.text forKey:@"Objetivo"];}
-            if (cell.coordenadaTextField.text) {[diccionarioCeldasArmamento setObject:cell.coordenadaTextField.text forKey:@"Coordenada"];}
+            if (cell.coordenadaTextField.text){
+                NSString *coordParsed=[[[cell.coordenadaTextField.text stringByReplacingOccurrencesOfString:@"º" withString:@"g"] stringByReplacingOccurrencesOfString:@"'" withString:@"m"] stringByReplacingOccurrencesOfString:@"\"" withString:@"s"];
+                [diccionarioCeldasArmamento setObject:coordParsed forKey:@"Coordenada"];
+            }
             if (cell.departamentoTextfield.text) {[diccionarioCeldasArmamento setObject:cell.departamentoTextfield.text forKey:@"Departamento"];}
             if (cell.enemigoTextField.text) {[diccionarioCeldasArmamento setObject:cell.enemigoTextField.text forKey:@"Enemigo"];}
             if (pag.stringNoVuelo) {[diccionarioCeldasArmamento setObject:pag.stringNoVuelo forKey:@"NoVuelo"];}
@@ -1079,19 +1105,38 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
-    [server callServerWithMethod:@"XX" andParameter:data];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",data];
+    [server callServerWithMethod:@"RegistrarVuelo" andParameter:params];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=@"Enviando Registro";
 }
 #pragma mark - server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
+    NSLog(@"Respuesta %@",sender.resDic);
     if (sender.tag==1) {
+        if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"false"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" false"]) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        else if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"true"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" true"]) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Registro exitoso No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            FileSaver *file=[[FileSaver alloc]init];
+            NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+            [masterDic setObject:@"YES" forKey:@"Done"];
+            [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
     if (sender.tag==1) {
         NSString *titulo=@"Error al enviar registro de vuelo";
-        NSString *mensaje=@"Su registro no pudo ser enviado. Compruebe la conexión a internet y vuelva a intentarlo.";
+        NSString *mensaje=@"Su registro no pudo ser enviado. Compruebe la conexión a la red y vuelva a intentarlo.";
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 @end

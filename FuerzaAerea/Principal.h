@@ -21,6 +21,8 @@
 @property(nonatomic,retain)NSString *matricula;
 @property(nonatomic,retain)NSString *unidad;
 @property(nonatomic,retain)NSString *unidadAsume;
+@property(nonatomic,retain)NSString *idUnidad;
+@property(nonatomic,retain)NSString *idUnidadAsume;
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 //aprobado, cumplido, imprimircola, registrada
 

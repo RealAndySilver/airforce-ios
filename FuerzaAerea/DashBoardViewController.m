@@ -247,7 +247,6 @@
     rvmVC.arrayDepartamentos=arrayDepartamentos;
     rvmVC.arrayArmamentos=arrayArmamentos;
     rvmVC.lista=lista;
-    
     [self.navigationController pushViewController:rvmVC animated:YES];
 }
 #pragma mark external request
@@ -332,7 +331,7 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=10;
-    [server callServerWithMethod:@"documento" andParameter:@""];
+    [server callServerWithMethod:@"documentos" andParameter:@""];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando archivos", nil);
 }
@@ -454,6 +453,7 @@
     else if (sender.tag==10){
         Archivo *archivo=[[Archivo alloc]init];
         [archivo validarDiccionarioDeArchivos:sender.resDic];
+        NSLog(@"Archivos :%@",sender.resDic);
         return;
     }
     else if (sender.tag==20){
@@ -576,14 +576,14 @@
             }
             else{
                 ordenDeVuelo=nil;
-                NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a internet y vuelva a intentarlo.";
+                NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a la red y vuelva a intentarlo.";
                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                 [alert show];
             }
         }
         else if (!ordenDeVuelo.principal.matricula){
             ordenDeVuelo=nil;
-            NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a internet y vuelva a intentarlo.";
+            NSString *message=@"No es posible validar la orden de vuelo.\nRevise su conexión a la red y vuelva a intentarlo.";
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error." message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }

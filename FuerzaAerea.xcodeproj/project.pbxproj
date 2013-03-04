@@ -55,15 +55,14 @@
 		7556FE7E167AD8EE00891508 /* docicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7556FE7D167AD8EE00891508 /* docicon.png */; };
 		7556FE80167AD92300891508 /* pdficon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7556FE7F167AD92300891508 /* pdficon.png */; };
 		755F9F2316534D6E0002266B /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F2216534D6E0002266B /* ImageDownloader.m */; };
-		755F9F27165431E40002266B /* pptexample.ppt in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F25165431E40002266B /* pptexample.ppt */; };
-		755F9F28165431E40002266B /* docexample.doc in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F26165431E40002266B /* docexample.doc */; };
 		755F9F2E16543A4E0002266B /* pdf.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F2D16543A4E0002266B /* pdf.pdf */; };
 		755F9F3E16548A2B0002266B /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F3D16548A2B0002266B /* DeviceInfo.m */; };
 		755F9F4016548A5B0002266B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F9F3F16548A5B0002266B /* CoreTelephony.framework */; };
 		755F9F4716548AD40002266B /* MBProgressHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F4616548AD40002266B /* MBProgressHud.m */; };
-		755F9F5116554F460002266B /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 755F9F5016554F450002266B /* icon@2x.png */; };
 		755F9F5E16555F3D0002266B /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 755F9F5D16555F3C0002266B /* DetailViewController.m */; };
 		755F9F64165594560002266B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 755F9F63165594550002266B /* QuartzCore.framework */; };
+		757352C516E04C5A0001F5EA /* logo-maletin.png in Resources */ = {isa = PBXBuildFile; fileRef = 757352C416E04C5A0001F5EA /* logo-maletin.png */; };
+		757352C716E04C710001F5EA /* logo-maletin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 757352C616E04C710001F5EA /* logo-maletin2.png */; };
 		7573642216ADB85F00445CB0 /* RegistroDeVueloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573642116ADB85F00445CB0 /* RegistroDeVueloViewController.m */; };
 		7573642F16AF708300445CB0 /* CeldaItinerario.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573642E16AF708300445CB0 /* CeldaItinerario.m */; };
 		7573644816B5ACA800445CB0 /* CeldaCondiciones.m in Sources */ = {isa = PBXBuildFile; fileRef = 7573644716B5ACA800445CB0 /* CeldaCondiciones.m */; };
@@ -71,7 +70,6 @@
 		758711A61680142800FEC282 /* fuerza.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 758711A51680142800FEC282 /* fuerza.jpeg */; };
 		758711A91680C1B900FEC282 /* atras.png in Resources */ = {isa = PBXBuildFile; fileRef = 758711A81680C1B900FEC282 /* atras.png */; };
 		758711AB1680CCEA00FEC282 /* jpg.png in Resources */ = {isa = PBXBuildFile; fileRef = 758711AA1680CCEA00FEC282 /* jpg.png */; };
-		758711AD16814C7F00FEC282 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 758711AC16814C7E00FEC282 /* icon.png */; };
 		75926CF2166419D100B3CDD5 /* Notam.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF1166419D100B3CDD5 /* Notam.m */; };
 		75926CF6166419E000B3CDD5 /* Metar.m in Sources */ = {isa = PBXBuildFile; fileRef = 75926CF5166419E000B3CDD5 /* Metar.m */; };
 		75A1D2D516B9C6E60013B48A /* CeldaArmamento.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A1D2D416B9C6E60013B48A /* CeldaArmamento.m */; };
@@ -194,8 +192,6 @@
 		7556FE7F167AD92300891508 /* pdficon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pdficon.png; sourceTree = "<group>"; };
 		755F9F2116534D6E0002266B /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
 		755F9F2216534D6E0002266B /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
-		755F9F25165431E40002266B /* pptexample.ppt */ = {isa = PBXFileReference; lastKnownFileType = file; path = pptexample.ppt; sourceTree = "<group>"; };
-		755F9F26165431E40002266B /* docexample.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = docexample.doc; sourceTree = "<group>"; };
 		755F9F2D16543A4E0002266B /* pdf.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = pdf.pdf; sourceTree = "<group>"; };
 		755F9F3C16548A2B0002266B /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
 		755F9F3D16548A2B0002266B /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
@@ -206,6 +202,8 @@
 		755F9F5C16555F3C0002266B /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		755F9F5D16555F3C0002266B /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		755F9F63165594550002266B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		757352C416E04C5A0001F5EA /* logo-maletin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-maletin.png"; sourceTree = "<group>"; };
+		757352C616E04C710001F5EA /* logo-maletin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-maletin2.png"; sourceTree = "<group>"; };
 		7573642016ADB85F00445CB0 /* RegistroDeVueloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistroDeVueloViewController.h; sourceTree = "<group>"; };
 		7573642116ADB85F00445CB0 /* RegistroDeVueloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistroDeVueloViewController.m; sourceTree = "<group>"; };
 		7573642D16AF708300445CB0 /* CeldaItinerario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CeldaItinerario.h; sourceTree = "<group>"; };
@@ -333,8 +331,6 @@
 				758711AA1680CCEA00FEC282 /* jpg.png */,
 				7556FE7D167AD8EE00891508 /* docicon.png */,
 				7556FE7B167AD8C900891508 /* ppticon.png */,
-				755F9F25165431E40002266B /* pptexample.ppt */,
-				755F9F26165431E40002266B /* docexample.doc */,
 				755F9F2D16543A4E0002266B /* pdf.pdf */,
 			);
 			name = Resources;
@@ -343,6 +339,8 @@
 		754E95011630D15A002FEB37 = {
 			isa = PBXGroup;
 			children = (
+				757352C616E04C710001F5EA /* logo-maletin2.png */,
+				757352C416E04C5A0001F5EA /* logo-maletin.png */,
 				758711AC16814C7E00FEC282 /* icon.png */,
 				755F9F5016554F450002266B /* icon@2x.png */,
 				754E950F1630D15A002FEB37 /* Frameworks */,
@@ -711,17 +709,15 @@
 				754E95251630D15A002FEB37 /* Default@2x.png in Resources */,
 				754E95271630D15A002FEB37 /* Default-568h@2x.png in Resources */,
 				754E952A1630D15A002FEB37 /* MainStoryboard.storyboard in Resources */,
-				755F9F27165431E40002266B /* pptexample.ppt in Resources */,
-				755F9F28165431E40002266B /* docexample.doc in Resources */,
 				755F9F2E16543A4E0002266B /* pdf.pdf in Resources */,
-				755F9F5116554F460002266B /* icon@2x.png in Resources */,
 				7556FE7C167AD8C900891508 /* ppticon.png in Resources */,
 				7556FE7E167AD8EE00891508 /* docicon.png in Resources */,
 				7556FE80167AD92300891508 /* pdficon.png in Resources */,
 				758711A61680142800FEC282 /* fuerza.jpeg in Resources */,
 				758711A91680C1B900FEC282 /* atras.png in Resources */,
 				758711AB1680CCEA00FEC282 /* jpg.png in Resources */,
-				758711AD16814C7F00FEC282 /* icon.png in Resources */,
+				757352C516E04C5A0001F5EA /* logo-maletin.png in Resources */,
+				757352C716E04C710001F5EA /* logo-maletin2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -38,6 +38,11 @@
 @property(nonatomic,retain)UILabel *horaDecolajeOverlay;
 @property(nonatomic,retain)UILabel *horaAterrizajeOverlay;
 
+@property(nonatomic,retain)NSString *horaEncendidoFormateado;
+@property(nonatomic,retain)NSString *horaApagadoFormateado;
+@property(nonatomic,retain)NSString *horaDecolajeFormateado;
+@property(nonatomic,retain)NSString *horaAterrizajeFormateado;
+
 @property(nonatomic,retain)UILabel *tiempoAeronave;
 @property(nonatomic,retain)UILabel *tiempoTripulacion;
 @property(nonatomic,retain)UITextField *tipoOperacion;
@@ -48,6 +53,9 @@
 @property(nonatomic,retain)NSString *idTipoOperacion;
 @property(nonatomic,retain)NSString *idPlan;
 @property(nonatomic,retain)NSString *idOperacion;
+
+@property(nonatomic,retain)NSString *idDe;
+@property(nonatomic,retain)NSString *idA;
 
 
 @property(nonatomic)double segundosEncendido;

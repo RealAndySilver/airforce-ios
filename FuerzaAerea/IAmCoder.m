@@ -37,6 +37,10 @@ static const short _base64DecodingTable[256] = {
     NSString *stringDecoded=[[[[[[[url stringByReplacingOccurrencesOfString:@"HH" withString:@"http"]stringByReplacingOccurrencesOfString:@"SS" withString:@"/"]stringByReplacingOccurrencesOfString:@"II" withString:@"?"]stringByReplacingOccurrencesOfString:@"EE" withString:@"="]stringByReplacingOccurrencesOfString:@"DD" withString:@":"]stringByReplacingOccurrencesOfString:@"sS" withString:@" "]stringByReplacingOccurrencesOfString:@"pP" withString:@"."];
     return stringDecoded;
 }
++(NSString *)encodeCoordinate:(NSString *)coordinate{
+    NSString *stringEncoded=[[[coordinate stringByReplacingOccurrencesOfString:@"g" withString:@"º"] stringByReplacingOccurrencesOfString:@"m" withString:@"'"] stringByReplacingOccurrencesOfString:@"s" withString:@"\""];
+    return stringEncoded;
+}
 +(NSString *)hash256:(NSString *)parameters{
     NSString *key = @"d4fe34231";
     NSString *parameterParsed=[parameters stringByReplacingOccurrencesOfString:@"/" withString:@"|"];

@@ -259,12 +259,14 @@
         paxSubenTextfield.textAlignment=NSTextAlignmentCenter;
         paxSubenTextfield.textColor=[UIColor blackColor];
         paxSubenTextfield.tag=50;
+        paxSubenTextfield.text=@"0";
         [self addSubview:paxSubenTextfield];
         
         paxSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(505, 2, 40, 30)];
         paxSubenOverlay.numberOfLines=1;
         paxSubenOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [paxSubenOverlay setUserInteractionEnabled:YES];
+        paxSubenOverlay.text=@"0";
         //[self addSubview:paxSubenOverlay];
         UITapGestureRecognizer *tap13=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [paxSubenOverlay addGestureRecognizer:tap13];
@@ -278,12 +280,14 @@
         paxBajanTextfield.textAlignment=NSTextAlignmentCenter;
         paxBajanTextfield.textColor=[UIColor blackColor];
         paxBajanTextfield.tag=51;
+        paxBajanTextfield.text=@"0";
         [self addSubview:paxBajanTextfield];
         
         paxBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(550, 2, 40, 30)];
         paxBajanOverlay.numberOfLines=1;
         paxBajanOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [paxBajanOverlay setUserInteractionEnabled:YES];
+        paxBajanOverlay.text=@"0";
         //[self addSubview:paxBajanOverlay];
         UITapGestureRecognizer *tap14=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [paxBajanOverlay addGestureRecognizer:tap14];
@@ -316,12 +320,15 @@
         cargaSubenTextfield.textAlignment=NSTextAlignmentCenter;
         cargaSubenTextfield.textColor=[UIColor blackColor];
         cargaSubenTextfield.tag=60;
+        cargaSubenTextfield.text=@"0";
+
         [self addSubview:cargaSubenTextfield];
         
         cargaSubenOverlay=[[UILabel alloc]initWithFrame:CGRectMake(640, 2, 40, 30)];
         cargaSubenOverlay.numberOfLines=1;
         cargaSubenOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [cargaSubenOverlay setUserInteractionEnabled:YES];
+        cargaSubenOverlay.text=@"0";
         //[self addSubview:cargaSubenOverlay];
         UITapGestureRecognizer *tap15=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [cargaSubenOverlay addGestureRecognizer:tap15];
@@ -336,12 +343,15 @@
         cargaBajanTextfield.textAlignment=NSTextAlignmentCenter;
         cargaBajanTextfield.textColor=[UIColor blackColor];
         cargaBajanTextfield.tag=61;
+        cargaBajanTextfield.text=@"0";
+
         [self addSubview:cargaBajanTextfield];
         
         cargaBajanOverlay=[[UILabel alloc]initWithFrame:CGRectMake(685, 2, 40, 30)];
         cargaBajanOverlay.numberOfLines=1;
         cargaBajanOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [cargaBajanOverlay setUserInteractionEnabled:YES];
+        cargaBajanOverlay.text=@"0";
         //[self addSubview:cargaBajanOverlay];
         UITapGestureRecognizer *tap16=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [cargaBajanOverlay addGestureRecognizer:tap16];
@@ -632,7 +642,7 @@
     if (self) {
         self.frame=CGRectMake(frame.origin.x, frame.origin.y, 964, 34);
         self.backgroundColor=[UIColor clearColor];
-        int margen=5;
+        //int margen=5;
         UIView *bordeSuperior=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
         bordeSuperior.backgroundColor=[UIColor blackColor];
         [self addSubview:bordeSuperior];

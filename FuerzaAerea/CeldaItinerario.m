@@ -10,9 +10,10 @@
 
 @implementation CeldaItinerario
 @synthesize a,de,horaApagado,horaAterrizaje,horaDecolaje,horaEncendido,noVuelo,operacion,plan,tiempoAeronave,tiempoTripulacion,tipoOperacion;
-@synthesize segundosApagado,segundosAterrizaje,segundosDecolaje,segundosEncendido,checkDefensa;
+@synthesize segundosApagado,segundosAterrizaje,segundosDecolaje,segundosEncendido,checkDefensa,idDe,idA;
 @synthesize horaApagadoOverlay,horaAterrizajeOverlay,horaDecolajeOverlay,horaEncendidoOverlay,lista;
 @synthesize idOperacion,idPlan,idTipoOperacion;
+@synthesize horaApagadoFormateado,horaAterrizajeFormateado,horaDecolajeFormateado,horaEncendidoFormateado;
 - (id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate
 {
     self = [super initWithFrame:frame];
@@ -316,7 +317,7 @@
         [self addSubview:horaAterrizajeLabel];
         
         UILabel *tiempoAeronaveLabel=[[UILabel alloc]initWithFrame:CGRectMake(340+margen*7, 2, 60, altura)];
-        tiempoAeronaveLabel.text=@"Tiempo Aeronave";
+        tiempoAeronaveLabel.text=@"Tiempo Tripulación";
         tiempoAeronaveLabel.numberOfLines=2;
         tiempoAeronaveLabel.backgroundColor=bgColor;
         tiempoAeronaveLabel.font=font;
@@ -325,7 +326,7 @@
         [self addSubview:tiempoAeronaveLabel];
         
         UILabel *tiempoTripulacionLabel=[[UILabel alloc]initWithFrame:CGRectMake(400+margen*8, 2, 60, altura)];
-        tiempoTripulacionLabel.text=@"Tiempo Tripulación";
+        tiempoTripulacionLabel.text=@"Tiempo Aeronave";
         tiempoTripulacionLabel.numberOfLines=2;
         tiempoTripulacionLabel.backgroundColor=bgColor;
         tiempoTripulacionLabel.font=font;
@@ -394,10 +395,13 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM HH:mm"];
+        [formatter setDateFormat:@"MM-dd HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected];
+        strDate=[self formatearFechaConNombreCorto:strDate];
         
+        [formatter setDateFormat:@"dd-MM-yy HH:mm"];
+        horaEncendidoFormateado=[formatter stringFromDate:selected];
         
         segundosEncendido=interval1;
         segundosApagado=interval2;
@@ -416,9 +420,14 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM HH:mm"];
+        [formatter setDateFormat:@"MM-dd HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
+
+        strDate=[self formatearFechaConNombreCorto:strDate];
+
+        [formatter setDateFormat:@"dd-MM-yy HH:mm"];
+        horaApagadoFormateado=[formatter stringFromDate:selected2];
         
         segundosEncendido=interval1;
         segundosApagado=interval2;
@@ -436,10 +445,14 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM HH:mm"];
+        [formatter setDateFormat:@"MM-dd HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected];
+        strDate=[self formatearFechaConNombreCorto:strDate];
         
+        [formatter setDateFormat:@"dd-MM-yy HH:mm"];
+        horaDecolajeFormateado=[formatter stringFromDate:selected];
+
         segundosDecolaje=interval1;
         segundosAterrizaje=interval2;
         horaDecolajeOverlay.text = strDate;//[date stringByReplacingOccurrencesOfString:@"+0000" withString:@""];
@@ -457,9 +470,13 @@
         NSTimeInterval interval2=[selected2 timeIntervalSince1970];
         
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"dd-MM HH:mm"];
+        [formatter setDateFormat:@"MM-dd HH:mm"];
         
         NSString *strDate = [formatter stringFromDate:selected2];
+        strDate=[self formatearFechaConNombreCorto:strDate];
+        
+        [formatter setDateFormat:@"dd-MM-yy HH:mm"];
+        horaAterrizajeFormateado=[formatter stringFromDate:selected2];
         
         segundosDecolaje=interval1;
         segundosAterrizaje=interval2;
@@ -468,6 +485,25 @@
         [self textFieldDidEndEditing:horaAterrizaje];
         //NSLog(@"Date %@",date);
     }
+}
+-(NSString *)formatearFechaConNombreCorto:(NSString*)string{
+    NSString *numeroExtraido=[string substringToIndex:2];
+    NSString *nuevoString=[string substringFromIndex:2];
+    int intMes=[numeroExtraido intValue];
+    if (intMes==1) {nuevoString=[NSString stringWithFormat:@"ene%@",nuevoString];}
+    else if (intMes==2) {nuevoString=[NSString stringWithFormat:@"feb%@",nuevoString];}
+    else if (intMes==3) {nuevoString=[NSString stringWithFormat:@"mar%@",nuevoString];}
+    else if (intMes==4) {nuevoString=[NSString stringWithFormat:@"abr%@",nuevoString];}
+    else if (intMes==5) {nuevoString=[NSString stringWithFormat:@"may%@",nuevoString];}
+    else if (intMes==6) {nuevoString=[NSString stringWithFormat:@"jun%@",nuevoString];}
+    else if (intMes==7) {nuevoString=[NSString stringWithFormat:@"jul%@",nuevoString];}
+    else if (intMes==8) {nuevoString=[NSString stringWithFormat:@"ago%@",nuevoString];}
+    else if (intMes==9) {nuevoString=[NSString stringWithFormat:@"sep%@",nuevoString];}
+    else if (intMes==10) {nuevoString=[NSString stringWithFormat:@"oct%@",nuevoString];}
+    else if (intMes==11) {nuevoString=[NSString stringWithFormat:@"nov%@",nuevoString];}
+    else if (intMes==12) {nuevoString=[NSString stringWithFormat:@"dic%@",nuevoString];}
+
+    return nuevoString;
 }
 #pragma mark - validar
 -(void)validar{

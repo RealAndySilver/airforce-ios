@@ -9,7 +9,7 @@
 #import "Principal.h"
 
 @implementation Principal
-@synthesize combustible,equipo,fecha,horaDespegue,idConsecutivoUnidad,idOrdenVuelo,imprimirCola,instrucciones,itinerario,matricula,unidad,unidadAsume;
+@synthesize combustible,equipo,fecha,horaDespegue,idConsecutivoUnidad,idOrdenVuelo,imprimirCola,instrucciones,itinerario,matricula,unidad,unidadAsume,idUnidad,idUnidadAsume;
 -(id)initWithDictionary:(NSDictionary*)dictionary{
     if (self=[super init]) {
         combustible = [dictionary objectForKey:@"combustible"];
@@ -24,6 +24,8 @@
         matricula = [dictionary objectForKey:@"matricula"];
         unidad = [dictionary objectForKey:@"unidad"];
         unidadAsume = [dictionary objectForKey:@"unidadAsume"];
+        idUnidad = [dictionary objectForKey:@"idUnidad"];
+        idUnidadAsume = [dictionary objectForKey:@"idUnidadAsume"];
     }
     return self;
 }

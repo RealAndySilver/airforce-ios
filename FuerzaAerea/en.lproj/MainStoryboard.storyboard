@@ -2978,6 +2978,9 @@
         <class className="DashBoardViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DashBoardViewController.h"/>
             <relationships>
+                <relationship kind="action" name="consultarOrdenDeVuelo:"/>
+                <relationship kind="action" name="cosultarMetarNotam:"/>
+                <relationship kind="action" name="irAOrdenDeVuelo:"/>
                 <relationship kind="outlet" name="conservarSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="containerMetar" candidateClass="UIView"/>
                 <relationship kind="outlet" name="containerOV" candidateClass="UIView"/>
@@ -3063,6 +3066,7 @@
         <class className="PrincipalViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PrincipalViewController.h"/>
             <relationships>
+                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="instruccionesTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>

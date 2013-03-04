@@ -162,6 +162,10 @@
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"objetivo" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             [arregloDeObjetivo sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
             NSLog(@"Objetivos count %i",arregloDeObjetivo.count);
+            /*for (Objetivo *o in arregloDeObjetivo) {
+                NSLog(@"Objetivos {%@}",o.objetivo);
+            }*/
+
         }
     }
     else if ([dictionary objectForKey:@"joaOperaciones"]) {

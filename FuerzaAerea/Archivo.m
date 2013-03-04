@@ -18,7 +18,7 @@
         fechaCreacion=[dictionary objectForKey:@"fechaCreacion"];
         idAeronave=[dictionary objectForKey:@"idAeronave"];
         idGrupoAeronave=[dictionary objectForKey:@"idGrupoAeronave"];
-        link=[dictionary objectForKey:@"link"];
+        link=[[dictionary objectForKey:@"link"] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         mimeOriginal=[dictionary objectForKey:@"mime"];
         
         if ([mimeOriginal rangeOfString:@".ppt"].location == NSNotFound) {}

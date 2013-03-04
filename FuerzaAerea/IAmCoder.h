@@ -16,6 +16,8 @@
 @interface IAmCoder : NSObject
 
 +(NSString*)encodeURL:(NSString*)url;
++(NSString*)encodeCoordinate:(NSString*)coordinate;
+
 +(NSString*)decodeURL:(NSString*)url;
 +(NSString*)hash256:(NSString*)parameters;
 +(NSString*)base64EncodeString:(NSString *)strData;

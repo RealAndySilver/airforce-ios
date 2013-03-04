@@ -23,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
+    NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
     UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
     [self.view addGestureRecognizer:dismissRecognizer];
     //nombreTF.text=USERNAME;
@@ -79,7 +79,7 @@
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><imei>%@</imei><serial>%@</serial>",nombreTF.text,passTF.text,IMEI,SERIAL];
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><imei>%@</imei><serial>%@</serial>",nombreTF.text,passTF.text,[DeviceInfo getUUDID],[DeviceInfo getMacAddress]];
     //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
     [server callServerWithMethod:@"login" andParameter:params];
 }
@@ -91,7 +91,9 @@
 #pragma mark server response
 -(void)receivedDataFromServer:(id)sender{
     ServerCommunicator *server=sender;
-    if (![[server.resDic objectForKey:@"conexion"] isEqualToString:@"true"]) {
+    NSLog(@"Resultado %@",server.resDic);
+    BOOL conexion = [[server.resDic objectForKey:@"conexion"] boolValue];;
+    if (conexion) {
         FileSaver *file=[[FileSaver alloc]init];
         NSMutableDictionary *userDic=[[NSMutableDictionary alloc]init];
         if (nombreTF.text) {
@@ -103,6 +105,10 @@
         [file setDictionary:userDic withName:@"User"];
         [self loadNextViewController];
     }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Usuario o contraseña inválidos. Por favor intente de nuevo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 -(void)receivedDataFromServerWithError:(id)sender{
@@ -112,6 +118,10 @@
         if ([[userDic objectForKey:@"password"] isEqualToString:passTF.text]) {
             [self loadNextViewController];
         }
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:@"El usuario ingresado no se encuentra registrado en la aplicación offline. Por favor conéctese a una red disponible e inténtelo nuevamente." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
