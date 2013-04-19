@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MBProgressHud.h"
 #import "FileSaver.h"
+#import "AdminViewController.h"
 @interface LoginViewController : UIViewController<UITextFieldDelegate>{
     CGRect frameInicial;
     CGRect frameFinal;

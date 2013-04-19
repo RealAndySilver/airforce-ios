@@ -140,5 +140,13 @@
     }
     return dic;
 }
-
+-(void)setIP:(NSString *)ip{
+    NSMutableDictionary *newData = [datos mutableCopy];
+	[newData setObject:ip forKey:@"IP"];
+	datos = newData;
+	[self guardar];
+}
+-(NSString*)getIp{
+    return [datos objectForKey:@"IP"];
+}
 @end

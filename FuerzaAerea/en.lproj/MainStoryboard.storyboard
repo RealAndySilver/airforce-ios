@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C3006" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -21,6 +21,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lYq-e7-wwJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1313" y="-12"/>
+        </scene>
+        <!--Admin View Controller-->
+        <scene sceneID="W2Y-t1-yzJ">
+            <objects>
+                <viewController storyboardIdentifier="Admin" id="TaO-pX-yzT" customClass="AdminViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FIq-DN-zv1">
+                        <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vvK-7u-BSS">
+                                <rect key="frame" x="476" y="259" width="73" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sender:" destination="TaO-pX-yzT" eventType="touchUpInside" id="ThK-On-fZk"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="5R4-Ib-AnO">
+                                <rect key="frame" x="239" y="193" width="546" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="IP + Puerto del end point" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uwN-WP-k2e">
+                                <rect key="frame" x="418" y="142" width="188" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="tf" destination="5R4-Ib-AnO" id="D7c-jH-NAy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vKi-24-nRA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-174" y="-985"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="4">
@@ -515,6 +564,21 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="bhl-p4-E3K">
+                                        <rect key="frame" x="688" y="12" width="18" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="goToTutorial:" destination="FmN-AU-Gz9" eventType="touchUpInside" id="eYR-PU-9ZN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -2961,174 +3025,36 @@
             </objects>
             <point key="canvasLocation" x="2060" y="880"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="WAZ-sU-4C4">
+            <objects>
+                <viewController storyboardIdentifier="Tutorial" id="hKy-C1-Nom" customClass="TutorialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pho-4C-Nwz">
+                        <rect key="frame" x="0.0" y="20" width="1024" height="748"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="2Hc-6h-FR5">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="748"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <connections>
+                        <outlet property="scrollView" destination="2Hc-6h-FR5" id="vde-Yu-3uU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CKD-Sw-nOm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="938" y="-1833"/>
+        </scene>
     </scenes>
     <resources>
         <image name="atras.png" width="800" height="400"/>
         <image name="fuerza.jpeg" width="960" height="720"/>
     </resources>
-    <classes>
-        <class className="ArmamentoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ArmamentoViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DashBoardViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DashBoardViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="consultarOrdenDeVuelo:"/>
-                <relationship kind="action" name="cosultarMetarNotam:"/>
-                <relationship kind="action" name="irAOrdenDeVuelo:"/>
-                <relationship kind="outlet" name="conservarSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="containerMetar" candidateClass="UIView"/>
-                <relationship kind="outlet" name="containerOV" candidateClass="UIView"/>
-                <relationship kind="outlet" name="leftSearchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="leftTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="matriTF" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="metarSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="mtTF" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="notamSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="ovTF" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="rightTableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="searchDisplayController" candidateClass="UISearchDisplayController"/>
-            </relationships>
-        </class>
-        <class className="DetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="DocumentViewerController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DocumentViewerController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="webView" candidateClass="UIWebView"/>
-            </relationships>
-        </class>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="container" candidateClass="UIView"/>
-                <relationship kind="outlet" name="nombreTF" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="passTF" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="OrdenDeVueloMenuViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/OrdenDeVueloMenuViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="armamentoButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="colaLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="combustibleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="consecutivoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="equipoLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="fechaLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="horaDespegueLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="itinerarioLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="noFacLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="pageScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="piernasButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="principalButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tripulacionButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="PiernasCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PiernasCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="armamento" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cantidad" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="cargo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="codigo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="desde" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="grado" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="hasta" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="idArmamento" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nombre" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="operacion" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="operacionTipo" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="piernaNumero" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="plan" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="PiernasViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PiernasViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="piernasTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="PrincipalViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PrincipalViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="instruccionesTextView" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="RegistroDeVueloViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RegistroDeVueloViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="armamentoPierna:"/>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="condicionesDeVuelo:"/>
-                <relationship kind="action" name="fadeInAeronaveImpactada:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="guardarRegistro:" candidateClass="UIButton"/>
-                <relationship kind="action" name="itinerario:"/>
-                <relationship kind="action" name="tipoDeVuelo:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="tripulacion:"/>
-                <relationship kind="outlet" name="aeronaveDosTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="aeronaveImpactadaSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="aeronaveUnoTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="botonArmamento" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="botonCondiciones" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="botonItinerario" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="botonTripulacion" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="containerAeronaveImpactada" candidateClass="UIView"/>
-                <relationship kind="outlet" name="fechaTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="grupoTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaArmamentoTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaDeptoTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaFaseTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaImpactosTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLatitud1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLatitud2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLatitud3TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLatitud4TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLongitud1TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLongitud2TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLongitud3TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaLongitud4TextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaMunicipioTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="impactadaNoVueloTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="noRegistroTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="observacionTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="ordenDeVueloTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="pageScrollView" candidateClass="UIScrollView"/>
-                <relationship kind="outlet" name="requerimientosTextfield" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="unidadAsumeTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="unidadQueCreaTextfield" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="vueloExtranjeroSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="vueloNacionalSwitch" candidateClass="UISwitch"/>
-            </relationships>
-        </class>
-        <class className="TripulacionViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TripulacionViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="buttonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="ordenLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadAsumeLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="unidadLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

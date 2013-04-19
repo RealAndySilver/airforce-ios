@@ -31,6 +31,8 @@
     [self integrarInfoDeOrdenDeVueloEnLosTextfields];
     [self setAllPickers];
     [self checkIfSaved];
+    
+
 }
 -(void)integrarInfoDeOrdenDeVueloEnLosTextfields{
     ordenDeVueloTextfield.text=ordenDeVuelo.principal.idConsecutivoUnidad;
@@ -154,6 +156,7 @@
             impactadaArmamentoTextField.text=[masterDic objectForKey:@"ImpactadaArmamento"];
             impactadaNoVueloTextField.text=[masterDic objectForKey:@"ImpactadaNoVuelo"];
             impactadaFaseTextField.text=[masterDic objectForKey:@"ImpactadaFase"];
+            idImpactadaFase=[masterDic objectForKey:@"id_impactada_fase"];
             impactadaLatitud1TextField.text=[masterDic objectForKey:@"ImpactadaLatitud"];
             impactadaLatitud2TextField.text=[masterDic objectForKey:@"ImpactadaLatitudGrados"];
             impactadaLatitud3TextField.text=[masterDic objectForKey:@"ImpactadaLatitudMinutos"];
@@ -796,6 +799,7 @@
             FaseVuelo *result=[lista.arregloDeFaseDeVuelo objectAtIndex:row];
             NSString *strRes=result.faseVuelo;
             impactadaFaseTextField.text=strRes;
+            idImpactadaFase=result.idFaseVuelo;
             return;
         }
         else if (pickerView.tag==2001){
@@ -885,12 +889,19 @@
     if(aeronaveImpactadaSwitch.on){[generalDic setObject:@"S" forKey:@"aeronave_impactada"];}
     else{[generalDic setObject:@"N" forKey:@"aeronave_impactada"];}
     if(impactadaImpactosTextField.text){[generalDic setObject:impactadaImpactosTextField.text forKey:@"ImpactadaNoImpactos"];}
+    
+    if(idImpactadaFase){[generalDic setObject:idImpactadaFase forKey:@"id_impactada_fase"];}
+
+    
     if(impactadaDeptoTextField.text){[generalDic setObject:impactadaDeptoTextField.text forKey:@"ImpactadaDepto"];}
     if(impactadaMunicipioTextField.text){[generalDic setObject:impactadaMunicipioTextField.text forKey:@"ImpactadaMunicipio"];}
 
     if(impactadaArmamentoTextField.text){[generalDic setObject:impactadaArmamentoTextField.text forKey:@"ImpactadaArmamento"];}
     if(impactadaNoVueloTextField.text){[generalDic setObject:impactadaNoVueloTextField.text forKey:@"ImpactadaNoVuelo"];}
+    
+    //poner id
     if(impactadaFaseTextField.text){[generalDic setObject:impactadaFaseTextField.text forKey:@"ImpactadaFase"];}
+    
     if(impactadaLatitud1TextField.text){[generalDic setObject:impactadaLatitud1TextField.text forKey:@"ImpactadaLatitud"];}
     if(impactadaLatitud2TextField.text){[generalDic setObject:impactadaLatitud2TextField.text forKey:@"ImpactadaLatitudGrados"];}
     if(impactadaLatitud3TextField.text){[generalDic setObject:impactadaLatitud3TextField.text forKey:@"ImpactadaLatitudMinutos"];}
@@ -899,6 +910,18 @@
     if(impactadaLongitud2TextField.text){[generalDic setObject:impactadaLongitud2TextField.text forKey:@"ImpactadaLongitudGrados"];}
     if(impactadaLongitud3TextField.text){[generalDic setObject:impactadaLongitud3TextField.text forKey:@"ImpactadaLongitudMinutos"];}
     if(impactadaLongitud4TextField.text){[generalDic setObject:impactadaLongitud4TextField.text forKey:@"ImpactadaLongitudSegundos"];}
+    
+    FileSaver *file=[[FileSaver alloc]init];
+    NSString *user=@"";
+    if ([file getDictionary:@"User"]) {
+        user=[[file getDictionary:@"User"] objectForKey:@"username"];
+    }
+    else{
+        user=@"NoUser";
+    }
+        
+    [generalDic setObject:user forKey:@"Usuario"];
+    
     [masterDic setObject:generalDic forKey:@"General"];
     
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
@@ -1114,18 +1137,61 @@
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
     NSLog(@"Respuesta %@",sender.resDic);
     if (sender.tag==1) {
-        if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"false"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" false"]) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+        /*if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"false"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" false"]) {
+         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+         [alert show];
+         }
+         else if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"true"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" true"]) {
+         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Registro exitoso No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+         [alert show];
+         FileSaver *file=[[FileSaver alloc]init];
+         NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+         [masterDic setObject:@"YES" forKey:@"Done"];
+         [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+         [self.navigationController popViewControllerAnimated:YES];
+         }*/
+        if ([sender.resDic objectForKey:@"status:"]) {
+            if ([[sender.resDic objectForKey:@"status:"] intValue]==2) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor redColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+            }
+            else if ([[sender.resDic objectForKey:@"status:"] intValue]==0) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Registro exitoso No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor greenColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+                FileSaver *file=[[FileSaver alloc]init];
+                NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+                [masterDic setObject:@"YES" forKey:@"Done"];
+                [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else if ([[sender.resDic objectForKey:@"status:"] intValue]==1) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Registro con Advertencia No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor yellowColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+                FileSaver *file=[[FileSaver alloc]init];
+                NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+                [masterDic setObject:@"YES" forKey:@"Done"];
+                [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
-        else if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"true"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" true"]) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Registro exitoso No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Ha ocurrido un error. Por favor vuelva a intentarlo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
-            FileSaver *file=[[FileSaver alloc]init];
-            NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
-            [masterDic setObject:@"YES" forKey:@"Done"];
-            [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
-            [self.navigationController popViewControllerAnimated:YES];
         }
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];

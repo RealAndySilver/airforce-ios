@@ -24,7 +24,7 @@
 #import "Departamentos.h"
 #import "Armamentos.h"
 #import "Lista.h"
-
+#import "TutorialViewController.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;

@@ -89,8 +89,8 @@
     //conservarSwitch.onTintColor=[UIColor grayColor];
     //ovTF.text=@"1472";
     //matriTF.text=@"4005";
-    ovTF.text=@"633";
-    matriTF.text=@"1010";
+    //ovTF.text=@"633";
+    //matriTF.text=@"1010";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoSuccess:)
 												 name:@"ArchivosSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(archivoError:)
@@ -98,7 +98,8 @@
     Archivo *archivo=[[Archivo alloc]init];
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
     [dic setObject:@"true" forKey:@"Offline"];
-    [archivo validarDiccionarioDeArchivos:dic];    
+    [archivo validarDiccionarioDeArchivos:dic];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -205,6 +206,14 @@
     [rightTableView reloadData];
 }
 -(IBAction)consultarOrdenDeVuelo:(id)sender{
+    ordenDeVuelo=nil;
+    [rightTableMetarArray removeAllObjects];
+    [rightTableNotamArray removeAllObjects];
+    [rightTableMetarArrayFijo removeAllObjects];
+    [rightTableNotamArrayFijo removeAllObjects];
+    [rightTableMetarArrayParcial removeAllObjects];
+    [rightTableNotamArrayParcial removeAllObjects];
+    [rightTableView reloadData];
     [self ordenDeVuelo];
 }
 -(IBAction)actualizarTablaDeArchivos:(id)sender{
@@ -322,10 +331,13 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=6;
-    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",ovTF.text,matriTF.text];
-    [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando Orden de Vuelo", nil);
+    
+    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",ovTF.text,matriTF.text];
+    
+    [server callServerWithMethod:@"ordenVuelo" andParameter:params];
+    
 }
 -(void)obtenerArchivosYmostrar{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
@@ -1008,11 +1020,13 @@ viewForHeaderInSection:(NSInteger)section{
         [rightTableMetarArrayParcial removeAllObjects];
         [rightTableNotamArrayParcial removeAllObjects];
     }
+    BOOL encontrado=NO;
     for (NSString *string in rightTableMetarArray) {
         //NSLog(@"String es %@",string);
         if ([string rangeOfString:stringBusqueda].location != NSNotFound) {
             if (![rightTableMetarArrayParcial containsObject:string]) {
                 [rightTableMetarArrayParcial addObject:string];
+                encontrado =YES;
             }
         }
     }
@@ -1037,6 +1051,7 @@ viewForHeaderInSection:(NSInteger)section{
         if ([string rangeOfString:stringBusqueda].location !=NSNotFound) {
             if (![rightTableNotamArrayParcial containsObject:string]) {
                 [rightTableNotamArrayParcial addObject:string];
+                encontrado =YES;
             }
         }
     }
@@ -1057,8 +1072,28 @@ viewForHeaderInSection:(NSInteger)section{
             }
         }
     }
+    if (encontrado) {
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText=NSLocalizedString(@"Buscando", nil);
+            //[MBProgressHUD hideHUDForView:self.view animated:YES];
+        NSString *formattedString=[NSString stringWithFormat:@"Parámetro %@ Encontrado", stringBusqueda];
+        [self changeTextToHudAndHideWithDelay:formattedString];
+            //NSLog(@"no hay nada");
+    }
+    else{
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText=NSLocalizedString(@"Buscando", nil);
+        NSString *formattedString=[NSString stringWithFormat:@"Parámetro %@ No Encontrado", stringBusqueda];
+        [self changeTextToHudAndHideWithDelay:formattedString];
+    }
+    
     [rightTableView reloadData];
     [ovTF resignFirstResponder];
     [matriTF resignFirstResponder];
+}
+-(IBAction)goToTutorial:(UIButton*)sender{
+    TutorialViewController *tVC=[[TutorialViewController alloc]init];
+    tVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
+    [self.navigationController pushViewController:tVC animated:YES];
 }
 @end

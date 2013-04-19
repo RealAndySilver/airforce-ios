@@ -38,26 +38,29 @@
     tempMethod=method;
     methodName=method;
     NSURL *url=nil;
+    FileSaver *file=[[FileSaver alloc]init];
+    NSString *ip=[file getIp];
     if ([method isEqualToString:@"faseVuelos"]||[method isEqualToString:@"departamentos"]||[method isEqualToString:@"armamentos"]||[method isEqualToString:@"listas"]||[method isEqualToString:@"enemigos"]||[method isEqualToString:@"objetivos"]||[method isEqualToString:@"joaOperaciones"]||[method isEqualToString:@"municipios"]) {
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
-
-
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+        if ([ip isEqualToString:@""]) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+        }
+        else{
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Listas?xsd=1",ip]];
+        }
     }
     else{
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
-
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+        if ([ip isEqualToString:@""]) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+        }
+        else{
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Inicio?wsdl",ip]];
+        }
     }
-    /*if ([method isEqualToString:@"faseVuelos"] || [method isEqualToString:@"departamentos"] || [method isEqualToString:@"armamentos"]) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://webservicesiioc2:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
-        
-    }
-    else{
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://webservicesiioc2:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
-    }*/
-    
-    
+    NSLog(@"URL -> %@",url);
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
 	NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
 	NSString *msgLength = [NSString stringWithFormat:@"%d", [soapMessage length]];
@@ -105,7 +108,7 @@
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
-    //NSLog(@"dic %@",theXML);
+    NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
         NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]

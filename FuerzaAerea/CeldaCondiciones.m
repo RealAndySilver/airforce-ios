@@ -50,12 +50,14 @@
         vfrHhTextfield.textAlignment=NSTextAlignmentCenter;
         vfrHhTextfield.textColor=[UIColor blackColor];
         vfrHhTextfield.tag=100;
+        vfrHhTextfield.text=@"0";
         [self addSubview:vfrHhTextfield];
         
         vfrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(10, 2, 40, 30)];
         vfrHhOverlay.numberOfLines=1;
         vfrHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [vfrHhOverlay setUserInteractionEnabled:YES];
+        vfrHhOverlay.text=@"0";
         //[self addSubview:vfrHhOverlay];
         UITapGestureRecognizer *tap2=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [vfrHhOverlay addGestureRecognizer:tap2];
@@ -69,6 +71,8 @@
         vfrMiTextfield.textAlignment=NSTextAlignmentCenter;
         vfrMiTextfield.textColor=[UIColor blackColor];
         vfrMiTextfield.tag=100;
+        vfrMiTextfield.text=@"0";
+
         [self addSubview:vfrMiTextfield];
         
         vfrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(55, 2, 40, 30)];
@@ -76,6 +80,8 @@
         vfrMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [vfrMiOverlay setUserInteractionEnabled:YES];
         //[self addSubview:vfrMiOverlay];
+        vfrMiOverlay.text=@"0";
+
         UITapGestureRecognizer *tap3=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [vfrMiOverlay addGestureRecognizer:tap3];
         
@@ -88,6 +94,8 @@
         ifrHhTextfield.textAlignment=NSTextAlignmentCenter;
         ifrHhTextfield.textColor=[UIColor blackColor];
         ifrHhTextfield.tag=100;
+        ifrHhTextfield.text=@"0";
+
         [self addSubview:ifrHhTextfield];
         
         ifrHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(100, 2, 40, 30)];
@@ -95,6 +103,8 @@
         ifrHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [ifrHhOverlay setUserInteractionEnabled:YES];
         //[self addSubview:ifrHhOverlay];
+        ifrHhOverlay.text=@"0";
+
         UITapGestureRecognizer *tap4=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [ifrHhOverlay addGestureRecognizer:tap4];
         
@@ -107,6 +117,8 @@
         ifrMiTextfield.textAlignment=NSTextAlignmentCenter;
         ifrMiTextfield.textColor=[UIColor blackColor];
         ifrMiTextfield.tag=100;
+        ifrMiTextfield.text=@"0";
+
         [self addSubview:ifrMiTextfield];
         
         ifrMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(145, 2, 40, 30)];
@@ -114,6 +126,7 @@
         ifrMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [ifrMiOverlay setUserInteractionEnabled:YES];
         //[self addSubview:ifrMiOverlay];
+        ifrMiOverlay.text=@"0";
         UITapGestureRecognizer *tap5=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [ifrHhOverlay addGestureRecognizer:tap5];
         
@@ -126,12 +139,16 @@
         nocHhTextfield.textAlignment=NSTextAlignmentCenter;
         nocHhTextfield.textColor=[UIColor blackColor];
         nocHhTextfield.tag=100;
+        nocHhTextfield.text=@"0";
+
         [self addSubview:nocHhTextfield];
         
         nocHhOverlay=[[UILabel alloc]initWithFrame:CGRectMake(190, 2, 40, 30)];
         nocHhOverlay.numberOfLines=1;
         nocHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nocHhOverlay setUserInteractionEnabled:YES];
+        nocHhOverlay.text=@"0";
+
         //[self addSubview:nocHhOverlay];
         UITapGestureRecognizer *tap6=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nocHhOverlay addGestureRecognizer:tap6];
@@ -140,6 +157,7 @@
         nocMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nocMiTextfield.delegate=self;
         nocMiTextfield.font=font;
+        nocMiTextfield.text=@"0";
         [nocMiTextfield setUserInteractionEnabled:YES];
         nocMiTextfield.keyboardType=UIKeyboardTypePhonePad;
         nocMiTextfield.textAlignment=NSTextAlignmentCenter;
@@ -151,6 +169,8 @@
         nocMiOverlay.numberOfLines=1;
         nocMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nocMiOverlay setUserInteractionEnabled:YES];
+        nocMiOverlay.text=@"0";
+
         //[self addSubview:nocMiOverlay];
         UITapGestureRecognizer *tap7=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nocHhOverlay addGestureRecognizer:tap7];
@@ -159,6 +179,8 @@
         nvgHhTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nvgHhTextfield.delegate=self;
         nvgHhTextfield.font=font;
+        nvgHhTextfield.text=@"0";
+
         [nvgHhTextfield setUserInteractionEnabled:YES];
         nvgHhTextfield.keyboardType=UIKeyboardTypePhonePad;
         nvgHhTextfield.textAlignment=NSTextAlignmentCenter;
@@ -170,6 +192,8 @@
         nvgHhOverlay.numberOfLines=1;
         nvgHhOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nvgHhOverlay setUserInteractionEnabled:YES];
+        nvgHhOverlay.text=@"0";
+
         //[self addSubview:nvgHhOverlay];
         UITapGestureRecognizer *tap8=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nvgHhOverlay addGestureRecognizer:tap8];
@@ -178,17 +202,22 @@
         nvgMiTextfield.borderStyle = UITextBorderStyleRoundedRect;
         nvgMiTextfield.delegate=self;
         nvgMiTextfield.font=font;
+        nvgMiTextfield.text=@"0";
+
         [nvgMiTextfield setUserInteractionEnabled:YES];
         nvgMiTextfield.keyboardType=UIKeyboardTypePhonePad;
         nvgMiTextfield.textAlignment=NSTextAlignmentCenter;
         nvgMiTextfield.textColor=[UIColor blackColor];
         nvgMiTextfield.tag=100;
+        
         [self addSubview:nvgMiTextfield];
         
         nvgMiOverlay=[[UILabel alloc]initWithFrame:CGRectMake(325, 2, 40, 30)];
         nvgMiOverlay.numberOfLines=1;
         nvgMiOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [nvgMiOverlay setUserInteractionEnabled:YES];
+        nvgMiOverlay.text=@"0";
+
         //[self addSubview:nvgMiOverlay];
         UITapGestureRecognizer *tap9=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [nvgMiOverlay addGestureRecognizer:tap9];
@@ -202,12 +231,15 @@
         aterrizajesTextfield.textAlignment=NSTextAlignmentCenter;
         aterrizajesTextfield.textColor=[UIColor blackColor];
         aterrizajesTextfield.tag=100;
+        aterrizajesTextfield.text=@"0";
+
         [self addSubview:aterrizajesTextfield];
         
         aterrizajesOverlay=[[UILabel alloc]initWithFrame:CGRectMake(370, 2, 40, 30)];
         aterrizajesOverlay.numberOfLines=1;
         aterrizajesOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [aterrizajesOverlay setUserInteractionEnabled:YES];
+        aterrizajesOverlay.text=@"0";
         //[self addSubview:aterrizajesOverlay];
         UITapGestureRecognizer *tap10=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [aterrizajesOverlay addGestureRecognizer:tap10];
@@ -217,6 +249,7 @@
         heridosTextfield.keyboardType=UIKeyboardTypePhonePad;
         heridosTextfield.delegate=self;
         heridosTextfield.font=font;
+        heridosTextfield.text=@"0";
         [heridosTextfield setUserInteractionEnabled:YES];
         heridosTextfield.textAlignment=NSTextAlignmentCenter;
         heridosTextfield.textColor=[UIColor blackColor];
@@ -227,6 +260,7 @@
         heridosOverlay.numberOfLines=1;
         heridosOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [heridosOverlay setUserInteractionEnabled:YES];
+        heridosOverlay.text=@"0";
         //[self addSubview:heridosOverlay];
         UITapGestureRecognizer *tap11=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [heridosOverlay addGestureRecognizer:tap11];
@@ -240,6 +274,8 @@
         muertosTextfield.textAlignment=NSTextAlignmentCenter;
         muertosTextfield.textColor=[UIColor blackColor];
         muertosTextfield.tag=100;
+        muertosTextfield.text=@"0";
+
         [self addSubview:muertosTextfield];
         
         muertosOverlay=[[UILabel alloc]initWithFrame:CGRectMake(460, 2, 40, 30)];
@@ -247,6 +283,7 @@
         muertosOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [muertosOverlay setUserInteractionEnabled:YES];
         //[self addSubview:muertosOverlay];
+        muertosOverlay.text=@"0";
         UITapGestureRecognizer *tap12=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [muertosOverlay addGestureRecognizer:tap12];
         

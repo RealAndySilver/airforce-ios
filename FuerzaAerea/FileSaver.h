@@ -19,6 +19,9 @@
 -(NSString*)getNombre;
 -(NSString*)getPassword;
 
+-(void)setIP:(NSString*)ip;
+-(NSString*)getIp;
+
 
 
 @end

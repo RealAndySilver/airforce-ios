@@ -97,6 +97,9 @@
     NSString *idDepartamento;
     NSString *idUnidadAsume;
     NSString *idUnidad;
+    
+    NSString *idImpactadaFase;
+
 
     CeldaCondiciones *condicionesTotal;
     

@@ -34,7 +34,10 @@
     NSDictionary *userDic=[file getDictionary:@"User"];
     nombreTF.text=[userDic objectForKey:@"username"];
     passTF.text=[userDic objectForKey:@"password"];
-    
+    FileSaver *file2=[[FileSaver alloc]init];
+    if (![file2 getIp]) {
+        [file2 setIP:@"172.20.100.6:8989"];
+    }
     //[self loadNextViewController];
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -75,6 +78,13 @@
 }
 #pragma mark acciones
 -(IBAction)irAlDashboard{
+    if ([nombreTF.text isEqualToString:@"admin"] && [passTF.text isEqualToString:@"admin"]) {
+        AdminViewController *adVC=[[AdminViewController alloc]init];
+        adVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Admin"];
+        [self.navigationController pushViewController:adVC animated:YES];
+        return;
+
+    }
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
