@@ -33,13 +33,32 @@
     FileSaver *file=[[FileSaver alloc]init];
     NSDictionary *userDic=[file getDictionary:@"User"];
     nombreTF.text=[userDic objectForKey:@"username"];
-    passTF.text=[userDic objectForKey:@"password"];
+    //passTF.text=[userDic objectForKey:@"password"];
     FileSaver *file2=[[FileSaver alloc]init];
     if (![file2 getIp]) {
         [file2 setIP:@"172.20.100.6:8989"];
     }
     //[self loadNextViewController];
+    /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
+                                   @"12",
+                                   @"12",
+                                   @"1234",
+                                   @"1234",
+                                   @"11",
+                                   @"123",
+                                   @"01a",nil];
+    
+    BOOL esNumero=[self isAllDigitsFromArray:numberVerifyingArray];
+    if (!esNumero) {
+        NSLog(@"No Hay números");
+        [self stopAlert];
+        return;
+    }
+    else{
+        NSLog(@"Si Hay números");
+    }*/
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(733, 187, 231, 173);
     frameFinal=CGRectMake(733, 323, 231, 173);
@@ -89,7 +108,7 @@
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><imei>%@</imei><serial>%@</serial>",nombreTF.text,passTF.text,[DeviceInfo getUUDID],[DeviceInfo getMacAddress]];
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",nombreTF.text,passTF.text,[DeviceInfo getUUDID],[DeviceInfo getMacAddress]];
     //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
     [server callServerWithMethod:@"login" andParameter:params];
 }
@@ -134,5 +153,24 @@
         [alert show];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+#pragma mark number check
+- (BOOL) isAllDigitsFromArray:(NSArray*)array
+{
+    for (NSString *string in array) {
+        NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
+        if (r.location != NSNotFound) {
+            return NO;
+        }
+        NSLog(@"Hay");
+    }
+    return YES;
+}
+- (void) stopAlert{
+    NSString *titulo=@"Error";
+    NSString *mensaje=@"Su registro no pudo ser enviado ya que contiene un elemento no numérico en un campo numérico. Por favor verifique y vuelva a intentarlo.";
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 @end

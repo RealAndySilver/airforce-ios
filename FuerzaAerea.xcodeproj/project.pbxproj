@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75086771174E9C89004DAAA9 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 75086770174E9C89004DAAA9 /* bg.png */; };
 		7512BF8216C1F7F800B222C0 /* PiernasTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8116C1F7F800B222C0 /* PiernasTableSubView.m */; };
 		7512BF8616C2041800B222C0 /* PiernasCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8516C2041800B222C0 /* PiernasCell2.m */; };
 		7512BF8916C2145300B222C0 /* ArmamentoTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8816C2145300B222C0 /* ArmamentoTableSubView.m */; };
@@ -117,6 +118,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		75086770174E9C89004DAAA9 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		7512BF8016C1F7F800B222C0 /* PiernasTableSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiernasTableSubView.h; sourceTree = "<group>"; };
 		7512BF8116C1F7F800B222C0 /* PiernasTableSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiernasTableSubView.m; sourceTree = "<group>"; };
 		7512BF8416C2041800B222C0 /* PiernasCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiernasCell2.h; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				75DE9F6416EEBADD004AC7E3 /* Tutorial */,
+				75086770174E9C89004DAAA9 /* bg.png */,
 				758711A81680C1B900FEC282 /* atras.png */,
 				758711A51680142800FEC282 /* fuerza.jpeg */,
 				7556FE7F167AD92300891508 /* pdficon.png */,
@@ -765,6 +768,7 @@
 				75DE9F6F16EEBAE8004AC7E3 /* 3.jpg in Resources */,
 				75DE9F7116EEBAE8004AC7E3 /* 4.jpg in Resources */,
 				75DE9F7216EEBAE8004AC7E3 /* 5.jpg in Resources */,
+				75086771174E9C89004DAAA9 /* bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,8 +996,8 @@
 				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "AD31E49A-4B7A-4CC7-B458-448591DC98B7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AD31E49A-4B7A-4CC7-B458-448591DC98B7";
+				PROVISIONING_PROFILE = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

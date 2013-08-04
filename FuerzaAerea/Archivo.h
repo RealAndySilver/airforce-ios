@@ -28,4 +28,6 @@
 @property(nonatomic,retain)NSString *version;
 -(id)initWithDictionary:(NSDictionary *)dictionary;
 -(void)validarDiccionarioDeArchivos:(NSDictionary*)diccionario;
++(NSString*)getTruncatedString:(NSString*)string;
++(UIImage*)getIconFromMime:(NSString*)string;
 @end

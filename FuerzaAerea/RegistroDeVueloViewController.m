@@ -886,8 +886,34 @@
     if(vueloNacionalSwitch.on){[generalDic setObject:@"1" forKey:@"VueloNacionalSwitch"];}
     else{[generalDic setObject:@"0" forKey:@"VueloNacionalSwitch"];}
     
-    if(aeronaveImpactadaSwitch.on){[generalDic setObject:@"S" forKey:@"aeronave_impactada"];}
+    if(aeronaveImpactadaSwitch.on){
+        [generalDic setObject:@"S" forKey:@"aeronave_impactada"];
+        if (![self isAllDigitsFromString:impactadaImpactosTextField.text]) {
+            [self stopAlertWithFieldName:@"'Aeronave Impactada - Cantidad impactos'"];
+            return;
+        }
+        NSArray *arrayCamposLatitud=[[NSArray alloc]initWithObjects:
+                                     impactadaLatitud2TextField.text,
+                                     impactadaLatitud3TextField.text,
+                                     impactadaLatitud4TextField.text, nil];
+        if (![self isAllDigitsFromArray:arrayCamposLatitud]) {
+            [self stopAlertWithFieldName:@"'Aeronave Impactada - Latitud'"];
+            return;
+        }
+        
+        NSArray *arrayCamposLongitud=[[NSArray alloc]initWithObjects:
+                                     impactadaLongitud2TextField.text,
+                                     impactadaLongitud3TextField.text,
+                                     impactadaLongitud4TextField.text, nil];
+        if (![self isAllDigitsFromArray:arrayCamposLongitud]) {
+            [self stopAlertWithFieldName:@"'Aeronave Impactada - Longitud'"];
+            return;
+        }
+    
+    }
     else{[generalDic setObject:@"N" forKey:@"aeronave_impactada"];}
+    
+    
     if(impactadaImpactosTextField.text){[generalDic setObject:impactadaImpactosTextField.text forKey:@"ImpactadaNoImpactos"];}
     
     if(idImpactadaFase){[generalDic setObject:idImpactadaFase forKey:@"id_impactada_fase"];}
@@ -899,7 +925,6 @@
     if(impactadaArmamentoTextField.text){[generalDic setObject:impactadaArmamentoTextField.text forKey:@"ImpactadaArmamento"];}
     if(impactadaNoVueloTextField.text){[generalDic setObject:impactadaNoVueloTextField.text forKey:@"ImpactadaNoVuelo"];}
     
-    //poner id
     if(impactadaFaseTextField.text){[generalDic setObject:impactadaFaseTextField.text forKey:@"ImpactadaFase"];}
     
     if(impactadaLatitud1TextField.text){[generalDic setObject:impactadaLatitud1TextField.text forKey:@"ImpactadaLatitud"];}
@@ -989,6 +1014,80 @@
         NSMutableDictionary *condicionesDic=[[NSMutableDictionary alloc]init];
         
         if (cell.idEntidad) {[condicionesDic setObject:cell.idEntidad forKey:@"id_entidad"];}
+        
+        if ([cell.vfrHhTextfield.text isEqualToString:@""]) {
+            cell.vfrHhTextfield.text=@"0";
+        }
+        if ([cell.vfrMiTextfield.text isEqualToString:@""]) {
+            cell.vfrMiTextfield.text=@"0";
+        }
+        if ([cell.ifrHhTextfield.text isEqualToString:@""]) {
+            cell.ifrHhTextfield.text=@"0";
+        }
+        if ([cell.ifrMiTextfield.text isEqualToString:@""]) {
+            cell.ifrMiTextfield.text=@"0";
+        }
+        if ([cell.nocHhTextfield.text isEqualToString:@""]) {
+            cell.nocHhTextfield.text=@"0";
+        }
+        if ([cell.nocMiTextfield.text isEqualToString:@""]) {
+            cell.nocMiTextfield.text=@"0";
+        }
+        if ([cell.nvgHhTextfield.text isEqualToString:@""]) {
+            cell.nvgHhTextfield.text=@"0";
+        }
+        if ([cell.nvgMiTextfield.text isEqualToString:@""]) {
+            cell.nvgMiTextfield.text=@"0";
+        }
+        if ([cell.aterrizajesTextfield.text isEqualToString:@""]) {
+            cell.aterrizajesTextfield.text=@"0";
+        }
+        if ([cell.heridosTextfield.text isEqualToString:@""]) {
+            cell.heridosTextfield.text=@"0";
+        }
+        if ([cell.muertosTextfield.text isEqualToString:@""]) {
+            cell.muertosTextfield.text=@"0";
+        }
+        if ([cell.paxSubenTextfield.text isEqualToString:@""]) {
+            cell.paxSubenTextfield.text=@"0";
+        }
+        if ([cell.paxBajanTextfield.text isEqualToString:@""]) {
+            cell.paxBajanTextfield.text=@"0";
+        }
+        if ([cell.cargaSubenTextfield.text isEqualToString:@""]) {
+            cell.cargaSubenTextfield.text=@"0";
+        }
+        if ([cell.cargaBajanTextfield.text isEqualToString:@""]) {
+            cell.cargaBajanTextfield.text=@"0";
+        }
+        
+        NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
+                                       cell.vfrHhTextfield.text,
+                                       cell.vfrMiTextfield.text,
+                                       cell.ifrHhTextfield.text,
+                                       cell.ifrMiTextfield.text,
+                                       cell.nocHhTextfield.text,
+                                       cell.nocMiTextfield.text,
+                                       cell.nvgHhTextfield.text,
+                                       cell.nvgMiTextfield.text,
+                                       cell.aterrizajesTextfield.text,
+                                       cell.heridosTextfield.text,
+                                       cell.muertosTextfield.text,
+                                       cell.paxSubenTextfield.text,
+                                       cell.paxBajanTextfield.text,
+                                       cell.cargaSubenTextfield.text,
+                                       cell.cargaBajanTextfield.text,nil];
+
+        
+        BOOL esNumero=[self isAllDigitsFromArray:numberVerifyingArray];
+        if (!esNumero) {
+            NSLog(@"Hay items no numéricos, detener la operación");
+            [self stopAlertWithSectionName:@"Condiciones de Vuelo"];
+            return;
+        }
+        else{
+            NSLog(@"Todos son números, se puede continuar");
+        }
         
         if (cell.vfrHhTextfield.text) {[condicionesDic setObject:cell.vfrHhTextfield.text forKey:@"VfrHh"];}
         if (cell.vfrMiTextfield.text) {[condicionesDic setObject:cell.vfrMiTextfield.text forKey:@"VfrMi"];}
@@ -1204,5 +1303,35 @@
         [alert show];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+#pragma mark number check
+- (BOOL) isAllDigitsFromArray:(NSArray*)array
+{
+    for (NSString *string in array) {
+        NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
+        if (r.location != NSNotFound) {
+            return NO;
+        }
+    }
+    return YES;
+}
+- (BOOL) isAllDigitsFromString:(NSString*)string
+{
+    NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
+    return r.location == NSNotFound;
+}
+- (void) stopAlertWithFieldName:(NSString*)fieldName{
+    NSString *titulo=@"Error";
+    NSString *mensaje=[NSString stringWithFormat:@"Su registro no pudo ser enviado ya que contiene un elemento no numérico en el campo %@. Por favor verifique y vuelva a intentarlo.",fieldName];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
+- (void) stopAlertWithSectionName:(NSString*)sectionName{
+    NSString *titulo=@"Error";
+    NSString *mensaje=[NSString stringWithFormat:@"Su registro no pudo ser enviado ya que contiene un elemento no numérico en la sección %@. Por favor verifique y vuelva a intentarlo.",sectionName];
+    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
 }
 @end

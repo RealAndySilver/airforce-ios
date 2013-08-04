@@ -13,10 +13,23 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary{
     if (self=[super init]) {
         activo=[dictionary objectForKey:@"activo"];
-        carpetaContenedora=[dictionary objectForKey:@"carpetaContenedora"];
-        fechaActualizacion=[dictionary objectForKey:@"fechaActualizacion"];
+        if ([dictionary objectForKey:@"carpetaContenedora"]) {
+            carpetaContenedora=[dictionary objectForKey:@"carpetaContenedora"];
+        }
+        else{
+            carpetaContenedora=@"N/A";
+        }
+        
+        if ([dictionary objectForKey:@"fechaActualizacion"]) {
+            fechaActualizacion=[dictionary objectForKey:@"fechaActualizacion"];
+        }
+        else{
+            fechaActualizacion=@"N/A";
+        }
+        
+        
         fechaCreacion=[dictionary objectForKey:@"fechaCreacion"];
-        idAeronave=[dictionary objectForKey:@"idAeronave"];
+        //idAeronave=[dictionary objectForKey:@"idAeronave"];
         idGrupoAeronave=[dictionary objectForKey:@"idGrupoAeronave"];
         link=[[dictionary objectForKey:@"link"] stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
         mimeOriginal=[dictionary objectForKey:@"mime"];
@@ -129,7 +142,7 @@
     [dic setObject:archivo.carpetaContenedora forKey:@"carpetaContenedora"];
     [dic setObject:archivo.fechaActualizacion forKey:@"fechaActualizacion"];
     [dic setObject:archivo.fechaCreacion forKey:@"fechaCreacion"];
-    [dic setObject:archivo.idAeronave forKey:@"idAeronave"];
+    //[dic setObject:archivo.idAeronave forKey:@"idAeronave"];
     [dic setObject:archivo.idGrupoAeronave forKey:@"idGrupoAeronave"];
     [dic setObject:archivo.link forKey:@"link"];
     [dic setObject:archivo.mimeOriginal forKey:@"mimeOriginal"];
@@ -180,5 +193,31 @@
     NSMutableDictionary *final=[[NSMutableDictionary alloc]init];
     [final setObject:arreglo forKey:@"ArregloDeArchivos"];
     [file setDictionary:final withName:@"ArchivosGuardados"];
+}
+#pragma mark - class methods
+#pragma mark - truncate string ext
++(NSString*)getTruncatedString:(NSString*)string{
+    NSString *tempStringTruncated=[[[[[string stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
+    return tempStringTruncated;
+    
+}
+#pragma mark - get icon from mime
++(UIImage*)getIconFromMime:(NSString*)string{
+    if ([string isEqualToString:@".ppt"]) {
+        return [UIImage imageNamed:@"ppticon.png"];
+    }
+    else if ([string isEqualToString:@".jpg"]){
+        return [UIImage imageNamed:@"jpg.png"];
+    }
+    else if ([string isEqualToString:@".pptx"]){
+        return [UIImage imageNamed:@"ppticon.png"];
+    }
+    else if ([string isEqualToString:@".doc"]){
+        return [UIImage imageNamed:@"docicon.png"];
+    }
+    else if ([string isEqualToString:@".pdf"]){
+        return [UIImage imageNamed:@"pdficon.png"];
+    }
+    else return nil;
 }
 @end

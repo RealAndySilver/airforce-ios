@@ -34,7 +34,8 @@
                              44);
     //leftTableArray=[[NSMutableArray alloc]initWithObjects:@"pptexample.ppt",@"docexample.doc",@"pdf.pdf", nil];
     leftTableArray=[[NSMutableArray alloc]init];
-    
+    leftSectionDictionary=[[NSMutableDictionary alloc]init];
+
     searchDisplayController.searchResultsTableView.frame=CGRectMake(0, 200, 300, 500);
     //[leftTableArray addObject:@"pptexample.ppt"];
     //[leftTableArray addObject:@"docexample.doc"];
@@ -343,7 +344,10 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=10;
-    [server callServerWithMethod:@"documentos" andParameter:@""];
+    NSString *imei=[DeviceInfo getUUDID];
+    NSString *serial=[DeviceInfo getMacAddress];
+    NSString *params=[NSString stringWithFormat:@"<uuid>%@</uuid><macaddress>%@</macaddress>",imei,serial];
+    [server callServerWithMethod:@"documentos" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando archivos", nil);
 }
@@ -738,6 +742,12 @@ viewForHeaderInSection:(NSInteger)section{
             return 1;
         }
     }
+    else if (tableView.tag==10000) {
+        if (leftTableArray.count==0) {
+            return 0;
+        }
+        return [leftSectionDictionary allKeys].count;
+    }
     return 1;
 }
 
@@ -752,7 +762,16 @@ viewForHeaderInSection:(NSInteger)section{
     }
     else{
         if (tableView.tag==10000) {
-            rows= leftTableArray.count;
+            //Sin Probar
+            NSArray *keysArray=[leftSectionDictionary allKeys];
+            for (int i=0; i<keysArray.count; i++) {
+                if (section==i) {
+                    NSArray *array=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
+                    return array.count;
+                }
+            }
+            //Fin
+            //rows= leftTableArray.count;
         }
         else if(tableView.tag==10001){
             if (metarSwitch.on && notamSwitch.on) {
@@ -845,35 +864,36 @@ viewForHeaderInSection:(NSInteger)section{
     static NSString *CellIdentifier = @"id1";
     
     UITableViewCell *celda = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (celda == nil) {
+    //if (celda == nil) {
         celda = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+    //}
     [celda setSelectionStyle:UITableViewCellSelectionStyleGray];
     
     if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-        celda.textLabel.text=[[[[[[leftStaticArray objectAtIndex:indexPath.row]stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
+        celda.textLabel.text=[Archivo getTruncatedString:[leftStaticArray objectAtIndex:indexPath.row]];
     }
     else{
         if (tableView.tag==10000) {
+            
+            //Sin Probar
+            NSArray *keysArray=[leftSectionDictionary allKeys];
+            for (int i=0; i<keysArray.count; i++) {
+                if (indexPath.section==i) {
+                    NSArray *valuesArray=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
+                    for (int j=0; j<valuesArray.count; j++) {
+                        if (indexPath.row==j) {
+                            Archivo *archivo=[valuesArray objectAtIndex:j];
+                            celda.textLabel.text=[Archivo getTruncatedString:archivo.nombre];
+                            celda.imageView.image=[Archivo getIconFromMime:archivo.mime];
+                        }
+                    }
+                }
+            }
             celda.textLabel.textColor=[UIColor darkGrayColor];
-            Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
-            NSString *tempStringTruncated=[[[[[archivo.nombre stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
-            celda.textLabel.text=tempStringTruncated;
-            if ([archivo.mime isEqualToString:@".ppt"]) {
-                celda.imageView.image=[UIImage imageNamed:@"ppticon.png"];
-            }
-            else if ([archivo.mime isEqualToString:@".jpg"]){
-                celda.imageView.image=[UIImage imageNamed:@"jpg.png"];
-            }
-            else if ([archivo.mime isEqualToString:@".pptx"]){
-                celda.imageView.image=[UIImage imageNamed:@"ppticon.png"];
-            }
-            else if ([archivo.mime isEqualToString:@".doc"]){
-                celda.imageView.image=[UIImage imageNamed:@"docicon.png"];
-            }
-            else if ([archivo.mime isEqualToString:@".pdf"]){
-                celda.imageView.image=[UIImage imageNamed:@"pdficon.png"];
-            }
+            /*Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
+            celda.textLabel.text=[Archivo getTruncatedString:archivo.nombre];;
+            celda.imageView.image=[Archivo getIconFromMime:archivo.mime];*/
+            //Fin
         }
         else if(tableView.tag==10001){
             if (metarSwitch.on && notamSwitch.on) {
@@ -938,22 +958,39 @@ viewForHeaderInSection:(NSInteger)section{
 
 #pragma mark tableview delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView.tag==10000||tableView.tag==10002) {
-        //NSLog(@"Touched cell in left tableview");
+    if (tableView.tag==10002||tableView.tag==10000) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        //Archivo *archivo=[leftTableArray objectAtIndex:indexPath.row];
         NSString *path=@"";
         for (Archivo *archivo in leftTableArray) {
-            NSString *tempStringTruncated=[[[[[archivo.nombre stringByReplacingOccurrencesOfString:@".doc" withString:@""]stringByReplacingOccurrencesOfString:@".pptx" withString:@""]stringByReplacingOccurrencesOfString:@".ppt" withString:@""]stringByReplacingOccurrencesOfString:@".pdf" withString:@""]stringByReplacingOccurrencesOfString:@".jpg" withString:@""];
-            //NSLog(@"Cell %@ vs archivo %@",cell.textLabel.text,tempStringTruncated);
-            if ([tempStringTruncated isEqualToString:cell.textLabel.text]) {
+            if ([[Archivo getTruncatedString:archivo.nombre] isEqualToString:cell.textLabel.text]) {
                 path=archivo.rutaLocal;
-                //NSLog(@"Archivo ruta local %@",path);
                 break;
             }
         }
         [self loadLocalDocument:path inView:nil];
     }
+//    else if (tableView.tag==10000){
+//        //Sin Probar, pero al parecer no es necesario
+//        NSArray *keysArray=[leftSectionDictionary allKeys];
+//        NSString *path=@"";
+//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        for (int i=0; i<keysArray.count; i++) {
+//            if (indexPath.section==i) {
+//                NSArray *valuesArray=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
+//                for (int j=0; j<valuesArray.count; j++) {
+//                    if (indexPath.row==j) {
+//                        for (Archivo *archivo in leftTableArray) {
+//                            if ([[Archivo getTruncatedString:archivo.nombre] isEqualToString:cell.textLabel.text]) {
+//                                path=archivo.rutaLocal;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        //Fin
+//    }
     else if(tableView.tag==10001){
         DetailViewController *iaVC=[[DetailViewController alloc]init];
         iaVC=[self.storyboard instantiateViewControllerWithIdentifier:@"InfoAero"];
@@ -993,11 +1030,43 @@ viewForHeaderInSection:(NSInteger)section{
 -(void)archivoSuccess:(NSNotification*)notification{
     NSDictionary *diccionario=notification.object;
     [leftTableArray removeAllObjects];
+    [leftSectionDictionary removeAllObjects];
+    
+    
     for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
         Archivo *archivo=[[Archivo alloc]initWithDictionary:dic];
         [leftTableArray addObject:archivo];
         //NSLog(@"cantidad");
     }
+    
+    //Esta sección se encargará de organizar los archivos en objetos agrupados en una colección
+    NSMutableArray *fileTitleArray=[[NSMutableArray alloc]init];
+    for (Archivo *archivo in leftTableArray) {
+        if (![fileTitleArray containsObject:archivo.carpetaContenedora]) {
+            [fileTitleArray addObject:archivo.carpetaContenedora];
+        }
+    }
+    for (int i=0; i<fileTitleArray.count; i++) {
+        NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
+        NSMutableArray *array=[[NSMutableArray alloc]init];
+        [dic setObject:array forKey:[fileTitleArray objectAtIndex:i]];
+        [leftSectionDictionary setObject:array forKey:[fileTitleArray objectAtIndex:i]];
+    }
+    for (Archivo *archivo in leftTableArray) {
+        int i=0;
+        for (NSString *fileTitle in fileTitleArray) {
+            if ([fileTitle isEqualToString:archivo.carpetaContenedora]) {
+                NSMutableArray *array2=[leftSectionDictionary objectForKey:archivo.carpetaContenedora];
+                [array2 addObject:archivo];
+            }
+            i++;
+        }
+    }
+    //Fin
+    
+    
+    
+    
     //NSLog(@"Left array %@",diccionario);
     [leftTableView reloadData];
     [MBProgressHUD hideHUDForView:self.view animated:YES];

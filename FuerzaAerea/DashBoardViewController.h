@@ -25,6 +25,7 @@
 #import "Armamentos.h"
 #import "Lista.h"
 #import "TutorialViewController.h"
+#import "DeviceInfo.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
@@ -42,6 +43,8 @@
 
     IBOutlet UITableView *leftTableView;
     NSMutableArray *leftTableArray;
+    NSMutableDictionary *leftSectionDictionary;
+
     NSMutableArray *leftTableResults;
     NSArray *leftStaticArray;
     
