@@ -689,6 +689,8 @@ viewForHeaderInSection:(NSInteger)section{
     UILabel *titleHeader=[[UILabel alloc]initWithFrame:CGRectMake(10,0, 300, 20)];
     if (tableView.tag==10000) {
         titleHeader.text=@"Archivos";
+        NSArray *keys=[leftSectionDictionary allKeys];
+        titleHeader.text=[NSString stringWithFormat:@"%@",[keys objectAtIndex:section ]];
     }
     else if(tableView.tag==10001){
         if (metarSwitch.on && notamSwitch.on) {
@@ -969,28 +971,28 @@ viewForHeaderInSection:(NSInteger)section{
         }
         [self loadLocalDocument:path inView:nil];
     }
-//    else if (tableView.tag==10000){
-//        //Sin Probar, pero al parecer no es necesario
-//        NSArray *keysArray=[leftSectionDictionary allKeys];
-//        NSString *path=@"";
-//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//        for (int i=0; i<keysArray.count; i++) {
-//            if (indexPath.section==i) {
-//                NSArray *valuesArray=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
-//                for (int j=0; j<valuesArray.count; j++) {
-//                    if (indexPath.row==j) {
-//                        for (Archivo *archivo in leftTableArray) {
-//                            if ([[Archivo getTruncatedString:archivo.nombre] isEqualToString:cell.textLabel.text]) {
-//                                path=archivo.rutaLocal;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        //Fin
-//    }
+    else if (tableView.tag==10000){
+        //Sin Probar, pero al parecer no es necesario
+        NSArray *keysArray=[leftSectionDictionary allKeys];
+        NSString *path=@"";
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        for (int i=0; i<keysArray.count; i++) {
+            if (indexPath.section==i) {
+                NSArray *valuesArray=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
+                for (int j=0; j<valuesArray.count; j++) {
+                    if (indexPath.row==j) {
+                        for (Archivo *archivo in leftTableArray) {
+                            if ([[Archivo getTruncatedString:archivo.nombre] isEqualToString:cell.textLabel.text]) {
+                                path=archivo.rutaLocal;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //Fin
+    }
     else if(tableView.tag==10001){
         DetailViewController *iaVC=[[DetailViewController alloc]init];
         iaVC=[self.storyboard instantiateViewControllerWithIdentifier:@"InfoAero"];

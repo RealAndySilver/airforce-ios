@@ -152,7 +152,10 @@
     
     [dic setObject:archivo.rutaLocal forKey:@"rutaLocal"];
     [dic setObject:archivo.nombre forKey:@"nombre"];
-    [dic setObject:archivo.tamano forKey:@"tamaño"];
+    if (archivo.tamano) {
+        [dic setObject:archivo.tamano forKey:@"tamaño"];
+    }
+    
     [dic setObject:archivo.version forKey:@"version"];
     return dic;
 }
