@@ -24,6 +24,7 @@
 {
     [super viewDidLoad];
     NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
+    
     UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
     [self.view addGestureRecognizer:dismissRecognizer];
     //nombreTF.text=USERNAME;
@@ -38,7 +39,7 @@
     if (![file2 getIp]) {
         [file2 setIP:@"172.20.100.6:8989"];
     }
-    //[self loadNextViewController];
+    [self loadNextViewController];
     /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
                                    @"12",
                                    @"12",
@@ -108,7 +109,7 @@
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",nombreTF.text,passTF.text,[DeviceInfo getUUDID],[DeviceInfo getMacAddress]];
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder base64String:nombreTF.text],[IAmCoder base64String:passTF.text],[IAmCoder base64String:[DeviceInfo getUUDID]],[IAmCoder base64String:[DeviceInfo getMacAddress]]];
     //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
     [server callServerWithMethod:@"login" andParameter:params];
 }
@@ -139,6 +140,7 @@
         [alert show];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    //[self loadNextViewController];
 }
 -(void)receivedDataFromServerWithError:(id)sender{
     FileSaver *file=[[FileSaver alloc]init];

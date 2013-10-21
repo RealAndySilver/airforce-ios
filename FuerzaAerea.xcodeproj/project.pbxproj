@@ -89,6 +89,7 @@
 		75A95A26166ED7190012CFA5 /* Armamento.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A25166ED7190012CFA5 /* Armamento.m */; };
 		75A95A29166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A28166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m */; };
 		75A95A2C166EF7A00012CFA5 /* SerializadorOV.m in Sources */ = {isa = PBXBuildFile; fileRef = 75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */; };
+		75B6442317EBDDD000E3FA38 /* ZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75B6442217EBDDD000E3FA38 /* ZoomViewController.m */; };
 		75DB41EC167962FA00F58DED /* Archivo.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DB41EB167962FA00F58DED /* Archivo.m */; };
 		75DE9F6016EBCDF0004AC7E3 /* Usuario.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE9F5F16EBCDF0004AC7E3 /* Usuario.m */; };
 		75DE9F6316EBECC7004AC7E3 /* AdminViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE9F6216EBECC7004AC7E3 /* AdminViewController.m */; };
@@ -262,6 +263,8 @@
 		75A95A28166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeladorDeOrdenDeVuelo.m; sourceTree = "<group>"; };
 		75A95A2A166EF7A00012CFA5 /* SerializadorOV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializadorOV.h; sourceTree = "<group>"; };
 		75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializadorOV.m; sourceTree = "<group>"; };
+		75B6442117EBDDD000E3FA38 /* ZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomViewController.h; sourceTree = "<group>"; };
+		75B6442217EBDDD000E3FA38 /* ZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomViewController.m; sourceTree = "<group>"; };
 		75DB41EA167962FA00F58DED /* Archivo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archivo.h; sourceTree = "<group>"; };
 		75DB41EB167962FA00F58DED /* Archivo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Archivo.m; sourceTree = "<group>"; };
 		75DE9F5E16EBCDF0004AC7E3 /* Usuario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Usuario.h; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 		75523467164047D300D541DB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				75B6442117EBDDD000E3FA38 /* ZoomViewController.h */,
+				75B6442217EBDDD000E3FA38 /* ZoomViewController.m */,
 				75DE9F7316EEBB54004AC7E3 /* TutorialViewController.h */,
 				75DE9F7416EEBB54004AC7E3 /* TutorialViewController.m */,
 				75DE9F6116EBECC7004AC7E3 /* AdminViewController.h */,
@@ -869,6 +874,7 @@
 				75DE9F6016EBCDF0004AC7E3 /* Usuario.m in Sources */,
 				75DE9F6316EBECC7004AC7E3 /* AdminViewController.m in Sources */,
 				75DE9F7516EEBB54004AC7E3 /* TutorialViewController.m in Sources */,
+				75B6442317EBDDD000E3FA38 /* ZoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,6 +988,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8364E923-86B7-4071-9F0E-2510C79DD77B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F3F0B0AF-F082-4543-89FB-31DB2CB0CB69";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -998,6 +1005,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
+				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

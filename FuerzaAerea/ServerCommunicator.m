@@ -59,6 +59,8 @@
         else{
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Inicio?wsdl",ip]];
         }
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://174.120.23.123/~api/archivos2.json"]];
     }
     NSLog(@"URL -> %@",url);
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
@@ -71,6 +73,9 @@
 	[theRequest setHTTPBody: [soapMessage dataUsingEncoding:NSUTF8StringEncoding]];
 	theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
 	dictionary = [[NSDictionary alloc]init];
+    
+    NSLog(@"Request %@",[NSString stringWithUTF8String:[theRequest.HTTPBody bytes]]);
+    
 	if(theConnection) {
 		webData = [NSMutableData data];
 	}
@@ -118,8 +123,13 @@
         NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
         NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         //NSLog(@"Json %@",json_string);
+        //login,ordenVuelo,
+        if ([tempMethod isEqualToString:@"login"]) {
+            json_string=[IAmCoder base64DecodeString:json_string];
+        }
         if ([tempMethod isEqualToString:@"ordenVuelo"]) {
-            
+            json_string=[IAmCoder base64DecodeString:json_string];
+            NSLog(@"json %@",json_string);
             resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
             [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
             return;
@@ -128,7 +138,9 @@
             NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
             json_string=[NSString stringWithFormat:@"{\"listas\":%@}",str];
         }
-        NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
+        //NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
+        NSMutableDictionary *dit=[json objectWithString:theXML error:nil];
+
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }

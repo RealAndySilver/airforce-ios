@@ -26,6 +26,8 @@
 #import "Lista.h"
 #import "TutorialViewController.h"
 #import "DeviceInfo.h"
+#import "IAmCoder.h"
+#import "ZoomViewController.h"
 @interface DashBoardViewController : UIViewController<UITextFieldDelegate,UISearchBarDelegate,UIDocumentInteractionControllerDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>{
     IBOutlet UIView *containerOV;
     IBOutlet UIView *containerMetar;
@@ -79,6 +81,8 @@
     NSMutableArray *arrayArmamentos;
     
     Lista *lista;
+    
+    NSMutableArray *arrayForBool;
 
 }
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;

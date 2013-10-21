@@ -101,6 +101,8 @@
     [dic setObject:@"true" forKey:@"Offline"];
     [archivo validarDiccionarioDeArchivos:dic];
     
+    arrayForBool = [[NSMutableArray alloc]init];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -264,13 +266,18 @@
     //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
     NSString *path = documentName;
     
-    NSURL *url = [NSURL fileURLWithPath:path];
+    //NSURL *url = [NSURL fileURLWithPath:path];
     //NSURLRequest *request = [NSURLRequest requestWithURL:url];
     //[webView loadRequest:request];
     //[self loadDocument:@"test.pdf" inView:nil];
     //UIDocumentInteractionController *UIC=[self setupControllerWithURL:url usingDelegate:self];
     //[UIC presentOpenInMenuFromRect:CGRectMake(0, 0, 200, 200) inView:self.view animated:YES];
-    [self previewDocumentWithURL:url];
+    
+    //[self previewDocumentWithURL:url];
+    ZoomViewController *zVC=[[ZoomViewController alloc]init];
+    zVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Zoom"];
+    zVC.path=path;
+    [self.navigationController pushViewController:zVC animated:YES];
 }
 -(void)loadLocalDocument:(NSString*)documentName inView:(UIWebView*)webView{
     //NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:nil];
@@ -335,7 +342,7 @@
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando Orden de Vuelo", nil);
     
-    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",ovTF.text,matriTF.text];
+    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",[IAmCoder base64String:ovTF.text],[IAmCoder base64String:matriTF.text]];
     
     [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     
@@ -388,8 +395,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Vapor de Agua"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -400,8 +407,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Visual"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -412,8 +419,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -517,8 +524,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Vapor de Agua"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -529,8 +536,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Visual"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -541,8 +548,8 @@
         NSString *url=[ImageDownloader descargarImagenRetornarPathDesde:result yTipo:@"Infrarojo"];
         //NSLog(@"url %@",url);
         
-        DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
-        dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
+        //DocumentViewerController *dVC=[[DocumentViewerController alloc]init];
+        //dVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Document"];
         //dVC.path=[[NSBundle mainBundle] pathForResource:url ofType:nil];
         //[self.navigationController pushViewController:dVC animated:YES];
         [self loadDocument:url inView:nil];
@@ -1033,6 +1040,7 @@ viewForHeaderInSection:(NSInteger)section{
     NSDictionary *diccionario=notification.object;
     [leftTableArray removeAllObjects];
     [leftSectionDictionary removeAllObjects];
+    [arrayForBool removeAllObjects];
     
     
     for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
@@ -1053,6 +1061,7 @@ viewForHeaderInSection:(NSInteger)section{
         NSMutableArray *array=[[NSMutableArray alloc]init];
         [dic setObject:array forKey:[fileTitleArray objectAtIndex:i]];
         [leftSectionDictionary setObject:array forKey:[fileTitleArray objectAtIndex:i]];
+        [arrayForBool addObject:[NSNumber numberWithBool:NO]];
     }
     for (Archivo *archivo in leftTableArray) {
         int i=0;

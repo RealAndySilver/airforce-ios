@@ -231,7 +231,7 @@
         aterrizajesTextfield.textAlignment=NSTextAlignmentCenter;
         aterrizajesTextfield.textColor=[UIColor blackColor];
         aterrizajesTextfield.tag=100;
-        aterrizajesTextfield.text=@"0";
+        aterrizajesTextfield.text=@"1";
 
         [self addSubview:aterrizajesTextfield];
         
@@ -239,7 +239,7 @@
         aterrizajesOverlay.numberOfLines=1;
         aterrizajesOverlay.font=[UIFont fontWithName:@"Helvetica" size:10];
         [aterrizajesOverlay setUserInteractionEnabled:YES];
-        aterrizajesOverlay.text=@"0";
+        aterrizajesOverlay.text=@"1";
         //[self addSubview:aterrizajesOverlay];
         UITapGestureRecognizer *tap10=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(second)];
         [aterrizajesOverlay addGestureRecognizer:tap10];

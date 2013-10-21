@@ -1136,8 +1136,9 @@
         for (CeldaArmamento *cell in pag.arregloDeFilasArmamento) {
             NSMutableDictionary *diccionarioCeldasArmamento=[[NSMutableDictionary alloc]init];
             if (cell.armamentoTextField.text) {[diccionarioCeldasArmamento setObject:cell.armamentoTextField.text forKey:@"Armamento"];}
-            if (cell.cantidadTextiField.text) {[diccionarioCeldasArmamento setObject:cell.cantidadTextiField.text forKey:@"Cantidad"];}
-            if (cell.cantidadFallidoTextField.text) {[diccionarioCeldasArmamento setObject:cell.cantidadFallidoTextField.text forKey:@"CantidadFallido"];}
+            if (cell.cantidadTextiField.text) {[diccionarioCeldasArmamento setObject:[cell.cantidadTextiField.text length]>0 ? cell.cantidadTextiField.text:@"0" forKey:@"Cantidad"];}
+            //if (cell.cantidadFallidoTextField.text) {[diccionarioCeldasArmamento setObject:cell.cantidadFallidoTextField.text forKey:@"CantidadFallido"];}
+            
             if (cell.objetivoTextField.text) {[diccionarioCeldasArmamento setObject:cell.objetivoTextField.text forKey:@"Objetivo"];}
             if (cell.coordenadaTextField.text){
                 NSString *coordParsed=[[[cell.coordenadaTextField.text stringByReplacingOccurrencesOfString:@"º" withString:@"g"] stringByReplacingOccurrencesOfString:@"'" withString:@"m"] stringByReplacingOccurrencesOfString:@"\"" withString:@"s"];
@@ -1151,7 +1152,11 @@
             if(cell.idEnemigo){[diccionarioCeldasArmamento setObject:cell.idEnemigo forKey:@"id_enemigo"];}
             if(cell.idArmamento){[diccionarioCeldasArmamento setObject:cell.idArmamento forKey:@"id_armamento"];}
             
-            [arregloCeldasArmamento addObject:diccionarioCeldasArmamento];
+            //Comprueba al menos que los 2 primeros campos tengan contenido para agregar un 0
+            if ([cell.armamentoTextField.text length] > 0 && [cell.cantidadTextiField.text length] > 0) {
+                [diccionarioCeldasArmamento setObject:[cell.cantidadFallidoTextField.text length] > 0 ? cell.cantidadFallidoTextField.text:@"0" forKey:@"CantidadFallido"];
+                [arregloCeldasArmamento addObject:diccionarioCeldasArmamento];
+            }
         }
         [armamentoArray addObject:arregloCeldasArmamento];
     }
@@ -1175,7 +1180,7 @@
     for (CeldaTripulacion *cell in arregloEntrenamiento) {
         NSMutableDictionary *entrenamientoDic=[[NSMutableDictionary alloc]init];
         if (cell.maniobraTextField.text) {[entrenamientoDic setObject:cell.maniobraTextField.text forKey:@"Maniobra"];}
-        if (cell.cantidadTextfield.text) {[entrenamientoDic setObject:cell.cantidadTextfield.text forKey:@"Cantidad"];}
+        if (cell.cantidadTextfield.text) {[entrenamientoDic setObject:[cell.cantidadTextfield.text length] > 0 ? cell.cantidadTextfield.text:@"0" forKey:@"Cantidad"];}
 
         if (cell.idManiobra) {[entrenamientoDic setObject:cell.idManiobra forKey:@"id_maniobra"];}
         
@@ -1227,7 +1232,7 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
-    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",data];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64String:data]];
     [server callServerWithMethod:@"RegistrarVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"Enviando Registro";

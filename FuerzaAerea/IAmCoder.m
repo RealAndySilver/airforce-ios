@@ -69,6 +69,38 @@ static const short _base64DecodingTable[256] = {
     //NSLog(@"hash %@",hash);
     return hash;
 }
++ (NSString *)base64String:(NSString *)str
+{
+    NSData *theData = [str dataUsingEncoding: NSUTF8StringEncoding];
+    const uint8_t* input = (const uint8_t*)[theData bytes];
+    NSInteger length = [theData length];
+    
+    static char table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    
+    NSMutableData* data = [NSMutableData dataWithLength:((length + 2) / 3) * 4];
+    uint8_t* output = (uint8_t*)data.mutableBytes;
+    
+    NSInteger i;
+    for (i=0; i < length; i += 3) {
+        NSInteger value = 0;
+        NSInteger j;
+        for (j = i; j < (i + 3); j++) {
+            value <<= 8;
+            
+            if (j < length) {
+                value |= (0xFF & input[j]);
+            }
+        }
+        
+        NSInteger theIndex = (i / 3) * 4;
+        output[theIndex + 0] =                    table[(value >> 18) & 0x3F];
+        output[theIndex + 1] =                    table[(value >> 12) & 0x3F];
+        output[theIndex + 2] = (i + 1) < length ? table[(value >> 6)  & 0x3F] : '=';
+        output[theIndex + 3] = (i + 2) < length ? table[(value >> 0)  & 0x3F] : '=';
+    }
+    
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
 + (NSString *) base64EncodeString: (NSString *) strData {
 	return [self base64EncodeData: [strData dataUsingEncoding: NSUTF8StringEncoding] ];
 }
@@ -119,7 +151,7 @@ static const short _base64DecodingTable[256] = {
 	return [NSString stringWithCString:strResult encoding:NSASCIIStringEncoding];
 }
 
-+ (NSData *) base64DecodeString: (NSString *) strBase64 {
++ (NSString *) base64DecodeString: (NSString *) strBase64 {
 	const char * objPointer = [strBase64 cStringUsingEncoding:NSASCIIStringEncoding];
 	int intLength = strlen(objPointer);
 	int intCurrent;
@@ -190,7 +222,26 @@ static const short _base64DecodingTable[256] = {
     
 	// Cleanup and setup the return NSData
 	NSData * objData = [[NSData alloc] initWithBytes:objResult length:j];
+    NSString *str=[[NSString alloc]initWithBytes:[objData bytes] length:[objData length] encoding:NSASCIIStringEncoding];
 	free(objResult);
-	return objData;
+	return str;
+}
++(NSString*)dateString{
+    //    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    //    [formatter setDateFormat:@"yyyyMMdd-HHmmss"];
+    //    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    //    [formatter setTimeZone:timeZone];
+    //    NSDate *now = [[NSDate alloc] init];
+    //    NSString *date=[formatter stringFromDate:now];
+    //    NSDate *date2=[formatter dateFromString:date];
+    //    NSTimeInterval seconds = [date2 timeIntervalSince1970];
+    //    NSString *date3=[NSString stringWithFormat:@"%.0f",seconds];
+    //    NSLog(@"segundos entre fechas %@",date3);
+    //    return date3;
+    
+    NSDate *now = [[NSDate alloc] init];
+    NSTimeInterval seconds = [now timeIntervalSince1970];
+    NSString *date3=[NSString stringWithFormat:@"%.0f",seconds];
+    return date3;
 }
 @end
