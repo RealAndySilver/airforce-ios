@@ -47,7 +47,7 @@
 }
 - (void)loadScrollView{
     scrollViewImagen=[[UIScrollView alloc]init];
-    scrollViewImagen.frame=CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width);
+    scrollViewImagen.frame=CGRectMake(0, 48, self.view.frame.size.height, self.view.frame.size.width-48);
     [self.view addSubview:scrollViewImagen];
     [scrollViewImagen setMinimumZoomScale:minimumZoomScale];
     [scrollViewImagen setMaximumZoomScale:maximumZoomScale];

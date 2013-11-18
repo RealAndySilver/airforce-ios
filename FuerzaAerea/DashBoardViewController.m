@@ -101,7 +101,7 @@
     [dic setObject:@"true" forKey:@"Offline"];
     [archivo validarDiccionarioDeArchivos:dic];
     
-    arrayForBool = [[NSMutableArray alloc]init];
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -692,14 +692,27 @@
 - (UIView *) tableView:(UITableView *)tableView
 viewForHeaderInSection:(NSInteger)section{
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width, 30)];
-    [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.6 alpha:0.8]];
+    headerView.tag = section;
+    
     UILabel *titleHeader=[[UILabel alloc]initWithFrame:CGRectMake(10,0, 300, 20)];
     if (tableView.tag==10000) {
         titleHeader.text=@"Archivos";
+        BOOL manyCells=[[arrayForBool objectAtIndex:section] boolValue];
+        titleHeader.frame=CGRectMake(10,0, 300, 50);
+        [headerView setBackgroundColor:manyCells? [UIColor redColor]:[UIColor colorWithRed:0.0 green:0.0 blue:0.6 alpha:0.8]];
         NSArray *keys=[leftSectionDictionary allKeys];
         titleHeader.text=[NSString stringWithFormat:@"%@",[keys objectAtIndex:section ]];
+        UITapGestureRecognizer  *headerTapped   = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTapped:)];
+        [headerView addGestureRecognizer:headerTapped];
+        titleHeader.textColor=[UIColor whiteColor];
+        titleHeader.backgroundColor= manyCells? [UIColor clearColor]:[UIColor redColor];
+        UIImageView *upDownArrow        = [[UIImageView alloc] initWithImage:manyCells ? [UIImage imageNamed:@"upArrowBlack.png"] : [UIImage imageNamed:@"downArrowBlack.png"]];
+        upDownArrow.autoresizingMask    = UIViewAutoresizingFlexibleLeftMargin;
+        upDownArrow.frame               = CGRectMake(headerView.frame.size.width-40, 10, 30, 30);
+        [headerView addSubview:upDownArrow];
     }
     else if(tableView.tag==10001){
+        [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.6 alpha:0.8]];
         if (metarSwitch.on && notamSwitch.on) {
             if (section==0) {
                 //titleHeader.text= [NSString stringWithFormat:@"%i Metar disponibles",rightTableMetarArray.count];
@@ -724,18 +737,25 @@ viewForHeaderInSection:(NSInteger)section{
         else{
             titleHeader.text=@"";
         }
-    }
+            }
     else{
+        [headerView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.6 alpha:0.8]];
         titleHeader.text=@"";
     }
     
     titleHeader.textColor=[UIColor whiteColor];
     titleHeader.backgroundColor=[UIColor clearColor];
+
     [headerView addSubview:titleHeader];
     
     return headerView;
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView.tag==10000) {
+        return 50;
+    }
+    return 20;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -772,11 +792,14 @@ viewForHeaderInSection:(NSInteger)section{
     else{
         if (tableView.tag==10000) {
             //Sin Probar
+            
             NSArray *keysArray=[leftSectionDictionary allKeys];
             for (int i=0; i<keysArray.count; i++) {
                 if (section==i) {
-                    NSArray *array=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
-                    return array.count;
+                    if ([[arrayForBool objectAtIndex:i] boolValue]) {
+                        NSArray *array=[leftSectionDictionary objectForKey:[keysArray objectAtIndex:i]];
+                        return array.count;
+                    }
                 }
             }
             //Fin
@@ -830,6 +853,14 @@ viewForHeaderInSection:(NSInteger)section{
             if (indexPath.section==0) {
                 return 60;
             }
+        }
+    }
+    else if (tableView.tag==10000){
+        if ([[arrayForBool objectAtIndex:indexPath.section] boolValue]) {
+            return 40;
+        }
+        else{
+            return 0;
         }
     }
     return 50;
@@ -1040,8 +1071,11 @@ viewForHeaderInSection:(NSInteger)section{
     NSDictionary *diccionario=notification.object;
     [leftTableArray removeAllObjects];
     [leftSectionDictionary removeAllObjects];
+    if (!arrayForBool) {
+        arrayForBool = [[NSMutableArray alloc]init];
+    }
     [arrayForBool removeAllObjects];
-    
+    NSLog(@"Success!!!!");
     
     for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
         Archivo *archivo=[[Archivo alloc]initWithDictionary:dic];
@@ -1063,6 +1097,7 @@ viewForHeaderInSection:(NSInteger)section{
         [leftSectionDictionary setObject:array forKey:[fileTitleArray objectAtIndex:i]];
         [arrayForBool addObject:[NSNumber numberWithBool:NO]];
     }
+    NSLog(@"Bool Array %i",leftSectionDictionary.allKeys.count);
     for (Archivo *archivo in leftTableArray) {
         int i=0;
         for (NSString *fileTitle in fileTitleArray) {
@@ -1175,5 +1210,19 @@ viewForHeaderInSection:(NSInteger)section{
     TutorialViewController *tVC=[[TutorialViewController alloc]init];
     tVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Tutorial"];
     [self.navigationController pushViewController:tVC animated:YES];
+}
+#pragma mark - gesture tapped
+- (void)sectionHeaderTapped:(UITapGestureRecognizer *)gestureRecognizer{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:gestureRecognizer.view.tag];
+    if (indexPath.row == 0) {
+        BOOL collapsed  = [[arrayForBool objectAtIndex:indexPath.section] boolValue];
+        collapsed       = !collapsed;
+        [arrayForBool replaceObjectAtIndex:indexPath.section withObject:[NSNumber numberWithBool:collapsed]];
+        
+        //reload specific section animated
+        NSRange range   = NSMakeRange(indexPath.section, 1);
+        NSIndexSet *sectionToReload = [NSIndexSet indexSetWithIndexesInRange:range];
+        [leftTableView reloadSections:sectionToReload withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 @end

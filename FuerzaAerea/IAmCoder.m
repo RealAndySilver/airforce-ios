@@ -7,6 +7,7 @@
 //
 
 #import "IAmCoder.h"
+#import "NSData+AES.h"
 
 @implementation IAmCoder
 static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -243,5 +244,12 @@ static const short _base64DecodingTable[256] = {
     NSTimeInterval seconds = [now timeIntervalSince1970];
     NSString *date3=[NSString stringWithFormat:@"%.0f",seconds];
     return date3;
+}
+#pragma mark - AES Crypt
++(NSString *)AESEncryptWithMessage:(NSString *)message andPassword:(NSString *)password{
+    return [AESCrypt encrypt:message password:password];
+}
++(NSString *)AESDecryptWithMessage:(NSString *)message andPassword:(NSString *)password{
+    return [AESCrypt decrypt:message password:password];
 }
 @end

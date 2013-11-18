@@ -32,14 +32,14 @@
     container.backgroundColor=[UIColor colorWithWhite:0.8 alpha:0.7];
     container.layer.cornerRadius=10;
     FileSaver *file=[[FileSaver alloc]init];
-    NSDictionary *userDic=[file getDictionary:@"User"];
-    nombreTF.text=[userDic objectForKey:@"username"];
+    NSDictionary *userDic = [file getDictionary:@"User"];
+    nombreTF.text = [userDic objectForKey:@"username"];
     //passTF.text=[userDic objectForKey:@"password"];
     FileSaver *file2=[[FileSaver alloc]init];
     if (![file2 getIp]) {
         [file2 setIP:@"172.20.100.6:8989"];
     }
-    [self loadNextViewController];
+    //[self loadNextViewController];
     /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
                                    @"12",
                                    @"12",

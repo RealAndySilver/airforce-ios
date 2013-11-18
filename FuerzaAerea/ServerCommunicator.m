@@ -60,7 +60,7 @@
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Inicio?wsdl",ip]];
         }
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://174.120.23.123/~api/archivos2.json"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://174.120.23.123/~api/archivos2.json"]];
     }
     NSLog(@"URL -> %@",url);
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
@@ -138,8 +138,8 @@
             NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
             json_string=[NSString stringWithFormat:@"{\"listas\":%@}",str];
         }
-        //NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
-        NSMutableDictionary *dit=[json objectWithString:theXML error:nil];
+        NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
+        //NSMutableDictionary *dit=[json objectWithString:theXML error:nil];
 
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];

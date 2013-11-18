@@ -11,7 +11,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import <CommonCrypto/CommonHMAC.h>
 #import <CommonCrypto/CommonCryptor.h>
-
+#import "AESCrypt.h"
 
 @interface IAmCoder : NSObject
 
@@ -25,5 +25,7 @@
 +(NSString*)dateString;
 +(NSString*)base64String:(NSString*)str;
 + (NSString*) sha256:(NSString *)clear;
-+ (NSString *) base64DecodeString: (NSString *) strBase64 ;
++ (NSString *) base64DecodeString: (NSString*) strBase64 ;
++(NSString *)AESEncryptWithMessage:(NSString*)message andPassword:(NSString*)password;
++(NSString *)AESDecryptWithMessage:(NSString*)message andPassword:(NSString*)password;
 @end

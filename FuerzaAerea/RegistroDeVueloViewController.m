@@ -1199,7 +1199,7 @@
     NSMutableDictionary *ultra=[[NSMutableDictionary alloc]init];
     [ultra setObject:masterDic forKey:@"RegistroDeVuelo"];
     NSString *str=[json stringWithObject:ultra];
-    NSLog(@"JSON %@",str);
+    //NSLog(@"JSON %@",str);
     
     
     
@@ -1232,7 +1232,13 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
-    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64String:data]];
+    FileSaver *file=[[FileSaver alloc]init];
+    //NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64String:data]];
+    NSData *realData=[data dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *userDic=[file getDictionary:@"User"];
+    NSData *cipher=[realData AES256EncryptWithKey:[userDic objectForKey:@"password"]];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64EncodeData:cipher]];
+
     [server callServerWithMethod:@"RegistrarVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"Enviando Registro";

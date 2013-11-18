@@ -26,6 +26,12 @@
 		7512BFEE16C4B0D900B222C0 /* Objetivo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BFED16C4B0D600B222C0 /* Objetivo.m */; };
 		7514A49716C548850093F58C /* Entidad.m in Sources */ = {isa = PBXBuildFile; fileRef = 7514A49616C548850093F58C /* Entidad.m */; };
 		7515A4CF164C327A00504C23 /* DocumentViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7515A4CE164C327A00504C23 /* DocumentViewerController.m */; };
+		7540121A1816016100EE43AD /* downArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 754012181816016100EE43AD /* downArrowBlack.png */; };
+		7540121B1816016100EE43AD /* upArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = 754012191816016100EE43AD /* upArrowBlack.png */; };
+		754012251816E6A700EE43AD /* AESCrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = 7540121E1816E6A700EE43AD /* AESCrypt.m */; };
+		754012261816E6A700EE43AD /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 754012201816E6A700EE43AD /* NSData+Base64.m */; };
+		754012271816E6A700EE43AD /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 754012221816E6A700EE43AD /* NSData+CommonCrypto.m */; };
+		754012281816E6A700EE43AD /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 754012241816E6A700EE43AD /* NSString+Base64.m */; };
 		754E95111630D15A002FEB37 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95101630D15A002FEB37 /* UIKit.framework */; };
 		754E95131630D15A002FEB37 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95121630D15A002FEB37 /* Foundation.framework */; };
 		754E95151630D15A002FEB37 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 754E95141630D15A002FEB37 /* CoreGraphics.framework */; };
@@ -100,6 +106,7 @@
 		75DE9F7116EEBAE8004AC7E3 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 75DE9F6A16EEBAE8004AC7E3 /* 4.jpg */; };
 		75DE9F7216EEBAE8004AC7E3 /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 75DE9F6B16EEBAE8004AC7E3 /* 5.jpg */; };
 		75DE9F7516EEBB54004AC7E3 /* TutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75DE9F7416EEBB54004AC7E3 /* TutorialViewController.m */; };
+		75E276721818970800D3571C /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = 75E276711818970800D3571C /* NSData+AES.m */; };
 		75F0480416712A31002DB7B2 /* OrdenDeVueloMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0480316712A31002DB7B2 /* OrdenDeVueloMenuViewController.m */; };
 		75F0480716713878002DB7B2 /* ArmamentoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0480616713878002DB7B2 /* ArmamentoViewController.m */; };
 		75F0480A16713886002DB7B2 /* PiernasViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0480916713886002DB7B2 /* PiernasViewController.m */; };
@@ -156,6 +163,16 @@
 		7514A49616C548850093F58C /* Entidad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Entidad.m; sourceTree = "<group>"; };
 		7515A4CD164C327A00504C23 /* DocumentViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentViewerController.h; sourceTree = "<group>"; };
 		7515A4CE164C327A00504C23 /* DocumentViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentViewerController.m; sourceTree = "<group>"; };
+		754012181816016100EE43AD /* downArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrowBlack.png; sourceTree = "<group>"; };
+		754012191816016100EE43AD /* upArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upArrowBlack.png; sourceTree = "<group>"; };
+		7540121D1816E6A700EE43AD /* AESCrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AESCrypt.h; sourceTree = "<group>"; };
+		7540121E1816E6A700EE43AD /* AESCrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AESCrypt.m; sourceTree = "<group>"; };
+		7540121F1816E6A700EE43AD /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		754012201816E6A700EE43AD /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		754012211816E6A700EE43AD /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
+		754012221816E6A700EE43AD /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
+		754012231816E6A700EE43AD /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		754012241816E6A700EE43AD /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		754E950C1630D15A002FEB37 /* FuerzaAerea.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FuerzaAerea.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		754E95101630D15A002FEB37 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		754E95121630D15A002FEB37 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -279,6 +296,8 @@
 		75DE9F6B16EEBAE8004AC7E3 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
 		75DE9F7316EEBB54004AC7E3 /* TutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialViewController.h; sourceTree = "<group>"; };
 		75DE9F7416EEBB54004AC7E3 /* TutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialViewController.m; sourceTree = "<group>"; };
+		75E276701818970800D3571C /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
+		75E276711818970800D3571C /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
 		75F0480216712A31002DB7B2 /* OrdenDeVueloMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdenDeVueloMenuViewController.h; sourceTree = "<group>"; };
 		75F0480316712A31002DB7B2 /* OrdenDeVueloMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdenDeVueloMenuViewController.m; sourceTree = "<group>"; };
 		75F0480516713878002DB7B2 /* ArmamentoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArmamentoViewController.h; sourceTree = "<group>"; };
@@ -364,17 +383,35 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		7540121C1816E69100EE43AD /* AESEncrypt */ = {
+			isa = PBXGroup;
+			children = (
+				7540121D1816E6A700EE43AD /* AESCrypt.h */,
+				7540121E1816E6A700EE43AD /* AESCrypt.m */,
+				7540121F1816E6A700EE43AD /* NSData+Base64.h */,
+				754012201816E6A700EE43AD /* NSData+Base64.m */,
+				754012211816E6A700EE43AD /* NSData+CommonCrypto.h */,
+				754012221816E6A700EE43AD /* NSData+CommonCrypto.m */,
+				75E276701818970800D3571C /* NSData+AES.h */,
+				75E276711818970800D3571C /* NSData+AES.m */,
+				754012231816E6A700EE43AD /* NSString+Base64.h */,
+				754012241816E6A700EE43AD /* NSString+Base64.m */,
+			);
+			name = AESEncrypt;
+			sourceTree = "<group>";
+		};
 		754E95011630D15A002FEB37 = {
 			isa = PBXGroup;
 			children = (
+				754E950F1630D15A002FEB37 /* Frameworks */,
 				757352C616E04C710001F5EA /* logo-maletin2.png */,
 				757352C416E04C5A0001F5EA /* logo-maletin.png */,
 				758711AC16814C7E00FEC282 /* icon.png */,
 				755F9F5016554F450002266B /* icon@2x.png */,
-				754E950F1630D15A002FEB37 /* Frameworks */,
+				7540121C1816E69100EE43AD /* AESEncrypt */,
 				754E95161630D15A002FEB37 /* FuerzaAerea */,
-				754E953A1630D15A002FEB37 /* FuerzaAereaTests */,
 				754E950D1630D15A002FEB37 /* Products */,
+				754E953A1630D15A002FEB37 /* FuerzaAereaTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -629,6 +666,8 @@
 		75DE9F6416EEBADD004AC7E3 /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
+				754012181816016100EE43AD /* downArrowBlack.png */,
+				754012191816016100EE43AD /* upArrowBlack.png */,
 				75DE9F6516EEBAE8004AC7E3 /* 0.jpg */,
 				75DE9F6616EEBAE8004AC7E3 /* 1.jpg */,
 				75DE9F6716EEBAE8004AC7E3 /* 2.jpg */,
@@ -774,6 +813,8 @@
 				75DE9F7116EEBAE8004AC7E3 /* 4.jpg in Resources */,
 				75DE9F7216EEBAE8004AC7E3 /* 5.jpg in Resources */,
 				75086771174E9C89004DAAA9 /* bg.png in Resources */,
+				7540121A1816016100EE43AD /* downArrowBlack.png in Resources */,
+				7540121B1816016100EE43AD /* upArrowBlack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -875,6 +916,11 @@
 				75DE9F6316EBECC7004AC7E3 /* AdminViewController.m in Sources */,
 				75DE9F7516EEBB54004AC7E3 /* TutorialViewController.m in Sources */,
 				75B6442317EBDDD000E3FA38 /* ZoomViewController.m in Sources */,
+				754012251816E6A700EE43AD /* AESCrypt.m in Sources */,
+				754012261816E6A700EE43AD /* NSData+Base64.m in Sources */,
+				754012271816E6A700EE43AD /* NSData+CommonCrypto.m in Sources */,
+				754012281816E6A700EE43AD /* NSString+Base64.m in Sources */,
+				75E276721818970800D3571C /* NSData+AES.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -988,7 +1034,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8364E923-86B7-4071-9F0E-2510C79DD77B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F3F0B0AF-F082-4543-89FB-31DB2CB0CB69";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos6.1;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1005,7 +1052,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos6.1;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

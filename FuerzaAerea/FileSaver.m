@@ -47,14 +47,45 @@
 		return NO;
 	}
 }
+//Método antiguo, sin encripción
+//-(NSDictionary*)getDictionary:(NSString*)name{
+//    return [datos objectForKey:name];
+//}
+//-(void)setDictionary:(NSDictionary*)dictionary withName:(NSString*)name{
+//	NSMutableDictionary *newData = [datos mutableCopy];
+//	[newData setObject:dictionary forKey:name];
+//	datos = newData;
+//	[self guardar];
+//}
+
 
 -(NSDictionary*)getDictionary:(NSString*)name{
-    return [datos objectForKey:name];
+    if ([name isEqualToString:@"User"]) {
+        return [datos objectForKey:name];
+    }
+    NSData *data=[datos objectForKey:name];
+    NSDictionary *userDic=[self getDictionary:@"User"];
+    NSData *dcipher=[data AES256DecryptWithKey:@"password"];
+    NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];
+    return dic;
 }
+
 -(void)setDictionary:(NSDictionary*)dictionary withName:(NSString*)name{
+    if ([name isEqualToString:@"User"]) {
+        NSMutableDictionary *newData = [datos mutableCopy];
+        [newData setObject:dictionary forKey:name];
+        datos = newData;
+        [self guardar];
+        return;
+    }
 	NSMutableDictionary *newData = [datos mutableCopy];
-	[newData setObject:dictionary forKey:name];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    NSDictionary *userDic=[self getDictionary:@"User"];
+    NSData *cipher = [data AES256EncryptWithKey:@"password"];
+	[newData setObject:cipher forKey:name];
+
 	datos = newData;
+    NSLog(@"Data: %@",datos);
 	[self guardar];
 }
 
@@ -74,6 +105,7 @@
 	datos = newData;
 	[self guardar];
 }*/
+
 -(NSString*)getUserWithName:(NSString*)name andPassword:(NSString*)password{
     if ([[datos objectForKey:name]isEqualToString:name]&&[[datos objectForKey:password]isEqualToString:password]) {
         NSString *namePass=[NSString stringWithFormat:@"%@%@",name,password];
