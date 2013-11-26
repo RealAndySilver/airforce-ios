@@ -1232,14 +1232,18 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
-    FileSaver *file=[[FileSaver alloc]init];
+    //FileSaver *file=[[FileSaver alloc]init];
     //NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64String:data]];
-    NSData *realData=[data dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    /*NSData *realData=[data dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *userDic=[file getDictionary:@"User"];
     NSData *cipher=[realData AES256EncryptWithKey:[userDic objectForKey:@"password"]];
-    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64EncodeData:cipher]];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64EncodeData:cipher]];*/
+    FileSaver *temp=[[FileSaver alloc]init];
+    NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
 
-    [server callServerWithMethod:@"RegistrarVuelo" andParameter:params];
+    [server callServerWithMethod:@"RegistrarVuelo" andParameter:cipher];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"Enviando Registro";
 }

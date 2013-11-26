@@ -113,6 +113,7 @@
 		75F0480D16713893002DB7B2 /* PrincipalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0480C16713893002DB7B2 /* PrincipalViewController.m */; };
 		75F04810167138B7002DB7B2 /* TripulacionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0480F167138B7002DB7B2 /* TripulacionViewController.m */; };
 		75F0481516716081002DB7B2 /* PiernasCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F0481416716081002DB7B2 /* PiernasCell.m */; };
+		75F63A8518443524000784B5 /* Cipher.m in Sources */ = {isa = PBXBuildFile; fileRef = 75F63A8418443524000784B5 /* Cipher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -310,6 +311,8 @@
 		75F0480F167138B7002DB7B2 /* TripulacionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripulacionViewController.m; sourceTree = "<group>"; };
 		75F0481316716081002DB7B2 /* PiernasCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiernasCell.h; sourceTree = "<group>"; };
 		75F0481416716081002DB7B2 /* PiernasCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiernasCell.m; sourceTree = "<group>"; };
+		75F63A8318443524000784B5 /* Cipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cipher.h; sourceTree = "<group>"; };
+		75F63A8418443524000784B5 /* Cipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cipher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -408,6 +411,7 @@
 				757352C416E04C5A0001F5EA /* logo-maletin.png */,
 				758711AC16814C7E00FEC282 /* icon.png */,
 				755F9F5016554F450002266B /* icon@2x.png */,
+				75F63A8218443502000784B5 /* Crypt */,
 				7540121C1816E69100EE43AD /* AESEncrypt */,
 				754E95161630D15A002FEB37 /* FuerzaAerea */,
 				754E950D1630D15A002FEB37 /* Products */,
@@ -721,6 +725,15 @@
 			name = SubViews;
 			sourceTree = "<group>";
 		};
+		75F63A8218443502000784B5 /* Crypt */ = {
+			isa = PBXGroup;
+			children = (
+				75F63A8318443524000784B5 /* Cipher.h */,
+				75F63A8418443524000784B5 /* Cipher.m */,
+			);
+			name = Crypt;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -766,7 +779,7 @@
 		754E95031630D15A002FEB37 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Andres Abril";
 			};
 			buildConfigurationList = 754E95061630D15A002FEB37 /* Build configuration list for PBXProject "FuerzaAerea" */;
@@ -921,6 +934,7 @@
 				754012271816E6A700EE43AD /* NSData+CommonCrypto.m in Sources */,
 				754012281816E6A700EE43AD /* NSString+Base64.m in Sources */,
 				75E276721818970800D3571C /* NSData+AES.m in Sources */,
+				75F63A8518443524000784B5 /* Cipher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1034,7 +1048,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8364E923-86B7-4071-9F0E-2510C79DD77B";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F3F0B0AF-F082-4543-89FB-31DB2CB0CB69";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1052,7 +1066,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1908FF2-A8CB-4AE6-A494-58A880B26E79";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

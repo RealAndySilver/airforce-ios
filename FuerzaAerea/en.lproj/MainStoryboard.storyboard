@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -3215,14 +3215,7 @@
         <class className="RegistroDeVueloViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RegistroDeVueloViewController.h"/>
             <relationships>
-                <relationship kind="action" name="armamentoPierna:"/>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="condicionesDeVuelo:"/>
-                <relationship kind="action" name="fadeInAeronaveImpactada:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="guardarRegistro:" candidateClass="UIButton"/>
                 <relationship kind="action" name="itinerario:"/>
-                <relationship kind="action" name="tipoDeVuelo:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="tripulacion:"/>
                 <relationship kind="outlet" name="aeronaveDosTextfield" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="aeronaveImpactadaSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="aeronaveUnoTextfield" candidateClass="UITextField"/>

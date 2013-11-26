@@ -103,13 +103,15 @@
         adVC=[self.storyboard instantiateViewControllerWithIdentifier:@"Admin"];
         [self.navigationController pushViewController:adVC animated:YES];
         return;
-
     }
+    FileSaver *temp=[[FileSaver alloc]init];
+    [temp setDictionary:[NSDictionary dictionaryWithObject:[IAmCoder md5:passTF.text] forKey:@"sha"] withName:@"Temp"];
+    
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder base64String:nombreTF.text],[IAmCoder base64String:passTF.text],[IAmCoder base64String:[DeviceInfo getUUDID]],[IAmCoder base64String:[DeviceInfo getMacAddress]]];
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:nombreTF.text withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:passTF.text withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]]];
     //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
     [server callServerWithMethod:@"login" andParameter:params];
 }

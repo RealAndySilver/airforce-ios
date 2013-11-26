@@ -15,17 +15,25 @@
 
 @interface IAmCoder : NSObject
 
-+(NSString*)encodeURL:(NSString*)url;
-+(NSString*)encodeCoordinate:(NSString*)coordinate;
++(NSString *)encodeURL:(NSString*)url;
++(NSString *)encodeCoordinate:(NSString*)coordinate;
 
-+(NSString*)decodeURL:(NSString*)url;
-+(NSString*)hash256:(NSString*)parameters;
-+(NSString*)base64EncodeString:(NSString *)strData;
-+ (NSString *) base64EncodeData: (NSData *) objData;
-+(NSString*)dateString;
-+(NSString*)base64String:(NSString*)str;
-+ (NSString*) sha256:(NSString *)clear;
-+ (NSString *) base64DecodeString: (NSString*) strBase64 ;
++(NSString *)decodeURL:(NSString*)url;
++(NSString *)hash256:(NSString*)parameters;
++(NSString *)base64EncodeString:(NSString *)strData;
++(NSString *) base64EncodeData: (NSData *) objData;
++(NSString *)dateString;
++(NSString *)base64String:(NSString*)str;
++(NSString *) sha256:(NSString *)clear;
++(NSString *) base64DecodeString: (NSString*) strBase64 ;
 +(NSString *)AESEncryptWithMessage:(NSString*)message andPassword:(NSString*)password;
 +(NSString *)AESDecryptWithMessage:(NSString*)message andPassword:(NSString*)password;
+
+//AES
++(NSData *) transform:(CCOperation) encryptOrDecrypt data:(NSData *) inputData andKey:(NSString*)key;
++(NSString *) encryptAndBase64:(NSString*)message withKey:(NSString*)key;
++(NSString *) base64AndDecrypt:(NSString*)message withKey:(NSString*)key;
++(NSData *) md5:(NSString *) stringToHash;
++(NSData *)data_base64AndDecrypt:(NSString *)message withKey:(NSString*)key;
++(NSData *)data_encryptAndBase64:(NSString *)message withKey:(NSString*)key;
 @end

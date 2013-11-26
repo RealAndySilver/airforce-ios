@@ -112,6 +112,8 @@
 	NSLog(@"Todos los datos recibidos");
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     
+    FileSaver *temp=[[FileSaver alloc]init];
+    
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
     NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
@@ -125,10 +127,12 @@
         //NSLog(@"Json %@",json_string);
         //login,ordenVuelo,
         if ([tempMethod isEqualToString:@"login"]) {
-            json_string=[IAmCoder base64DecodeString:json_string];
+            //json_string=[IAmCoder base64DecodeString:json_string];
+            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
         }
         if ([tempMethod isEqualToString:@"ordenVuelo"]) {
-            json_string=[IAmCoder base64DecodeString:json_string];
+            //json_string=[IAmCoder base64DecodeString:json_string];
+            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
             NSLog(@"json %@",json_string);
             resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
             [caller performSelector:@selector(receivedDataFromServer:) withObject:self];

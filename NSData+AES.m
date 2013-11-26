@@ -8,10 +8,12 @@
 
 #import "NSData+AES.h"
 #import <CommonCrypto/CommonCryptor.h>
-
+#import "NSData+CommonCrypto.h"
 @implementation NSData (AES)
 - (NSData *)AES256EncryptWithKey:(NSString *)key {
-	// 'key' should be 32 bytes for AES256, will be null-padded otherwise
+    //const char iv[16] = { 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd,   0xcd, 0xcd, 0xcd, 0xcd };
+	//NSData *iv = [@"1010101010101010" dataUsingEncoding:NSUTF8StringEncoding];
+    // 'key' should be 32 bytes for AES256, will be null-padded otherwise
 	char keyPtr[kCCKeySizeAES256+1]; // room for terminator (unused)
 	bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
 	
@@ -25,10 +27,11 @@
 	//That's why we need to add the size of one block here
 	size_t bufferSize = dataLength + kCCBlockSizeAES128;
 	void *buffer = malloc(bufferSize);
-	
+    NSData *datax=[key dataUsingEncoding:NSUTF8StringEncoding];
+	NSLog(@"Soy el password: %@",datax);
 	size_t numBytesEncrypted = 0;
     //kCCAlgorithmAES128
-	CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCModeCTR, kCCOptionPKCS7Padding,
+	CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                                           keyPtr, kCCKeySizeAES256,
                                           NULL /* initialization vector (optional) */,
                                           [self bytes], dataLength, /* input */
@@ -44,7 +47,9 @@
 }
 
 - (NSData *)AES256DecryptWithKey:(NSString *)key {
-	// 'key' should be 32 bytes for AES256, will be null-padded otherwise
+    //const char iv[16] = { 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd, 0xcd,   0xcd, 0xcd, 0xcd, 0xcd };
+	//NSData *iv = [@"1010101010101010" dataUsingEncoding:NSUTF8StringEncoding];
+    // 'key' should be 32 bytes for AES256, will be null-padded otherwise
 	char keyPtr[kCCKeySizeAES256+1]; // room for terminator (unused)
 	bzero(keyPtr, sizeof(keyPtr)); // fill with zeroes (for padding)
 	
@@ -58,11 +63,11 @@
 	//That's why we need to add the size of one block here
 	size_t bufferSize = dataLength + kCCBlockSizeAES128;
 	void *buffer = malloc(bufferSize);
-	
+	//kCCOptionPKCS7Padding
 	size_t numBytesDecrypted = 0;
-	CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCModeCTR, kCCOptionPKCS7Padding,
+	CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                                           keyPtr, kCCKeySizeAES256,
-                                          NULL /* initialization vector (optional) */,
+                                          NULL/* initialization vector (optional) */,
                                           [self bytes], dataLength, /* input */
                                           buffer, bufferSize, /* output */
                                           &numBytesDecrypted);

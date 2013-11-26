@@ -1,5 +1,6 @@
 
 #import "FileSaver.h"
+#import "IAmCoder.h"
 #define DATAFILENAME @"savefile.plist"
 #define FRIENDLISTFILE @"friendList.plist"
 
@@ -60,30 +61,41 @@
 
 
 -(NSDictionary*)getDictionary:(NSString*)name{
-    if ([name isEqualToString:@"User"]) {
+    if ([name isEqualToString:@"User"] || [name isEqualToString:@"Temp"]) {
         return [datos objectForKey:name];
     }
-    NSData *data=[datos objectForKey:name];
+    /*NSData *data=[datos objectForKey:name];
     NSDictionary *userDic=[self getDictionary:@"User"];
     NSData *dcipher=[data AES256DecryptWithKey:@"password"];
+    NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];*/
+    
+    NSData *dcipher=[[IAmCoder base64AndDecrypt:[datos objectForKey:name]
+                                         withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]]
+                      dataUsingEncoding:NSUTF8StringEncoding];
+    
     NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];
+    
     return dic;
 }
 
 -(void)setDictionary:(NSDictionary*)dictionary withName:(NSString*)name{
-    if ([name isEqualToString:@"User"]) {
+    if ([name isEqualToString:@"User"] || [name isEqualToString:@"Temp"]) {
         NSMutableDictionary *newData = [datos mutableCopy];
         [newData setObject:dictionary forKey:name];
         datos = newData;
         [self guardar];
         return;
     }
-	NSMutableDictionary *newData = [datos mutableCopy];
+	/*NSMutableDictionary *newData = [datos mutableCopy];
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
-    NSDictionary *userDic=[self getDictionary:@"User"];
     NSData *cipher = [data AES256EncryptWithKey:@"password"];
-	[newData setObject:cipher forKey:name];
-
+	[newData setObject:cipher forKey:name];*/
+    
+    NSMutableDictionary *newData = [datos mutableCopy];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    NSData *cipher = [IAmCoder data_encryptAndBase64:[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding] withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]];
+    [newData setObject:cipher forKey:name];
+    
 	datos = newData;
     NSLog(@"Data: %@",datos);
 	[self guardar];

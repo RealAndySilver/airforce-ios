@@ -8,7 +8,8 @@
 
 #import "IAmCoder.h"
 #import "NSData+AES.h"
-
+#import "NSData+Base64.h"
+#import "NSString+Base64.h"
 @implementation IAmCoder
 static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const short _base64DecodingTable[256] = {
@@ -246,10 +247,75 @@ static const short _base64DecodingTable[256] = {
     return date3;
 }
 #pragma mark - AES Crypt
-+(NSString *)AESEncryptWithMessage:(NSString *)message andPassword:(NSString *)password{
-    return [AESCrypt encrypt:message password:password];
+//+(NSString *)AESEncryptWithMessage:(NSString *)message andPassword:(NSString *)password{
+//    return [AESCrypt encrypt:message password:password];
+//}
+//+(NSString *)AESDecryptWithMessage:(NSString *)message andPassword:(NSString *)password{
+//    return [AESCrypt decrypt:message password:password];
+//}
++ (NSData *) transform:(CCOperation) encryptOrDecrypt data:(NSData *) inputData andKey:(NSString*)key{
+    // kCCKeySizeAES128 = 16 bytes
+    // CC_MD5_DIGEST_LENGTH = 16 bytes
+    NSData* secretKey = [IAmCoder md5:key];
+    CCCryptorRef cryptor = NULL;
+    CCCryptorStatus status = kCCSuccess;
+    uint8_t iv[kCCBlockSizeAES128];
+    memset((void *) iv, 0x0, (size_t) sizeof(iv));
+    status = CCCryptorCreate(encryptOrDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
+                             [secretKey bytes], kCCKeySizeAES128, iv, &cryptor);
+    if (status != kCCSuccess) {
+        return nil;
+    }
+    size_t bufsize = CCCryptorGetOutputLength(cryptor, (size_t)[inputData length], true);
+    void * buf = malloc(bufsize * sizeof(uint8_t));
+    memset(buf, 0x0, bufsize);
+    size_t bufused = 0;
+    size_t bytesTotal = 0;
+    status = CCCryptorUpdate(cryptor, [inputData bytes], (size_t)[inputData length],
+                             buf, bufsize, &bufused);
+    if (status != kCCSuccess) {
+        free(buf);
+        CCCryptorRelease(cryptor);
+        return nil;
+    }
+    bytesTotal += bufused;
+    status = CCCryptorFinal(cryptor, buf + bufused, bufsize - bufused, &bufused);
+    if (status != kCCSuccess) {
+        free(buf);
+        CCCryptorRelease(cryptor);
+        return nil;
+    }
+    bytesTotal += bufused;
+    CCCryptorRelease(cryptor);
+    return [NSData dataWithBytesNoCopy:buf length:bytesTotal];
 }
-+(NSString *)AESDecryptWithMessage:(NSString *)message andPassword:(NSString *)password{
-    return [AESCrypt decrypt:message password:password];
+
++ (NSData *) md5:(NSString *) stringToHash {
+    
+    const char *src = [stringToHash UTF8String];
+    
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    
+    CC_MD5(src, strlen(src), result);
+    
+    return [NSData dataWithBytes:result length:CC_MD5_DIGEST_LENGTH];
+    //return [stringToHash dataUsingEncoding:NSUTF8StringEncoding];
+}
+
++(NSString*)encryptAndBase64:(NSString *)message withKey:(NSString*)key{
+    NSData *encrypted = [self transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
+    NSLog(@"Encriptado Hexa: %@",encrypted);
+    return [NSString base64StringFromData:encrypted length:[encrypted length]];
+}
++(NSString *)base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
+    NSData *decrypted = [self transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
+    NSLog(@"Desencriptado Hexa: %@",decrypted);
+    return [[NSString alloc]initWithData:decrypted encoding:NSUTF8StringEncoding];
+}
++(NSData *)data_base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
+    return [self transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
+}
++(NSData*)data_encryptAndBase64:(NSString *)message withKey:(NSString*)key{
+    return [self transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
 }
 @end
