@@ -62,6 +62,8 @@
     
     NSDictionary *tripulacion=[json objectWithString:stringFour error:nil];
     
+    //NSLog(@"El stringo %@",jsonDic);
+
     
     [jsonDic setObject:[consultaPrincipal objectForKey:@"ConsultaPrincipalOrdenVuelo "] forKey:@"Principal"];
     

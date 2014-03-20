@@ -10,6 +10,7 @@
 #import "NSData+AES.h"
 #import "NSData+Base64.h"
 #import "NSString+Base64.h"
+#import "NSData+CommonCrypto.h"
 @implementation IAmCoder
 static const char _base64EncodingTable[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 static const short _base64DecodingTable[256] = {
@@ -257,10 +258,13 @@ static const short _base64DecodingTable[256] = {
     // kCCKeySizeAES128 = 16 bytes
     // CC_MD5_DIGEST_LENGTH = 16 bytes
     NSData* secretKey = [IAmCoder md5:key];
+    //NSData* secretKey = [[key dataUsingEncoding:NSUTF8StringEncoding] SHA256Hash];
     CCCryptorRef cryptor = NULL;
     CCCryptorStatus status = kCCSuccess;
-    uint8_t iv[kCCBlockSizeAES128];
-    memset((void *) iv, 0x0, (size_t) sizeof(iv));
+    //uint8_t iv[kCCBlockSizeAES128];
+    //memset((void *) iv, 0x0, (size_t) sizeof(iv));
+    const char iv[16] = {1,1,0,1,0,1,0,0,0,1,0,1,0,1,1,1};
+    NSLog(@"CHAR %s llave hash %@",iv,secretKey);
     status = CCCryptorCreate(encryptOrDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                              [secretKey bytes], kCCKeySizeAES128, iv, &cryptor);
     if (status != kCCSuccess) {
@@ -312,10 +316,19 @@ static const short _base64DecodingTable[256] = {
     NSLog(@"Desencriptado Hexa: %@",decrypted);
     return [[NSString alloc]initWithData:decrypted encoding:NSUTF8StringEncoding];
 }
-+(NSData *)data_base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
-    return [self transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
++(NSData *)data_decrypt:(NSData *)data withKey:(NSString*)key{
+    return [self transform:kCCDecrypt data:data andKey:key];
 }
-+(NSData*)data_encryptAndBase64:(NSString *)message withKey:(NSString*)key{
-    return [self transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
++(NSData*)data_encrypt:(NSData *)data withKey:(NSString*)key{
+    return [self transform:kCCEncrypt data:data andKey:key];
+}
+#pragma mark - fecha
++(NSString*)dateKey{
+    NSDate * selected = [NSDate date];
+    //NSString * dateString = [selected description];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-yyyy"];//HH:mm
+    NSString *strDate = [formatter stringFromDate:selected];
+    return strDate;
 }
 @end

@@ -173,7 +173,7 @@
         if (tempArregloDeOperaciones.count) {
             arregloDeOperacion=[[NSMutableArray alloc]init];
             for (int i=0; i<tempArregloDeOperaciones.count; i++) {
-                Operacion *op=[[Operacion alloc]initWithDictionary:[tempArregloDeOperaciones objectAtIndex:i]];
+                Operacion *op=[[Operacion alloc] initWithDictionary:[tempArregloDeOperaciones objectAtIndex:i]];
                 [arregloDeOperacion addObject:op];
             }
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"descripcion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];

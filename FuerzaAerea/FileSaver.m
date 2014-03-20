@@ -61,7 +61,19 @@
 
 
 -(NSDictionary*)getDictionary:(NSString*)name{
-    if ([name isEqualToString:@"User"] || [name isEqualToString:@"Temp"]) {
+    if (1==1) {
+        return [datos objectForKey:name];
+    }
+    if ([name isEqualToString:@"User"] ||
+        [name isEqualToString:@"Temp"] ||
+        [name isEqualToString:@"Notams"] ||
+        [name isEqualToString:@"metars"] ||
+        [name isEqualToString:@"enemigos"] ||
+        [name isEqualToString:@"objetivos"] ||
+        [name isEqualToString:@"operaciones"] ||
+        [name isEqualToString:@"lista"] ||
+        [name isEqualToString:@"municipios"] ||
+        [name isEqualToString:@"ArchivosGuardados"]){
         return [datos objectForKey:name];
     }
     /*NSData *data=[datos objectForKey:name];
@@ -69,17 +81,33 @@
     NSData *dcipher=[data AES256DecryptWithKey:@"password"];
     NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];*/
     
-    NSData *dcipher=[[IAmCoder base64AndDecrypt:[datos objectForKey:name]
-                                         withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]]
-                      dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *dcipher=[IAmCoder data_decrypt:[datos objectForKey:name] withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]];
     
-    NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];
-    
+    //NSDictionary *dic = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:dcipher];
+    NSError *error;
+    NSDictionary *dic =[NSJSONSerialization JSONObjectWithData: dcipher options:0 error:&error];
+    //NSLog(@"Data recuperada %@", dic);
     return dic;
 }
 
 -(void)setDictionary:(NSDictionary*)dictionary withName:(NSString*)name{
-    if ([name isEqualToString:@"User"] || [name isEqualToString:@"Temp"]) {
+    if (1==1) {
+        NSMutableDictionary *newData = [datos mutableCopy];
+        [newData setObject:dictionary forKey:name];
+        datos = newData;
+        [self guardar];
+        return;
+    }
+    if ([name isEqualToString:@"User"] ||
+        [name isEqualToString:@"Temp"] ||
+        [name isEqualToString:@"Notams"] ||
+        [name isEqualToString:@"metars"] ||
+        [name isEqualToString:@"enemigos"] ||
+        [name isEqualToString:@"objetivos"] ||
+        [name isEqualToString:@"operaciones"] ||
+        [name isEqualToString:@"lista"] ||
+        [name isEqualToString:@"municipios"] ||
+        [name isEqualToString:@"ArchivosGuardados"]) {
         NSMutableDictionary *newData = [datos mutableCopy];
         [newData setObject:dictionary forKey:name];
         datos = newData;
@@ -92,12 +120,14 @@
 	[newData setObject:cipher forKey:name];*/
     
     NSMutableDictionary *newData = [datos mutableCopy];
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
-    NSData *cipher = [IAmCoder data_encryptAndBase64:[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding] withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]];
+    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    NSData *data=[NSJSONSerialization dataWithJSONObject:dictionary options:0 error:nil];
+    //NSLog(@"Data %@", data);
+    NSData *cipher = [IAmCoder data_encrypt:data withKey:[[self getDictionary:@"Temp"] objectForKey:@"sha"]];
     [newData setObject:cipher forKey:name];
     
 	datos = newData;
-    NSLog(@"Data: %@",datos);
+    //NSLog(@"Data: %@",datos);
 	[self guardar];
 }
 

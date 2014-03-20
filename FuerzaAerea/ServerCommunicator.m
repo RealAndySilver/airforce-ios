@@ -45,9 +45,13 @@
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
         if ([ip isEqualToString:@""]) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+
         }
         else{
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Listas?xsd=1",ip]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+
         }
     }
     else{
@@ -55,12 +59,18 @@
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
         if ([ip isEqualToString:@""]) {
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+
         }
         else{
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Inicio?wsdl",ip]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+
         }
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://174.120.23.123/~api/archivos2.json"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.2.46:8080/ServiciosMaletin/WS_Inicio?wsdl"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.2.46:8080/ServiciosMaletin/WS_Inicio?wsdl"]];
     }
     NSLog(@"URL -> %@",url);
     NSString *soapAction=[NSString stringWithFormat:@"http://ws.sinte.co/%@",method];
@@ -112,7 +122,7 @@
 	NSLog(@"Todos los datos recibidos");
     NSString *theXML = [[NSString alloc] initWithBytes:[webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     
-    FileSaver *temp=[[FileSaver alloc]init];
+    //    FileSaver *temp=[[FileSaver alloc]init];
     
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
     NSLog(@"dic %@",theXML);
@@ -128,15 +138,21 @@
         //login,ordenVuelo,
         if ([tempMethod isEqualToString:@"login"]) {
             //json_string=[IAmCoder base64DecodeString:json_string];
-            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
+            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[IAmCoder dateKey]];
         }
         if ([tempMethod isEqualToString:@"ordenVuelo"]) {
             //json_string=[IAmCoder base64DecodeString:json_string];
-            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
-            NSLog(@"json %@",json_string);
-            resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
-            [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
-            return;
+            json_string=[IAmCoder base64AndDecrypt:json_string withKey:[IAmCoder dateKey]];
+            if (json_string.length>0) {
+                NSLog(@"json %@",json_string);
+                resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
+                [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
+                return;
+            }
+            else{
+                [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
+                return;
+            }
         }
         else if ([tempMethod isEqualToString:@"listas"]){
             NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
@@ -144,7 +160,7 @@
         }
         NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
         //NSMutableDictionary *dit=[json objectWithString:theXML error:nil];
-
+        
         resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
         [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
     }

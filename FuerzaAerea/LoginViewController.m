@@ -7,6 +7,8 @@
 //
 
 #import "LoginViewController.h"
+#import "NSData+Base64.h"
+#import "NSString+Base64.h"
 #import <objc/message.h>
 #define USERNAME @"omar"
 #define PASSWORD @"sinte"
@@ -105,14 +107,21 @@
         return;
     }
     FileSaver *temp=[[FileSaver alloc]init];
-    [temp setDictionary:[NSDictionary dictionaryWithObject:[IAmCoder md5:passTF.text] forKey:@"sha"] withName:@"Temp"];
+    //[temp setDictionary:[NSDictionary dictionaryWithObject:[NSString base64StringFromData:[IAmCoder md5:passTF.text] length:[[IAmCoder md5:passTF.text] length]] forKey:@"sha"] withName:@"Temp"];
+    [temp setDictionary:[NSDictionary dictionaryWithObject:@"WVRJjNZ2Ml5yE0sC" forKey:@"sha"] withName:@"Temp"];
+
     
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando", nil);
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:nombreTF.text withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:passTF.text withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]]];
-    //NSString *params=[NSString stringWithFormat:@"<imei>%@</imei><serial>%@</serial>",IMEI,SERIAL];
+    //NSString *key=[[temp getDictionary:@"Temp"] objectForKey:@"sha"] ;
+    NSString *key=[IAmCoder dateKey];
+    NSLog(@"DateKey == %@",key);
+    NSLog(@"la llave %@",key);
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:nombreTF.text withKey:key],[IAmCoder encryptAndBase64:passTF.text withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:key]];
+    //Zif1sbIcOxHWcei/RXccwg==</user><pass>IJaKbJAepuX9WPAOdqLvdg==
+    //NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:@"siio" withKey:key],[IAmCoder encryptAndBase64:@"siioplmnko0" withKey:key],[IAmCoder encryptAndBase64:@"11" withKey:key],[IAmCoder encryptAndBase64:@"1" withKey:key]];
     [server callServerWithMethod:@"login" andParameter:params];
 }
 -(void)loadNextViewController{

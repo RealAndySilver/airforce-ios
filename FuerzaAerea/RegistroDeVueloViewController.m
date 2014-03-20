@@ -296,8 +296,8 @@
     FileSaver *file=[[FileSaver alloc]init];
     if ([file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad]) {
         //NSDictionary *masterDic=[file getDictionary:@"registroDeVuelo"];
-        NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];        if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
-
+        NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];
+        if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
         if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
             NSArray *array=[masterDic objectForKey:@"ArregloTripulacion"];
             NSDictionary *dic=[array objectAtIndex:i];
@@ -877,9 +877,18 @@
     if(unidadAsumeTextfield.text){[generalDic setObject:unidadAsumeTextfield.text forKey:@"UnidadAsume"];}
     if(aeronaveUnoTextfield.text){[generalDic setObject:aeronaveUnoTextfield.text forKey:@"Matricula"];}
     if(aeronaveDosTextfield.text){[generalDic setObject:aeronaveDosTextfield.text forKey:@"Alias"];}
-    if(grupoTextfield.text){[generalDic setObject:grupoTextfield.text forKey:@"Grupo"];}
-    if(unidadQueCreaTextfield.text){[generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
-    
+    if(grupoTextfield.text.length>0){[generalDic setObject:grupoTextfield.text forKey:@"Grupo"];}
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"El campo 'Grupo' no debe estar vacío." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    if(unidadQueCreaTextfield.text.length>0){[generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
+    else{
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"El campo 'Unidad que crea' no debe estar vacío." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
     
     if(requerimientosTextfield.text){[generalDic setObject:requerimientosTextfield.text forKey:@"Requerimientos"];}
     if(observacionTextfield.text){[generalDic setObject:observacionTextfield.text forKey:@"Observacion"];}
@@ -1240,10 +1249,13 @@
     NSDictionary *userDic=[file getDictionary:@"User"];
     NSData *cipher=[realData AES256EncryptWithKey:[userDic objectForKey:@"password"]];
     NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",[IAmCoder base64EncodeData:cipher]];*/
-    FileSaver *temp=[[FileSaver alloc]init];
-    NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
+    //FileSaver *temp=[[FileSaver alloc]init];
+    //NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[[temp getDictionary:@"Temp"] objectForKey:@"sha"]];
+    NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[IAmCoder dateKey]];
 
-    [server callServerWithMethod:@"RegistrarVuelo" andParameter:cipher];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",cipher];
+    
+    [server callServerWithMethod:@"RegistrarVuelo" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"Enviando Registro";
 }

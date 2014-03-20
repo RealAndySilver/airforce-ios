@@ -100,8 +100,11 @@
     NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
     [dic setObject:@"true" forKey:@"Offline"];
     [archivo validarDiccionarioDeArchivos:dic];
-    
-    
+//    NSString *json_string = @"{\"ConsultaPrincipalOrdenVuelo \":[{\"idOrdenVuelo\":\"672261\",\"idConsecutivoUnidad\":\"11\",\"unidad\":\"COFAC\",\"unidadAsume\":\"COFAC\",\"idUnidad\":\"135\",\"idUnidadAsume\":\"135\",\"fecha\":\"13-02-2014\",\"horaDespegue\":\"11:37:00\",\"matricula\":\"1004\",\"imprimirCola\":\"S\",\"equipo\":\"C-130\",\"itinerario\":\"SKBO-AREA-SKBO\",\"combustible\":\"100\",\"instrucciones\":\"EL TRIPULANTE DEBE COMUNICARSE EN LA CABECERA DE LA PISTA \nESTE ES UN EXAMEN SIIO\nESPERO HABER APRENDIDO LO ENSEÑADO\nTS CIFUENTES RAUL\nTS NIÑO C JUANC\"}]}{\"ConsultaPiernas \":[{\"idOrden\":\"672261\",\"desdeAerodromo\":\"BOGOTA - EL DORADO\",\"idDe\":\"617\",\"idA\":\"617\",\"hastaAerodromo\":\"BOGOTA - EL DORADO\",\"entidadApoyada\":\"ACCION INTEGRAL COORDINADA\",\"identidadApoyada\":\"15888\",\"plan\":\"ESPADA DE HONOR II\",\"id_plan\":\"1308105\",\"operacionTipo\":\"DELTA3-TRANSPORTE AEREO\",\"id_operacionTipo\":\"3131\",\"operacion\":\"ESPADA DE HONOR (JOA)\",\"id_operacion\":\"23267\",\"piernaNumero\":\"1\",\"entidad\":\"ACCION INTEGRAL COORDINADA\",\"id_entidad\":\"15888\",\"descripcionMision\":\"prueba\",\"de\":\"SKBO\",\"a\":\"SKBO\"},{\"idOrden\":\"672261\",\"desdeAerodromo\":\"BOGOTA - EL DORADO\",\"idDe\":\"617\",\"idA\":\"617\",\"hastaAerodromo\":\"BOGOTA - EL DORADO\",\"entidadApoyada\":\"ACCION INTEGRAL COORDINADA\",\"identidadApoyada\":\"15888\",\"plan\":\"ESPADA DE HONOR II\",\"id_plan\":\"1308105\",\"operacionTipo\":\"DELTA3-TRANSPORTE AEREO\",\"id_operacionTipo\":\"3131\",\"operacion\":\"ESPADA DE HONOR (JOA)\",\"id_operacion\":\"23267\",\"piernaNumero\":\"2\",\"entidad\":\"ACCION INTEGRAL COORDINADA\",\"id_entidad\":\"15888\",\"descripcionMision\":\"PRUEBA\",\"de\":\"SKBO\",\"a\":\"SKBO\"}]}{\"Armamento \":[{\"idOrden\":\"672261\",\"idArmamento\":\"13\",\"armamento\":\"BENGALA INFRARROJA LUU-19\",\"cantidad\":\"10\"},{\"idOrden\":\"672261\",\"idArmamento\":\"12\",\"armamento\":\"BENGALA LUU2B/B-LUU2B/C-LUU-2D/B\",\"cantidad\":\"10\"}]}{\"Tripulacion \":[{\"idRegistro\":\"672261\",\"id_persona\":\"9405\",\"cargo\":\"PIL\",\"grado\":\"TC\",\"persona\":\"ORTIZ JIMENEZ JORGE ALBERTO\",\"codigo\":\"94365965\"},{\"idRegistro\":\"672261\",\"id_persona\":\"13121\",\"cargo\":\"COP\",\"grado\":\"MY\",\"persona\":\"APONTE RODRIGUEZ JHON ALEXANDER\",\"codigo\":\"94531285\"}]}";
+//    NSDictionary *dict=[SerializadorOV getDiccionarioFronJsonString:json_string];
+//    FileSaver *save=[[FileSaver alloc]init];
+//    [save setDictionary:dict withName:@"ordenDeVuelo"];
+//    ordenDeVuelo=[[ModeladorDeOrdenDeVuelo alloc]initWithDictionary:dict];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -341,8 +344,10 @@
     server.tag=6;
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=NSLocalizedString(@"Cargando Orden de Vuelo", nil);
-    
-    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",[IAmCoder base64String:ovTF.text],[IAmCoder base64String:matriTF.text]];
+    //FileSaver *file=[[FileSaver alloc]init];
+    //NSString *key=[[file getDictionary:@"Temp"]objectForKey:@"sha"];
+    NSString *key=[IAmCoder dateKey];
+    NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",[IAmCoder encryptAndBase64:ovTF.text withKey:key],[IAmCoder encryptAndBase64:matriTF.text withKey:key]];
     
     [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     
