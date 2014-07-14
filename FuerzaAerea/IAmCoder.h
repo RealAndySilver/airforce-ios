@@ -31,8 +31,11 @@
 
 //AES
 +(NSData *)transform:(CCOperation) encryptOrDecrypt data:(NSData *) inputData andKey:(NSString*)key;
++(NSData *)ecb_transform:(CCOperation) encryptOrDecrypt data:(NSData *) inputData andKey:(NSString*)key;
 +(NSString *)encryptAndBase64:(NSString*)message withKey:(NSString*)key;
 +(NSString *)base64AndDecrypt:(NSString*)message withKey:(NSString*)key;
++(NSString *)ecb_encryptAndBase64:(NSString*)message withKey:(NSString*)key;
++(NSString *)ecb_base64AndDecrypt:(NSString*)message withKey:(NSString*)key;
 +(NSData *)md5:(NSString *) stringToHash;
 +(NSData *)data_decrypt:(NSData *)data withKey:(NSString*)key;
 +(NSData *)data_encrypt:(NSData *)data withKey:(NSString*)key;

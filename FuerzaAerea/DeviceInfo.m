@@ -352,7 +352,8 @@ static mach_msg_type_number_t numCpuInfo, numPrevCpuInfo;
     return countryCode;
 }
 +(NSString *)getUUDID{
-    NSString *res=[[UIDevice currentDevice]uniqueIdentifier];
+    //NSString *res = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSString *res =[[UIDevice currentDevice]uniqueIdentifier];
     return res;
 }
 @end
