@@ -1064,8 +1064,8 @@
 				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B5B38422-74CA-4591-90B2-747D86991B98";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B5B38422-74CA-4591-90B2-747D86991B98";
+				PROVISIONING_PROFILE = "8d44f29f-eda4-4701-a2ff-9fc06d5d1b3d";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8d44f29f-eda4-4701-a2ff-9fc06d5d1b3d";
 				SDKROOT = iphoneos6.1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
@@ -1132,13 +1132,15 @@
 		75E9B3B319745DAE00D64FD0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: fuerza aerea colombiana";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: fuerza aerea colombiana";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FuerzaAerea/FuerzaAerea-Prefix.pch";
 				INFOPLIST_FILE = "FuerzaAerea/FuerzaAerea-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ff3b546c-5199-4251-98d0-5ecc1ae5d02d";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ff3b546c-5199-4251-98d0-5ecc1ae5d02d";
 				SDKROOT = iphoneos6.1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

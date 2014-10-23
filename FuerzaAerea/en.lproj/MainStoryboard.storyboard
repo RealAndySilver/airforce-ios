@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="13A603" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="13E28" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="rDT-fp-d3t">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -131,6 +131,20 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nzE-yS-VbY">
+                                <rect key="frame" x="388" y="625" width="576" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Si la aplicación es borrada será necesario agregar de nuevo este número al sistema" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="leM-DT-1hC">
+                                <rect key="frame" x="488" y="654" width="476" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -141,6 +155,7 @@
                         <outlet property="container" destination="eO4-Nu-pzy" id="wB5-wI-afQ"/>
                         <outlet property="nombreTF" destination="Svy-QY-b3b" id="f6h-Gx-ezZ"/>
                         <outlet property="passTF" destination="qbL-HA-zuj" id="Zj2-yg-iSO"/>
+                        <outlet property="vendorLabel" destination="nzE-yS-VbY" id="6Ql-gW-8MK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
@@ -3153,6 +3168,7 @@
                 <relationship kind="outlet" name="container" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nombreTF" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="passTF" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="vendorLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="OrdenDeVueloMenuViewController" superclassName="UIViewController">
@@ -3215,7 +3231,6 @@
         <class className="RegistroDeVueloViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RegistroDeVueloViewController.h"/>
             <relationships>
-                <relationship kind="action" name="itinerario:"/>
                 <relationship kind="outlet" name="aeronaveDosTextfield" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="aeronaveImpactadaSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="aeronaveUnoTextfield" candidateClass="UITextField"/>

@@ -60,6 +60,8 @@
     else{
         NSLog(@"Si Hay números");
     }*/
+
+    vendorLabel.text = [NSString stringWithFormat:@"ID Único: %@",[UIDevice currentDevice].identifierForVendor.UUIDString];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -118,7 +120,7 @@
     //NSString *key=[[temp getDictionary:@"Temp"] objectForKey:@"sha"] ;
     NSString *key=[IAmCoder dateKey];
     NSLog(@"DateKey == %@",key);
-    NSLog(@"la llave %@",key);
+    NSLog(@"la llave %@",[DeviceInfo getUUDID]);
     NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:nombreTF.text withKey:key],[IAmCoder encryptAndBase64:passTF.text withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:key]];
     //Zif1sbIcOxHWcei/RXccwg==</user><pass>IJaKbJAepuX9WPAOdqLvdg==
     //NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:@"siio" withKey:key],[IAmCoder encryptAndBase64:@"siioplmnko0" withKey:key],[IAmCoder encryptAndBase64:@"11" withKey:key],[IAmCoder encryptAndBase64:@"1" withKey:key]];
