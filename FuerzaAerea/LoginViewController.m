@@ -65,8 +65,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    frameInicial=CGRectMake(733, 187, 231, 173);
-    frameFinal=CGRectMake(733, 323, 231, 173);
+    frameInicial=CGRectMake(733, 187, 231, 205);
+    frameFinal=CGRectMake(733, 323, 231, 205);
 }
 - (void)didReceiveMemoryWarning
 {
@@ -121,9 +121,10 @@
     NSString *key=[IAmCoder dateKey];
     NSLog(@"DateKey == %@",key);
     NSLog(@"la llave %@",[DeviceInfo getUUDID]);
-    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:nombreTF.text withKey:key],[IAmCoder encryptAndBase64:passTF.text withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:key]];
+    NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress><passcode>%@</passcode>",[IAmCoder encryptAndBase64:nombreTF.text withKey:key],[IAmCoder encryptAndBase64:passTF.text withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:key], [IAmCoder encryptAndBase64:tokenTF.text withKey:key]];
     //Zif1sbIcOxHWcei/RXccwg==</user><pass>IJaKbJAepuX9WPAOdqLvdg==
     //NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:@"siio" withKey:key],[IAmCoder encryptAndBase64:@"siioplmnko0" withKey:key],[IAmCoder encryptAndBase64:@"11" withKey:key],[IAmCoder encryptAndBase64:@"1" withKey:key]];
+    NSLog(@"Params: %@",params);
     [server callServerWithMethod:@"login" andParameter:params];
 }
 -(void)loadNextViewController{

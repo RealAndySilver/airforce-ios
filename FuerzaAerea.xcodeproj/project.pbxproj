@@ -771,7 +771,7 @@
 			name = FuerzaAereaTests;
 			productName = FuerzaAereaTests;
 			productReference = 754E95331630D15A002FEB37 /* FuerzaAereaTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -779,6 +779,7 @@
 		754E95031630D15A002FEB37 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0610;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Andres Abril";
 			};

@@ -23,6 +23,7 @@
     IBOutlet UIView *container;
     IBOutlet UITextField *nombreTF;
     IBOutlet UITextField *passTF;
+    IBOutlet UITextField *tokenTF;
     IBOutlet UILabel *vendorLabel;
     MBProgressHUD *hud;
 }
