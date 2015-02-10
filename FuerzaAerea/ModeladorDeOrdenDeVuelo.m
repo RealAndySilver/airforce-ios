@@ -8,7 +8,7 @@
 
 #import "ModeladorDeOrdenDeVuelo.h"
 @implementation ModeladorDeOrdenDeVuelo
-@synthesize principal,arregloDeArmamento,arregloDePiernas,arregloDeTripulacion;
+@synthesize principal,arregloDeArmamento,arregloDePiernas,arregloDeTripulacion, arregloDeSanidad,arregloDeTeplas;
 -(id)initWithDictionary:(NSDictionary*)dictionary{
     if (self =[super init]) {
         principal = [[Principal alloc]initWithDictionary:[[dictionary objectForKey:@"Principal"]objectAtIndex:0]];
@@ -36,6 +36,22 @@
             for (int i=0; i<tempTripulacion.count; i++) {
                 Tripulacion *tripulacion=[[Tripulacion alloc]initWithDictionary:[tempTripulacion objectAtIndex:i]];
                 [arregloDeTripulacion addObject:tripulacion];
+            }
+        }
+        NSArray *tempTeplas=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"Teplas"]];
+        if (tempTeplas.count) {
+            arregloDeTeplas=[[NSMutableArray alloc]init];
+            for (int i=0; i<arregloDeTeplas.count; i++) {
+                Teplas *teplas=[[Teplas alloc]initWithDictionary:[tempTeplas objectAtIndex:i]];
+                [arregloDeTeplas addObject:teplas];
+            }
+        }
+        NSArray *tempSanidad=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"Sanidad"]];
+        if (tempSanidad.count) {
+            arregloDeSanidad=[[NSMutableArray alloc]init];
+            for (int i=0; i<arregloDeSanidad.count; i++) {
+                Sanidad *sanidad=[[Sanidad alloc]initWithDictionary:[tempSanidad objectAtIndex:i]];
+                [arregloDeSanidad addObject:sanidad];
             }
         }
     }

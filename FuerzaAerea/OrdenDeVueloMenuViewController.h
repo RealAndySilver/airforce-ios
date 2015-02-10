@@ -15,6 +15,8 @@
 #import "PiernasTableSubView.h"
 #import "ArmamentoTableSubView.h"
 #import "TripulacionTableSubView.h"
+#import "TeplasTableSubView.h"
+#import "SanidadSubView.h"
 @interface OrdenDeVueloMenuViewController : UIViewController<UIScrollViewDelegate>{
     IBOutlet UILabel *unidadLabel;
     IBOutlet UILabel *unidadAsumeLabel;
@@ -32,7 +34,8 @@
     IBOutlet UIButton *piernasButton;
     IBOutlet UIButton *principalButton;
     IBOutlet UIButton *tripulacionButton;
-    
+    IBOutlet UIButton *teplasButton;
+    IBOutlet UIButton *sanidadButton;
     
     IBOutlet UIScrollView *pageScrollView;
 

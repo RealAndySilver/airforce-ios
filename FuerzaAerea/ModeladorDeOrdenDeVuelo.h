@@ -11,10 +11,14 @@
 #import "Tripulacion.h"
 #import "Piernas.h"
 #import "Armamento.h"
+#import "Teplas.h"
+#import "Sanidad.h"
 @interface ModeladorDeOrdenDeVuelo : NSObject
 @property(nonatomic,readonly)Principal *principal;
 @property(nonatomic,readonly)NSMutableArray *arregloDePiernas;
 @property(nonatomic,readonly)NSMutableArray *arregloDeTripulacion;
 @property(nonatomic,readonly)NSMutableArray *arregloDeArmamento;
+@property(nonatomic,readonly)NSMutableArray *arregloDeTeplas;
+@property(nonatomic,readonly)NSMutableArray *arregloDeSanidad;
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 @end

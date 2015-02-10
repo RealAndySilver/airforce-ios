@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		75086771174E9C89004DAAA9 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 75086770174E9C89004DAAA9 /* bg.png */; };
+		750D2CB71A89A8BE00C1B569 /* TeplasTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CB61A89A8BE00C1B569 /* TeplasTableSubView.m */; };
+		750D2CBA1A89ABC200C1B569 /* TeplasCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CB91A89ABC200C1B569 /* TeplasCell.m */; };
+		750D2CBD1A89B72300C1B569 /* SanidadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CBC1A89B72300C1B569 /* SanidadCell.m */; };
+		750D2CC01A89BEAF00C1B569 /* Teplas.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CBF1A89BEAF00C1B569 /* Teplas.m */; };
+		750D2CC31A89BFE400C1B569 /* Sanidad.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CC21A89BFE400C1B569 /* Sanidad.m */; };
+		750D2CC61A89C31C00C1B569 /* SanidadSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 750D2CC51A89C31C00C1B569 /* SanidadSubView.m */; };
 		7512BF8216C1F7F800B222C0 /* PiernasTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8116C1F7F800B222C0 /* PiernasTableSubView.m */; };
 		7512BF8616C2041800B222C0 /* PiernasCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8516C2041800B222C0 /* PiernasCell2.m */; };
 		7512BF8916C2145300B222C0 /* ArmamentoTableSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7512BF8816C2145300B222C0 /* ArmamentoTableSubView.m */; };
@@ -128,6 +134,18 @@
 
 /* Begin PBXFileReference section */
 		75086770174E9C89004DAAA9 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		750D2CB51A89A8BE00C1B569 /* TeplasTableSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeplasTableSubView.h; sourceTree = "<group>"; };
+		750D2CB61A89A8BE00C1B569 /* TeplasTableSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeplasTableSubView.m; sourceTree = "<group>"; };
+		750D2CB81A89ABC200C1B569 /* TeplasCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeplasCell.h; sourceTree = "<group>"; };
+		750D2CB91A89ABC200C1B569 /* TeplasCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeplasCell.m; sourceTree = "<group>"; };
+		750D2CBB1A89B72300C1B569 /* SanidadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SanidadCell.h; sourceTree = "<group>"; };
+		750D2CBC1A89B72300C1B569 /* SanidadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SanidadCell.m; sourceTree = "<group>"; };
+		750D2CBE1A89BEAF00C1B569 /* Teplas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Teplas.h; sourceTree = "<group>"; };
+		750D2CBF1A89BEAF00C1B569 /* Teplas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Teplas.m; sourceTree = "<group>"; };
+		750D2CC11A89BFE400C1B569 /* Sanidad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sanidad.h; sourceTree = "<group>"; };
+		750D2CC21A89BFE400C1B569 /* Sanidad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sanidad.m; sourceTree = "<group>"; };
+		750D2CC41A89C31C00C1B569 /* SanidadSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SanidadSubView.h; sourceTree = "<group>"; };
+		750D2CC51A89C31C00C1B569 /* SanidadSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SanidadSubView.m; sourceTree = "<group>"; };
 		7512BF8016C1F7F800B222C0 /* PiernasTableSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiernasTableSubView.h; sourceTree = "<group>"; };
 		7512BF8116C1F7F800B222C0 /* PiernasTableSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiernasTableSubView.m; sourceTree = "<group>"; };
 		7512BF8416C2041800B222C0 /* PiernasCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PiernasCell2.h; sourceTree = "<group>"; };
@@ -351,6 +369,10 @@
 				7512BF8816C2145300B222C0 /* ArmamentoTableSubView.m */,
 				7512BF9016C217F800B222C0 /* TripulacionTableSubView.h */,
 				7512BF9116C217F800B222C0 /* TripulacionTableSubView.m */,
+				750D2CB51A89A8BE00C1B569 /* TeplasTableSubView.h */,
+				750D2CB61A89A8BE00C1B569 /* TeplasTableSubView.m */,
+				750D2CC41A89C31C00C1B569 /* SanidadSubView.h */,
+				750D2CC51A89C31C00C1B569 /* SanidadSubView.m */,
 			);
 			name = TableViewViews;
 			sourceTree = "<group>";
@@ -366,6 +388,10 @@
 				7512BF8B16C2149A00B222C0 /* ArmamentoCell.m */,
 				7512BF8D16C2175B00B222C0 /* TripulacionCell.h */,
 				7512BF8E16C2175B00B222C0 /* TripulacionCell.m */,
+				750D2CB81A89ABC200C1B569 /* TeplasCell.h */,
+				750D2CB91A89ABC200C1B569 /* TeplasCell.m */,
+				750D2CBB1A89B72300C1B569 /* SanidadCell.h */,
+				750D2CBC1A89B72300C1B569 /* SanidadCell.m */,
 			);
 			name = CeldasTV;
 			sourceTree = "<group>";
@@ -661,6 +687,10 @@
 				75A95A22166ED70A0012CFA5 /* Piernas.m */,
 				75A95A24166ED7190012CFA5 /* Armamento.h */,
 				75A95A25166ED7190012CFA5 /* Armamento.m */,
+				750D2CBE1A89BEAF00C1B569 /* Teplas.h */,
+				750D2CBF1A89BEAF00C1B569 /* Teplas.m */,
+				750D2CC11A89BFE400C1B569 /* Sanidad.h */,
+				750D2CC21A89BFE400C1B569 /* Sanidad.m */,
 				75A95A2A166EF7A00012CFA5 /* SerializadorOV.h */,
 				75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */,
 			);
@@ -865,6 +895,7 @@
 			files = (
 				754E951D1630D15A002FEB37 /* main.m in Sources */,
 				754E95211630D15A002FEB37 /* AppDelegate.m in Sources */,
+				750D2CC61A89C31C00C1B569 /* SanidadSubView.m in Sources */,
 				754E952D1630D15A002FEB37 /* LoginViewController.m in Sources */,
 				7552345C164045AE00D541DB /* ServerCommunicator.m in Sources */,
 				75523461164045C600D541DB /* XMLReader.m in Sources */,
@@ -875,6 +906,7 @@
 				7553185E164BFD7700B176A2 /* SBJsonBase.m in Sources */,
 				7553185F164BFD7700B176A2 /* SBJsonParser.m in Sources */,
 				75531860164BFD7700B176A2 /* SBJsonWriter.m in Sources */,
+				750D2CC31A89BFE400C1B569 /* Sanidad.m in Sources */,
 				7515A4CF164C327A00504C23 /* DocumentViewerController.m in Sources */,
 				755F9F2316534D6E0002266B /* ImageDownloader.m in Sources */,
 				755F9F3E16548A2B0002266B /* DeviceInfo.m in Sources */,
@@ -884,6 +916,7 @@
 				75926CF6166419E000B3CDD5 /* Metar.m in Sources */,
 				75A95A1D166ED6F80012CFA5 /* Principal.m in Sources */,
 				75A95A20166ED7030012CFA5 /* Tripulacion.m in Sources */,
+				750D2CB71A89A8BE00C1B569 /* TeplasTableSubView.m in Sources */,
 				75A95A23166ED70A0012CFA5 /* Piernas.m in Sources */,
 				75A95A26166ED7190012CFA5 /* Armamento.m in Sources */,
 				75A95A29166EDA390012CFA5 /* ModeladorDeOrdenDeVuelo.m in Sources */,
@@ -894,6 +927,7 @@
 				75F0480D16713893002DB7B2 /* PrincipalViewController.m in Sources */,
 				75F04810167138B7002DB7B2 /* TripulacionViewController.m in Sources */,
 				75F0481516716081002DB7B2 /* PiernasCell.m in Sources */,
+				750D2CBD1A89B72300C1B569 /* SanidadCell.m in Sources */,
 				7575CA4216729C510078E354 /* FileSaver.m in Sources */,
 				75DB41EC167962FA00F58DED /* Archivo.m in Sources */,
 				7556FE72167A8FAA00891508 /* IAmCoder.m in Sources */,
@@ -907,12 +941,14 @@
 				75A1D2E016BA2D030013B48A /* Departamentos.m in Sources */,
 				75A1D2E716BA30E40013B48A /* Municipios.m in Sources */,
 				75A1D2EB16BA32F90013B48A /* Armamentos.m in Sources */,
+				750D2CBA1A89ABC200C1B569 /* TeplasCell.m in Sources */,
 				75A1D2EE16BB14B60013B48A /* VistaListadoArmamento.m in Sources */,
 				75A1D2F216BB25B20013B48A /* CheckView.m in Sources */,
 				7512BF8216C1F7F800B222C0 /* PiernasTableSubView.m in Sources */,
 				7512BF8616C2041800B222C0 /* PiernasCell2.m in Sources */,
 				7512BF8916C2145300B222C0 /* ArmamentoTableSubView.m in Sources */,
 				7512BF8C16C2149A00B222C0 /* ArmamentoCell.m in Sources */,
+				750D2CC01A89BEAF00C1B569 /* Teplas.m in Sources */,
 				7512BF8F16C2175B00B222C0 /* TripulacionCell.m in Sources */,
 				7512BF9216C217F800B222C0 /* TripulacionTableSubView.m in Sources */,
 				7512BFD316C4912000B222C0 /* ArmamentosImpactados.m in Sources */,

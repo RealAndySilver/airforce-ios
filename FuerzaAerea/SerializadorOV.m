@@ -51,6 +51,21 @@
     
     NSString *stringFour=[json_string4 substringWithRange:NSMakeRange(0, range4.location+3)];
     
+    NSString *json_string5=[json_string4 substringWithRange:NSMakeRange(range4.location+3,[json_string4 length]-(range4.location+3))];
+    
+    
+    NSRange range5=[json_string5 rangeOfString:thresholdString];
+    
+    NSString *stringFive=[json_string5 substringWithRange:NSMakeRange(0, range5.location+3)];
+    
+    NSString *json_string6=[json_string5 substringWithRange:NSMakeRange(range5.location+3,[json_string5 length]-(range5.location+3))];
+    
+    
+    NSRange range6=[json_string6 rangeOfString:thresholdString];
+    
+    NSString *stringSix=[json_string6 substringWithRange:NSMakeRange(0, range6.location+3)];
+    
+
     
     NSMutableDictionary *jsonDic=[[NSMutableDictionary alloc]init];
     
@@ -62,6 +77,10 @@
     
     NSDictionary *tripulacion=[json objectWithString:stringFour error:nil];
     
+    NSDictionary *teplas=[json objectWithString:stringFive error:nil];
+    
+    NSDictionary *sanidad=[json objectWithString:stringSix error:nil];
+    
     //NSLog(@"El stringo %@",jsonDic);
 
     
@@ -72,6 +91,10 @@
     [jsonDic setObject:[armamento objectForKey:@"Armamento "] forKey:@"Armamento"];
     
     [jsonDic setObject:[tripulacion objectForKey:@"Tripulacion "] forKey:@"Tripulacion"];
+    
+    [jsonDic setObject:[teplas objectForKey:@"PerTeplasOrden "] forKey:@"Teplas"];
+    
+    [jsonDic setObject:[sanidad objectForKey:@"PerSanidadOrden "] forKey:@"Sanidad"];
     
     return jsonDic;
 }

@@ -44,11 +44,15 @@
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
         if ([ip isEqualToString:@""]) {
-            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+            //URL Producción
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+            //URL Sinte
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:8383/ServiciosMaletin/WS_Listas?xsd=1"]];
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
 
         }
         else{
+            //URL Custom usando el login admin
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Listas?xsd=1",ip]];
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
 
@@ -58,11 +62,15 @@
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
         if ([ip isEqualToString:@""]) {
-            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+            //URL Producción
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+            //URL Sinte
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:8383/ServiciosMaletin/WS_Inicio?wsdl"]];
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
 
         }
         else{
+            //URL Custom usando el login admin
             url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/ServiciosMaletin/WS_Inicio?wsdl",ip]];
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
 

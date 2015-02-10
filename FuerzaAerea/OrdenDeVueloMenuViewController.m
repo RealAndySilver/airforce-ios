@@ -33,7 +33,9 @@
     [self crearPaginas];
     [self seleccionarBoton:1];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -65,23 +67,26 @@
         tVC.ordenDeVuelo=ordenDeVuelo;
         [self.navigationController pushViewController:tVC animated:YES];
     }
-    else if (sender.tag==5) {
+    else if (sender.tag==7) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     //NSLog(@"Button %i pressed",sender.tag);
 }
 #pragma mark - crear paginas
 -(void)crearPaginas{
-    int numeroPaginas=4;
+    int numeroPaginas=6;
     [pageScrollView setPagingEnabled:YES];
     pageScrollView.delegate=self;
     pageScrollView.contentSize=CGSizeMake(pageScrollView.frame.size.width*numeroPaginas, pageScrollView.frame.size.height);
     [pageScrollView setShowsHorizontalScrollIndicator:NO];
+    [pageScrollView setAlwaysBounceVertical:NO];
     
     [self crearPaginaUno];
     [self crearPaginaDos];
     [self crearPaginaTres];
     [self crearPaginaCuatro];
+    [self crearPaginaCinco];
+    [self crearPaginaSeis];
 }
 -(void)crearPaginaUno{
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*0, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
@@ -124,6 +129,20 @@
     TripulacionTableSubView *tripulacionSubView=[[TripulacionTableSubView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*3, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height) ordenDeVuelo:ordenDeVuelo yCaller:self];
     [pageScrollView addSubview:tripulacionSubView];
 }
+-(void)crearPaginaCinco{
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*4, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    view.backgroundColor=[UIColor colorWithWhite:0.9 alpha:1];
+    [pageScrollView addSubview:view];
+    TeplasTableSubView *teplasSubView=[[TeplasTableSubView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*4, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height) ordenDeVuelo:ordenDeVuelo yCaller:self];
+    [pageScrollView addSubview:teplasSubView];
+}
+-(void)crearPaginaSeis{
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    view.backgroundColor=[UIColor colorWithWhite:0.9 alpha:1];
+    [pageScrollView addSubview:view];
+    SanidadSubView *sanidadSubView=[[SanidadSubView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height) ordenDeVuelo:ordenDeVuelo yCaller:self];
+    [pageScrollView addSubview:sanidadSubView];
+}
 -(UIView*)containerCreatorInPosition:(int)position{
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*position, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
     view.backgroundColor=[UIColor yellowColor];
@@ -140,40 +159,84 @@
             [piernasButton setBackgroundColor:colorNormal];
             [armamentoButton setBackgroundColor:colorNormal];
             [tripulacionButton setBackgroundColor:colorNormal];
+            [teplasButton setBackgroundColor:colorNormal];
+            [sanidadButton setBackgroundColor:colorNormal];
             [principalButton setHighlighted:YES];
             [piernasButton setHighlighted:NO];
             [armamentoButton setHighlighted:NO];
             [tripulacionButton setHighlighted:NO];
+            [teplasButton setHighlighted:NO];
+            [sanidadButton setHighlighted:NO];
             break;
         case 2:
             [principalButton setBackgroundColor:colorNormal];
             [piernasButton setBackgroundColor:colorHilight];
             [armamentoButton setBackgroundColor:colorNormal];
             [tripulacionButton setBackgroundColor:colorNormal];
+            [teplasButton setBackgroundColor:colorNormal];
+            [sanidadButton setBackgroundColor:colorNormal];
             [principalButton setHighlighted:NO];
             [piernasButton setHighlighted:YES];
             [armamentoButton setHighlighted:NO];
             [tripulacionButton setHighlighted:NO];
+            [teplasButton setHighlighted:NO];
+            [sanidadButton setHighlighted:NO];
             break;
         case 3:
             [principalButton setBackgroundColor:colorNormal];
             [piernasButton setBackgroundColor:colorNormal];
             [armamentoButton setBackgroundColor:colorHilight];
             [tripulacionButton setBackgroundColor:colorNormal];
+            [teplasButton setBackgroundColor:colorNormal];
+            [sanidadButton setBackgroundColor:colorNormal];
             [principalButton setHighlighted:NO];
             [piernasButton setHighlighted:NO];
             [armamentoButton setHighlighted:YES];
             [tripulacionButton setHighlighted:NO];
+            [teplasButton setHighlighted:NO];
+            [sanidadButton setHighlighted:NO];
             break;
         case 4:
             [principalButton setBackgroundColor:colorNormal];
             [piernasButton setBackgroundColor:colorNormal];
             [armamentoButton setBackgroundColor:colorNormal];
             [tripulacionButton setBackgroundColor:colorHilight];
+            [teplasButton setBackgroundColor:colorNormal];
+            [sanidadButton setBackgroundColor:colorNormal];
             [principalButton setHighlighted:NO];
             [piernasButton setHighlighted:NO];
             [armamentoButton setHighlighted:NO];
             [tripulacionButton setHighlighted:YES];
+            [teplasButton setHighlighted:NO];
+            [sanidadButton setHighlighted:NO];
+            break;
+        case 5:
+            [principalButton setBackgroundColor:colorNormal];
+            [piernasButton setBackgroundColor:colorNormal];
+            [armamentoButton setBackgroundColor:colorNormal];
+            [tripulacionButton setBackgroundColor:colorNormal];
+            [teplasButton setBackgroundColor:colorHilight];
+            [sanidadButton setBackgroundColor:colorNormal];
+            [principalButton setHighlighted:NO];
+            [piernasButton setHighlighted:NO];
+            [armamentoButton setHighlighted:NO];
+            [tripulacionButton setHighlighted:NO];
+            [teplasButton setHighlighted:YES];
+            [sanidadButton setHighlighted:NO];
+            break;
+        case 6:
+            [principalButton setBackgroundColor:colorNormal];
+            [piernasButton setBackgroundColor:colorNormal];
+            [armamentoButton setBackgroundColor:colorNormal];
+            [tripulacionButton setBackgroundColor:colorNormal];
+            [teplasButton setBackgroundColor:colorNormal];
+            [sanidadButton setBackgroundColor:colorHilight];
+            [principalButton setHighlighted:NO];
+            [piernasButton setHighlighted:NO];
+            [armamentoButton setHighlighted:NO];
+            [tripulacionButton setHighlighted:NO];
+            [teplasButton setHighlighted:NO];
+            [sanidadButton setHighlighted:YES];
             break;
             
         default:
@@ -205,5 +268,13 @@
 -(IBAction)tripulacion:(id)sender{
     [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 3, 0.0f) animated:YES];
     [self seleccionarBoton:4];
+}
+-(IBAction)teplas:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 4, 0.0f) animated:YES];
+    [self seleccionarBoton:5];
+}
+-(IBAction)sanidad:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
+    [self seleccionarBoton:6];
 }
 @end

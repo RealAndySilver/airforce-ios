@@ -39,9 +39,12 @@
     //passTF.text=[userDic objectForKey:@"password"];
     FileSaver *file2=[[FileSaver alloc]init];
     if (![file2 getIp]) {
-        [file2 setIP:@"172.20.100.6:8989"];
+        //URL Producción
+        //[file2 setIP:@"172.20.100.6:8989"];
+        //URL Sinte
+        [file2 setIP:@"app.sinte.co:8383"];
     }
-    //[self loadNextViewController];
+    [self loadNextViewController];
     /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
                                    @"12",
                                    @"12",
