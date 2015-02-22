@@ -2135,6 +2135,22 @@
                                                     <action selector="tripulacion:" destination="MgK-cT-A3I" eventType="touchUpInside" id="gHj-Bt-oTm"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Bfw-Vd-FCo">
+                                                <rect key="frame" x="634" y="7" width="156" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                                <state key="normal" title="Teplas / Sanidad">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="teplas:" destination="MgK-cT-A3I" eventType="touchUpInside" id="7Uz-QB-Iwp"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -2608,6 +2624,7 @@
                         <outlet property="botonArmamento" destination="Q2O-53-8Ds" id="vrB-Nm-KNG"/>
                         <outlet property="botonCondiciones" destination="sEV-bT-qny" id="WnE-WS-q60"/>
                         <outlet property="botonItinerario" destination="k89-Lh-QW2" id="WcT-J5-m3M"/>
+                        <outlet property="botonTeplas" destination="Bfw-Vd-FCo" id="AMr-ia-qkk"/>
                         <outlet property="botonTripulacion" destination="qBx-FE-f5D" id="PKT-8D-YhA"/>
                         <outlet property="containerAeronaveImpactada" destination="Qp9-Ry-4SX" id="I23-JK-0a7"/>
                         <outlet property="fechaTextfield" destination="cTR-36-EuP" id="cVX-9r-SWb"/>
@@ -2653,13 +2670,6 @@
                                 <rect key="frame" x="0.0" y="206" width="1024" height="542"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="og9-Sc-yIx">
-                                        <rect key="frame" x="0.0" y="48" width="1024" height="494"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="AP9-1d-sOW" id="cIc-ch-7aM"/>
-                                        </connections>
-                                    </scrollView>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="87L-lG-koW">
                                         <rect key="frame" x="337" y="1" width="153" height="48"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2762,6 +2772,13 @@
                                             <action selector="sanidad:" destination="AP9-1d-sOW" eventType="touchUpInside" id="K7N-uy-Yj1"/>
                                         </connections>
                                     </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="og9-Sc-yIx">
+                                        <rect key="frame" x="0.0" y="49" width="1024" height="498"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="AP9-1d-sOW" id="cIc-ch-7aM"/>
+                                        </connections>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0026302184069999998" blue="0.52138472579999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>

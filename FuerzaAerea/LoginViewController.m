@@ -44,7 +44,7 @@
         //URL Sinte
         [file2 setIP:@"app.sinte.co:8383"];
     }
-    [self loadNextViewController];
+    //[self loadNextViewController];
     /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
                                    @"12",
                                    @"12",
@@ -70,6 +70,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     frameInicial=CGRectMake(733, 187, 231, 205);
     frameFinal=CGRectMake(733, 323, 231, 205);
+    [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
 }
 - (void)didReceiveMemoryWarning
 {

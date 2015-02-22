@@ -1,16 +1,16 @@
 //
-//  CeldaTripulacion.h
+//  CeldaTeplasSanidad.h
 //  FuerzaAerea
 //
-//  Created by Andres Abril on 30/01/13.
-//  Copyright (c) 2013 Andres Abril. All rights reserved.
+//  Created by Andres Abril on 17/02/15.
+//  Copyright (c) 2015 Andres Abril. All rights reserved.
 //
+
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import "Lista.h"
-@interface CeldaTripulacion : UIView<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
-    UIPickerView *pickerManiobra;
+@interface CeldaTeplasSanidad : UIView{
     Lista *lista;
 }
 @property(nonatomic,retain)UITextField *cargoTextField;
@@ -24,7 +24,6 @@
 @property(nonatomic,retain)NSString *idManiobra;
 
 
--(id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
+-(id)initWithFrame:(CGRect)frame andDelegate:(id)myDelegate withType:(NSString*)type;
 -(id)initHeaderWithFrame:(CGRect)frame;
--(id)initEntrenamientoWithFrame:(CGRect)frame andDelegate:(id)myDelegate;
 @end

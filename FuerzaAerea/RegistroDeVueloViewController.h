@@ -12,6 +12,7 @@
 #import "ModeladorDeOrdenDeVuelo.h"
 #import "CeldaArmamento.h"
 #import "CeldaTripulacion.h"
+#import "CeldaTeplasSanidad.h"
 #import "FaseVuelo.h"
 #import "Departamentos.h"
 #import "Armamentos.h"
@@ -31,6 +32,8 @@
     IBOutlet UIButton *botonCondiciones;
     IBOutlet UIButton *botonArmamento;
     IBOutlet UIButton *botonTripulacion;
+    IBOutlet UIButton *botonTeplas;
+    IBOutlet UIButton *botonSanidad;
     
     IBOutlet UISwitch *aeronaveImpactadaSwitch;
     IBOutlet UIView *containerAeronaveImpactada;
@@ -84,12 +87,15 @@
     UIScrollView *paginaCondicionesDeVuelo;
     UIScrollView *paginaArmamentoPierna;
     UIScrollView *paginaTripulacion;
+    UIScrollView *paginaTeplasSanidad;
     
     NSMutableArray *arregloParaSumarItinerario;
     NSMutableArray *arregloParaSumarCondiciones;
     NSMutableArray *arregloPaginasArmamento;
     NSMutableArray *arregloTripulacion;
     NSMutableArray *arregloEntrenamiento;
+    NSMutableArray *arregloTeplas;
+    NSMutableArray *arregloSanidad;
 
     NSString *idGrupo;
     NSString *idArmamentoImpactado;

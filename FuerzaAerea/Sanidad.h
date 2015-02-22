@@ -14,6 +14,7 @@
 @property(nonatomic,retain)NSString *orden_vuelo_id;
 @property(nonatomic,retain)NSString *grado;
 @property(nonatomic,retain)NSString *cargo;
+@property(nonatomic,retain)NSString *persona;
 @property(nonatomic,retain)NSString *sanidad_orden_id;
 @property(nonatomic,retain)NSString *notificado;
 

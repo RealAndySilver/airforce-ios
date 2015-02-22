@@ -9,10 +9,11 @@
 #import "Sanidad.h"
 
 @implementation Sanidad
-@synthesize persona_id,orden_vuelo_id,grado,cargo,sanidad_orden_id,notificado;
+@synthesize persona_id,orden_vuelo_id,grado,cargo,sanidad_orden_id,notificado,persona;
 -(id)initWithDictionary:(NSDictionary *)dictionary{
     if (self=[super init]) {
         persona_id = [dictionary objectForKey:@"persona_id"];
+        persona = [dictionary objectForKey:@"persona"];
         orden_vuelo_id = [dictionary objectForKey:@"orden_vuelo_id"];
         grado = [dictionary objectForKey:@"grado"];
         cargo = [dictionary objectForKey:@"cargo"];

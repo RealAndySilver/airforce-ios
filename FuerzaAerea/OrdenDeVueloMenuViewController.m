@@ -77,9 +77,8 @@
     int numeroPaginas=6;
     [pageScrollView setPagingEnabled:YES];
     pageScrollView.delegate=self;
-    pageScrollView.contentSize=CGSizeMake(pageScrollView.frame.size.width*numeroPaginas, pageScrollView.frame.size.height);
+    pageScrollView.contentSize=CGSizeMake(pageScrollView.frame.size.width*numeroPaginas, 300);
     [pageScrollView setShowsHorizontalScrollIndicator:NO];
-    [pageScrollView setAlwaysBounceVertical:NO];
     
     [self crearPaginaUno];
     [self crearPaginaDos];
@@ -248,7 +247,7 @@
 #pragma mark - scrollview delegate
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     CGRect frame=[[UIScreen mainScreen] applicationFrame];
-    float roundedValue = round(pageScrollView.contentOffset.x / frame.size.height);
+    float roundedValue = round(pageScrollView.contentOffset.x / frame.size.width);
     [self seleccionarBoton:roundedValue+1];
 }
 #pragma mark - ibactions

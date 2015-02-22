@@ -10,10 +10,13 @@
 
 @interface TeplasCell : UITableViewCell
 
+@property(nonatomic,retain) UILabel *nombre;
+@property(nonatomic,retain) UILabel *cargo;
+@property(nonatomic,retain) UILabel *grado;
+
 @property(nonatomic,retain) UILabel *persona_id;
 @property(nonatomic,retain) UILabel *orden_vuelo_id;
 @property(nonatomic,retain) UILabel *tipo;
-@property(nonatomic,retain) UILabel *grado;
 @property(nonatomic,retain) UILabel *teplas_orden_id;
 @property(nonatomic,retain) UILabel *nombre_tipo;
 @property(nonatomic,retain) UILabel *notificado;

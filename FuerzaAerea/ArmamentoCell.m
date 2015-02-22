@@ -42,7 +42,7 @@
     [self addSubview:label];
 }
 -(void)setDivisionInPosition:(int)position{
-    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 0.5, 100)];
+    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 1, 100)];
     line.backgroundColor=[UIColor grayColor];
     [self addSubview:line];
 }

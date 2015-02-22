@@ -34,13 +34,11 @@
         tableView.dataSource=self;
         tableView.backgroundColor=[UIColor clearColor];
         [self addSubview:tableView];
-        [self setLabelWithText:@"Cargo" position:5 andWidth:200 inThisView:header];
-        [self setDivisionInPosition:205 onView:header];
-        [self setLabelWithText:@"Grado" position:215 andWidth:200 inThisView:header];
-        [self setDivisionInPosition:415 onView:header];
-        [self setLabelWithText:@"Nombre" position:420 andWidth:490 inThisView:header];
-        [self setDivisionInPosition:915 onView:header];
-        [self setLabelWithText:@"Código" position:920 andWidth:100 inThisView:header];
+        [self setLabelWithText:@"Cargo" position:5 andWidth:80 inThisView:header];
+        [self setDivisionInPosition:80 onView:header];
+        [self setLabelWithText:@"Nombre" position:85 andWidth:800 inThisView:header];
+        [self setDivisionInPosition:880 onView:header];
+        [self setLabelWithText:@"Grado" position:885 andWidth:120 inThisView:header];
         
     }
     return self;
@@ -114,11 +112,10 @@ viewForFooterInSection:(NSInteger)section{
         celda = [[SanidadCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     [celda setSelectionStyle:UITableViewCellSelectionStyleNone];
-    //    Teplas *teplas=[ordenDeVuelo.arregloDeTeplas objectAtIndex:indexPath.row];
-    //    celda.cargo.text=teplas.tipo;
-    //    celda.grado.text=teplas.grado;
-    //    celda.nombre.text=tripulacion.persona;
-    //    celda.codigo.text=tripulacion.codigo;
+    Sanidad *sanidad = [ordenDeVuelo.arregloDeSanidad objectAtIndex:indexPath.row];
+    celda.cargo.text= sanidad.cargo;
+    celda.grado.text= sanidad.grado;
+    celda.nombre.text= sanidad.persona;
     
     return celda;
 }

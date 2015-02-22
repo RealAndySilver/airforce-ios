@@ -81,7 +81,7 @@
     
     NSDictionary *sanidad=[json objectWithString:stringSix error:nil];
     
-    //NSLog(@"El stringo %@",jsonDic);
+    NSLog(@"El stringo %@",sanidad);
 
     
     [jsonDic setObject:[consultaPrincipal objectForKey:@"ConsultaPrincipalOrdenVuelo "] forKey:@"Principal"];

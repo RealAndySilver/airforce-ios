@@ -22,6 +22,8 @@
     arregloPaginasArmamento=[[NSMutableArray alloc]init];
     arregloTripulacion=[[NSMutableArray alloc]init];
     arregloEntrenamiento=[[NSMutableArray alloc]init];
+    arregloTeplas=[[NSMutableArray alloc]init];
+    arregloSanidad=[[NSMutableArray alloc]init];
     [self crearPaginas];
     [self seleccionarBoton:1];
     //NSLog(@"Fecha fase %@",ordenDeVuelo.principal.fecha);
@@ -33,6 +35,9 @@
     [self checkIfSaved];
     
 
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
 }
 -(void)integrarInfoDeOrdenDeVueloEnLosTextfields{
     ordenDeVueloTextfield.text=ordenDeVuelo.principal.idConsecutivoUnidad;
@@ -310,6 +315,38 @@
         }
     }
 }
+-(void)checkIfTeplasSavedWithCell:(CeldaTeplasSanidad*)cell atIndex:(int)i{
+    FileSaver *file=[[FileSaver alloc]init];
+    if ([file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad]) {
+        //NSDictionary *masterDic=[file getDictionary:@"registroDeVuelo"];
+        NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];
+        if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
+        if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
+            NSArray *array=[masterDic objectForKey:@"ArregloTeplas"];
+            NSDictionary *dic=[array objectAtIndex:i];
+            cell.cargoTextField.text=[dic objectForKey:@"Cargo"];
+            cell.nombreTextiField.text=[dic objectForKey:@"Persona"];
+            cell.codigoTextField.text=[dic objectForKey:@"Codigo"];
+            cell.gradoTextField.text=[dic objectForKey:@"Grado"];
+        }
+    }
+}
+-(void)checkIfSanidadSavedWithCell:(CeldaTeplasSanidad*)cell atIndex:(int)i{
+    FileSaver *file=[[FileSaver alloc]init];
+    if ([file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad]) {
+        //NSDictionary *masterDic=[file getDictionary:@"registroDeVuelo"];
+        NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];
+        if (![[masterDic objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad])return;
+        if ([[masterDic objectForKey:@"Done"]isEqualToString:@"NO"]) {
+            NSArray *array=[masterDic objectForKey:@"ArregloSanidad"];
+            NSDictionary *dic=[array objectAtIndex:i];
+            cell.cargoTextField.text=[dic objectForKey:@"Cargo"];
+            cell.nombreTextiField.text=[dic objectForKey:@"Persona"];
+            cell.codigoTextField.text=[dic objectForKey:@"Codigo"];
+            cell.gradoTextField.text=[dic objectForKey:@"Grado"];
+        }
+    }
+}
 -(void)checkIfEntrenamientoSavedWithCell:(CeldaTripulacion*)cell atIndex:(int)i{
     FileSaver *file=[[FileSaver alloc]init];
     if ([file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad]) {
@@ -354,6 +391,14 @@
 -(IBAction)tripulacion:(id)sender{
     [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 3, 0.0f) animated:YES];
     [self seleccionarBoton:4];
+}
+-(IBAction)teplas:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 4, 0.0f) animated:YES];
+    [self seleccionarBoton:5];
+}
+-(IBAction)sanidad:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
+    [self seleccionarBoton:6];
 }
 -(IBAction)fadeInAeronaveImpactada:(UISwitch*)sender{
     if (sender.on) {
@@ -401,40 +446,86 @@
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorNormal];
             [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:YES];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:NO];
             break;
         case 2:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorHilight];
             [botonArmamento setBackgroundColor:colorNormal];
             [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:YES];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:NO];
             break;
         case 3:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorHilight];
             [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:YES];
             [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:NO];
             break;
         case 4:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorNormal];
             [botonTripulacion setBackgroundColor:colorHilight];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:YES];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:NO];
+            break;
+        
+        case 5:
+            [botonItinerario setBackgroundColor:colorNormal];
+            [botonCondiciones setBackgroundColor:colorNormal];
+            [botonArmamento setBackgroundColor:colorNormal];
+            [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorHilight];
+            [botonSanidad setBackgroundColor:colorNormal];
+            [botonItinerario setHighlighted:NO];
+            [botonCondiciones setHighlighted:NO];
+            [botonArmamento setHighlighted:NO];
+            [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:YES];
+            [botonSanidad setHighlighted:NO];
+            break;
+            
+        case 6:
+            [botonItinerario setBackgroundColor:colorNormal];
+            [botonCondiciones setBackgroundColor:colorNormal];
+            [botonArmamento setBackgroundColor:colorNormal];
+            [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorHilight];
+            [botonItinerario setHighlighted:NO];
+            [botonCondiciones setHighlighted:NO];
+            [botonArmamento setHighlighted:NO];
+            [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:YES];
             break;
             
         default:
@@ -445,7 +536,7 @@
 }
 #pragma mark - creacion de paginas
 -(void)crearPaginas{
-    int numeroPaginas=4;
+    int numeroPaginas=5;
     [pageScrollView setPagingEnabled:YES];
     pageScrollView.delegate=self;
     pageScrollView.contentSize=CGSizeMake(pageScrollView.frame.size.width*numeroPaginas, pageScrollView.frame.size.height);
@@ -455,6 +546,7 @@
     [self crearPaginaCondiciones];
     [self crearPaginaArmamentoPiernas];
     [self crearPaginaTripulacion];
+    [self crearPaginaTeplasSanidad];
     [self crearFilasDeItinerarioYCondiciones];
     
     /*for (int j=0; j<5; j++) {
@@ -550,6 +642,44 @@
         [arregloEntrenamiento addObject:celdaEntrenamiento];
         [self checkIfEntrenamientoSavedWithCell:celdaEntrenamiento atIndex:k];
     }
+}
+-(void)crearPaginaTeplasSanidad{
+    paginaTeplasSanidad=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*4, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    paginaTeplasSanidad.backgroundColor=[UIColor clearColor];
+    paginaTeplasSanidad.contentSize=CGSizeMake(paginaTeplasSanidad.frame.size.width, paginaTeplasSanidad.frame.size.height+1);
+    [pageScrollView addSubview:paginaTeplasSanidad];
+    CeldaTeplasSanidad *teplasSanidadHeader=[[CeldaTeplasSanidad alloc]initHeaderWithFrame:CGRectMake(0, 0, 0, 0)];
+    [paginaTeplasSanidad addSubview:teplasSanidadHeader];
+    int h=0;
+    float posFinalY=0;
+    for (Teplas *teplas in ordenDeVuelo.arregloDeTeplas) {
+        //NSLog(@"OK %@",tripulacion.persona);
+        CeldaTeplasSanidad *teplasCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(480, 33+33*h, 0,0) andDelegate:nil withType:@"teplas"];
+        [self checkIfTeplasSavedWithCell:teplasCell atIndex:h];
+        teplasCell.cargoTextField.text=teplas.cargo;
+        teplasCell.nombreTextiField.text=teplas.persona;
+        teplasCell.codigoTextField.text=teplas.persona_id;
+        teplasCell.gradoTextField.text=teplas.grado;
+        [paginaTeplasSanidad addSubview:teplasCell];
+        [arregloTeplas addObject:teplasCell];
+        h++;
+        posFinalY=teplasCell.frame.origin.y+33;
+    }
+    int sh = 0;
+    for (Sanidad *sanidad in ordenDeVuelo.arregloDeSanidad) {
+        //NSLog(@"La sanidad! %@",sanidad.persona_id);
+        CeldaTeplasSanidad *sanidadCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(0, 33+33*sh, 0,0) andDelegate:nil withType:@"sanidad"];
+        [self checkIfSanidadSavedWithCell:sanidadCell atIndex:sh];
+        sanidadCell.cargoTextField.text=sanidad.cargo;
+        sanidadCell.nombreTextiField.text=sanidad.persona;
+        sanidadCell.codigoTextField.text=sanidad.persona_id;
+        sanidadCell.gradoTextField.text=sanidad.grado;
+        [paginaTeplasSanidad addSubview:sanidadCell];
+        [arregloSanidad addObject:sanidadCell];
+        sh++;
+        posFinalY=sanidadCell.frame.origin.y+33;
+    }
+    
 }
 #pragma mark - procedimientos compartidos entre páginas
 ////// las 3 primeras páginas están relacionadas entre sí.
@@ -708,7 +838,7 @@
 #pragma mark - scrollview delegate
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     CGRect frame=[[UIScreen mainScreen] applicationFrame];
-    float roundedValue = round(pageScrollView.contentOffset.x / frame.size.height);
+    float roundedValue = round(pageScrollView.contentOffset.x / frame.size.width);
     [self seleccionarBoton:roundedValue+1];
     [self callForeignDismisser];
 }
@@ -1197,6 +1327,29 @@
     }
     [masterDic setObject:entrenamientoArray forKey:@"ArregloEntrenamiento"];
     
+    NSMutableArray *teplasArray=[[NSMutableArray alloc]init];
+    for (CeldaTeplasSanidad *cell in arregloTeplas) {
+        NSMutableDictionary *teplasDic=[[NSMutableDictionary alloc]init];
+        if (cell.cargoTextField.text) {[teplasDic setObject:cell.cargoTextField.text forKey:@"Cargo"];}
+        if (cell.nombreTextiField.text) {[teplasDic setObject:cell.nombreTextiField.text forKey:@"Nombre"];}
+        if (cell.codigoTextField.text) {[teplasDic setObject:cell.codigoTextField.text forKey:@"Codigo"];}
+        if (cell.gradoTextField.text) {[teplasDic setObject:cell.gradoTextField.text forKey:@"Grado"];}
+        
+        [teplasArray addObject:teplasDic];
+    }
+    [masterDic setObject:teplasArray forKey:@"ArregloTeplas"];
+    
+    NSMutableArray *sanidadArray=[[NSMutableArray alloc]init];
+    for (CeldaTeplasSanidad *cell in arregloSanidad) {
+        NSMutableDictionary *sanidadDic=[[NSMutableDictionary alloc]init];
+        if (cell.cargoTextField.text) {[sanidadDic setObject:cell.cargoTextField.text forKey:@"Cargo"];}
+        if (cell.nombreTextiField.text) {[sanidadDic setObject:cell.nombreTextiField.text forKey:@"Nombre"];}
+        if (cell.codigoTextField.text) {[sanidadDic setObject:cell.codigoTextField.text forKey:@"Codigo"];}
+        if (cell.gradoTextField.text) {[sanidadDic setObject:cell.gradoTextField.text forKey:@"Grado"];}
+        
+        [sanidadArray addObject:sanidadArray];
+    }
+    [masterDic setObject:teplasArray forKey:@"ArregloSanidad"];
     
     SBJSON *json=[[SBJSON alloc]init];
     //NSMutableArray *arr=[[NSMutableArray alloc]init];

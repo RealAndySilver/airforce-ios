@@ -41,7 +41,8 @@
         NSArray *tempTeplas=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"Teplas"]];
         if (tempTeplas.count) {
             arregloDeTeplas=[[NSMutableArray alloc]init];
-            for (int i=0; i<arregloDeTeplas.count; i++) {
+            for (int i=0; i<tempTeplas.count; i++) {
+                NSLog(@"YEAHHH %i",i);
                 Teplas *teplas=[[Teplas alloc]initWithDictionary:[tempTeplas objectAtIndex:i]];
                 [arregloDeTeplas addObject:teplas];
             }
@@ -49,7 +50,7 @@
         NSArray *tempSanidad=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"Sanidad"]];
         if (tempSanidad.count) {
             arregloDeSanidad=[[NSMutableArray alloc]init];
-            for (int i=0; i<arregloDeSanidad.count; i++) {
+            for (int i=0; i<tempSanidad.count; i++) {
                 Sanidad *sanidad=[[Sanidad alloc]initWithDictionary:[tempSanidad objectAtIndex:i]];
                 [arregloDeSanidad addObject:sanidad];
             }

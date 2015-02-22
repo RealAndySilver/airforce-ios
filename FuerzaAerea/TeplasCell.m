@@ -10,38 +10,38 @@
 
 @implementation TeplasCell
 
-@synthesize persona_id,orden_vuelo_id,tipo,grado,teplas_orden_id,nombre_tipo,notificado;
+@synthesize persona_id,orden_vuelo_id,tipo,grado,teplas_orden_id,nombre_tipo,notificado, nombre, cargo;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        persona_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:0 andWidth:35 andLabel:persona_id];
+        cargo=[[UILabel alloc]init];
+        [self createLabelWithPosition:0 andWidth:80 andLabel:cargo];
         
-        orden_vuelo_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:40 andWidth:205 andLabel:orden_vuelo_id];
-        
-        tipo=[[UILabel alloc]init];
-        [self createLabelWithPosition:250 andWidth:195 andLabel:tipo];
+        nombre=[[UILabel alloc]init];
+        [self createLabelWithPosition:80 andWidth:800 andLabel:nombre];
         
         grado=[[UILabel alloc]init];
-        [self createLabelWithPosition:450 andWidth:195 andLabel:grado];
+        [self createLabelWithPosition:880 andWidth:120 andLabel:grado];
         
-        teplas_orden_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:650 andWidth:190 andLabel:teplas_orden_id];
+//        grado=[[UILabel alloc]init];
+//        [self createLabelWithPosition:450 andWidth:195 andLabel:grado];
+//        
+//        teplas_orden_id=[[UILabel alloc]init];
+//        [self createLabelWithPosition:650 andWidth:190 andLabel:teplas_orden_id];
+//        
+//        nombre_tipo=[[UILabel alloc]init];
+//        [self createLabelWithPosition:850 andWidth:170 andLabel:nombre_tipo];
+//        
+//        notificado=[[UILabel alloc]init];
+//        [self createLabelWithPosition:850 andWidth:170 andLabel:notificado];
         
-        nombre_tipo=[[UILabel alloc]init];
-        [self createLabelWithPosition:850 andWidth:170 andLabel:nombre_tipo];
-        
-        notificado=[[UILabel alloc]init];
-        [self createLabelWithPosition:850 andWidth:170 andLabel:notificado];
-        
-        [self setDivisionInPosition:38];
-        [self setDivisionInPosition:250];
-        [self setDivisionInPosition:450];
-        [self setDivisionInPosition:650];
-        [self setDivisionInPosition:845];
+        [self setDivisionInPosition:80];
+        [self setDivisionInPosition:880];
+//        [self setDivisionInPosition:450];
+//        [self setDivisionInPosition:650];
+//        [self setDivisionInPosition:845];
         
         
     }
@@ -59,8 +59,8 @@
     [self addSubview:label];
 }
 -(void)setDivisionInPosition:(int)position{
-    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 0.5, 100)];
-    line.backgroundColor=[UIColor grayColor];
+    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 1, 100)];
+    line.backgroundColor=[UIColor blackColor];
     [self addSubview:line];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

@@ -10,36 +10,23 @@
 
 @implementation SanidadCell
 
-@synthesize persona_id,orden_vuelo_id,cargo,grado,sanidad_orden_id,notificado;
+@synthesize persona_id,orden_vuelo_id,cargo,grado,sanidad_orden_id,notificado,nombre;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        persona_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:0 andWidth:35 andLabel:persona_id];
-        
-        orden_vuelo_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:40 andWidth:205 andLabel:orden_vuelo_id];
-        
         cargo=[[UILabel alloc]init];
-        [self createLabelWithPosition:250 andWidth:195 andLabel:cargo];
+        [self createLabelWithPosition:0 andWidth:80 andLabel:cargo];
+        
+        nombre=[[UILabel alloc]init];
+        [self createLabelWithPosition:80 andWidth:800 andLabel:nombre];
         
         grado=[[UILabel alloc]init];
-        [self createLabelWithPosition:450 andWidth:195 andLabel:grado];
+        [self createLabelWithPosition:880 andWidth:120 andLabel:grado];
         
-        sanidad_orden_id=[[UILabel alloc]init];
-        [self createLabelWithPosition:650 andWidth:190 andLabel:sanidad_orden_id];
-        
-        notificado=[[UILabel alloc]init];
-        [self createLabelWithPosition:850 andWidth:170 andLabel:notificado];
-        
-        [self setDivisionInPosition:38];
-        [self setDivisionInPosition:250];
-        [self setDivisionInPosition:450];
-        [self setDivisionInPosition:650];
-        [self setDivisionInPosition:845];
-        
+        [self setDivisionInPosition:80];
+        [self setDivisionInPosition:880];
         
     }
     return self;
@@ -56,7 +43,7 @@
     [self addSubview:label];
 }
 -(void)setDivisionInPosition:(int)position{
-    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 0.5, 100)];
+    UIView *line=[[UIView alloc]initWithFrame:CGRectMake(position, 0, 1, 100)];
     line.backgroundColor=[UIColor grayColor];
     [self addSubview:line];
 }
