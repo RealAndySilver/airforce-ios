@@ -654,7 +654,7 @@
     float posFinalY=0;
     for (Teplas *teplas in ordenDeVuelo.arregloDeTeplas) {
         //NSLog(@"OK %@",tripulacion.persona);
-        CeldaTeplasSanidad *teplasCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(480, 33+33*h, 0,0) andDelegate:nil withType:@"teplas"];
+        CeldaTeplasSanidad *teplasCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(0, 33+33*h, 0,0) andDelegate:nil withType:@"teplas"];
         [self checkIfTeplasSavedWithCell:teplasCell atIndex:h];
         teplasCell.cargoTextField.text=teplas.cargo;
         teplasCell.nombreTextiField.text=teplas.persona;
@@ -668,7 +668,7 @@
     int sh = 0;
     for (Sanidad *sanidad in ordenDeVuelo.arregloDeSanidad) {
         //NSLog(@"La sanidad! %@",sanidad.persona_id);
-        CeldaTeplasSanidad *sanidadCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(0, 33+33*sh, 0,0) andDelegate:nil withType:@"sanidad"];
+        CeldaTeplasSanidad *sanidadCell=[[CeldaTeplasSanidad alloc]initWithFrame:CGRectMake(484, 33+33*sh, 0,0) andDelegate:nil withType:@"sanidad"];
         [self checkIfSanidadSavedWithCell:sanidadCell atIndex:sh];
         sanidadCell.cargoTextField.text=sanidad.cargo;
         sanidadCell.nombreTextiField.text=sanidad.persona;
@@ -1341,15 +1341,16 @@
     
     NSMutableArray *sanidadArray=[[NSMutableArray alloc]init];
     for (CeldaTeplasSanidad *cell in arregloSanidad) {
+        
         NSMutableDictionary *sanidadDic=[[NSMutableDictionary alloc]init];
         if (cell.cargoTextField.text) {[sanidadDic setObject:cell.cargoTextField.text forKey:@"Cargo"];}
         if (cell.nombreTextiField.text) {[sanidadDic setObject:cell.nombreTextiField.text forKey:@"Nombre"];}
         if (cell.codigoTextField.text) {[sanidadDic setObject:cell.codigoTextField.text forKey:@"Codigo"];}
         if (cell.gradoTextField.text) {[sanidadDic setObject:cell.gradoTextField.text forKey:@"Grado"];}
         
-        [sanidadArray addObject:sanidadArray];
+        [sanidadArray addObject:sanidadDic];
     }
-    [masterDic setObject:teplasArray forKey:@"ArregloSanidad"];
+    [masterDic setObject:sanidadArray forKey:@"ArregloSanidad"];
     
     SBJSON *json=[[SBJSON alloc]init];
     //NSMutableArray *arr=[[NSMutableArray alloc]init];
@@ -1376,7 +1377,7 @@
     }
     else if (sender.tag==11){
         [self sincronizarDataConServer:str];
-        NSLog(@"Diccionario %@",masterDic);
+        //NSLog(@"Diccionario %@",masterDic);
     }
 }
 #pragma mark - fecha
