@@ -557,6 +557,7 @@
 				7515A4CE164C327A00504C23 /* DocumentViewerController.m */,
 				755F9F5C16555F3C0002266B /* DetailViewController.h */,
 				755F9F5D16555F3C0002266B /* DetailViewController.m */,
+				75C700341ADC363000C0ACF6 /* MisionCumplida */,
 				7573641F16ADB11100445CB0 /* RegistroDeVuelo */,
 				75F0480016712A08002DB7B2 /* OrdenDeVueloMenu */,
 			);
@@ -698,6 +699,13 @@
 				75A95A2B166EF7A00012CFA5 /* SerializadorOV.m */,
 			);
 			name = OrdenDeVuelo;
+			sourceTree = "<group>";
+		};
+		75C700341ADC363000C0ACF6 /* MisionCumplida */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MisionCumplida;
 			sourceTree = "<group>";
 		};
 		75DE9F6416EEBADD004AC7E3 /* Tutorial */ = {
@@ -1092,7 +1100,7 @@
 				PROVISIONING_PROFILE = "2BDC8C81-1E8F-40C5-BA12-963B0F68D818";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2BDC8C81-1E8F-40C5-BA12-963B0F68D818";
 				SDKROOT = iphoneos6.1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1110,7 +1118,7 @@
 				PROVISIONING_PROFILE = "8d44f29f-eda4-4701-a2ff-9fc06d5d1b3d";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8d44f29f-eda4-4701-a2ff-9fc06d5d1b3d";
 				SDKROOT = iphoneos6.1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1185,7 +1193,7 @@
 				PROVISIONING_PROFILE = "ff3b546c-5199-4251-98d0-5ecc1ae5d02d";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "ff3b546c-5199-4251-98d0-5ecc1ae5d02d";
 				SDKROOT = iphoneos6.1;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
