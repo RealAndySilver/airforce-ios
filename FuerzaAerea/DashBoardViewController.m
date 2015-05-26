@@ -255,6 +255,11 @@
      }
     
 }
+-(IBAction)irAMisionCumplida:(id)sender{
+        //hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //hud.labelText=NSLocalizedString(@"Cargando Registro de Vuelo", nil);
+        [self performSelector:@selector(delayedAction2) withObject:sender afterDelay:0.01];
+}
 -(void)delayedAction{
     RegistroDeVueloViewController *rvmVC=[[RegistroDeVueloViewController alloc]init];
     rvmVC=[self.storyboard instantiateViewControllerWithIdentifier:@"RegistroDeVuelo"];
@@ -264,6 +269,12 @@
     rvmVC.arrayArmamentos=arrayArmamentos;
     rvmVC.lista=lista;
     [self.navigationController pushViewController:rvmVC animated:YES];
+}
+-(void)delayedAction2{
+    MisionCumplidaViewController *mcVC=[[MisionCumplidaViewController alloc]init];
+    mcVC=[self.storyboard instantiateViewControllerWithIdentifier:@"MisionCumplida"];
+    mcVC.ordenDeVuelo=ordenDeVuelo;
+    [self.navigationController pushViewController:mcVC animated:YES];
 }
 #pragma mark external request
 -(void)loadDocument:(NSString*)documentName inView:(UIWebView*)webView{

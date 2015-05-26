@@ -20,6 +20,7 @@
 #import "OrdenDeVueloMenuViewController.h"
 #import "Archivo.h"
 #import "RegistroDeVueloViewController.h"
+#import "MisionCumplidaViewController.h"
 #import "FaseVuelo.h"
 #import "Departamentos.h"
 #import "Armamentos.h"

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Andres Abril. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface FuerzaAereaTests : SenTestCase
+@interface FuerzaAereaTests : XCTestCase
 
 @end
