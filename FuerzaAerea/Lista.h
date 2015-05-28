@@ -41,5 +41,6 @@
 
 
 -(id)initWithDictionary:(NSDictionary*)dictionary;
+-(id)initWithMisionDictionary:(NSDictionary*)dictionary;
 -(void)agregarAlArregloRespectivo:(NSDictionary*)dictionary;
 @end

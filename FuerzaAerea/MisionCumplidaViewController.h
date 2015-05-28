@@ -25,7 +25,7 @@
 #import "MBProgressHud.h"
 #import "NSData+AES.h"
 #import "UITextFieldDS.h"
-@interface MisionCumplidaViewController : UIViewController<UIScrollViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+@interface MisionCumplidaViewController : UIViewController<UIScrollViewDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
     MBProgressHUD *hud;
     IBOutlet UIScrollView *pageScrollView;
     
@@ -54,18 +54,6 @@
     IBOutlet UITextView *requerimientosTextfield;
     
     
-    UIPickerView *pickerFaseVuelo;
-    UIPickerView *pickerDepto;
-    UIPickerView *pickerMunicipio;
-    UIPickerView *pickerArmamentos;
-    UIPickerView *pickerLatitud;
-    UIPickerView *pickerLongitud;
-    UIPickerView *pickerUnidad;
-    UIPickerView *pickerGrupo;
-    
-    UIDatePicker *datePicker;
-    
-    
     UIScrollView *paginaInforme;
     UITextView *descripcionTV;
     UITextView *recomendacionesTV;
@@ -79,98 +67,22 @@
     UISwitch *escoltaVIPSwitch;
     UISwitch *transporteVIPSwitch;
     
+    NSMutableDictionary *masterDictionary;
+    NSMutableDictionary *informeDictionary;
+    NSMutableDictionary *infoGeneralDictionary;
+    NSMutableDictionary *paxCargaDictionary;
+    NSMutableDictionary *resultadosDictionary;
+    NSMutableDictionary *motivosDictionary;
+
+    UITextField *currentTextField;
+    UIPickerView *currentPicker;
+    UILabel *overlayLabel;
     
     UIScrollView *paginaPaxArmamento;
-    UITextFieldDS *tipoPax0;
-    UITextFieldDS *entidadPax0;
-    UITextFieldDS *cantidadPax0;
-    UITextFieldDS *tipoPax1;
-    UITextFieldDS *entidadPax1;
-    UITextFieldDS *cantidadPax1;
-    UITextFieldDS *tipoPax2;
-    UITextFieldDS *entidadPax2;
-    UITextFieldDS *cantidadPax2;
-    UITextFieldDS *tipoPax3;
-    UITextFieldDS *entidadPax3;
-    UITextFieldDS *cantidadPax3;
-    UITextFieldDS *tipoPax4;
-    UITextFieldDS *entidadPax4;
-    UITextFieldDS *cantidadPax4;
-    UITextFieldDS *tipoPax5;
-    UITextFieldDS *entidadPax5;
-    UITextFieldDS *cantidadPax5;
-    UITextFieldDS *tipoPax6;
-    UITextFieldDS *entidadPax6;
-    UITextFieldDS *cantidadPax6;
-    UITextFieldDS *tipoPax7;
-    UITextFieldDS *entidadPax7;
-    UITextFieldDS *cantidadPax7;
-    
-    UITextFieldDS *entidadCarga0;
-    UITextFieldDS *cantidadCarga0;
-    UITextFieldDS *entidadCarga1;
-    UITextFieldDS *cantidadCarga1;
-    UITextFieldDS *entidadCarga2;
-    UITextFieldDS *cantidadCarga2;
-    UITextFieldDS *entidadCarga3;
-    UITextFieldDS *cantidadCarga3;
-    UITextFieldDS *entidadCarga4;
-    UITextFieldDS *cantidadCarga4;
-    UITextFieldDS *entidadCarga5;
-    UITextFieldDS *cantidadCarga5;
-    UITextFieldDS *entidadCarga6;
-    UITextFieldDS *cantidadCarga6;
-    UITextFieldDS *entidadCarga7;
-    UITextFieldDS *cantidadCarga7;
-    
-    UITextFieldDS *tipoArmamento0;
-    UITextFieldDS *cantidadArmamento0;
-    UITextFieldDS *cantidadFallidoArmamento0;
-    UITextFieldDS *efectividadArmamento0;
-    UITextFieldDS *tipoArmamento1;
-    UITextFieldDS *cantidadArmamento1;
-    UITextFieldDS *cantidadFallidoArmamento1;
-    UITextFieldDS *efectividadArmamento1;
-    UITextFieldDS *tipoArmamento2;
-    UITextFieldDS *cantidadArmamento2;
-    UITextFieldDS *cantidadFallidoArmamento2;
-    UITextFieldDS *efectividadArmamento2;
-    UITextFieldDS *tipoArmamento3;
-    UITextFieldDS *cantidadArmamento3;
-    UITextFieldDS *cantidadFallidoArmamento3;
-    UITextFieldDS *efectividadArmamento3;
-    UITextFieldDS *tipoArmamento4;
-    UITextFieldDS *cantidadArmamento4;
-    UITextFieldDS *cantidadFallidoArmamento4;
-    UITextFieldDS *efectividadArmamento4;
-    UITextFieldDS *tipoArmamento5;
-    UITextFieldDS *cantidadArmamento5;
-    UITextFieldDS *cantidadFallidoArmamento5;
-    UITextFieldDS *efectividadArmamento5;
-    UITextFieldDS *tipoArmamento6;
-    UITextFieldDS *cantidadArmamento6;
-    UITextFieldDS *cantidadFallidoArmamento6;
-    UITextFieldDS *efectividadArmamento6;
-    UITextFieldDS *tipoArmamento7;
-    UITextFieldDS *cantidadArmamento7;
-    UITextFieldDS *cantidadFallidoArmamento7;
-    UITextFieldDS *efectividadArmamento7;
-    UITextFieldDS *tipoArmamento8;
-    UITextFieldDS *cantidadArmamento8;
-    UITextFieldDS *cantidadFallidoArmamento8;
-    UITextFieldDS *efectividadArmamento8;
     
     UIScrollView *paginaResultados;
     
     UIScrollView *paginaMotivos;
-    UITextField *retardo1;
-    UITextField *retardo2;
-    UITextField *retardo3;
-    UITextField *retardo4;
-    UITextField *retardo5;
-    UITextField *retardo6;
-    UITextField *retardo7;
-    UITextField *retardo8;
     
     NSString *idGrupo;
     NSString *idArmamentoImpactado;
@@ -178,6 +90,44 @@
     NSString *idDepartamento;
     NSString *idUnidadAsume;
     NSString *idUnidad;
+    
+    UITextField *totalPaxTF;
+    UITextField *totalCargaTF;
+    
+    
+    UIPickerView *pickerEntidad;
+    UIPickerView *pickerRequerimiento;
+    UIPickerView *pickerOperacion;
+    UIPickerView *pickerOperacionTipo;
+    UIPickerView *pickerPlan;
+    
+    UIPickerView *pickerTipoPax;
+    UIPickerView *pickerEntidadPax;
+    UIPickerView *pickerNumeros;
+    UIPickerView *pickerCantidadCarga;
+    UIPickerView *pickerEntidadCarga;
+    UIPickerView *pickerTipoArmamento;
+    UIPickerView *pickerCantidadArmamento;
+    UIPickerView *pickerCantidadFallidoArmamento;
+    UIPickerView *pickerEfectividadArmamento;
+    
+    UIPickerView *pickerResultadosTipoOperacion;
+    UIPickerView *pickerResultadosMotivosIncumplimiento;
+    UIPickerView *pickerResultadosConvenio;
+    UIPickerView *pickerResultadosInmediatos;
+    UIPickerView *pickerResultadosCantidad;
+    
+    UIDatePicker *fechaCompletaPicker;
+    UIDatePicker *datePicker;
+    UIDatePicker *hourPicker;
+    
+    UIPickerView *pickerRetardo;
+    
+    NSMutableArray *numbersArray;
+
+    NSMutableArray *sumaPaxArray;
+    NSMutableArray *sumaCargaArray;
+    NSMutableArray *porcentajeArray;
     
     CeldaCondiciones *condicionesTotal;
     

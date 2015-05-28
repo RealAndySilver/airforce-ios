@@ -110,6 +110,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
+    [self obtenerListasMision];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -405,6 +406,12 @@
     server.tag=23;
     [server callServerWithMethod:@"listas" andParameter:@""];
 }
+-(void)obtenerListasMision{
+    ServerCommunicator *server=[[ServerCommunicator alloc]init];
+    server.caller=self;
+    server.tag=25;
+    [server callServerWithMethod:@"ListaTipoOperacion" andParameter:@""];
+}
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
     NSString *result=[sender.resDic objectForKey:@"url"];
@@ -522,7 +529,7 @@
         [lista agregarAlArregloRespectivo:sender.resDic];
         FileSaver *save=[[FileSaver alloc]init];
         [save setDictionary:sender.resDic withName:@"municipios"];
-        [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
+        [self obtenerListasMision];
         return;
     }
     else if (sender.tag==23){
@@ -530,6 +537,13 @@
         [save setDictionary:sender.resDic withName:@"lista"];
         lista=[[Lista alloc]initWithDictionary:sender.resDic];
         [self obtenerEnemigos];
+        return;
+    }
+    else if (sender.tag==25){
+        FileSaver *save=[[FileSaver alloc]init];
+        [save setDictionary:sender.resDic withName:@"listasMision"];
+        lista=[[Lista alloc]initWithMisionDictionary:sender.resDic];
+        [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
         return;
     }
     

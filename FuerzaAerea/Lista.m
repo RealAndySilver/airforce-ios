@@ -129,6 +129,124 @@
     }
     return self;
 }
+-(id)initWithMisionDictionary:(NSDictionary*)dictionary{
+    if (self =[super init]) {
+        
+        dictionary=[dictionary objectForKey:@"listasMision"];
+        
+        NSArray *tempArmamentos=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"armamentos"]];
+        if (tempArmamentos.count) {
+            arregloDeArmamentos=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArmamentos.count; i++) {
+                Armamentos *arm=[[Armamentos alloc]initWithDictionary:[tempArmamentos objectAtIndex:i]];
+                [arregloDeArmamentos addObject:arm];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"armamento" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeArmamentos sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArmamentosImpactados=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"armamentosImpactados"]];
+        if (tempArmamentosImpactados.count) {
+            arregloDeArmamentosImpactados=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArmamentosImpactados.count; i++) {
+                ArmamentosImpactados *armImp=[[ArmamentosImpactados alloc]initWithDictionary:[tempArmamentosImpactados objectAtIndex:i]];
+                [arregloDeArmamentosImpactados addObject:armImp];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"nombre" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeArmamentosImpactados sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeDepartamentos=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"departamentos"]];
+        if (tempArregloDeDepartamentos.count) {
+            arregloDeDepartamentos=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeDepartamentos.count; i++) {
+                Departamentos *dep=[[Departamentos alloc]initWithDictionary:[tempArregloDeDepartamentos objectAtIndex:i]];
+                [arregloDeDepartamentos addObject:dep];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"departamento" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeDepartamentos sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeManiobra=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"maniobra"]];
+        if (tempArregloDeManiobra.count) {
+            arregloDeManiobra=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeManiobra.count; i++) {
+                Maniobra *man=[[Maniobra alloc]initWithDictionary:[tempArregloDeManiobra objectAtIndex:i]];
+                [arregloDeManiobra addObject:man];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"maniobra" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeManiobra sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDePlan=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"planes"]];
+        if (tempArregloDePlan.count) {
+            arregloDePlan=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDePlan.count; i++) {
+                Plan *plan=[[Plan alloc]initWithDictionary:[tempArregloDePlan objectAtIndex:i]];
+                [arregloDePlan addObject:plan];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"descripcion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDePlan sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeTipoOperacion=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"tipoOperaciones"]];
+        if (tempArregloDeTipoOperacion.count) {
+            arregloDeTipoOperacion=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeTipoOperacion.count; i++) {
+                TipoOperacion *tipoOp=[[TipoOperacion alloc]initWithDictionary:[tempArregloDeTipoOperacion objectAtIndex:i]];
+                [arregloDeTipoOperacion addObject:tipoOp];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"tipoOperacion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeTipoOperacion sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeUnidades=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"unidades"]];
+        if (tempArregloDeUnidades.count) {
+            arregloDeUnidades=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeUnidades.count; i++) {
+                Unidades *unidades=[[Unidades alloc]initWithDictionary:[tempArregloDeUnidades objectAtIndex:i]];
+                [arregloDeUnidades addObject:unidades];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"sigla" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeUnidades sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeFaseDeVuelo=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"faseVuelo"]];
+        if (tempArregloDeFaseDeVuelo.count) {
+            arregloDeFaseDeVuelo=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeFaseDeVuelo.count; i++) {
+                FaseVuelo *fase=[[FaseVuelo alloc]initWithDictionary:[tempArregloDeFaseDeVuelo objectAtIndex:i]];
+                [arregloDeFaseDeVuelo addObject:fase];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"faseVuelo" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeFaseDeVuelo sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeGrupo=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"grupos"]];
+        if (tempArregloDeGrupo.count) {
+            arregloDeGrupo=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeGrupo.count; i++) {
+                Grupo *grupo=[[Grupo alloc]initWithDictionary:[tempArregloDeGrupo objectAtIndex:i]];
+                [arregloDeGrupo addObject:grupo];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"nombreOrganizacion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeGrupo sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloDeEntidad=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"entidades"]];
+        if (tempArregloDeEntidad.count) {
+            arregloDeEntidades=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloDeEntidad.count; i++) {
+                Entidad *entidad=[[Entidad alloc]initWithDictionary:[tempArregloDeEntidad objectAtIndex:i]];
+                [arregloDeEntidades addObject:entidad];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"nombreOrganizacion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeEntidades sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+    }
+    return self;
+}
 -(void)agregarAlArregloRespectivo:(NSDictionary*)dictionary{
     if ([dictionary objectForKey:@"enemigos"]) {
         NSArray *tempArregloDeEnemigos=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"enemigos"]];

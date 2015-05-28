@@ -24,7 +24,7 @@
                andParameter:(NSString*)parameter{
     NSString *soapMessage = [NSString stringWithFormat:
                              @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                             "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://droidsecure.dglabs.com/app/service/\"\n"
+                             "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"http://apps.sinte.co/app/service/\"\n"
                              "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\n"
                              "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
                              "xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\">\n"
@@ -57,6 +57,24 @@
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
 
         }
+    }
+    else if ([method isEqualToString:@"ListaTipoOperacion"]) {
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
+        //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
+        //if ([ip isEqualToString:@""]) {
+            //URL Producción
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.2.197:8080/TestMisionCumplida/ListasMisionCumplidaWS?wsdl"]];
+            //URL Sinte
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:8383/ServiciosMaletin/WS_Listas?xsd=1"]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+            
+        //}
+        //else{
+            //URL Custom usando el login admin
+        //    url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/TestMisionCumplida/ListasMisionCumplidaWS?wsdl",ip]];
+            //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
+            
+        //}
     }
     else{
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Inicio?wsdl"]];
