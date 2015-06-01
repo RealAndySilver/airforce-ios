@@ -58,12 +58,12 @@
 
         }
     }
-    else if ([method isEqualToString:@"ListaTipoOperacion"]) {
+    else if ([method isEqualToString:@"ListasMisionCumplida"]) {
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:2626/ServiciosMaletin/WS_Listas?xsd=1"]];
         //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.100.6:8989/ServiciosMaletin/WS_Listas?xsd=1"]];
         //if ([ip isEqualToString:@""]) {
             //URL Producción
-            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.2.197:8080/TestMisionCumplida/ListasMisionCumplidaWS?wsdl"]];
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:8383/TestMisionCumplida/ListasMisionCumplidaWS?wsdl"]];
             //URL Sinte
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.sinte.co:8383/ServiciosMaletin/WS_Listas?xsd=1"]];
             //url = [NSURL URLWithString:[NSString stringWithFormat:@"http://172.20.122.123:8989/ServiciosMaletin/WS_Inicio?wsdl"]];
@@ -151,7 +151,7 @@
     //    FileSaver *temp=[[FileSaver alloc]init];
     
     NSDictionary *dictionary1 = [XMLReader dictionaryForXMLString:theXML error:nil];
-    NSLog(@"dic %@",theXML);
+    //NSLog(@"dic %@",theXML);
     //NSString *tempString=[NSString stringWithFormat:@"ns2:%@Response",tempMethod];
     if ([caller respondsToSelector:@selector(receivedDataFromServer:)]) {
         NSDictionary * dictionary2=[[[dictionary1 objectForKey:@"S:Envelope"]
@@ -183,6 +183,19 @@
         else if ([tempMethod isEqualToString:@"listas"]){
             NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
             json_string=[NSString stringWithFormat:@"{\"listas\":%@}",str];
+        }
+        else if ([tempMethod isEqualToString:@"ListasMisionCumplida"]){
+            //En este método es necesario incluir lo que ocurre después del if-else
+            //Ya que es un arreglo y no un objeto
+            //Necesario el return al finalizar para evitar que continúe el proceso
+            json_string = [json_string stringByReplacingOccurrencesOfString:@"null" withString:@"\"N/A\""];
+            NSMutableArray *arr =[json objectWithString:json_string error:nil];
+            
+            NSMutableDictionary *dit=[[NSMutableDictionary alloc]init];
+            [dit setObject:arr forKey:@"listasMision"];
+            resDic=[[NSMutableDictionary alloc]initWithDictionary:dit];
+            [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
+            return;
         }
         NSMutableDictionary *dit=[json objectWithString:json_string error:nil];
         //NSMutableDictionary *dit=[json objectWithString:theXML error:nil];

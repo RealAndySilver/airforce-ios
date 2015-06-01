@@ -39,6 +39,13 @@
 @property(nonatomic,readonly)NSMutableArray *arregloDeOperacion;
 @property(nonatomic,readonly)NSMutableArray *arregloDeObjetivo;
 
+@property(nonatomic,readonly)NSMutableArray *arregloDeConvenios;
+@property(nonatomic,readonly)NSMutableArray *arregloEntidadesPaxCarga;
+@property(nonatomic,readonly)NSMutableArray *arregloMotivosIncumplimiento;
+@property(nonatomic,readonly)NSMutableArray *arregloResultadosInmediatos;
+@property(nonatomic,readonly)NSMutableArray *arregloRetardos;
+@property(nonatomic,readonly)NSMutableArray *arregloTipoOperacionMision;
+@property(nonatomic,readonly)NSMutableArray *arregloTipoPax;
 
 -(id)initWithDictionary:(NSDictionary*)dictionary;
 -(id)initWithMisionDictionary:(NSDictionary*)dictionary;

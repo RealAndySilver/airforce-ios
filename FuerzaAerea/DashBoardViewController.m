@@ -257,8 +257,8 @@
     
 }
 -(IBAction)irAMisionCumplida:(id)sender{
-        //hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        //hud.labelText=NSLocalizedString(@"Cargando Registro de Vuelo", nil);
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText=NSLocalizedString(@"Cargando Misión Cumplida", nil);
         [self performSelector:@selector(delayedAction2) withObject:sender afterDelay:0.01];
 }
 -(void)delayedAction{
@@ -275,6 +275,7 @@
     MisionCumplidaViewController *mcVC=[[MisionCumplidaViewController alloc]init];
     mcVC=[self.storyboard instantiateViewControllerWithIdentifier:@"MisionCumplida"];
     mcVC.ordenDeVuelo=ordenDeVuelo;
+    mcVC.lista=lista;
     [self.navigationController pushViewController:mcVC animated:YES];
 }
 #pragma mark external request
@@ -410,7 +411,7 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=25;
-    [server callServerWithMethod:@"ListaTipoOperacion" andParameter:@""];
+    [server callServerWithMethod:@"ListasMisionCumplida" andParameter:@""];
 }
 #pragma mark server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{

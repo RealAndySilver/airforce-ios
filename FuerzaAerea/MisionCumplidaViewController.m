@@ -14,7 +14,7 @@
 
 @implementation MisionCumplidaViewController
 
-@synthesize ordenDeVuelo;
+@synthesize ordenDeVuelo,lista;
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self initializeDictionaries];
@@ -90,6 +90,11 @@
 
 }
 
+#pragma mark - populate outlets con orden de vuelo
+- (void)populateWithOrdenDeVuelo{
+    unidadCreaTF.text = ordenDeVuelo.principal.unidad;
+}
+
 #pragma mark - set pickers
 - (void)setAllPickers{
     pickerNumeros=[[UIPickerView alloc]init];
@@ -97,6 +102,50 @@
     pickerNumeros.delegate=self;
     pickerNumeros.showsSelectionIndicator = YES;
     pickerNumeros.tag=2000;
+    
+    pickerConvenio=[[UIPickerView alloc]init];
+    pickerConvenio.dataSource=self;
+    pickerConvenio.delegate=self;
+    pickerConvenio.showsSelectionIndicator = YES;
+    pickerConvenio.tag=2001;
+    
+    pickerEntidad=[[UIPickerView alloc]init];
+    pickerEntidad.dataSource=self;
+    pickerEntidad.delegate=self;
+    pickerEntidad.showsSelectionIndicator = YES;
+    pickerEntidad.tag=2002;
+    
+    pickerMotivos=[[UIPickerView alloc]init];
+    pickerMotivos.dataSource=self;
+    pickerMotivos.delegate=self;
+    pickerMotivos.showsSelectionIndicator = YES;
+    pickerMotivos.tag=2003;
+    
+    pickerResultadosInmediatos=[[UIPickerView alloc]init];
+    pickerResultadosInmediatos.dataSource=self;
+    pickerResultadosInmediatos.delegate=self;
+    pickerResultadosInmediatos.showsSelectionIndicator = YES;
+    pickerResultadosInmediatos.tag=2004;
+    
+    pickerRetardo=[[UIPickerView alloc]init];
+    pickerRetardo.dataSource=self;
+    pickerRetardo.delegate=self;
+    pickerRetardo.showsSelectionIndicator = YES;
+    pickerRetardo.tag=2005;
+    
+    pickerTipoOperacion=[[UIPickerView alloc]init];
+    pickerTipoOperacion.dataSource=self;
+    pickerTipoOperacion.delegate=self;
+    pickerTipoOperacion.showsSelectionIndicator = YES;
+    pickerTipoOperacion.tag=2006;
+    
+    pickerTipoPax=[[UIPickerView alloc]init];
+    pickerTipoPax.dataSource=self;
+    pickerTipoPax.delegate=self;
+    pickerTipoPax.showsSelectionIndicator = YES;
+    pickerTipoPax.tag=2007;
+    
+    
     
     fechaCompletaPicker=[[UIDatePicker alloc]init];
     fechaCompletaPicker.tag = 5000;
@@ -392,15 +441,11 @@
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         
         UITextField *entidadTF = [self crearTextField:marginLeftForTV y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        [entidadTF setUserInteractionEnabled:NO];
         UITextField *requerimientoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*1)+2 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        [requerimientoTF setUserInteractionEnabled:NO];
         UITextField *operacionTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*2)+4 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        [operacionTF setUserInteractionEnabled:NO];
         UITextField *operacionTipoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*3)+6 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        [operacionTipoTF setUserInteractionEnabled:NO];
+        operacionTipoTF.inputView = pickerTipoOperacion;
         UITextField *planTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*4)+8 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        [planTF setUserInteractionEnabled:NO];
         
         [dictionary setObject:entidadTF forKey:@"entidad"];
         [dictionary setObject:requerimientoTF forKey:@"requerimiento"];
@@ -484,7 +529,9 @@
     for(int i=0; i<maxNumberOfCells; i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         UITextField *tipoPax = [self crearTextField:marginLeft y:marginTop+(tfHeight*i)+i width:tfWidthLarge height:tfHeight InView:paxScroll];
+        tipoPax.inputView = pickerTipoPax;
         UITextField *entidadPax = [self crearTextField:marginLeft+(tfWidthLarge)+2 y:marginTop+(tfHeight*i)+i width:tfWidthLarge height:tfHeight InView:paxScroll];
+        entidadPax.inputView = pickerEntidad;
         UITextField *cantidadPax = [self crearTextField:marginLeft+(tfWidthLarge*2)+4 y:marginTop+(tfHeight*i)+i width:tfWidthShort height:tfHeight InView:paxScroll];
         [cantidadPax setTag:-1000];
         cantidadPax.inputView = pickerNumeros;
@@ -525,7 +572,7 @@
         cantidadCarga.inputView = pickerNumeros;
         [cantidadCarga setTag:-1000];
         UITextField *entidadCarga = [self crearTextField:marginLeft+(tfWidthShort)+4 y:marginTop+(tfHeight*i)+i width:tfWidthLarge height:tfHeight InView:cargaScroll];
-        
+        entidadCarga.inputView = pickerEntidad;
         [dictionary setObject:entidadCarga forKey:@"entidadCarga"];
         [dictionary setObject:cantidadCarga forKey:@"cantidadCarga"];
         
@@ -624,6 +671,7 @@
     
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tipoOperacionScroll];
+        TF.inputView = pickerOperacionTipo;
         [tipoOperacionArray addObject:TF];
     }
     [resultadosDictionary setObject:tipoOperacionArray forKey:@"tipoOperacion"];
@@ -644,6 +692,7 @@
     NSMutableArray *convenioArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:convenioScroll];
+        TF.inputView = pickerConvenio;
         [convenioArray addObject:TF];
     }
     [resultadosDictionary setObject:convenioArray forKey:@"convenio"];
@@ -663,6 +712,7 @@
     NSMutableArray *motivosIncumplimientoArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:480 height:tfHeight InView:motivosIncumplimientoScroll];
+        TF.inputView = pickerMotivos;
         [motivosIncumplimientoArray addObject:TF];
     }
     [resultadosDictionary setObject:motivosIncumplimientoArray forKey:@"motivosIncumplimiento"];
@@ -687,6 +737,7 @@
     for(int i=0;i<8;i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         UITextField *resultadosTF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:300 height:tfHeight InView:resultadosInmediatosScroll];
+        resultadosTF.inputView = pickerResultadosInmediatos;
         UITextField *cantidadTF = [self crearTextField:10+(300*1)+2 y:(tfHeight*i)+(2*i) width:180 height:tfHeight InView:resultadosInmediatosScroll];
         cantidadTF.textAlignment = NSTextAlignmentCenter;
         cantidadTF.inputView =pickerNumeros;
@@ -728,6 +779,7 @@
     NSMutableArray *motivosRetardoArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:center y:(marginTop*(i+1))+initialMargin width:tfWidth height:tfHeight InView:paginaMotivos];
+        TF.inputView = pickerRetardo;
         [motivosRetardoArray addObject:TF];
     }
     [motivosDictionary setObject:motivosRetardoArray forKey:@"motivosRetardo"];
@@ -774,8 +826,17 @@
             }
             return;
         }
+        NSInteger index = 0;
+        if (currentPicker.tag == 2000) {
+            index=[numbersArray indexOfObject:currentTextField.text];
+        }
+        else if (currentPicker.tag == 2001) {
+            index=[lista.arregloDeConvenios indexOfObject:currentTextField.text];
+        }
         
-        NSInteger index=[numbersArray indexOfObject:currentTextField.text];
+        
+        
+        
         if(index != NSNotFound ){
             [currentPicker selectRow:index inComponent:0 animated:YES];
         }
@@ -885,7 +946,7 @@
 }
 
 #pragma mark number check
-- (BOOL) isAllDigitsFromArray:(NSArray*)array{
+- (BOOL)isAllDigitsFromArray:(NSArray*)array{
     for (NSString *string in array) {
         NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
         NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
@@ -895,18 +956,18 @@
     }
     return YES;
 }
-- (BOOL) isAllDigitsFromString:(NSString*)string{
+- (BOOL)isAllDigitsFromString:(NSString*)string{
     NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
     return r.location == NSNotFound;
 }
-- (void) stopAlertWithFieldName:(NSString*)fieldName{
+- (void)stopAlertWithFieldName:(NSString*)fieldName{
     NSString *titulo=@"Error";
     NSString *mensaje=[NSString stringWithFormat:@"Su registro no pudo ser enviado ya que contiene un elemento no numérico en el campo %@. Por favor verifique y vuelva a intentarlo.",fieldName];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alert show];
 }
-- (void) stopAlertWithSectionName:(NSString*)sectionName{
+- (void)stopAlertWithSectionName:(NSString*)sectionName{
     NSString *titulo=@"Error";
     NSString *mensaje=[NSString stringWithFormat:@"Su registro no pudo ser enviado ya que contiene un elemento no numérico en la sección %@. Por favor verifique y vuelva a intentarlo.",sectionName];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -918,6 +979,27 @@
     if (pickerView.tag == 2000) {
         return numbersArray.count;
     }
+    else if (pickerView.tag == 2001) {
+        return lista.arregloDeConvenios.count;
+    }
+    else if (pickerView.tag == 2002) {
+        return lista.arregloEntidadesPaxCarga.count;
+    }
+    else if (pickerView.tag == 2003) {
+        return lista.arregloMotivosIncumplimiento.count;
+    }
+    else if (pickerView.tag == 2004) {
+        return lista.arregloResultadosInmediatos.count;
+    }
+    else if (pickerView.tag == 2005) {
+        return lista.arregloRetardos.count;
+    }
+    else if (pickerView.tag == 2006) {
+        return lista.arregloTipoOperacionMision.count;
+    }
+    else if (pickerView.tag == 2007) {
+        return lista.arregloTipoPax.count;
+    }
     return 0;
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -927,11 +1009,74 @@
     if (pickerView.tag == 2000) {
         return [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
     }
+    else if (pickerView.tag == 2001) {
+        NSDictionary *dic = lista.arregloDeConvenios[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
+    }
+    else if (pickerView.tag == 2002) {
+        NSDictionary *dic = lista.arregloEntidadesPaxCarga[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"NombreOrganizacion"]];
+    }
+    else if (pickerView.tag == 2003) {
+        NSDictionary *dic = lista.arregloMotivosIncumplimiento[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
+    }
+    else if (pickerView.tag == 2004) {
+        NSDictionary *dic = lista.arregloResultadosInmediatos[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
+    }
+    else if (pickerView.tag == 2005) {
+        NSDictionary *dic = lista.arregloRetardos[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
+    }
+    else if (pickerView.tag == 2006) {
+        NSDictionary *dic = lista.arregloTipoOperacionMision[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"DescripcionValorDefinicion"]];
+    }
+    else if (pickerView.tag == 2007) {
+        NSDictionary *dic = lista.arregloTipoPax[row];
+        return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
+    }
     return nil;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (pickerView.tag == 2000) {
         currentTextField.text = [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
+    }
+    else if (pickerView.tag == 2001) {
+        NSDictionary *dic = lista.arregloDeConvenios[row];
+        currentTextField.text = [dic objectForKey:@"Descripcion"];
+        currentTextField.tag = [dic objectForKey:@"IdConvenio"];
+    }
+    else if (pickerView.tag == 2002) {
+        NSDictionary *dic = lista.arregloEntidadesPaxCarga[row];
+        currentTextField.text = [dic objectForKey:@"NombreOrganizacion"];
+        currentTextField.tag = [dic objectForKey:@"OrganizacionId"];
+    }
+    else if (pickerView.tag == 2003) {
+        NSDictionary *dic = lista.arregloMotivosIncumplimiento[row];
+        currentTextField.text = [dic objectForKey:@"Descripcion"];
+        currentTextField.tag = [dic objectForKey:@"IdIncumplimiento"];
+    }
+    else if (pickerView.tag == 2004) {
+        NSDictionary *dic = lista.arregloResultadosInmediatos[row];
+        currentTextField.text = [dic objectForKey:@"Descripcion"];
+        currentTextField.tag = [dic objectForKey:@"IdResultado"];
+    }
+    else if (pickerView.tag == 2005) {
+        NSDictionary *dic = lista.arregloRetardos[row];
+        currentTextField.text = [dic objectForKey:@"Descripcion"];
+        currentTextField.tag = [dic objectForKey:@"IdRetardo"];
+    }
+    else if (pickerView.tag == 2006) {
+        NSDictionary *dic = lista.arregloTipoOperacionMision[row];
+        currentTextField.text = [dic objectForKey:@"DescripcionValorDefinicion"];
+        currentTextField.tag = [dic objectForKey:@"ValorDefinicionId"];
+    }
+    else if (pickerView.tag == 2007) {
+        NSDictionary *dic = lista.arregloTipoPax[row];
+        currentTextField.text = [dic objectForKey:@"Descripcion"];
+        currentTextField.tag = [dic objectForKey:@"IdTipoPax"];
     }
     overlayLabel.text = currentTextField.text;
     return;

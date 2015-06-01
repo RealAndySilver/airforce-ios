@@ -27,6 +27,8 @@
 #import "UITextFieldDS.h"
 @interface MisionCumplidaViewController : UIViewController<UIScrollViewDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
     MBProgressHUD *hud;
+
+    
     IBOutlet UIScrollView *pageScrollView;
     
     IBOutlet UIButton *botonInforme;
@@ -101,21 +103,18 @@
     UIPickerView *pickerOperacionTipo;
     UIPickerView *pickerPlan;
     
+    UIPickerView *pickerConvenio;
+    UIPickerView *pickerMotivos;
     UIPickerView *pickerTipoPax;
-    UIPickerView *pickerEntidadPax;
     UIPickerView *pickerNumeros;
     UIPickerView *pickerCantidadCarga;
-    UIPickerView *pickerEntidadCarga;
     UIPickerView *pickerTipoArmamento;
     UIPickerView *pickerCantidadArmamento;
     UIPickerView *pickerCantidadFallidoArmamento;
     UIPickerView *pickerEfectividadArmamento;
     
-    UIPickerView *pickerResultadosTipoOperacion;
-    UIPickerView *pickerResultadosMotivosIncumplimiento;
-    UIPickerView *pickerResultadosConvenio;
+    UIPickerView *pickerTipoOperacion;
     UIPickerView *pickerResultadosInmediatos;
-    UIPickerView *pickerResultadosCantidad;
     
     UIDatePicker *fechaCompletaPicker;
     UIDatePicker *datePicker;
@@ -133,7 +132,7 @@
     
 }
 @property(nonatomic,retain)ModeladorDeOrdenDeVuelo *ordenDeVuelo;
-
+@property(nonatomic,retain)Lista *lista;
 
 
 
