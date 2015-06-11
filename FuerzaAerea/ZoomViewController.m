@@ -91,7 +91,6 @@
     return imageViewZoomImage;
 }
 - (void)handleDoubleTap:(UIGestureRecognizer *)recognizer {
-    NSLog(@"doubletap ");
     if(zoomCheck){
         CGPoint Pointview=[recognizer locationInView:scrollViewImagen];
         CGFloat newZoomscal=maximumZoomScale;

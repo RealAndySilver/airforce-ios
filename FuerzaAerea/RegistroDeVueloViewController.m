@@ -14,8 +14,7 @@
 
 @implementation RegistroDeVueloViewController
 @synthesize ordenDeVuelo,arrayFaseVuelo,arrayDepartamentos,arrayMunicipios,arrayArmamentos,arrayLatitud,arrayLongitud,lista;
-- (void)viewDidLoad
-{
+-(void)viewDidLoad{
     [super viewDidLoad];
     arregloParaSumarItinerario=[[NSMutableArray alloc]init];
     arregloParaSumarCondiciones=[[NSMutableArray alloc]init];
@@ -363,8 +362,7 @@
         }
     }
 }
-- (void)didReceiveMemoryWarning
-{
+-(void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -921,9 +919,7 @@
     }
     return nil;
 }
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     if (component == 0) {
         if (pickerView.tag==2000) {
             FaseVuelo *result=[lista.arregloDeFaseDeVuelo objectAtIndex:row];
@@ -1415,7 +1411,7 @@
 }
 #pragma mark - server response
 -(void)receivedDataFromServer:(ServerCommunicator*)sender{
-    NSLog(@"Respuesta %@",sender.resDic);
+    //NSLog(@"Respuesta %@",sender.resDic);
     if (sender.tag==1) {
         /*if ([[sender.resDic objectForKey:@"status:"] isEqualToString:@"false"] || [[sender.resDic objectForKey:@"status:"] isEqualToString:@" false"]) {
          UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

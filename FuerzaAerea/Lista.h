@@ -48,6 +48,6 @@
 @property(nonatomic,readonly)NSMutableArray *arregloTipoPax;
 
 -(id)initWithDictionary:(NSDictionary*)dictionary;
--(id)initWithMisionDictionary:(NSDictionary*)dictionary;
+-(void)addMisionDictionary:(NSDictionary*)dictionary;
 -(void)agregarAlArregloRespectivo:(NSDictionary*)dictionary;
 @end

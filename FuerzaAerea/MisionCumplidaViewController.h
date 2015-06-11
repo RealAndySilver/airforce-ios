@@ -25,7 +25,7 @@
 #import "MBProgressHud.h"
 #import "NSData+AES.h"
 #import "UITextFieldDS.h"
-@interface MisionCumplidaViewController : UIViewController<UIScrollViewDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+@interface MisionCumplidaViewController : UIViewController<UIScrollViewDelegate,UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextViewDelegate>{
     MBProgressHUD *hud;
 
     
@@ -54,6 +54,8 @@
     IBOutlet UITextField *itinerarioTF;
 
     IBOutlet UITextView *requerimientosTextfield;
+    
+    NSString *pathForSave;
     
     
     UIScrollView *paginaInforme;

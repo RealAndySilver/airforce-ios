@@ -47,7 +47,7 @@ static const short _base64DecodingTable[256] = {
 +(NSString *)hash256:(NSString *)parameters{
     NSString *key = @"d4fe34231";
     NSString *parameterParsed=[parameters stringByReplacingOccurrencesOfString:@"/" withString:@"|"];
-    NSLog(@"parsed %@",parameterParsed);
+    //NSLog(@"parsed %@",parameterParsed);
     NSString *data = [NSString stringWithFormat:@"%@%@%@", @"sha256", parameterParsed, key];
     //const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
     //const char *cData = [data cStringUsingEncoding:NSASCIIStringEncoding];
@@ -264,7 +264,7 @@ static const short _base64DecodingTable[256] = {
     //uint8_t iv[kCCBlockSizeAES128];
     //memset((void *) iv, 0x0, (size_t) sizeof(iv));
     const char iv[16] = {1,1,0,1,0,1,0,0,0,1,0,1,0,1,1,1};
-    NSLog(@"CHAR %s llave hash %@",iv,secretKey);
+    //NSLog(@"CHAR %s llave hash %@",iv,secretKey);
     status = CCCryptorCreate(encryptOrDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                              [secretKey bytes], kCCKeySizeAES128, iv, &cryptor);
     if (status != kCCSuccess) {
@@ -304,7 +304,7 @@ static const short _base64DecodingTable[256] = {
     //uint8_t iv[kCCBlockSizeAES128];
     //memset((void *) iv, 0x0, (size_t) sizeof(iv));
     const char iv[16] = {1,1,0,1,0,1,0,0,0,1,0,1,0,1,1,1};
-    NSLog(@"CHAR %s llave hash %@",iv,secretKey);
+    //NSLog(@"CHAR %s llave hash %@",iv,secretKey);
     //status = CCCryptorCreate(encryptOrDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
     //                         [secretKey bytes], kCCKeySizeAES128, iv, &cryptor);
     status = CCCryptorCreate(encryptOrDecrypt, kCCAlgorithmAES128, kCCOptionECBMode,
@@ -349,22 +349,22 @@ static const short _base64DecodingTable[256] = {
 
 +(NSString*)encryptAndBase64:(NSString *)message withKey:(NSString*)key{
     NSData *encrypted = [self transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
-    NSLog(@"Encriptado Hexa: %@",encrypted);
+    //NSLog(@"Encriptado Hexa: %@",encrypted);
     return [NSString base64StringFromData:encrypted length:[encrypted length]];
 }
 +(NSString *)base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
     NSData *decrypted = [self transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
-    NSLog(@"Desencriptado Hexa: %@",decrypted);
+    //NSLog(@"Desencriptado Hexa: %@",decrypted);
     return [[NSString alloc]initWithData:decrypted encoding:NSUTF8StringEncoding];
 }
 +(NSString*)ecb_encryptAndBase64:(NSString *)message withKey:(NSString*)key{
     NSData *encrypted = [self ecb_transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
-    NSLog(@"Encriptado ECB Hexa: %@",encrypted);
+    //NSLog(@"Encriptado ECB Hexa: %@",encrypted);
     return [NSString base64StringFromData:encrypted length:[encrypted length]];
 }
 +(NSString *)ecb_base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
     NSData *decrypted = [self ecb_transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
-    NSLog(@"Desencriptado ECB Hexa: %@",decrypted);
+    //NSLog(@"Desencriptado ECB Hexa: %@",decrypted);
     return [[NSString alloc]initWithData:decrypted encoding:NSUTF8StringEncoding];
 }
 +(NSData *)data_decrypt:(NSData *)data withKey:(NSString*)key{

@@ -42,28 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FuerzaAerea/DashBoardViewController.m"
-            timestampString = "454628347.288471"
+            timestampString = "455690151.501339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "-ordenDeVuelo"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FuerzaAerea/RegistroDeVueloViewController.m"
-            timestampString = "446435069.592414"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1060"
-            endingLineNumber = "1060"
-            landmarkName = "-guardarRegistro:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -110,7 +110,7 @@
 	theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
 	dictionary = [[NSDictionary alloc]init];
     
-    NSLog(@"Request %@",[NSString stringWithUTF8String:[theRequest.HTTPBody bytes]]);
+    //NSLog(@"Request %@",[NSString stringWithUTF8String:[theRequest.HTTPBody bytes]]);
     
 	if(theConnection) {
 		webData = [NSMutableData data];
@@ -170,7 +170,6 @@
             //json_string=[IAmCoder base64DecodeString:json_string];
             json_string=[IAmCoder base64AndDecrypt:json_string withKey:[IAmCoder dateKey]];
             if (json_string.length>0) {
-                NSLog(@"json %@",json_string);
                 resDic=[[NSMutableDictionary alloc]initWithDictionary:[SerializadorOV getDiccionarioFronJsonString:json_string]];
                 [caller performSelector:@selector(receivedDataFromServer:) withObject:self];
                 return;
@@ -183,6 +182,7 @@
         else if ([tempMethod isEqualToString:@"listas"]){
             NSString *str=[json_string stringByReplacingOccurrencesOfString:@"}{" withString:@","];
             json_string=[NSString stringWithFormat:@"{\"listas\":%@}",str];
+            //NSLog(@"Listas json: %@",json_string);
         }
         else if ([tempMethod isEqualToString:@"ListasMisionCumplida"]){
             //En este método es necesario incluir lo que ocurre después del if-else

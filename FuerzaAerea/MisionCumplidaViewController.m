@@ -20,15 +20,21 @@
     [self initializeDictionaries];
     [self initializeArrays];
     
+    pathForSave = @"mc"/*ordenDeVuelo.principal.idConsecutivoUnidad*/;
+    
     numbersArray = [[NSMutableArray alloc]init];
     for (int i=0; i<101; i++) {
         [numbersArray addObject:[NSString stringWithFormat:@"%i",i]];
     }
+    [self populateWithOrdenDeVuelo];
     [self setAllPickers];
     [self crearPaginas];
     [self seleccionarBoton:1];
     
     [self initializeOutlets];
+    [self loadDataIntoOutlets];
+    [self totalPaxYCarga];
+
 }
 - (void)viewWillAppear:(BOOL)animated{
     [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
@@ -82,17 +88,68 @@
      [itinerarioTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     fechaDigitadoTF.inputView = datePicker;
-    fechaTF.inputView = datePicker;
+    fechaTF.inputView = fechaCompletaPicker;
     horaTF.inputView = hourPicker;
     hDecolajeTF.inputView = hourPicker;
     hAterrizajeTF.inputView = hourPicker;
     horaBlancoTF.inputView = hourPicker;
 
 }
+- (void)loadDataIntoOutlets{
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    NSDictionary * cabezeraDic = [masterDic objectForKey:@"GeneralCabezera"];
+    
+    consecutivoTF.text = [cabezeraDic objectForKey:@"ConsecutivoUnidad"];
+    unidadAsumeTF.text = [cabezeraDic objectForKey:@"UnidadAsume"];
+    unidadAsumeTF.tag = [[cabezeraDic objectForKey:@"IdUnidadAsume"] intValue];
+    
+    unidadCreaTF.text = [cabezeraDic objectForKey:@"UnidadCrea"];
+    unidadCreaTF.tag = [[cabezeraDic objectForKey:@"IdUnidadCrea"] intValue];
+    
+    
+    NSString *fechaDigitado = [cabezeraDic objectForKey:@"FechaDigitado"];
+    if(!fechaDigitado.length){
+        fechaDigitadoTF.text = [self getNowDate];
+    }
+    else{
+        fechaDigitadoTF.text = [cabezeraDic objectForKey:@"FechaDigitado"];
+    }
+
+    registroVueloTF.text = [cabezeraDic objectForKey:@"IdRegistroVuelo"];
+    
+    fechaTF.text = [cabezeraDic objectForKey:@"HoraOrden"];
+    
+    ovTF.text = [cabezeraDic objectForKey:@"OrdenVuelo"];
+    ovTF.tag = [[cabezeraDic objectForKey:@"IdOrdenVuelo"] intValue];
+
+    aeronaveUnoTF.text = [cabezeraDic objectForKey:@"AeronaveUno"];
+    aeronaveUnoTF.tag = [[cabezeraDic objectForKey:@"IdAeronave"] intValue];
+
+    aeronaveDosTF.text = [cabezeraDic objectForKey:@"AeronaveDos"];
+
+    hDecolajeTF.text = [cabezeraDic objectForKey:@"HoraDecolaje"];
+
+    hAterrizajeTF.text = [cabezeraDic objectForKey:@"HoraAterrizaje"];
+    
+    horaBlancoTF.text = [cabezeraDic objectForKey:@"HoraBlanco"];
+    
+    firmaTF.text = [cabezeraDic objectForKey:@"Firma"];
+    firmaTF.tag = [[cabezeraDic objectForKey:@"IdPiloto"] intValue];
+
+    itinerarioTF.text = [cabezeraDic objectForKey:@"Itinerario"];
+}
 
 #pragma mark - populate outlets con orden de vuelo
 - (void)populateWithOrdenDeVuelo{
+    consecutivoTF.text = ordenDeVuelo.principal.idConsecutivoUnidad;
+    ovTF.text = ordenDeVuelo.principal.idConsecutivoUnidad;
     unidadCreaTF.text = ordenDeVuelo.principal.unidad;
+    unidadAsumeTF.text = ordenDeVuelo.principal.unidadAsume;
+    aeronaveUnoTF.text = ordenDeVuelo.principal.matricula;
+    aeronaveDosTF.text = ordenDeVuelo.principal.equipo;
+    fechaTF.text = ordenDeVuelo.principal.fecha;
+    itinerarioTF.text = ordenDeVuelo.principal.itinerario;
 }
 
 #pragma mark - set pickers
@@ -297,6 +354,10 @@
     
 }
 - (void)crearPaginaInforme{
+    
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    
     paginaInforme=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*0, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
     paginaInforme.contentSize=CGSizeMake(paginaInforme.frame.size.width, paginaInforme.frame.size.height+1);
     paginaInforme.backgroundColor=[UIColor clearColor];
@@ -319,6 +380,8 @@
     descripcionTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, marginTop-threshold-(tvHeight/4), tvWidth, tvHeight)];
     descripcionTV.layer.borderWidth = 1;
     descripcionTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    descripcionTV.delegate = self;
+    descripcionTV.text = [[masterDic objectForKey:@"Informe"] objectForKey:@"Descripcion"];
     [paginaInforme addSubview:descripcionTV];
     
     
@@ -329,6 +392,8 @@
     recomendacionesTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, (marginTop*2)-threshold-(tvHeight/4), tvWidth, tvHeight)];
     recomendacionesTV.layer.borderWidth = 1;
     recomendacionesTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    recomendacionesTV.delegate = self;
+    recomendacionesTV.text = [[masterDic objectForKey:@"Informe"] objectForKey:@"Recomendaciones"];
     [paginaInforme addSubview:recomendacionesTV];
     
     UILabel *resultadosLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeft, (marginTop*3)-threshold, labelWidth, labelHeight)];
@@ -338,6 +403,8 @@
     resultadosTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, (marginTop*3)-threshold-(tvHeight/4), tvWidth, tvHeight)];
     resultadosTV.layer.borderWidth = 1;
     resultadosTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    resultadosTV.delegate = self;
+    resultadosTV.text = [[masterDic objectForKey:@"Informe"] objectForKey:@"Resultados"];
     [paginaInforme addSubview:resultadosTV];
     
     UILabel *observacionesLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeft, (marginTop*4)-threshold, labelWidth, labelHeight)];
@@ -347,6 +414,8 @@
     observacionesTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, (marginTop*4)-threshold-(tvHeight/4), tvWidth, tvHeight)];
     observacionesTV.layer.borderWidth = 1;
     observacionesTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    observacionesTV.delegate = self;
+    observacionesTV.text = [[masterDic objectForKey:@"Informe"] objectForKey:@"Observaciones"];
     [paginaInforme addSubview:observacionesTV];
     
     UILabel *noSerieVideoLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeft, (marginTop*5)-threshold, labelWidth, labelHeight)];
@@ -356,10 +425,16 @@
     noSerieVideoTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, (marginTop*5)-threshold, tvWidth, tvHeight/2)];
     noSerieVideoTV.layer.borderWidth = 1;
     noSerieVideoTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    noSerieVideoTV.delegate = self;
+    noSerieVideoTV.text = [[masterDic objectForKey:@"Informe"] objectForKey:@"NoSerieVideo"];
     [paginaInforme addSubview:noSerieVideoTV];
     
 }
 - (void)crearPaginaInformacion{
+    
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    
     paginaInformacion=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*1, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
     paginaInformacion.contentSize=CGSizeMake(paginaInformacion.frame.size.width, paginaInformacion.frame.size.height+1);
     paginaInformacion.backgroundColor=[UIColor clearColor];
@@ -381,6 +456,9 @@
     instruccionesTV = [[UITextView alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV, marginTop-threshold-(tvHeight/4), tvWidth, tvHeight)];
     instruccionesTV.layer.borderWidth = 1;
     instruccionesTV.layer.borderColor = [[UIColor grayColor] CGColor];
+    instruccionesTV.delegate = self;
+    instruccionesTV.text = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"Instrucciones"];
+
     [paginaInformacion addSubview:instruccionesTV];
     
     UILabel *escoltaVIPLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV+instruccionesTV.frame.size.width+20, marginTop-threshold-20, labelWidth, labelHeight)];
@@ -400,6 +478,24 @@
     transporteVIPSwitch = [[UISwitch alloc]initWithFrame:CGRectMake(marginLeft+distanceForTV+instruccionesTV.frame.size.width+90, marginTop-threshold+20, labelWidth, labelHeight)];
     [transporteVIPSwitch setOn:NO];
     [paginaInformacion addSubview:transporteVIPSwitch];
+    
+    //Seter para el switch de escolta
+    NSString *stringForEscolta = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"EscoVip"];
+    if([stringForEscolta isEqualToString:@"S"]){
+        [escoltaVIPSwitch setOn:YES];
+    }
+    else{
+        [escoltaVIPSwitch setOn:NO];
+    }
+    
+    //Seter para el switch de tránsito
+    NSString *stringForTransito = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"TransVip"];
+    if([stringForTransito isEqualToString:@"S"]){
+        [transporteVIPSwitch setOn:YES];
+    }
+    else{
+        [transporteVIPSwitch setOn:NO];
+    }
     
     //Cabecera Table View
     UILabel *entidadLabel = [[UILabel alloc]initWithFrame:CGRectMake( 100, 230, 80, 20)];
@@ -435,17 +531,50 @@
     int tfWidthLarge = 160;
     marginLeft +=15;
     
+    
+    NSArray *infoGeneralFileArray = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"InstruccionesMision"];
+
     NSMutableArray *infoGeneralArray = [[NSMutableArray alloc]init];
     
     for(int i=0;i<8;i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         
         UITextField *entidadTF = [self crearTextField:marginLeftForTV y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
+        [entidadTF setUserInteractionEnabled:NO];
+        
         UITextField *requerimientoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*1)+2 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
+        [requerimientoTF setUserInteractionEnabled:NO];
+
         UITextField *operacionTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*2)+4 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
+        [operacionTF setUserInteractionEnabled:NO];
+
         UITextField *operacionTipoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*3)+6 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
-        operacionTipoTF.inputView = pickerTipoOperacion;
+        [operacionTipoTF setUserInteractionEnabled:NO];
+        //operacionTipoTF.inputView = pickerTipoOperacion;
+        
         UITextField *planTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*4)+8 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
+        [planTF setUserInteractionEnabled:NO];
+
+        
+        if(infoGeneralFileArray.count >i){
+            NSDictionary *tempDic = infoGeneralFileArray[i];
+            
+            entidadTF.text = [[tempDic objectForKey:@"entidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidad"] objectForKey:@"text"]:@"";
+            entidadTF.tag = [[tempDic objectForKey:@"entidad"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidad"] objectForKey:@"id"] intValue]:0;
+            
+            requerimientoTF.text = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"]:@"";
+            requerimientoTF.tag = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] intValue]:0;
+            
+            operacionTF.text = [[tempDic objectForKey:@"operacion"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacion"] objectForKey:@"text"]:@"";
+            operacionTF.tag = [[tempDic objectForKey:@"operacion"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacion"] objectForKey:@"id"] intValue]:0;
+
+            operacionTipoTF.text = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"]:@"";
+            operacionTipoTF.tag = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] intValue]:0;
+
+            planTF.text = [[tempDic objectForKey:@"plan"] objectForKey:@"text"] ? [[tempDic objectForKey:@"plan"] objectForKey:@"text"]:@"";
+            planTF.tag = [[tempDic objectForKey:@"plan"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"plan"] objectForKey:@"id"] intValue]:0;
+        }
+        
         
         [dictionary setObject:entidadTF forKey:@"entidad"];
         [dictionary setObject:requerimientoTF forKey:@"requerimiento"];
@@ -456,7 +585,7 @@
         [infoGeneralArray addObject:dictionary];
 
     }
-    [infoGeneralDictionary setObject:infoGeneralArray forKey:@"infoGeneral"];
+    [infoGeneralDictionary setObject:infoGeneralArray forKey:@"instruccionesMision"];
 }
 - (void)crearPaginaPax{
     int maxNumberOfCells = 8;
@@ -525,6 +654,11 @@
     int tfWidthShort = 80;
     int tfWidthLarge = 180;
     
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    
+    NSArray *paxFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"PAX"];
+    
     NSMutableArray *paxArray = [[NSMutableArray alloc]init];
     for(int i=0; i<maxNumberOfCells; i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -536,6 +670,19 @@
         [cantidadPax setTag:-1000];
         cantidadPax.inputView = pickerNumeros;
         cantidadPax.textAlignment = NSTextAlignmentCenter;
+        
+        
+        if(paxFileArray.count >i){
+            NSDictionary *tempDic = paxFileArray[i];
+            tipoPax.text = [[tempDic objectForKey:@"tipoPax"] objectForKey:@"text"] ? [[tempDic objectForKey:@"tipoPax"] objectForKey:@"text"]:@"";
+            tipoPax.tag = [[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] intValue]:0;
+            
+            entidadPax.text = [[tempDic objectForKey:@"entidadPax"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidadPax"] objectForKey:@"text"]:@"";
+            entidadPax.tag = [[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] intValue]:0;
+            
+            cantidadPax.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
+        }
+        
         [dictionary setObject:tipoPax forKey:@"tipoPax"];
         [dictionary setObject:entidadPax forKey:@"entidadPax"];
         [dictionary setObject:cantidadPax forKey:@"cantidadPax"];
@@ -564,6 +711,8 @@
     [cargaScroll flashScrollIndicators];
     [paginaPaxArmamento addSubview:cargaScroll];
     
+    NSArray *cargaFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"Carga"];
+    
     NSMutableArray *cargaArray = [[NSMutableArray alloc]init];
     for(int i=0; i<maxNumberOfCells; i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -573,6 +722,15 @@
         [cantidadCarga setTag:-1000];
         UITextField *entidadCarga = [self crearTextField:marginLeft+(tfWidthShort)+4 y:marginTop+(tfHeight*i)+i width:tfWidthLarge height:tfHeight InView:cargaScroll];
         entidadCarga.inputView = pickerEntidad;
+        
+        if(cargaFileArray.count >i){
+            NSDictionary *tempDic = cargaFileArray[i];
+            entidadCarga.text = [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"text"]:@"";
+            entidadCarga.tag = [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] intValue]:0;
+            cantidadCarga.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
+        }
+        
+        
         [dictionary setObject:entidadCarga forKey:@"entidadCarga"];
         [dictionary setObject:cantidadCarga forKey:@"cantidadCarga"];
         
@@ -607,6 +765,8 @@
     
     marginLeft +=15;
     
+    NSArray *armamentoFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"Armamento"];
+    
     NSMutableArray *armamentoArray = [[NSMutableArray alloc]init];
     for(int i=0; i<maxNumberOfCells; i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -628,6 +788,17 @@
         efectividadArmamento.inputView = pickerNumeros;
         [efectividadArmamento setTag:-3000-i];
         [efectividadArmamento setUserInteractionEnabled:NO];
+        
+        
+        if(armamentoFileArray.count >i){
+            NSDictionary *tempDic = armamentoFileArray[i];
+            tipoArmamento.text = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"]:@"";
+            tipoArmamento.tag = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] intValue]:0;
+            
+            cantidadArmamento.text =[[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"]:@"";
+            cantidadFallidoArmamento.text =[[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"]:@"";
+            efectividadArmamento.text =[[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"]:@"";
+        }
         
         [dictionary setObject:tipoArmamento forKey:@"tipoArmamento"];
         [dictionary setObject:cantidadArmamento forKey:@"cantidadArmamento"];
@@ -667,11 +838,19 @@
     int tfHeight = 30;
     int tfWidthLarge = 280;
     
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    NSArray *tipoFileArray = [[masterDic objectForKey:@"Resultados"] objectForKey:@"TipoOperacion"];
     NSMutableArray *tipoOperacionArray = [[NSMutableArray alloc]init];
     
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tipoOperacionScroll];
-        TF.inputView = pickerOperacionTipo;
+        TF.inputView = pickerTipoOperacion;
+        if(tipoFileArray.count >i){
+            NSDictionary *tempDic = tipoFileArray[i];
+            TF.text = [tempDic objectForKey:@"text"];
+            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+        }
         [tipoOperacionArray addObject:TF];
     }
     [resultadosDictionary setObject:tipoOperacionArray forKey:@"tipoOperacion"];
@@ -689,10 +868,17 @@
     convenioScroll.showsVerticalScrollIndicator = YES;
     [paginaResultados addSubview:convenioScroll];
     
+    
+    NSArray *convenioFileArray = [[masterDic objectForKey:@"Resultados"] objectForKey:@"Convenio"];
     NSMutableArray *convenioArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:convenioScroll];
         TF.inputView = pickerConvenio;
+        if(convenioFileArray.count >i){
+            NSDictionary *tempDic = convenioFileArray[i];
+            TF.text = [tempDic objectForKey:@"text"];
+            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+        }
         [convenioArray addObject:TF];
     }
     [resultadosDictionary setObject:convenioArray forKey:@"convenio"];
@@ -709,10 +895,16 @@
     motivosIncumplimientoScroll.showsVerticalScrollIndicator = YES;
     [paginaResultados addSubview:motivosIncumplimientoScroll];
     
+    NSArray *motivosIncumplimientoFileArray = [[masterDic objectForKey:@"Resultados"] objectForKey:@"MotivosIncumplimiento"];
     NSMutableArray *motivosIncumplimientoArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:10 y:(tfHeight*i)+(2*i) width:480 height:tfHeight InView:motivosIncumplimientoScroll];
         TF.inputView = pickerMotivos;
+        if(motivosIncumplimientoFileArray.count >i){
+            NSDictionary *tempDic = motivosIncumplimientoFileArray[i];
+            TF.text = [tempDic objectForKey:@"text"];
+            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+        }
         [motivosIncumplimientoArray addObject:TF];
     }
     [resultadosDictionary setObject:motivosIncumplimientoArray forKey:@"motivosIncumplimiento"];
@@ -733,6 +925,8 @@
     resultadosInmediatosScroll.contentSize=CGSizeMake(280, 260);
     resultadosInmediatosScroll.showsVerticalScrollIndicator = YES;
     [paginaResultados addSubview:resultadosInmediatosScroll];
+    
+    NSArray *resultadosInmediatosFileArray = [[masterDic objectForKey:@"Resultados"] objectForKey:@"ResultadosInmediatos"];
     NSMutableArray *resultadosInmediatosArray = [[NSMutableArray alloc]init];
     for(int i=0;i<8;i++){
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
@@ -741,6 +935,13 @@
         UITextField *cantidadTF = [self crearTextField:10+(300*1)+2 y:(tfHeight*i)+(2*i) width:180 height:tfHeight InView:resultadosInmediatosScroll];
         cantidadTF.textAlignment = NSTextAlignmentCenter;
         cantidadTF.inputView =pickerNumeros;
+        
+        if(resultadosInmediatosFileArray.count >i){
+            NSDictionary *tempDic = resultadosInmediatosFileArray[i];
+            resultadosTF.text = [[tempDic objectForKey:@"resultados"] objectForKey:@"text"] ? [[tempDic objectForKey:@"resultados"] objectForKey:@"text"]:@"";
+            resultadosTF.tag = [[tempDic objectForKey:@"resultados"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"resultados"] objectForKey:@"id"] intValue]:0;
+            cantidadTF.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
+        }
         
         [dictionary setObject:resultadosTF forKey:@"resultados"];
         [dictionary setObject:cantidadTF forKey:@"cantidad"];
@@ -754,8 +955,12 @@
     [otrosResultadosLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:12]];
     [paginaResultados addSubview:otrosResultadosLabel];
     
+    NSArray *otrosFileArray = [[masterDic objectForKey:@"Resultados"] objectForKey:@"OtrosResultados"];
     NSMutableArray *otrosResultadosArray = [[NSMutableArray alloc]init];
     UITextField *otrosResultadosTF = [self crearTextField:200 y:380 width:703 height:tfHeight InView:paginaResultados];
+    if(otrosFileArray.count){
+        otrosResultadosTF.text = otrosFileArray[0];
+    }
     [otrosResultadosArray addObject:otrosResultadosTF];
     [resultadosDictionary setObject:otrosResultadosArray forKey:@"otrosResultados"];
     
@@ -777,13 +982,21 @@
     [paginaMotivos addSubview:retardoLabel];
     
     NSMutableArray *motivosRetardoArray = [[NSMutableArray alloc]init];
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    NSArray *motivosArray = [masterDic objectForKey:@"MotivosRetardo"];
     for(int i=0;i<8;i++){
         UITextField *TF = [self crearTextField:center y:(marginTop*(i+1))+initialMargin width:tfWidth height:tfHeight InView:paginaMotivos];
         TF.inputView = pickerRetardo;
+        if(motivosArray.count >i){
+            NSDictionary *tempDic = motivosArray[i];
+            TF.text = [tempDic objectForKey:@"text"];
+            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+        }
         [motivosRetardoArray addObject:TF];
     }
+    file = nil;
     [motivosDictionary setObject:motivosRetardoArray forKey:@"motivosRetardo"];
-    
 }
 
 #pragma mark - creacion de textfields
@@ -834,9 +1047,6 @@
             index=[lista.arregloDeConvenios indexOfObject:currentTextField.text];
         }
         
-        
-        
-        
         if(index != NSNotFound ){
             [currentPicker selectRow:index inComponent:0 animated:YES];
         }
@@ -869,6 +1079,20 @@
     }
 }
 - (void)textFieldDidChange:(UITextField *)textField{
+    overlayLabel.text = currentTextField.text;
+}
+
+#pragma mark - textview delegate
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    currentTextField = (UITextField*)textView;
+    overlayLabel.text = currentTextField.text;
+    [self animarView:overlayLabel Hasta:CGPointMake(self.view.bounds.size.width/2, (self.view.bounds.size.height/2)-28) conAlpha:1];
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    [self animarView:overlayLabel Hasta:CGPointMake(self.view.bounds.size.width/2, 800) conAlpha:0];
+    overlayLabel.text = @"";
+}
+- (void)textViewDidChange:(UITextView *)textView{
     overlayLabel.text = currentTextField.text;
 }
 
@@ -931,12 +1155,25 @@
     NSDate *finalDate = [dateFormatter dateFromString:date];
     return finalDate;
 }
-
+- (NSString*)getNowDate{
+    NSDate *currDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:currDate];
+    return dateString;
+}
 #pragma mark - server communication
 - (void)sincronizarDataConServer:(NSString*)data{
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
+    NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[IAmCoder dateKey]];
+    
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",cipher];
+    
+    [server callServerWithMethod:@"MisionCumplida" andParameter:params];
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText=@"Enviando Registro";
 }
 
 #pragma mark - server response
@@ -1092,4 +1329,390 @@
     [UIView commitAnimations];
 }
 
+#pragma mark - guardar mision
+-(IBAction)guardarMision:(UIButton*)sender{
+    NSLog(@"Saving..");
+    NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+    //////////////////////////////////////
+    ////////General Cabezera//////////////
+    //////////////////////////////////////
+    NSMutableDictionary *generalCabezeraDic = [[NSMutableDictionary alloc]init];
+    if(consecutivoTF.text){
+        [generalCabezeraDic setObject:consecutivoTF.text forKey:@"ConsecutivoUnidad"];
+    }
+    if(unidadAsumeTF.text){
+        [generalCabezeraDic setObject:unidadAsumeTF.text forKey:@"UnidadAsume"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%i",unidadAsumeTF.tag] forKey:@"IdUnidadAsume"];
+    }
+    if(unidadCreaTF.text){
+        [generalCabezeraDic setObject:unidadCreaTF.text forKey:@"UnidadCrea"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%i",unidadCreaTF.tag] forKey:@"IdUnidadCrea"];
+    }
+    if(fechaDigitadoTF.text){
+        [generalCabezeraDic setObject:fechaDigitadoTF.text forKey:@"FechaDigitado"];
+    }
+    if(registroVueloTF.text){
+        [generalCabezeraDic setObject:registroVueloTF.text forKey:@"IdRegistroVuelo"];
+    }
+    if(fechaTF.text){
+        [generalCabezeraDic setObject:fechaTF.text forKey:@"HoraOrden"];
+    }
+    if(ovTF.text){
+        [generalCabezeraDic setObject:ovTF.text forKey:@"OrdenVuelo"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%i",ovTF.tag] forKey:@"IdOrdenVuelo"];
+    }
+    if(aeronaveUnoTF.text){
+        [generalCabezeraDic setObject:aeronaveUnoTF.text forKey:@"AeronaveUno"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%i",aeronaveUnoTF.tag] forKey:@"IdAeronave"];
+    }
+    if(aeronaveDosTF.text){
+        [generalCabezeraDic setObject:aeronaveDosTF.text forKey:@"AeronaveDos"];
+    }
+    if(hDecolajeTF.text){
+        [generalCabezeraDic setObject:hDecolajeTF.text forKey:@"HoraDecolaje"];
+    }
+    if(hAterrizajeTF.text){
+        [generalCabezeraDic setObject:hAterrizajeTF.text forKey:@"HoraAterrizaje"];
+    }
+    if(horaBlancoTF.text){
+        [generalCabezeraDic setObject:horaBlancoTF.text forKey:@"HoraBlanco"];
+    }
+    if(firmaTF.text){
+        [generalCabezeraDic setObject:firmaTF.text forKey:@"Firma"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%i",firmaTF.tag] forKey:@"IdPiloto"];
+    }
+    if(itinerarioTF.text){
+        [generalCabezeraDic setObject:itinerarioTF.text forKey:@"Itinerario"];
+    }
+    //////////////////////////////////////
+    ////////Fin General Cabezera//////////
+    //////////////////////////////////////
+    
+    [masterDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
+    
+    //////////////////////////////////////
+    ////////Informe///////////////////////
+    //////////////////////////////////////
+    NSMutableDictionary *informeDic = [[NSMutableDictionary alloc]init];
+    if(descripcionTV.text){[informeDic setObject:descripcionTV.text forKey:@"Descripcion"];}
+    if(recomendacionesTV.text){[informeDic setObject:recomendacionesTV.text forKey:@"Recomendaciones"];}
+    if(resultadosTV.text){[informeDic setObject:resultadosTV.text forKey:@"Resultados"];}
+    if(observacionesTV.text){[informeDic setObject:observacionesTV.text forKey:@"Observaciones"];}
+    if(noSerieVideoTV.text){[informeDic setObject:noSerieVideoTV.text forKey:@"NoSerieVideo"];}
+    //////////////////////////////////////
+    ////////Fin Informe///////////////////
+    //////////////////////////////////////
+    
+    [masterDic setObject:informeDic forKey:@"Informe"];
+    
+    //////////////////////////////////////
+    ////////Información General///////////
+    //////////////////////////////////////
+    //Instrucciones
+    NSMutableDictionary *informaciongeneralDic = [[NSMutableDictionary alloc]init];
+    if(instruccionesTV.text){[informaciongeneralDic setObject:instruccionesTV.text forKey:@"Instrucciones"];}
+    
+    //Switches
+    if(escoltaVIPSwitch.on){
+        [informaciongeneralDic setObject:@"S" forKey:@"EscoVip"];
+    }
+    else{
+        [informaciongeneralDic setObject:@"N" forKey:@"EscoVip"];
+    }
+    if(transporteVIPSwitch.on){
+        [informaciongeneralDic setObject:@"S" forKey:@"TransVip"];
+    }
+    else{
+        [informaciongeneralDic setObject:@"N" forKey:@"TransVip"];
+    }
+    //Lista
+    //NSMutableDictionary *instruccionesMisionDic = [[NSMutableDictionary alloc]init];
+    NSArray *instruccionesMisionArray = [infoGeneralDictionary objectForKey:@"instruccionesMision"];
+    NSMutableArray *instruccionesMisionSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<instruccionesMisionArray.count; i++){
+        NSDictionary *masterTempDic = instruccionesMisionArray[i];
+        UITextField *tempTF = [masterTempDic objectForKey:@"entidad"];
+        UITextField *tempTF2 = [masterTempDic objectForKey:@"requerimiento"];
+        UITextField *tempTF3 = [masterTempDic objectForKey:@"operacion"];
+        UITextField *tempTF4 = [masterTempDic objectForKey:@"operacionTipo"];
+        UITextField *tempTF5 = [masterTempDic objectForKey:@"plan"];
+
+        NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"entidad"];
+        }
+        if(tempTF2.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF2.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"requerimiento"];
+        }
+        if(tempTF3.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF3.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"operacion"];
+        }
+        if(tempTF4.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF4.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"operacionTipo"];
+        }
+        if(tempTF5.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF5.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"plan"];
+        }
+        if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length || tempTF4.text.length || tempTF5.text.length){
+            [instruccionesMisionSave addObject:singleDic];
+        }
+    }
+    [informaciongeneralDic setObject:instruccionesMisionSave forKey:@"InstruccionesMision"];
+    //////////////////////////////////////
+    ////////Fin Pax Carga Armamento///////
+    //////////////////////////////////////
+    [masterDic setObject:informaciongeneralDic forKey:@"InformacionGeneral"];
+
+    
+    //////////////////////////////////////
+    ////////Pax Carga Armamento///////////
+    //////////////////////////////////////
+    //PAX
+    NSMutableDictionary *paxCargaArmamentoDic = [[NSMutableDictionary alloc]init];
+    NSArray *paxArray = [paxCargaDictionary objectForKey:@"pax"];
+    NSMutableArray *paxSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<paxArray.count; i++){
+        NSDictionary *masterTempDic = paxArray[i];
+        UITextField *tempTF = [masterTempDic objectForKey:@"tipoPax"];
+        UITextField *tempTF2 = [masterTempDic objectForKey:@"entidadPax"];
+        UITextField *tempTF3 = [masterTempDic objectForKey:@"cantidadPax"];
+        NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"tipoPax"];
+        }
+        if(tempTF2.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF2.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"entidadPax"];
+        }
+        if(tempTF3.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF3.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"cantidad"];
+        }
+        if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length){
+            [paxSave addObject:singleDic];
+        }
+    }
+    [paxCargaArmamentoDic setObject:paxSave forKey:@"PAX"];
+    
+    //CARGA
+    NSArray *cargaArray = [paxCargaDictionary objectForKey:@"carga"];
+    NSMutableArray *cargaSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<cargaArray.count; i++){
+        NSDictionary *masterTempDic = cargaArray[i];
+        UITextField *tempTF = [masterTempDic objectForKey:@"entidadCarga"];
+        UITextField *tempTF2 = [masterTempDic objectForKey:@"cantidadCarga"];
+        NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"entidadCarga"];
+        }
+        if(tempTF2.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF2.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"cantidad"];
+        }
+        if(tempTF.text.length || tempTF2.text.length){
+            [cargaSave addObject:singleDic];
+        }
+    }
+    [paxCargaArmamentoDic setObject:cargaSave forKey:@"Carga"];
+    
+    //ARMAMENTO
+    NSArray *armamentoArray = [paxCargaDictionary objectForKey:@"armamento"];
+    NSMutableArray *armamentoSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<armamentoArray.count; i++){
+        NSDictionary *masterTempDic = armamentoArray[i];
+        UITextField *tempTF = [masterTempDic objectForKey:@"tipoArmamento"];
+        UITextField *tempTF2 = [masterTempDic objectForKey:@"cantidadArmamento"];
+        UITextField *tempTF3 = [masterTempDic objectForKey:@"cantidadFallidoArmamento"];
+        UITextField *tempTF4 = [masterTempDic objectForKey:@"efectividadArmamento"];
+        NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"tipoArmamento"];
+        }
+        if(tempTF2.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF2.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"cantidadArmamento"];
+        }
+        if(tempTF3.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF3.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"cantidadFallidoArmamento"];
+        }
+        if(tempTF4.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF4.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"efectividadArmamento"];
+        }
+        if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length || tempTF4.text.length){
+            [armamentoSave addObject:singleDic];
+        }
+    }
+    [paxCargaArmamentoDic setObject:armamentoSave forKey:@"Armamento"];
+    //////////////////////////////////////
+    ////////Fin Pax Carga Armamento///////
+    //////////////////////////////////////
+    
+    [masterDic setObject:paxCargaArmamentoDic forKey:@"PaxCargaArmamento"];
+    
+    
+    //////////////////////////////////////
+    ////////Resultados////////////////////
+    //////////////////////////////////////
+    NSMutableDictionary *resultadosDic = [[NSMutableDictionary alloc]init];
+    
+    //TIPO OPERACION
+    NSArray *tipoOperacion = [resultadosDictionary objectForKey:@"tipoOperacion"];
+    NSMutableArray *tipoOperacionSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<tipoOperacion.count; i++){
+        UITextField *tempTF = tipoOperacion[i];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [tipoOperacionSave addObject:tempDic];
+        }
+    }
+    [resultadosDic setObject:tipoOperacionSave forKey:@"TipoOperacion"];
+    
+    //MOTIVOS INCUMPLIMIENTO
+    NSArray *motivosIncumplimiento = [resultadosDictionary objectForKey:@"motivosIncumplimiento"];
+    NSMutableArray *motivosIncumplimientoSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<motivosIncumplimiento.count; i++){
+        UITextField *tempTF = motivosIncumplimiento[i];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [motivosIncumplimientoSave addObject:tempDic];
+        }
+    }
+    [resultadosDic setObject:motivosIncumplimientoSave forKey:@"MotivosIncumplimiento"];
+    
+    //CONVENIO
+    NSArray *convenioArray = [resultadosDictionary objectForKey:@"convenio"];
+    NSMutableArray *convenioSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<convenioArray.count; i++){
+        UITextField *tempTF = convenioArray[i];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [convenioSave addObject:tempDic];
+        }
+    }
+    [resultadosDic setObject:convenioSave forKey:@"Convenio"];
+    
+    //RESULTADOS INMEDIATOS
+    NSArray *resultadosInmediatosArray = [resultadosDictionary objectForKey:@"resultadosInmediatos"];
+    NSMutableArray *resultadosInmeidiatosSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<resultadosInmediatosArray.count; i++){
+        NSDictionary *masterTempDic = resultadosInmediatosArray[i];
+        UITextField *tempTF = [masterTempDic objectForKey:@"resultados"];
+        UITextField *tempTF2 = [masterTempDic objectForKey:@"cantidad"];
+        NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [singleDic setObject:tempDic forKey:@"resultados"];
+        }
+        if(tempTF2.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF2.text forKey:@"text"];
+            [singleDic setObject:tempDic forKey:@"cantidad"];
+        }
+        if(tempTF.text.length || tempTF2.text.length){
+            [resultadosInmeidiatosSave addObject:singleDic];
+        }
+    }
+    [resultadosDic setObject:resultadosInmeidiatosSave forKey:@"ResultadosInmediatos"];
+    
+    //OTROS RESULTADOS
+    NSArray *otrosArray = [resultadosDictionary objectForKey:@"otrosResultados"];
+    NSMutableArray *otrosSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<otrosArray.count; i++){
+        UITextField *tempTF = otrosArray[i];
+        if(tempTF.text.length){
+            [otrosSave addObject:tempTF.text];
+        }
+    }
+    [resultadosDic setObject:otrosSave forKey:@"OtrosResultados"];
+    
+    //NSLog(@"Resultadoxxx: %@",resultadosDic);
+    
+    [masterDic setObject:resultadosDic forKey:@"Resultados"];
+    //////////////////////////////////////
+    /////Fin sección de resultados////////
+    //////////////////////////////////////
+    
+    //////////////////////////////////////
+    /////Motivos de retardo///////////////
+    //////////////////////////////////////
+    NSArray *motArr = [motivosDictionary objectForKey:@"motivosRetardo"];
+    NSMutableArray *motivosForSave = [[NSMutableArray alloc]init];
+    for(int i = 0; i<motArr.count; i++){
+        UITextField *tempTF = motArr[i];
+        if(tempTF.text.length){
+            NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            [tempDic setObject:tempTF.text forKey:@"text"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [motivosForSave addObject:tempDic];
+        }
+    }
+    [masterDic setObject:motivosForSave forKey:@"MotivosRetardo"];
+    //////////////////////////////////////
+    /////Fin de Motivos de retardo////////
+    //////////////////////////////////////
+    
+    SBJSON *json=[[SBJSON alloc]init];
+
+    NSMutableDictionary *ultra=[[NSMutableDictionary alloc]init];
+    [ultra setObject:masterDic forKey:@"MisionCumplida"];
+    NSString *str=[json stringWithObject:ultra];
+    
+    //NSLog(@"JsonXX: %@",str);
+    
+    [masterDic setObject:@"NO" forKey:@"Done"];
+    [masterDic setObject:@"mc" forKey:@"NoOrden"];
+    
+    
+    if (sender.tag==10) {
+        FileSaver *file=[[FileSaver alloc]init];
+        NSString *nameForFile = [NSString stringWithFormat:@"mc%@",@""/*ordenDeVuelo.principal.idConsecutivoUnidad*/];
+        [file setDictionary:masterDic withName:nameForFile];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if (sender.tag==11){
+        [self sincronizarDataConServer:str];
+        //NSLog(@"Diccionario %@",masterDic);
+    }
+}
 @end

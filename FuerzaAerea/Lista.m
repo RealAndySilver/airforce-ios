@@ -130,8 +130,8 @@
     }
     return self;
 }
--(id)initWithMisionDictionary:(NSDictionary*)dictionary{
-    if (self =[super init]) {
+-(void)addMisionDictionary:(NSDictionary*)dictionary{
+    if (self) {
         
         NSArray *arrayLista = [dictionary objectForKey:@"listasMision"];
         
@@ -172,7 +172,6 @@
             }
             if (arrayLista[5]) {
                 NSDictionary *dic = arrayLista[5];
-                
                 arregloTipoOperacionMision= (NSMutableArray*)[dic objectForKey:@"ListaTipoOperacion"];
                 NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"Descripcion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
                 [arregloTipoOperacionMision sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
@@ -187,7 +186,6 @@
             
         }
     }
-    return self;
 }
 -(void)agregarAlArregloRespectivo:(NSDictionary*)dictionary{
     if ([dictionary objectForKey:@"enemigos"]) {
@@ -221,7 +219,7 @@
             }
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"objetivo" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             [arregloDeObjetivo sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
-            NSLog(@"Objetivos count %i",arregloDeObjetivo.count);
+            //NSLog(@"Objetivos count %i",arregloDeObjetivo.count);
             /*for (Objetivo *o in arregloDeObjetivo) {
                 NSLog(@"Objetivos {%@}",o.objetivo);
             }*/

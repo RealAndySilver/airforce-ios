@@ -44,7 +44,7 @@
             for (int i=0; i<tempTeplas.count; i++) {
                 
                 Teplas *teplas=[[Teplas alloc]initWithDictionary:[tempTeplas objectAtIndex:i]];
-                NSLog(@"Tepla 1 %@",teplas.persona);
+                //NSLog(@"Tepla 1 %@",teplas.persona);
 
                 [arregloDeTeplas addObject:teplas];
             }
@@ -54,7 +54,7 @@
             arregloDeSanidad=[[NSMutableArray alloc]init];
             for (int i=0; i<tempSanidad.count; i++) {
                 Sanidad *sanidad=[[Sanidad alloc]initWithDictionary:[tempSanidad objectAtIndex:i]];
-                NSLog(@"Sanidad 1 %@",sanidad.persona);
+                //NSLog(@"Sanidad 1 %@",sanidad.persona);
                 [arregloDeSanidad addObject:sanidad];
             }
         }

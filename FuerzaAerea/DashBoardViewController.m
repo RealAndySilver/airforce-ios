@@ -110,7 +110,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.view setBounds: CGRectMake(0, -20, 1024, 748)];
-    [self obtenerListasMision];
+    //[self obtenerListasMision];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -269,6 +269,8 @@
     rvmVC.arrayDepartamentos=arrayDepartamentos;
     rvmVC.arrayArmamentos=arrayArmamentos;
     rvmVC.lista=lista;
+    NSLog(@"DicXX: %@",arrayFaseVuelo);
+
     [self.navigationController pushViewController:rvmVC animated:YES];
 }
 -(void)delayedAction2{
@@ -362,7 +364,7 @@
     //NSString *key=[[file getDictionary:@"Temp"]objectForKey:@"sha"];
     NSString *key=[IAmCoder dateKey];
     NSString *params=[NSString stringWithFormat:@"<consecutivo>%@</consecutivo><matricula>%@</matricula>",[IAmCoder encryptAndBase64:ovTF.text withKey:key],[IAmCoder encryptAndBase64:matriTF.text withKey:key]];
-    
+    //NSLog(@"Paramsx: %@",params);
     [server callServerWithMethod:@"ordenVuelo" andParameter:params];
     
 }
@@ -501,7 +503,7 @@
     else if (sender.tag==10){
         Archivo *archivo=[[Archivo alloc]init];
         [archivo validarDiccionarioDeArchivos:sender.resDic];
-        NSLog(@"Archivos :%@",sender.resDic);
+        //NSLog(@"Archivos :%@",sender.resDic);
         return;
     }
     else if (sender.tag==20){
@@ -541,9 +543,9 @@
         return;
     }
     else if (sender.tag==25){
+        [lista addMisionDictionary:sender.resDic];
         FileSaver *save=[[FileSaver alloc]init];
         [save setDictionary:sender.resDic withName:@"listasMision"];
-        lista=[[Lista alloc]initWithMisionDictionary:sender.resDic];
         [self changeTextToHudAndHideWithDelay:@"Orden de vuelo validada correctamente"];
         return;
     }
@@ -674,6 +676,8 @@
         FileSaver *save=[[FileSaver alloc]init];
         NSDictionary *dic=[save getDictionary:@"municipios"];
         [lista agregarAlArregloRespectivo:dic];
+        [self obtenerListasMision];
+        return;
     }
     else if (sender.tag==23){
         FileSaver *save=[[FileSaver alloc]init];
@@ -681,6 +685,11 @@
         lista=[[Lista alloc]initWithDictionary:dic];
         [self obtenerEnemigos];
         return;
+    }
+    else if (sender.tag==25){
+        FileSaver *save=[[FileSaver alloc]init];
+        NSDictionary *dic=[save getDictionary:@"listasMision"];
+        [lista addMisionDictionary:dic];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
@@ -1107,7 +1116,7 @@ viewForHeaderInSection:(NSInteger)section{
         arrayForBool = [[NSMutableArray alloc]init];
     }
     [arrayForBool removeAllObjects];
-    NSLog(@"Success!!!!");
+    //NSLog(@"Success!!!!");
     
     for (NSDictionary *dic in [diccionario objectForKey:@"ArregloDeArchivos"]) {
         Archivo *archivo=[[Archivo alloc]initWithDictionary:dic];
@@ -1129,7 +1138,7 @@ viewForHeaderInSection:(NSInteger)section{
         [leftSectionDictionary setObject:array forKey:[fileTitleArray objectAtIndex:i]];
         [arrayForBool addObject:[NSNumber numberWithBool:NO]];
     }
-    NSLog(@"Bool Array %i",leftSectionDictionary.allKeys.count);
+    //NSLog(@"Bool Array %i",leftSectionDictionary.allKeys.count);
     for (Archivo *archivo in leftTableArray) {
         int i=0;
         for (NSString *fileTitle in fileTitleArray) {

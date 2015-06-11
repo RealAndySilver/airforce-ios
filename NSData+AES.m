@@ -28,7 +28,7 @@
 	size_t bufferSize = dataLength + kCCBlockSizeAES128;
 	void *buffer = malloc(bufferSize);
     NSData *datax=[key dataUsingEncoding:NSUTF8StringEncoding];
-	NSLog(@"Soy el password: %@",datax);
+	//NSLog(@"Soy el password: %@",datax);
 	size_t numBytesEncrypted = 0;
     //kCCAlgorithmAES128
 	CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,

@@ -25,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
+    //NSLog(@"device %@ uudid %@ macaddress %@",[DeviceInfo getModel],[DeviceInfo getUUDID],[DeviceInfo getMacAddress]);
     
     UITapGestureRecognizer *dismissRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(resignKeyboard)];
     [self.view addGestureRecognizer:dismissRecognizer];
@@ -123,12 +123,12 @@
     server.caller=self;
     //NSString *key=[[temp getDictionary:@"Temp"] objectForKey:@"sha"] ;
     NSString *key=[IAmCoder dateKey];
-    NSLog(@"DateKey == %@",key);
-    NSLog(@"la llave %@",[DeviceInfo getUUDID]);
+    //NSLog(@"DateKey == %@",key);
+    //NSLog(@"la llave %@",[DeviceInfo getUUDID]);
     NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress><passcode>%@</passcode>",[IAmCoder encryptAndBase64:nombreTF.text withKey:key],[IAmCoder encryptAndBase64:passTF.text withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getUUDID] withKey:key],[IAmCoder encryptAndBase64:[DeviceInfo getMacAddress] withKey:key], [IAmCoder encryptAndBase64:tokenTF.text withKey:key]];
     //Zif1sbIcOxHWcei/RXccwg==</user><pass>IJaKbJAepuX9WPAOdqLvdg==
     //NSString *params=[NSString stringWithFormat:@"<user>%@</user><pass>%@</pass><uuid>%@</uuid><macaddress>%@</macaddress>",[IAmCoder encryptAndBase64:@"siio" withKey:key],[IAmCoder encryptAndBase64:@"siioplmnko0" withKey:key],[IAmCoder encryptAndBase64:@"11" withKey:key],[IAmCoder encryptAndBase64:@"1" withKey:key]];
-    NSLog(@"Params: %@",params);
+    //NSLog(@"Params: %@",params);
     [server callServerWithMethod:@"login" andParameter:params];
 }
 -(void)loadNextViewController{
@@ -139,7 +139,7 @@
 #pragma mark server response
 -(void)receivedDataFromServer:(id)sender{
     ServerCommunicator *server=sender;
-    NSLog(@"Resultado %@",server.resDic);
+    //NSLog(@"Resultado %@",server.resDic);
     BOOL conexion = [[server.resDic objectForKey:@"conexion"] boolValue];;
     if (conexion) {
         FileSaver *file=[[FileSaver alloc]init];
@@ -183,7 +183,6 @@
         if (r.location != NSNotFound) {
             return NO;
         }
-        NSLog(@"Hay");
     }
     return YES;
 }

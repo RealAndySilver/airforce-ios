@@ -96,12 +96,12 @@
 
 +(NSString*)encryptAndBase64:(NSString *)message withKey:(NSString*)key{
     NSData *encrypted = [self transform:kCCEncrypt data:[message dataUsingEncoding:NSUTF8StringEncoding] andKey:key];
-    NSLog(@"Encriptado Hexa: %@",encrypted);
+    //NSLog(@"Encriptado Hexa: %@",encrypted);
     return [NSString base64StringFromData:encrypted length:[encrypted length]];
 }
 +(NSString *)base64AndDecrypt:(NSString *)message withKey:(NSString*)key{
     NSData *decrypted = [self transform:kCCDecrypt data:[NSData base64DataFromString:message] andKey:key];
-    NSLog(@"Desencriptado Hexa: %@",decrypted);
+    //NSLog(@"Desencriptado Hexa: %@",decrypted);
     return [[NSString alloc]initWithData:decrypted encoding:NSUTF8StringEncoding];
 }
 @end
