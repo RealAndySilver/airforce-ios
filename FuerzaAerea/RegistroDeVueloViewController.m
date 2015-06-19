@@ -1084,6 +1084,8 @@
     
     [masterDic setObject:generalDic forKey:@"General"];
     
+    NSMutableDictionary *saveForMision = [[NSMutableDictionary alloc]init];
+    
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
     for (CeldaItinerario *cell in arregloParaSumarItinerario) {
         NSMutableDictionary *itinerarioDic=[[NSMutableDictionary alloc]init];
@@ -1136,13 +1138,29 @@
         
         if(cell.idDe){[itinerarioDic setObject:cell.idDe forKey:@"id_de"];}
         if(cell.idA){[itinerarioDic setObject:cell.idA forKey:@"id_a"];}
-
+        
+//        NSMutableDictionary * tempDicForSave = [[NSMutableDictionary alloc]init];
+//        [tempDicForSave setObject:cell.tipoOperacion forKey:@"OperacionTipo"];
+//        [tempDicForSave setObject:cell.idTipoOperacion forKey:@"IdOperacionTipo"];
+//        [tempDicForSave setObject:cell.operacion forKey:@"Operacion"];
+//        [tempDicForSave setObject:cell.idOperacion forKey:@"IdOperacion"];
+//        [tempDicForSave setObject:cell.plan forKey:@"Plan"];
+//        [tempDicForSave setObject:cell.idPlan forKey:@"IdPlan"];
+//        [arrayItinerario addObject:tempDicForSave];
         
         if(cell.checkDefensa.isOn){[itinerarioDic setObject:@"S" forKey:@"CheckDefensa"];}
         else{[itinerarioDic setObject:@"N" forKey:@"CheckDefensa"];}
         [itinerarioArray addObject:itinerarioDic];
     }
     [masterDic setObject:itinerarioArray forKey:@"ArregloItinerario"];
+    
+    
+    //Save itinerario para misión
+    [saveForMision setObject:itinerarioArray forKey:@"Itinerario"];
+    [saveForMision setObject:requerimientosTextfield.text.length ? requerimientosTextfield.text:@"No" forKey:@"Requerimiento"];
+    ////////////////////
+    
+    
     
     NSMutableArray *condicionesArray=[[NSMutableArray alloc]init];
     for (CeldaCondiciones *cell in arregloParaSumarCondiciones) {
@@ -1263,6 +1281,10 @@
 
         [condicionesArray addObject:condicionesDic];
     }
+    //Save Condiciones para misión
+    [saveForMision setObject:condicionesArray forKey:@"Condiciones"];
+    ////////////////////
+    
     [masterDic setObject:condicionesArray forKey:@"ArregloCondiciones"];
     
     NSMutableArray *armamentoArray=[[NSMutableArray alloc]init];
@@ -1295,6 +1317,11 @@
         }
         [armamentoArray addObject:arregloCeldasArmamento];
     }
+    
+    //Save Armamento para misión
+    [saveForMision setObject:armamentoArray forKey:@"Armamento"];
+    ////////////////////
+    
     [masterDic setObject:armamentoArray forKey:@"ArregloArmamento"];
     
     NSMutableArray *tripulacionArray=[[NSMutableArray alloc]init];
@@ -1364,7 +1391,10 @@
     
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"NoOrden"];
+    [masterDic setObject:@"123456" forKey:@"IdRegistro"];
 
+    [file setDictionary:saveForMision withName:@"SaveMision"];
+    [file setDictionary:@{@"NoOrden":ordenDeVuelo.principal.idConsecutivoUnidad} withName:@"UltimoRegistroGuardado"];
     
     if (sender.tag==10) {
         FileSaver *file=[[FileSaver alloc]init];
@@ -1447,6 +1477,7 @@
                 FileSaver *file=[[FileSaver alloc]init];
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
+                [masterDic setObject:[sender.resDic objectForKey:@"IdRegistro"] forKey:@"IdRegistro"];
                 [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -1461,6 +1492,7 @@
                 FileSaver *file=[[FileSaver alloc]init];
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
+                [masterDic setObject:[sender.resDic objectForKey:@"IdRegistro"] forKey:@"IdRegistro"];
                 [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [self.navigationController popViewControllerAnimated:YES];
             }

@@ -115,6 +115,8 @@
     UIPickerView *pickerCantidadFallidoArmamento;
     UIPickerView *pickerEfectividadArmamento;
     
+    UIPickerView *pickerFirma;
+    
     UIPickerView *pickerTipoOperacion;
     UIPickerView *pickerResultadosInmediatos;
     

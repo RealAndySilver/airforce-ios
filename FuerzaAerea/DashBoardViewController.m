@@ -257,9 +257,27 @@
     
 }
 -(IBAction)irAMisionCumplida:(id)sender{
-        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText=NSLocalizedString(@"Cargando Misión Cumplida", nil);
-        [self performSelector:@selector(delayedAction2) withObject:sender afterDelay:0.01];
+    if (ordenDeVuelo) {
+        FileSaver *save = [[FileSaver alloc]init];
+        NSDictionary *ultimoRegistro = [save getDictionary:@"UltimoRegistroGuardado"];
+        if ([[ultimoRegistro objectForKey:@"NoOrden"] isEqualToString:ordenDeVuelo.principal.idConsecutivoUnidad]) {
+            hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText=NSLocalizedString(@"Cargando Misión Cumplida", nil);
+            [self performSelector:@selector(delayedAction2) withObject:sender afterDelay:0.01];
+        }
+        else{
+            NSString *message=@"Para empezar con la Misión Cumplida, es necesario que primero haya guardado el Registro de Vuelo correspondiente a esta orden.";
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Registro de Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    }
+    else{
+        NSString *message=@"Es necesario que primero valide la orden de vuelo.\nEn la esquina inferior derecha podrá realizar este proceso.";
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Orden De Vuelo" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        //NSLog(@"No existe orden de vuelo");
+    }
 }
 -(void)delayedAction{
     RegistroDeVueloViewController *rvmVC=[[RegistroDeVueloViewController alloc]init];
@@ -269,8 +287,6 @@
     rvmVC.arrayDepartamentos=arrayDepartamentos;
     rvmVC.arrayArmamentos=arrayArmamentos;
     rvmVC.lista=lista;
-    NSLog(@"DicXX: %@",arrayFaseVuelo);
-
     [self.navigationController pushViewController:rvmVC animated:YES];
 }
 -(void)delayedAction2{

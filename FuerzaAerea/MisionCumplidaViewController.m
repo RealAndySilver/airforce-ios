@@ -8,7 +8,13 @@
 
 #import "MisionCumplidaViewController.h"
 
-@interface MisionCumplidaViewController ()
+@interface MisionCumplidaViewController (){
+    NSString *horaAterrizaje;
+    NSString *horaDecolaje;
+    
+    int sumaPaxRegistro;
+    int sumaCargaRegistro;
+}
 
 @end
 
@@ -17,10 +23,13 @@
 @synthesize ordenDeVuelo,lista;
 - (void)viewDidLoad{
     [super viewDidLoad];
+    sumaCargaRegistro = 0;
+    sumaPaxRegistro = 0;
+    
     [self initializeDictionaries];
     [self initializeArrays];
     
-    pathForSave = @"mc"/*ordenDeVuelo.principal.idConsecutivoUnidad*/;
+    pathForSave = [NSString stringWithFormat:@"mc%@",ordenDeVuelo.principal.idConsecutivoUnidad];
     
     numbersArray = [[NSMutableArray alloc]init];
     for (int i=0; i<101; i++) {
@@ -81,17 +90,19 @@
      [ovTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
      [aeronaveUnoTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
      [aeronaveDosTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-     [hDecolajeTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-     [hAterrizajeTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+     //[hDecolajeTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+     //[hAterrizajeTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
      [horaBlancoTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
      [firmaTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
      [itinerarioTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
+    
+    firmaTF.inputView = pickerFirma;
     fechaDigitadoTF.inputView = datePicker;
     fechaTF.inputView = fechaCompletaPicker;
     horaTF.inputView = hourPicker;
-    hDecolajeTF.inputView = hourPicker;
-    hAterrizajeTF.inputView = hourPicker;
+    //hDecolajeTF.inputView = hourPicker;
+    //hAterrizajeTF.inputView = hourPicker;
     horaBlancoTF.inputView = hourPicker;
 
 }
@@ -100,12 +111,12 @@
     NSDictionary *masterDic=[file getDictionary:pathForSave];
     NSDictionary * cabezeraDic = [masterDic objectForKey:@"GeneralCabezera"];
     
-    consecutivoTF.text = [cabezeraDic objectForKey:@"ConsecutivoUnidad"];
-    unidadAsumeTF.text = [cabezeraDic objectForKey:@"UnidadAsume"];
-    unidadAsumeTF.tag = [[cabezeraDic objectForKey:@"IdUnidadAsume"] intValue];
+    consecutivoTF.text = ordenDeVuelo.principal.idConsecutivoUnidad;//[cabezeraDic objectForKey:@"ConsecutivoUnidad"];
+    unidadAsumeTF.text = ordenDeVuelo.principal.unidadAsume;//[cabezeraDic objectForKey:@"UnidadAsume"];
+    unidadAsumeTF.tag = ordenDeVuelo.principal.idUnidadAsume;[[cabezeraDic objectForKey:@"IdUnidadAsume"] intValue];
     
-    unidadCreaTF.text = [cabezeraDic objectForKey:@"UnidadCrea"];
-    unidadCreaTF.tag = [[cabezeraDic objectForKey:@"IdUnidadCrea"] intValue];
+    unidadCreaTF.text = ordenDeVuelo.principal.unidad;//[cabezeraDic objectForKey:@"UnidadCrea"];
+    unidadCreaTF.tag = ordenDeVuelo.principal.idUnidad;//[[cabezeraDic objectForKey:@"IdUnidadCrea"] intValue];
     
     
     NSString *fechaDigitado = [cabezeraDic objectForKey:@"FechaDigitado"];
@@ -116,28 +127,30 @@
         fechaDigitadoTF.text = [cabezeraDic objectForKey:@"FechaDigitado"];
     }
 
-    registroVueloTF.text = [cabezeraDic objectForKey:@"IdRegistroVuelo"];
+    NSString *IdRegistroString = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"];
+    registroVueloTF.text = IdRegistroString;
+    //registroVueloTF.text = [cabezeraDic objectForKey:@"IdRegistroVuelo"];
     
-    fechaTF.text = [cabezeraDic objectForKey:@"HoraOrden"];
+    fechaTF.text = ordenDeVuelo.principal.fecha;//[cabezeraDic objectForKey:@"HoraOrden"];
     
-    ovTF.text = [cabezeraDic objectForKey:@"OrdenVuelo"];
-    ovTF.tag = [[cabezeraDic objectForKey:@"IdOrdenVuelo"] intValue];
+    ovTF.text = ordenDeVuelo.principal.idOrdenVuelo;//[cabezeraDic objectForKey:@"OrdenVuelo"];
+    ovTF.tag = ordenDeVuelo.principal.idConsecutivoUnidad;[[cabezeraDic objectForKey:@"IdOrdenVuelo"] intValue];
 
-    aeronaveUnoTF.text = [cabezeraDic objectForKey:@"AeronaveUno"];
-    aeronaveUnoTF.tag = [[cabezeraDic objectForKey:@"IdAeronave"] intValue];
+    aeronaveUnoTF.text = ordenDeVuelo.principal.matricula;//[cabezeraDic objectForKey:@"AeronaveUno"];
+    aeronaveUnoTF.tag = ordenDeVuelo.principal.matricula;//[[cabezeraDic objectForKey:@"IdAeronave"] intValue];
 
-    aeronaveDosTF.text = [cabezeraDic objectForKey:@"AeronaveDos"];
+    aeronaveDosTF.text = ordenDeVuelo.principal.equipo;//[cabezeraDic objectForKey:@"AeronaveDos"];
 
-    hDecolajeTF.text = [cabezeraDic objectForKey:@"HoraDecolaje"];
+    hDecolajeTF.text = horaDecolaje;//ordenDeVuelo.principal.horaDespegue;//[cabezeraDic objectForKey:@"HoraDecolaje"];
 
-    hAterrizajeTF.text = [cabezeraDic objectForKey:@"HoraAterrizaje"];
+    hAterrizajeTF.text = horaAterrizaje;//[cabezeraDic objectForKey:@"HoraAterrizaje"];
     
     horaBlancoTF.text = [cabezeraDic objectForKey:@"HoraBlanco"];
     
     firmaTF.text = [cabezeraDic objectForKey:@"Firma"];
     firmaTF.tag = [[cabezeraDic objectForKey:@"IdPiloto"] intValue];
 
-    itinerarioTF.text = [cabezeraDic objectForKey:@"Itinerario"];
+    itinerarioTF.text = ordenDeVuelo.principal.itinerario;//[cabezeraDic objectForKey:@"Itinerario"];
 }
 
 #pragma mark - populate outlets con orden de vuelo
@@ -202,7 +215,11 @@
     pickerTipoPax.showsSelectionIndicator = YES;
     pickerTipoPax.tag=2007;
     
-    
+    pickerFirma=[[UIPickerView alloc]init];
+    pickerFirma.dataSource=self;
+    pickerFirma.delegate=self;
+    pickerFirma.showsSelectionIndicator = YES;
+    pickerFirma.tag=2008;
     
     fechaCompletaPicker=[[UIDatePicker alloc]init];
     fechaCompletaPicker.tag = 5000;
@@ -536,7 +553,12 @@
 
     NSMutableArray *infoGeneralArray = [[NSMutableArray alloc]init];
     
+    NSArray *itinerarioArrayFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Itinerario"];
+    NSArray *condicionesArrayFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Condiciones"];
+    NSString *requerimientoStringFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Requerimiento"];
+    BOOL boolDecolaje = NO;
     for(int i=0;i<8;i++){
+        
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]init];
         
         UITextField *entidadTF = [self crearTextField:marginLeftForTV y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
@@ -547,33 +569,66 @@
 
         UITextField *operacionTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*2)+4 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
         [operacionTF setUserInteractionEnabled:NO];
-
+        
         UITextField *operacionTipoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*3)+6 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
         [operacionTipoTF setUserInteractionEnabled:NO];
         //operacionTipoTF.inputView = pickerTipoOperacion;
         
+        
         UITextField *planTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*4)+8 y:(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:tVScroll];
         [planTF setUserInteractionEnabled:NO];
-
         
-        if(infoGeneralFileArray.count >i){
-            NSDictionary *tempDic = infoGeneralFileArray[i];
+        if(itinerarioArrayFromRegistro.count>i){
             
-            entidadTF.text = [[tempDic objectForKey:@"entidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidad"] objectForKey:@"text"]:@"";
-            entidadTF.tag = [[tempDic objectForKey:@"entidad"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidad"] objectForKey:@"id"] intValue]:0;
-            
-            requerimientoTF.text = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"]:@"";
-            requerimientoTF.tag = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] intValue]:0;
-            
-            operacionTF.text = [[tempDic objectForKey:@"operacion"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacion"] objectForKey:@"text"]:@"";
-            operacionTF.tag = [[tempDic objectForKey:@"operacion"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacion"] objectForKey:@"id"] intValue]:0;
+            //Entidad viene de un arreglo separado del registro de vuelo
+            //Es necesario comprobar posición
+            if(condicionesArrayFromRegistro.count>i){
+                NSDictionary *dicFromCondicionesSave = condicionesArrayFromRegistro[i];
+                entidadTF.text = [dicFromCondicionesSave objectForKey:@"Entidad"];
+                entidadTF.tag = [[dicFromCondicionesSave objectForKey:@"id_entidad"] intValue];
+                NSLog(@"DictionaryXX %@",dicFromCondicionesSave);
 
-            operacionTipoTF.text = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"]:@"";
-            operacionTipoTF.tag = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] intValue]:0;
-
-            planTF.text = [[tempDic objectForKey:@"plan"] objectForKey:@"text"] ? [[tempDic objectForKey:@"plan"] objectForKey:@"text"]:@"";
-            planTF.tag = [[tempDic objectForKey:@"plan"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"plan"] objectForKey:@"id"] intValue]:0;
+            }
+            //Fin de arreglo condiciones//
+            //////////////////////////////
+            
+            NSDictionary *dicFromRegistroSave = itinerarioArrayFromRegistro[i];
+            operacionTF.text = [dicFromRegistroSave objectForKey:@"Operacion"];
+            operacionTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion"] intValue];
+            operacionTipoTF.text = [dicFromRegistroSave objectForKey:@"TipoOperacion"];
+            operacionTipoTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion_tipo"] intValue];
+            planTF.text = [dicFromRegistroSave objectForKey:@"Plan"];
+            planTF.tag = [dicFromRegistroSave objectForKey:@"id_plan"];
+            requerimientoTF.text = requerimientoStringFromRegistro;
+            //En este snipet colocamos la hora de aterrizaje usando el último item del itinerario
+            //Para la hora de decolaje usamos una bandera para que sólo tome el primer item
+            horaAterrizaje = [dicFromRegistroSave objectForKey:@"HoraAterrizaje"];
+            if (!boolDecolaje) {
+                horaDecolaje =[dicFromRegistroSave objectForKey:@"HoraDecolaje"];
+                boolDecolaje = YES;
+            }
+            //Fin del snipet
         }
+        
+        
+        //if(infoGeneralFileArray.count >i){
+            //NSDictionary *tempDic = infoGeneralFileArray[i];
+            
+            //entidadTF.text = [[tempDic objectForKey:@"entidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidad"] objectForKey:@"text"]:@"";
+            //entidadTF.tag = [[tempDic objectForKey:@"entidad"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidad"] objectForKey:@"id"] intValue]:0;
+            
+            //requerimientoTF.text = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"requerimiento"] objectForKey:@"text"]:@"";
+            //requerimientoTF.tag = [[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"requerimiento"] objectForKey:@"id"] intValue]:0;
+            
+            //operacionTF.text = [[tempDic objectForKey:@"operacion"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacion"] objectForKey:@"text"]:@"";
+            //operacionTF.tag = [[tempDic objectForKey:@"operacion"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacion"] objectForKey:@"id"] intValue]:0;
+
+            //operacionTipoTF.text = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"] ? [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"text"]:@"";
+            //operacionTipoTF.tag = [[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"operacionTipo"] objectForKey:@"id"] intValue]:0;
+
+            //planTF.text = [[tempDic objectForKey:@"plan"] objectForKey:@"text"] ? [[tempDic objectForKey:@"plan"] objectForKey:@"text"]:@"";
+            //planTF.tag = [[tempDic objectForKey:@"plan"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"plan"] objectForKey:@"id"] intValue]:0;
+        //}
         
         
         [dictionary setObject:entidadTF forKey:@"entidad"];
@@ -588,6 +643,23 @@
     [infoGeneralDictionary setObject:infoGeneralArray forKey:@"instruccionesMision"];
 }
 - (void)crearPaginaPax{
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    
+    //Snipet para traer cantidad de pax y carga desde el registro
+    //y asignarlos a las variables globales existentes en esta clase
+    NSArray *condicionesDesdeRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Condiciones"];
+    for (int i = 0; i<condicionesDesdeRegistro.count; i++) {
+        NSDictionary *tempDic = condicionesDesdeRegistro[i];
+        NSLog(@"CondicionesXX: %@",[tempDic objectForKey:@"PaxSuben"]);
+        sumaPaxRegistro += [[tempDic objectForKey:@"PaxSuben"] intValue];
+        sumaCargaRegistro += [[tempDic objectForKey:@"CargaSuben"] intValue];
+    }
+    
+    
+    //Fin del snipet//
+    //////////////////
+    
     int maxNumberOfCells = 8;
     
     paginaPaxArmamento=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*2, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
@@ -654,8 +726,7 @@
     int tfWidthShort = 80;
     int tfWidthLarge = 180;
     
-    FileSaver *file=[[FileSaver alloc]init];
-    NSDictionary *masterDic=[file getDictionary:pathForSave];
+    
     
     NSArray *paxFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"PAX"];
     
@@ -703,6 +774,9 @@
     paxLabel.text = @"PAX";
     [paginaPaxArmamento addSubview:paxLabel];
     
+    UILabel *totalPaxDeRegistroLabel = [[UILabel alloc]initWithFrame:CGRectMake(420, 185, 80, 30)];
+    totalPaxDeRegistroLabel.text = [NSString stringWithFormat:@"De %i",sumaPaxRegistro];
+    [paginaPaxArmamento addSubview:totalPaxDeRegistroLabel];
     
     UIScrollView *cargaScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(600, 50, 280, 100)];
     cargaScroll.backgroundColor = [UIColor clearColor];
@@ -750,6 +824,10 @@
     cargaLabel.text = @"Carga";
     [paginaPaxArmamento addSubview:cargaLabel];
     
+    UILabel *totalCargaDeRegistroLabel = [[UILabel alloc]initWithFrame:CGRectMake(610, 185, 80, 30)];
+    totalCargaDeRegistroLabel.text = [NSString stringWithFormat:@"De %i",sumaCargaRegistro];
+    [paginaPaxArmamento addSubview:totalCargaDeRegistroLabel];
+    
     
     
     UILabel *armamentoLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 205, 120, 30)];
@@ -765,7 +843,45 @@
     
     marginLeft +=15;
     
-    NSArray *armamentoFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"Armamento"];
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //Algoritmo para almacenar armamento sin repetir y sumando cantidades y cantidades fallidas//////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    NSArray *arrayHelper = [[file getDictionary:@"SaveMision"] objectForKey:@"Armamento"];
+    NSArray *armamentoArrayFromRegistro =arrayHelper[0];
+    NSMutableOrderedSet *arregloNombresDeArmamento = [[NSMutableOrderedSet alloc]init];
+    NSMutableArray *arregloFinalArmamentoDeRegistro = [[NSMutableArray alloc]init];
+    for (int i = 0; i<armamentoArrayFromRegistro.count; i++) {
+        NSDictionary *tempDic = armamentoArrayFromRegistro[i];
+        [arregloNombresDeArmamento addObject:[tempDic objectForKey:@"Armamento"]];
+    }
+    for (int i = 0; i<arregloNombresDeArmamento.count; i++) {
+        NSString *armamentoNombre = arregloNombresDeArmamento[i];
+        NSMutableDictionary *finalDic =[[NSMutableDictionary alloc]init];
+        [finalDic setObject:armamentoNombre forKey:@"Armamento"];
+        int cantidad = 0;
+        int cantidadFallido = 0;
+        NSString *IdArmamento = @"";
+        for (int j =0; j<armamentoArrayFromRegistro.count; j++) {
+            NSDictionary *tempDic = armamentoArrayFromRegistro[j];
+            if([armamentoNombre isEqualToString:[tempDic objectForKey:@"Armamento"]]){
+                cantidad += [[tempDic objectForKey:@"Cantidad"] intValue];
+                cantidadFallido += [[tempDic objectForKey:@"CantidadFallido"] intValue];
+                IdArmamento = [tempDic objectForKey:@"id_armamento"];
+            }
+        }
+        [finalDic setObject:[NSString stringWithFormat:@"%i", cantidad] forKey:@"Cantidad"];
+        [finalDic setObject:[NSString stringWithFormat:@"%i", cantidadFallido] forKey:@"CantidadFallido"];
+        [finalDic setObject:IdArmamento forKey:@"id"];
+        [finalDic setObject:[self sacarPorcentajeConCantidad:cantidad yCantidadFallido:cantidadFallido] forKey:@"Efectividad"];
+        [arregloFinalArmamentoDeRegistro addObject:finalDic];
+    }
+    //////////////////////////////////////////////////
+    ////////Fin proceso armamento de registro/////////
+    //////////////////////////////////////////////////
+    
+    //NSArray *armamentoFileArray = [[masterDic objectForKey:@"PaxCargaArmamento"] objectForKey:@"Armamento"];
+    
+    
     
     NSMutableArray *armamentoArray = [[NSMutableArray alloc]init];
     for(int i=0; i<maxNumberOfCells; i++){
@@ -773,15 +889,18 @@
         NSMutableDictionary *percentDictionary = [[NSMutableDictionary alloc]init];
 
         UITextField *tipoArmamento = [self crearTextField:marginLeft+2 y:marginTop+(tfHeight*i)+i width:tfWidthLarge*3 height:tfHeight InView:armamentoScroll];
+        [tipoArmamento setUserInteractionEnabled:NO];
         UITextField *cantidadArmamento = [self crearTextField:marginLeft+4+(tfWidthLarge*3) y:marginTop+(tfHeight*i)+i width:tfWidthShort height:tfHeight InView:armamentoScroll];
         cantidadArmamento.textAlignment = NSTextAlignmentCenter;
         cantidadArmamento.inputView = pickerNumeros;
         [cantidadArmamento setTag:-2000-i];
+        [cantidadArmamento setUserInteractionEnabled:NO];
 
         UITextField *cantidadFallidoArmamento = [self crearTextField:marginLeft+6+(tfWidthLarge*3+tfWidthShort) y:marginTop+(tfHeight*i)+i width:tfWidthShort height:tfHeight InView:armamentoScroll];
         cantidadFallidoArmamento.textAlignment = NSTextAlignmentCenter;
         cantidadFallidoArmamento.inputView = pickerNumeros;
         [cantidadFallidoArmamento setTag:-2500-i];
+        [cantidadFallidoArmamento setUserInteractionEnabled:NO];
         
         UITextField *efectividadArmamento = [self crearTextField:marginLeft+8+(tfWidthLarge*3+tfWidthShort*2) y:marginTop+(tfHeight*i)+i width:tfWidthShort height:tfHeight InView:armamentoScroll];
         efectividadArmamento.textAlignment = NSTextAlignmentCenter;
@@ -790,15 +909,25 @@
         [efectividadArmamento setUserInteractionEnabled:NO];
         
         
-        if(armamentoFileArray.count >i){
-            NSDictionary *tempDic = armamentoFileArray[i];
-            tipoArmamento.text = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"]:@"";
-            tipoArmamento.tag = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] intValue]:0;
+//        if(armamentoFileArray.count >i){
+//            NSDictionary *tempDic = armamentoFileArray[i];
+//            tipoArmamento.text = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"text"]:@"";
+//            tipoArmamento.tag = [[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoArmamento"] objectForKey:@"id"] intValue]:0;
+//            
+//            cantidadArmamento.text =[[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"]:@"";
+//            cantidadFallidoArmamento.text =[[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"]:@"";
+//            efectividadArmamento.text =[[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"]:@"";
+//        }
+        if(arregloFinalArmamentoDeRegistro.count >i){
+            NSDictionary *tempDic = arregloFinalArmamentoDeRegistro[i];
+            tipoArmamento.text = [tempDic objectForKey:@"Armamento"] ? [tempDic objectForKey:@"Armamento"]:@"";
+            tipoArmamento.tag = [tempDic objectForKey:@"id"] ? [[tempDic objectForKey:@"id"] intValue]:0;
             
-            cantidadArmamento.text =[[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadArmamento"] objectForKey:@"text"]:@"";
-            cantidadFallidoArmamento.text =[[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidadFallidoArmamento"] objectForKey:@"text"]:@"";
-            efectividadArmamento.text =[[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"] ? [[tempDic objectForKey:@"efectividadArmamento"] objectForKey:@"text"]:@"";
+            cantidadArmamento.text =[tempDic objectForKey:@"Cantidad"] ? [tempDic objectForKey:@"Cantidad"]:@"";
+            cantidadFallidoArmamento.text = [tempDic objectForKey:@"CantidadFallido"] ? [tempDic objectForKey:@"CantidadFallido"]:@"";
+            efectividadArmamento.text =[tempDic objectForKey:@"Efectividad"] ? [tempDic objectForKey:@"Efectividad"]:@"";
         }
+        
         
         [dictionary setObject:tipoArmamento forKey:@"tipoArmamento"];
         [dictionary setObject:cantidadArmamento forKey:@"cantidadArmamento"];
@@ -1119,6 +1248,11 @@
     contador += (([cantidadFallidoArmamentoTF.text floatValue]*100)/[cantidadArmamentoTF.text floatValue]-100)*-1;
     efectividadTF.text = [NSString stringWithFormat:@"%% %.1f",contador];
 }
+- (NSString*)sacarPorcentajeConCantidad:(int)cantidad yCantidadFallido:(int)cantidadFallido{
+    float contador =0;
+    contador += ((cantidadFallido*100)/cantidad-100)*-1;
+    return [NSString stringWithFormat:@"%% %.1f",contador];
+}
 
 #pragma mark - guardar
 - (IBAction)guardarRegistro:(UIButton*)sender{
@@ -1237,6 +1371,9 @@
     else if (pickerView.tag == 2007) {
         return lista.arregloTipoPax.count;
     }
+    else if (pickerView.tag == 2008) {
+        return ordenDeVuelo.arregloDeTripulacion.count;
+    }
     return 0;
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
@@ -1274,6 +1411,10 @@
         NSDictionary *dic = lista.arregloTipoPax[row];
         return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Descripcion"]];
     }
+    else if (pickerView.tag == 2008) {
+        Tripulacion *tripulacion = ordenDeVuelo.arregloDeTripulacion[row];
+        return tripulacion.persona;
+    }
     return nil;
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
@@ -1288,7 +1429,7 @@
     else if (pickerView.tag == 2002) {
         NSDictionary *dic = lista.arregloEntidadesPaxCarga[row];
         currentTextField.text = [dic objectForKey:@"NombreOrganizacion"];
-        currentTextField.tag = [dic objectForKey:@"OrganizacionId"];
+        currentTextField.tag = [dic objectForKey:@"OrganzacionId"]; //Error en el server de la palabra organizacion dice organzacion
     }
     else if (pickerView.tag == 2003) {
         NSDictionary *dic = lista.arregloMotivosIncumplimiento[row];
@@ -1315,6 +1456,11 @@
         currentTextField.text = [dic objectForKey:@"Descripcion"];
         currentTextField.tag = [dic objectForKey:@"IdTipoPax"];
     }
+    else if (pickerView.tag == 2008) {
+        Tripulacion *tripulacion = ordenDeVuelo.arregloDeTripulacion[row];
+        currentTextField.text = tripulacion.persona;
+        currentTextField.tag = tripulacion.idPersona;
+    }
     overlayLabel.text = currentTextField.text;
     return;
 }
@@ -1333,6 +1479,7 @@
 -(IBAction)guardarMision:(UIButton*)sender{
     NSLog(@"Saving..");
     NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+    NSMutableDictionary *jsonDic=[[NSMutableDictionary alloc]init];
     //////////////////////////////////////
     ////////General Cabezera//////////////
     //////////////////////////////////////
@@ -1369,10 +1516,10 @@
         [generalCabezeraDic setObject:aeronaveDosTF.text forKey:@"AeronaveDos"];
     }
     if(hDecolajeTF.text){
-        [generalCabezeraDic setObject:hDecolajeTF.text forKey:@"HoraDecolaje"];
+        //[generalCabezeraDic setObject:hDecolajeTF.text forKey:@"HoraDecolaje"];
     }
     if(hAterrizajeTF.text){
-        [generalCabezeraDic setObject:hAterrizajeTF.text forKey:@"HoraAterrizaje"];
+        //[generalCabezeraDic setObject:hAterrizajeTF.text forKey:@"HoraAterrizaje"];
     }
     if(horaBlancoTF.text){
         [generalCabezeraDic setObject:horaBlancoTF.text forKey:@"HoraBlanco"];
@@ -1389,6 +1536,7 @@
     //////////////////////////////////////
     
     [masterDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
+    [jsonDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
     
     //////////////////////////////////////
     ////////Informe///////////////////////
@@ -1404,7 +1552,7 @@
     //////////////////////////////////////
     
     [masterDic setObject:informeDic forKey:@"Informe"];
-    
+    [jsonDic setObject:informeDic forKey:@"Informe"];
     //////////////////////////////////////
     ////////Información General///////////
     //////////////////////////////////////
@@ -1453,19 +1601,19 @@
         if(tempTF3.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF3.text forKey:@"text"];
-            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF3.tag] forKey:@"id"];
             [singleDic setObject:tempDic forKey:@"operacion"];
         }
         if(tempTF4.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF4.text forKey:@"text"];
-            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF4.tag] forKey:@"id"];
             [singleDic setObject:tempDic forKey:@"operacionTipo"];
         }
         if(tempTF5.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF5.text forKey:@"text"];
-            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF5.tag] forKey:@"id"];
             [singleDic setObject:tempDic forKey:@"plan"];
         }
         if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length || tempTF4.text.length || tempTF5.text.length){
@@ -1698,7 +1846,7 @@
     [ultra setObject:masterDic forKey:@"MisionCumplida"];
     NSString *str=[json stringWithObject:ultra];
     
-    //NSLog(@"JsonXX: %@",str);
+    NSLog(@"JsonXX: %@",str);
     
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:@"mc" forKey:@"NoOrden"];
@@ -1706,8 +1854,7 @@
     
     if (sender.tag==10) {
         FileSaver *file=[[FileSaver alloc]init];
-        NSString *nameForFile = [NSString stringWithFormat:@"mc%@",@""/*ordenDeVuelo.principal.idConsecutivoUnidad*/];
-        [file setDictionary:masterDic withName:nameForFile];
+        [file setDictionary:masterDic withName:pathForSave];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (sender.tag==11){
