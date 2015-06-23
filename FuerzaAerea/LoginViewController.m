@@ -44,7 +44,7 @@
         //URL Sinte
         [file2 setIP:@"app.sinte.co:8383"];
     }
-    [self loadNextViewController];
+    //[self loadNextViewController];
     /*NSArray *numberVerifyingArray=[[NSArray alloc]initWithObjects:
                                    @"12",
                                    @"12",

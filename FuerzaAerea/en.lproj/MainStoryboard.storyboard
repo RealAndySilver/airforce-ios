@@ -3267,7 +3267,7 @@
                                                     <action selector="motivosRetardo:" destination="sPI-V1-RMo" eventType="touchUpInside" id="9CR-DS-NHO"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DEh-kV-X73">
+                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DEh-kV-X73">
                                                 <rect key="frame" x="796" y="492" width="178" height="26"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="0.0" green="0.61038749219999999" blue="0.82796556119999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -3279,6 +3279,9 @@
                                                 <state key="highlighted">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="guardarMision:" destination="sPI-V1-RMo" eventType="touchUpInside" id="gTp-5Q-Pl1"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

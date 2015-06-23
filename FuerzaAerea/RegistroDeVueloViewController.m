@@ -1391,7 +1391,7 @@
     
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"NoOrden"];
-    [masterDic setObject:@"123456" forKey:@"IdRegistro"];
+    //[masterDic setObject:@"123456" forKey:@"IdRegistro"];
 
     [file setDictionary:saveForMision withName:@"SaveMision"];
     [file setDictionary:@{@"NoOrden":ordenDeVuelo.principal.idConsecutivoUnidad} withName:@"UltimoRegistroGuardado"];

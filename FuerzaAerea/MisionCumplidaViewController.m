@@ -13,7 +13,9 @@
     NSString *horaDecolaje;
     
     int sumaPaxRegistro;
+    int sumaPaxMision;
     int sumaCargaRegistro;
+    int sumaCargaMision;
 }
 
 @end
@@ -113,10 +115,10 @@
     
     consecutivoTF.text = ordenDeVuelo.principal.idConsecutivoUnidad;//[cabezeraDic objectForKey:@"ConsecutivoUnidad"];
     unidadAsumeTF.text = ordenDeVuelo.principal.unidadAsume;//[cabezeraDic objectForKey:@"UnidadAsume"];
-    unidadAsumeTF.tag = ordenDeVuelo.principal.idUnidadAsume;[[cabezeraDic objectForKey:@"IdUnidadAsume"] intValue];
+    unidadAsumeTF.tag = [ordenDeVuelo.principal.idUnidadAsume doubleValue];//[[cabezeraDic objectForKey:@"IdUnidadAsume"] doubleValue];
     
     unidadCreaTF.text = ordenDeVuelo.principal.unidad;//[cabezeraDic objectForKey:@"UnidadCrea"];
-    unidadCreaTF.tag = ordenDeVuelo.principal.idUnidad;//[[cabezeraDic objectForKey:@"IdUnidadCrea"] intValue];
+    unidadCreaTF.tag = [ordenDeVuelo.principal.idUnidad doubleValue];//[[cabezeraDic objectForKey:@"IdUnidadCrea"] intValue];
     
     
     NSString *fechaDigitado = [cabezeraDic objectForKey:@"FechaDigitado"];
@@ -134,10 +136,10 @@
     fechaTF.text = ordenDeVuelo.principal.fecha;//[cabezeraDic objectForKey:@"HoraOrden"];
     
     ovTF.text = ordenDeVuelo.principal.idOrdenVuelo;//[cabezeraDic objectForKey:@"OrdenVuelo"];
-    ovTF.tag = ordenDeVuelo.principal.idConsecutivoUnidad;[[cabezeraDic objectForKey:@"IdOrdenVuelo"] intValue];
+    ovTF.tag = [ordenDeVuelo.principal.idConsecutivoUnidad doubleValue];
 
     aeronaveUnoTF.text = ordenDeVuelo.principal.matricula;//[cabezeraDic objectForKey:@"AeronaveUno"];
-    aeronaveUnoTF.tag = ordenDeVuelo.principal.matricula;//[[cabezeraDic objectForKey:@"IdAeronave"] intValue];
+    aeronaveUnoTF.tag = [ordenDeVuelo.principal.matricula doubleValue];//[[cabezeraDic objectForKey:@"IdAeronave"] intValue];
 
     aeronaveDosTF.text = ordenDeVuelo.principal.equipo;//[cabezeraDic objectForKey:@"AeronaveDos"];
 
@@ -148,7 +150,7 @@
     horaBlancoTF.text = [cabezeraDic objectForKey:@"HoraBlanco"];
     
     firmaTF.text = [cabezeraDic objectForKey:@"Firma"];
-    firmaTF.tag = [[cabezeraDic objectForKey:@"IdPiloto"] intValue];
+    firmaTF.tag = [[cabezeraDic objectForKey:@"IdPiloto"] doubleValue];
 
     itinerarioTF.text = ordenDeVuelo.principal.itinerario;//[cabezeraDic objectForKey:@"Itinerario"];
 }
@@ -466,6 +468,9 @@
     int tvHeight = marginTop-5;
     int distanceForTV = 150;
     
+    NSString *requerimientoStringFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Requerimiento"];
+
+    
     UILabel *instruccionesLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeft, marginTop-threshold, labelWidth, labelHeight)];
     [instruccionesLabel setText:@"Instrucciones:"];
     [instruccionesLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:16]];
@@ -474,7 +479,11 @@
     instruccionesTV.layer.borderWidth = 1;
     instruccionesTV.layer.borderColor = [[UIColor grayColor] CGColor];
     instruccionesTV.delegate = self;
-    instruccionesTV.text = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"Instrucciones"];
+    instruccionesTV.text = requerimientoStringFromRegistro;
+    NSString *instruccionesString = [[masterDic objectForKey:@"InformacionGeneral"] objectForKey:@"Instrucciones"];
+    if (instruccionesString.length>0) {
+        instruccionesTV.text = instruccionesString;
+    }
 
     [paginaInformacion addSubview:instruccionesTV];
     
@@ -555,7 +564,6 @@
     
     NSArray *itinerarioArrayFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Itinerario"];
     NSArray *condicionesArrayFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Condiciones"];
-    NSString *requerimientoStringFromRegistro = [[file getDictionary:@"SaveMision"] objectForKey:@"Requerimiento"];
     BOOL boolDecolaje = NO;
     for(int i=0;i<8;i++){
         
@@ -585,7 +593,7 @@
             if(condicionesArrayFromRegistro.count>i){
                 NSDictionary *dicFromCondicionesSave = condicionesArrayFromRegistro[i];
                 entidadTF.text = [dicFromCondicionesSave objectForKey:@"Entidad"];
-                entidadTF.tag = [[dicFromCondicionesSave objectForKey:@"id_entidad"] intValue];
+                entidadTF.tag = [[dicFromCondicionesSave objectForKey:@"id_entidad"] doubleValue];
                 NSLog(@"DictionaryXX %@",dicFromCondicionesSave);
 
             }
@@ -594,11 +602,11 @@
             
             NSDictionary *dicFromRegistroSave = itinerarioArrayFromRegistro[i];
             operacionTF.text = [dicFromRegistroSave objectForKey:@"Operacion"];
-            operacionTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion"] intValue];
+            operacionTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion"] doubleValue];
             operacionTipoTF.text = [dicFromRegistroSave objectForKey:@"TipoOperacion"];
-            operacionTipoTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion_tipo"] intValue];
+            operacionTipoTF.tag = [[dicFromRegistroSave objectForKey:@"id_operacion_tipo"] doubleValue];
             planTF.text = [dicFromRegistroSave objectForKey:@"Plan"];
-            planTF.tag = [dicFromRegistroSave objectForKey:@"id_plan"];
+            planTF.tag = [[dicFromRegistroSave objectForKey:@"id_plan"] doubleValue];
             requerimientoTF.text = requerimientoStringFromRegistro;
             //En este snipet colocamos la hora de aterrizaje usando el último item del itinerario
             //Para la hora de decolaje usamos una bandera para que sólo tome el primer item
@@ -746,10 +754,10 @@
         if(paxFileArray.count >i){
             NSDictionary *tempDic = paxFileArray[i];
             tipoPax.text = [[tempDic objectForKey:@"tipoPax"] objectForKey:@"text"] ? [[tempDic objectForKey:@"tipoPax"] objectForKey:@"text"]:@"";
-            tipoPax.tag = [[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] intValue]:0;
+            tipoPax.tag = [[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"tipoPax"] objectForKey:@"id"] doubleValue]:0;
             
             entidadPax.text = [[tempDic objectForKey:@"entidadPax"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidadPax"] objectForKey:@"text"]:@"";
-            entidadPax.tag = [[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] intValue]:0;
+            entidadPax.tag = [[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadPax"] objectForKey:@"id"] doubleValue]:0;
             
             cantidadPax.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
         }
@@ -800,7 +808,7 @@
         if(cargaFileArray.count >i){
             NSDictionary *tempDic = cargaFileArray[i];
             entidadCarga.text = [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"text"] ? [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"text"]:@"";
-            entidadCarga.tag = [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] intValue]:0;
+            entidadCarga.tag = [[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"entidadCarga"] objectForKey:@"id"] doubleValue]:0;
             cantidadCarga.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
         }
         
@@ -921,7 +929,7 @@
         if(arregloFinalArmamentoDeRegistro.count >i){
             NSDictionary *tempDic = arregloFinalArmamentoDeRegistro[i];
             tipoArmamento.text = [tempDic objectForKey:@"Armamento"] ? [tempDic objectForKey:@"Armamento"]:@"";
-            tipoArmamento.tag = [tempDic objectForKey:@"id"] ? [[tempDic objectForKey:@"id"] intValue]:0;
+            tipoArmamento.tag = [tempDic objectForKey:@"id"] ? [[tempDic objectForKey:@"id"] doubleValue]:0;
             
             cantidadArmamento.text =[tempDic objectForKey:@"Cantidad"] ? [tempDic objectForKey:@"Cantidad"]:@"";
             cantidadFallidoArmamento.text = [tempDic objectForKey:@"CantidadFallido"] ? [tempDic objectForKey:@"CantidadFallido"]:@"";
@@ -978,7 +986,7 @@
         if(tipoFileArray.count >i){
             NSDictionary *tempDic = tipoFileArray[i];
             TF.text = [tempDic objectForKey:@"text"];
-            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+            TF.tag =[[tempDic objectForKey:@"id"] doubleValue];
         }
         [tipoOperacionArray addObject:TF];
     }
@@ -1006,7 +1014,7 @@
         if(convenioFileArray.count >i){
             NSDictionary *tempDic = convenioFileArray[i];
             TF.text = [tempDic objectForKey:@"text"];
-            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+            TF.tag =[[tempDic objectForKey:@"id"] doubleValue];
         }
         [convenioArray addObject:TF];
     }
@@ -1032,7 +1040,7 @@
         if(motivosIncumplimientoFileArray.count >i){
             NSDictionary *tempDic = motivosIncumplimientoFileArray[i];
             TF.text = [tempDic objectForKey:@"text"];
-            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+            TF.tag =[[tempDic objectForKey:@"id"] doubleValue];
         }
         [motivosIncumplimientoArray addObject:TF];
     }
@@ -1068,7 +1076,7 @@
         if(resultadosInmediatosFileArray.count >i){
             NSDictionary *tempDic = resultadosInmediatosFileArray[i];
             resultadosTF.text = [[tempDic objectForKey:@"resultados"] objectForKey:@"text"] ? [[tempDic objectForKey:@"resultados"] objectForKey:@"text"]:@"";
-            resultadosTF.tag = [[tempDic objectForKey:@"resultados"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"resultados"] objectForKey:@"id"] intValue]:0;
+            resultadosTF.tag = [[tempDic objectForKey:@"resultados"] objectForKey:@"id"] ? [[[tempDic objectForKey:@"resultados"] objectForKey:@"id"] doubleValue]:0;
             cantidadTF.text =[[tempDic objectForKey:@"cantidad"] objectForKey:@"text"] ? [[tempDic objectForKey:@"cantidad"] objectForKey:@"text"]:@"";
         }
         
@@ -1120,7 +1128,7 @@
         if(motivosArray.count >i){
             NSDictionary *tempDic = motivosArray[i];
             TF.text = [tempDic objectForKey:@"text"];
-            TF.tag =[[tempDic objectForKey:@"id"] intValue];
+            TF.tag =[[tempDic objectForKey:@"id"] doubleValue];
         }
         [motivosRetardoArray addObject:TF];
     }
@@ -1231,12 +1239,14 @@
     for (UITextField *textfield in sumaPaxArray){
         contadorPax += [textfield.text intValue];
     }
+    sumaPaxMision = contadorPax;
     totalPaxTF.text = [NSString stringWithFormat:@"%i",contadorPax];
     
     int contadorCarga =0;
     for (UITextField *textfield in sumaCargaArray){
         contadorCarga += [textfield.text intValue];
     }
+    sumaCargaMision = contadorCarga;
     totalCargaTF.text = [NSString stringWithFormat:@"%i",contadorCarga];
 }
 - (void)porcentajeArmamentoConTag:(int)tag menosDiferencia:(int)diferencia{
@@ -1301,19 +1311,76 @@
     ServerCommunicator *server=[[ServerCommunicator alloc]init];
     server.caller=self;
     server.tag=1;
-    NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[IAmCoder dateKey]];
-    
-    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",cipher];
+    //NSString *cipher=[IAmCoder encryptAndBase64:data withKey:[IAmCoder dateKey]];
+    NSString *strB64 = [IAmCoder base64EncodeString:data];
+    NSString *params=[NSString  stringWithFormat:@"<jsonEntrada>%@</jsonEntrada>",strB64];
     
     [server callServerWithMethod:@"MisionCumplida" andParameter:params];
     hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText=@"Enviando Registro";
+    hud.labelText=@"Enviando Misión Cumplida";
+    //NSLog(@"Enviando Misión %@",strB64);
 }
 
 #pragma mark - server response
 - (void)receivedDataFromServer:(ServerCommunicator*)sender{
+    if (sender.tag==1) {
+        NSLog(@"Recibido Misión: %@", sender.resDic);
+        if ([sender.resDic objectForKey:@"status:"]) {
+            if ([[sender.resDic objectForKey:@"status:"] intValue]==2) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor redColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+            }
+            else if ([[sender.resDic objectForKey:@"status:"] intValue]==0) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Misión exitosa No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor greenColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+                FileSaver *file=[[FileSaver alloc]init];
+                NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+                [masterDic setObject:@"YES" forKey:@"Done"];
+                [masterDic setObject:[sender.resDic objectForKey:@"RegistroMC"] forKey:@"RegistroMC"];
+                [file setDictionary:masterDic withName:pathForSave];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else if ([[sender.resDic objectForKey:@"status:"] intValue]==1) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Misión con Advertencia No:\n%@",[sender.resDic objectForKey:@"noRegistro"]] message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                UILabel *label=[[UILabel alloc]init];
+                label.backgroundColor=[UIColor yellowColor];
+                label.layer.cornerRadius=10;
+                label.frame=CGRectMake(5, 2, 273, 13);
+                [alert addSubview:label];
+                [alert show];
+                FileSaver *file=[[FileSaver alloc]init];
+                NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
+                [masterDic setObject:@"YES" forKey:@"Done"];
+                [masterDic setObject:[sender.resDic objectForKey:@"RegistroMC"] forKey:@"RegistroMC"];
+                [file setDictionary:masterDic withName:pathForSave];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:@"Ha ocurrido un error. Por favor vuelva a intentarlo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 - (void)receivedDataFromServerWithError:(ServerCommunicator*)sender{
+    if (sender.tag==1) {
+        NSString *titulo=@"Error al enviar Misión Cumplida";
+        NSString *mensaje=@"Su Misión Cumplida no pudo ser enviada. Compruebe la conexión a la red y vuelva a intentarlo.";
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:titulo message:mensaje delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 #pragma mark number check
@@ -1424,42 +1491,42 @@
     else if (pickerView.tag == 2001) {
         NSDictionary *dic = lista.arregloDeConvenios[row];
         currentTextField.text = [dic objectForKey:@"Descripcion"];
-        currentTextField.tag = [dic objectForKey:@"IdConvenio"];
+        currentTextField.tag = [[dic objectForKey:@"IdConvenio"] doubleValue];
     }
     else if (pickerView.tag == 2002) {
         NSDictionary *dic = lista.arregloEntidadesPaxCarga[row];
         currentTextField.text = [dic objectForKey:@"NombreOrganizacion"];
-        currentTextField.tag = [dic objectForKey:@"OrganzacionId"]; //Error en el server de la palabra organizacion dice organzacion
+        currentTextField.tag = [[dic objectForKey:@"OrganzacionId"] doubleValue]; //Error en el server de la palabra organizacion dice organzacion
     }
     else if (pickerView.tag == 2003) {
         NSDictionary *dic = lista.arregloMotivosIncumplimiento[row];
         currentTextField.text = [dic objectForKey:@"Descripcion"];
-        currentTextField.tag = [dic objectForKey:@"IdIncumplimiento"];
+        currentTextField.tag = [[dic objectForKey:@"IdIncumplimiento"] doubleValue];
     }
     else if (pickerView.tag == 2004) {
         NSDictionary *dic = lista.arregloResultadosInmediatos[row];
         currentTextField.text = [dic objectForKey:@"Descripcion"];
-        currentTextField.tag = [dic objectForKey:@"IdResultado"];
+        currentTextField.tag = [[dic objectForKey:@"IdResultado"] doubleValue];
     }
     else if (pickerView.tag == 2005) {
         NSDictionary *dic = lista.arregloRetardos[row];
         currentTextField.text = [dic objectForKey:@"Descripcion"];
-        currentTextField.tag = [dic objectForKey:@"IdRetardo"];
+        currentTextField.tag = [[dic objectForKey:@"IdRetardo"] doubleValue];
     }
     else if (pickerView.tag == 2006) {
         NSDictionary *dic = lista.arregloTipoOperacionMision[row];
         currentTextField.text = [dic objectForKey:@"DescripcionValorDefinicion"];
-        currentTextField.tag = [dic objectForKey:@"ValorDefinicionId"];
+        currentTextField.tag = [[dic objectForKey:@"ValorDefinicionId"] doubleValue];
     }
     else if (pickerView.tag == 2007) {
         NSDictionary *dic = lista.arregloTipoPax[row];
         currentTextField.text = [dic objectForKey:@"Descripcion"];
-        currentTextField.tag = [dic objectForKey:@"IdTipoPax"];
+        currentTextField.tag = [[dic objectForKey:@"IdTipoPax"] doubleValue];
     }
     else if (pickerView.tag == 2008) {
         Tripulacion *tripulacion = ordenDeVuelo.arregloDeTripulacion[row];
         currentTextField.text = tripulacion.persona;
-        currentTextField.tag = tripulacion.idPersona;
+        currentTextField.tag = [tripulacion.idPersona doubleValue];
     }
     overlayLabel.text = currentTextField.text;
     return;
@@ -1479,7 +1546,7 @@
 -(IBAction)guardarMision:(UIButton*)sender{
     NSLog(@"Saving..");
     NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
-    NSMutableDictionary *jsonDic=[[NSMutableDictionary alloc]init];
+    NSMutableDictionary *masterJsonDic=[[NSMutableDictionary alloc]init];
     //////////////////////////////////////
     ////////General Cabezera//////////////
     //////////////////////////////////////
@@ -1516,10 +1583,10 @@
         [generalCabezeraDic setObject:aeronaveDosTF.text forKey:@"AeronaveDos"];
     }
     if(hDecolajeTF.text){
-        //[generalCabezeraDic setObject:hDecolajeTF.text forKey:@"HoraDecolaje"];
+        [generalCabezeraDic setObject:hDecolajeTF.text forKey:@"HoraDecolaje"];
     }
     if(hAterrizajeTF.text){
-        //[generalCabezeraDic setObject:hAterrizajeTF.text forKey:@"HoraAterrizaje"];
+        [generalCabezeraDic setObject:hAterrizajeTF.text forKey:@"HoraAterrizaje"];
     }
     if(horaBlancoTF.text){
         [generalCabezeraDic setObject:horaBlancoTF.text forKey:@"HoraBlanco"];
@@ -1536,7 +1603,7 @@
     //////////////////////////////////////
     
     [masterDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
-    [jsonDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
+    [masterJsonDic setObject:generalCabezeraDic forKey:@"GeneralCabezera"];
     
     //////////////////////////////////////
     ////////Informe///////////////////////
@@ -1552,31 +1619,40 @@
     //////////////////////////////////////
     
     [masterDic setObject:informeDic forKey:@"Informe"];
-    [jsonDic setObject:informeDic forKey:@"Informe"];
+    [masterJsonDic setObject:informeDic forKey:@"Informe"];
     //////////////////////////////////////
     ////////Información General///////////
     //////////////////////////////////////
     //Instrucciones
     NSMutableDictionary *informaciongeneralDic = [[NSMutableDictionary alloc]init];
-    if(instruccionesTV.text){[informaciongeneralDic setObject:instruccionesTV.text forKey:@"Instrucciones"];}
+    NSMutableDictionary *informaciongeneralJsonDic = [[NSMutableDictionary alloc]init];
+    if(instruccionesTV.text){
+        [informaciongeneralDic setObject:instruccionesTV.text forKey:@"Instrucciones"];
+        [informaciongeneralJsonDic setObject:instruccionesTV.text forKey:@"Instrucciones"];
+    }
     
     //Switches
     if(escoltaVIPSwitch.on){
         [informaciongeneralDic setObject:@"S" forKey:@"EscoVip"];
+        [informaciongeneralJsonDic setObject:@"S" forKey:@"EscoVip"];
     }
     else{
         [informaciongeneralDic setObject:@"N" forKey:@"EscoVip"];
+        [informaciongeneralJsonDic setObject:@"N" forKey:@"EscoVip"];
     }
     if(transporteVIPSwitch.on){
         [informaciongeneralDic setObject:@"S" forKey:@"TransVip"];
+        [informaciongeneralJsonDic setObject:@"S" forKey:@"TransVip"];
     }
     else{
         [informaciongeneralDic setObject:@"N" forKey:@"TransVip"];
+        [informaciongeneralJsonDic setObject:@"N" forKey:@"TransVip"];
     }
     //Lista
     //NSMutableDictionary *instruccionesMisionDic = [[NSMutableDictionary alloc]init];
     NSArray *instruccionesMisionArray = [infoGeneralDictionary objectForKey:@"instruccionesMision"];
     NSMutableArray *instruccionesMisionSave = [[NSMutableArray alloc]init];
+    NSMutableArray *instruccionesMisionJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<instruccionesMisionArray.count; i++){
         NSDictionary *masterTempDic = instruccionesMisionArray[i];
         UITextField *tempTF = [masterTempDic objectForKey:@"entidad"];
@@ -1586,111 +1662,134 @@
         UITextField *tempTF5 = [masterTempDic objectForKey:@"plan"];
 
         NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc] init];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdEntidad"];
             [singleDic setObject:tempDic forKey:@"entidad"];
         }
         if(tempTF2.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF2.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [jsonDic setObject:tempTF2.text forKey:@"Requerimiento"];
             [singleDic setObject:tempDic forKey:@"requerimiento"];
         }
         if(tempTF3.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF3.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF3.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF3.tag] forKey:@"IdOperacion"];
             [singleDic setObject:tempDic forKey:@"operacion"];
         }
         if(tempTF4.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF4.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF4.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF4.tag] forKey:@"IdOperacionTipo"];
             [singleDic setObject:tempDic forKey:@"operacionTipo"];
         }
         if(tempTF5.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF5.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF5.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF5.tag] forKey:@"IdPlan"];
             [singleDic setObject:tempDic forKey:@"plan"];
         }
         if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length || tempTF4.text.length || tempTF5.text.length){
             [instruccionesMisionSave addObject:singleDic];
+            [instruccionesMisionJson addObject:jsonDic];
         }
     }
     [informaciongeneralDic setObject:instruccionesMisionSave forKey:@"InstruccionesMision"];
+    [informaciongeneralJsonDic setObject:instruccionesMisionJson forKey:@"InstruccionesMision"];
     //////////////////////////////////////
     ////////Fin Pax Carga Armamento///////
     //////////////////////////////////////
     [masterDic setObject:informaciongeneralDic forKey:@"InformacionGeneral"];
-
+    [masterJsonDic setObject:informaciongeneralJsonDic forKey:@"InformacionGeneral"];
     
     //////////////////////////////////////
     ////////Pax Carga Armamento///////////
     //////////////////////////////////////
     //PAX
     NSMutableDictionary *paxCargaArmamentoDic = [[NSMutableDictionary alloc]init];
+    NSMutableDictionary *paxCargaArmamentoJsonDic = [[NSMutableDictionary alloc]init];
     NSArray *paxArray = [paxCargaDictionary objectForKey:@"pax"];
     NSMutableArray *paxSave = [[NSMutableArray alloc]init];
+    NSMutableArray *paxJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<paxArray.count; i++){
         NSDictionary *masterTempDic = paxArray[i];
         UITextField *tempTF = [masterTempDic objectForKey:@"tipoPax"];
         UITextField *tempTF2 = [masterTempDic objectForKey:@"entidadPax"];
         UITextField *tempTF3 = [masterTempDic objectForKey:@"cantidadPax"];
         NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc] init];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdTipoPax"];
             [singleDic setObject:tempDic forKey:@"tipoPax"];
         }
         if(tempTF2.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF2.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF2.tag] forKey:@"IdEntidad"];
             [singleDic setObject:tempDic forKey:@"entidadPax"];
         }
         if(tempTF3.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF3.text forKey:@"text"];
+            [jsonDic setObject:tempTF3.text forKey:@"Cantidad"];
             [singleDic setObject:tempDic forKey:@"cantidad"];
         }
         if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length){
             [paxSave addObject:singleDic];
+            [paxJson addObject:jsonDic];
         }
     }
     [paxCargaArmamentoDic setObject:paxSave forKey:@"PAX"];
+    [paxCargaArmamentoJsonDic setObject:paxJson forKey:@"Pax"];
     
     //CARGA
     NSArray *cargaArray = [paxCargaDictionary objectForKey:@"carga"];
     NSMutableArray *cargaSave = [[NSMutableArray alloc]init];
+    NSMutableArray *cargaJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<cargaArray.count; i++){
         NSDictionary *masterTempDic = cargaArray[i];
         UITextField *tempTF = [masterTempDic objectForKey:@"entidadCarga"];
         UITextField *tempTF2 = [masterTempDic objectForKey:@"cantidadCarga"];
         NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc] init];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdEntidad"];
             [singleDic setObject:tempDic forKey:@"entidadCarga"];
         }
         if(tempTF2.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF2.text forKey:@"text"];
+            [jsonDic setObject:tempTF2.text forKey:@"Cantidad"];
             [singleDic setObject:tempDic forKey:@"cantidad"];
         }
         if(tempTF.text.length || tempTF2.text.length){
             [cargaSave addObject:singleDic];
+            [cargaJson addObject:jsonDic];
         }
     }
     [paxCargaArmamentoDic setObject:cargaSave forKey:@"Carga"];
+    [paxCargaArmamentoJsonDic setObject:cargaJson forKey:@"Carga"];
     
     //ARMAMENTO
     NSArray *armamentoArray = [paxCargaDictionary objectForKey:@"armamento"];
     NSMutableArray *armamentoSave = [[NSMutableArray alloc]init];
+    NSMutableArray *armamentoJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<armamentoArray.count; i++){
         NSDictionary *masterTempDic = armamentoArray[i];
         UITextField *tempTF = [masterTempDic objectForKey:@"tipoArmamento"];
@@ -1698,125 +1797,162 @@
         UITextField *tempTF3 = [masterTempDic objectForKey:@"cantidadFallidoArmamento"];
         UITextField *tempTF4 = [masterTempDic objectForKey:@"efectividadArmamento"];
         NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc] init];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdArmamento"];
             [singleDic setObject:tempDic forKey:@"tipoArmamento"];
         }
         if(tempTF2.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF2.text forKey:@"text"];
+            [jsonDic setObject:tempTF2.text forKey:@"Cantidad"];
             [singleDic setObject:tempDic forKey:@"cantidadArmamento"];
         }
         if(tempTF3.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF3.text forKey:@"text"];
+            [jsonDic setObject:tempTF3.text forKey:@"CantidadFallido"];
             [singleDic setObject:tempDic forKey:@"cantidadFallidoArmamento"];
         }
         if(tempTF4.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF4.text forKey:@"text"];
+            [jsonDic setObject:tempTF4.text forKey:@"Efectividad"];
             [singleDic setObject:tempDic forKey:@"efectividadArmamento"];
         }
         if(tempTF.text.length || tempTF2.text.length || tempTF3.text.length || tempTF4.text.length){
             [armamentoSave addObject:singleDic];
+            [armamentoJson addObject:jsonDic];
         }
     }
     [paxCargaArmamentoDic setObject:armamentoSave forKey:@"Armamento"];
+    [paxCargaArmamentoJsonDic setObject:armamentoJson forKey:@"Armamento"];
+    
+    //Totales Pax Carga
+    [paxCargaArmamentoJsonDic setObject:[NSString stringWithFormat:@"%i", sumaPaxMision] forKey:@"TotalPax"];
+    [paxCargaArmamentoJsonDic setObject:[NSString stringWithFormat:@"%i", sumaCargaMision] forKey:@"TotalCarga"];
     //////////////////////////////////////
     ////////Fin Pax Carga Armamento///////
     //////////////////////////////////////
     
     [masterDic setObject:paxCargaArmamentoDic forKey:@"PaxCargaArmamento"];
+    [masterJsonDic setObject:paxCargaArmamentoJsonDic forKey:@"PaxCargaArmamento"];
     
     
     //////////////////////////////////////
     ////////Resultados////////////////////
     //////////////////////////////////////
     NSMutableDictionary *resultadosDic = [[NSMutableDictionary alloc]init];
+    NSMutableDictionary *resultadosJsonDic = [[NSMutableDictionary alloc]init];
     
     //TIPO OPERACION
     NSArray *tipoOperacion = [resultadosDictionary objectForKey:@"tipoOperacion"];
     NSMutableArray *tipoOperacionSave = [[NSMutableArray alloc]init];
+    NSMutableArray *tipoOperacionJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<tipoOperacion.count; i++){
         UITextField *tempTF = tipoOperacion[i];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdTipoOperacion"];
             [tipoOperacionSave addObject:tempDic];
+            [tipoOperacionJson addObject:jsonDic];
         }
     }
     [resultadosDic setObject:tipoOperacionSave forKey:@"TipoOperacion"];
-    
+    [resultadosJsonDic setObject:tipoOperacionJson forKey:@"TipoOperacion"];
     //MOTIVOS INCUMPLIMIENTO
     NSArray *motivosIncumplimiento = [resultadosDictionary objectForKey:@"motivosIncumplimiento"];
     NSMutableArray *motivosIncumplimientoSave = [[NSMutableArray alloc]init];
+    NSMutableArray *motivosIncumplimientoJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<motivosIncumplimiento.count; i++){
         UITextField *tempTF = motivosIncumplimiento[i];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdIncumplimiento"];
             [motivosIncumplimientoSave addObject:tempDic];
+            [motivosIncumplimientoJson addObject:jsonDic];
         }
     }
     [resultadosDic setObject:motivosIncumplimientoSave forKey:@"MotivosIncumplimiento"];
+    [resultadosJsonDic setObject:motivosIncumplimientoJson forKey:@"MotivosIncumplimiento"];
     
     //CONVENIO
     NSArray *convenioArray = [resultadosDictionary objectForKey:@"convenio"];
     NSMutableArray *convenioSave = [[NSMutableArray alloc]init];
+    NSMutableArray *convenioJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<convenioArray.count; i++){
         UITextField *tempTF = convenioArray[i];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdConvenio"];
             [convenioSave addObject:tempDic];
+            [convenioJson addObject:jsonDic];
         }
     }
     [resultadosDic setObject:convenioSave forKey:@"Convenio"];
+    [resultadosJsonDic setObject:convenioJson forKey:@"Convenio"];
     
     //RESULTADOS INMEDIATOS
     NSArray *resultadosInmediatosArray = [resultadosDictionary objectForKey:@"resultadosInmediatos"];
     NSMutableArray *resultadosInmeidiatosSave = [[NSMutableArray alloc]init];
+    NSMutableArray *resultadosInmeidiatosJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<resultadosInmediatosArray.count; i++){
         NSDictionary *masterTempDic = resultadosInmediatosArray[i];
         UITextField *tempTF = [masterTempDic objectForKey:@"resultados"];
         UITextField *tempTF2 = [masterTempDic objectForKey:@"cantidad"];
         NSMutableDictionary *singleDic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc] init];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdResultado"];
             [singleDic setObject:tempDic forKey:@"resultados"];
         }
         if(tempTF2.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF2.text forKey:@"text"];
+            [jsonDic setObject:tempTF2.text forKey:@"Cantidad"];
             [singleDic setObject:tempDic forKey:@"cantidad"];
         }
         if(tempTF.text.length || tempTF2.text.length){
             [resultadosInmeidiatosSave addObject:singleDic];
+            [resultadosInmeidiatosJson addObject:jsonDic];
         }
     }
     [resultadosDic setObject:resultadosInmeidiatosSave forKey:@"ResultadosInmediatos"];
+    [resultadosJsonDic setObject:resultadosInmeidiatosJson forKey:@"ResultadosInmediatos"];
     
     //OTROS RESULTADOS
     NSArray *otrosArray = [resultadosDictionary objectForKey:@"otrosResultados"];
     NSMutableArray *otrosSave = [[NSMutableArray alloc]init];
+    NSString *otrosJsonString = @"";
     for(int i = 0; i<otrosArray.count; i++){
         UITextField *tempTF = otrosArray[i];
         if(tempTF.text.length){
             [otrosSave addObject:tempTF.text];
+            otrosJsonString = tempTF.text;
         }
     }
     [resultadosDic setObject:otrosSave forKey:@"OtrosResultados"];
+    [resultadosJsonDic setObject:otrosJsonString forKey:@"OtrosResultados"];
     
     //NSLog(@"Resultadoxxx: %@",resultadosDic);
     
     [masterDic setObject:resultadosDic forKey:@"Resultados"];
+    [masterJsonDic setObject:resultadosJsonDic forKey:@"Resultados"];
     //////////////////////////////////////
     /////Fin sección de resultados////////
     //////////////////////////////////////
@@ -1826,16 +1962,21 @@
     //////////////////////////////////////
     NSArray *motArr = [motivosDictionary objectForKey:@"motivosRetardo"];
     NSMutableArray *motivosForSave = [[NSMutableArray alloc]init];
+    NSMutableArray *motivosForJson = [[NSMutableArray alloc]init];
     for(int i = 0; i<motArr.count; i++){
         UITextField *tempTF = motArr[i];
         if(tempTF.text.length){
             NSMutableDictionary *tempDic = [[NSMutableDictionary alloc]init];
+            NSMutableDictionary *jsonDic = [[NSMutableDictionary alloc]init];
             [tempDic setObject:tempTF.text forKey:@"text"];
             [tempDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"id"];
+            [jsonDic setObject:[NSString stringWithFormat:@"%i",tempTF.tag] forKey:@"IdRetardo"];
             [motivosForSave addObject:tempDic];
+            [motivosForJson addObject:jsonDic];
         }
     }
     [masterDic setObject:motivosForSave forKey:@"MotivosRetardo"];
+    [masterJsonDic setObject:motivosForJson forKey:@"MotivosRetardo"];
     //////////////////////////////////////
     /////Fin de Motivos de retardo////////
     //////////////////////////////////////
@@ -1843,8 +1984,12 @@
     SBJSON *json=[[SBJSON alloc]init];
 
     NSMutableDictionary *ultra=[[NSMutableDictionary alloc]init];
+    NSMutableDictionary *jsonUltra=[[NSMutableDictionary alloc]init];
     [ultra setObject:masterDic forKey:@"MisionCumplida"];
-    NSString *str=[json stringWithObject:ultra];
+    [jsonUltra setObject:masterJsonDic forKey:@"MisionCumplida"];
+
+    //NSString *str=[json stringWithObject:ultra];
+    NSString *str=[json stringWithObject:jsonUltra];
     
     NSLog(@"JsonXX: %@",str);
     
