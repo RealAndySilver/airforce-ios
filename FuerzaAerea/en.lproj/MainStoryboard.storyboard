@@ -3318,7 +3318,7 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Fecha:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sm5-aD-AI6">
-                                        <rect key="frame" x="677" y="40" width="93" height="21"/>
+                                        <rect key="frame" x="592" y="40" width="93" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
                                         <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
@@ -3356,7 +3356,7 @@
                                         <rect key="frame" x="96" y="35" width="167" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="sPI-V1-RMo" id="HAM-h9-TPa"/>
@@ -3391,7 +3391,7 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unidad que crea:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="429-Ls-Doh">
-                                        <rect key="frame" x="677" y="8" width="107" height="21"/>
+                                        <rect key="frame" x="592" y="8" width="107" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
                                         <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
@@ -3399,7 +3399,7 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bNM-59-nJb">
-                                        <rect key="frame" x="792" y="3" width="224" height="30"/>
+                                        <rect key="frame" x="707" y="3" width="309" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3447,17 +3447,17 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="edA-1f-wJo">
-                                        <rect key="frame" x="750" y="36" width="266" height="30"/>
+                                        <rect key="frame" x="665" y="36" width="122" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="sPI-V1-RMo" id="mwz-Me-x5P"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="H Decolaje:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jPj-9y-QTA">
-                                        <rect key="frame" x="677" y="72" width="93" height="21"/>
+                                        <rect key="frame" x="592" y="72" width="93" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
                                         <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
@@ -3465,7 +3465,15 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="H Aterrizaje:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x2J-TS-eSG">
-                                        <rect key="frame" x="845" y="72" width="75" height="21"/>
+                                        <rect key="frame" x="795" y="72" width="75" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
+                                        <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="1" height="1"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Hora Orden:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9fz-As-mD5">
+                                        <rect key="frame" x="795" y="39" width="75" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" weight="black" pointSize="12"/>
                                         <color key="textColor" white="0.29140054739999999" alpha="1" colorSpace="calibratedWhite"/>
@@ -3473,10 +3481,10 @@
                                         <size key="shadowOffset" width="1" height="1"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="tvg-9c-h4e">
-                                        <rect key="frame" x="750" y="68" width="85" height="30"/>
+                                        <rect key="frame" x="665" y="68" width="122" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="sPI-V1-RMo" id="32e-wd-cK4"/>
@@ -3527,13 +3535,23 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="2as-Ev-QFZ">
-                                        <rect key="frame" x="926" y="68" width="90" height="30"/>
+                                        <rect key="frame" x="873" y="68" width="143" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <outlet property="delegate" destination="sPI-V1-RMo" id="k2x-41-wBr"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="MX1-jg-tLn">
+                                        <rect key="frame" x="873" y="35" width="143" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.81566491789999995" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="sPI-V1-RMo" id="coJ-Zd-2Vc"/>
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Itinerario:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="enk-YN-EWd">
@@ -3568,12 +3586,12 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="p2v-NX-Lkm">
-                                <rect key="frame" x="667" y="46" width="1" height="66"/>
+                                <rect key="frame" x="582" y="46" width="1" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="fZX-FZ-aWF">
-                                <rect key="frame" x="667" y="111" width="1" height="36"/>
+                                <rect key="frame" x="582" y="111" width="1" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -3632,6 +3650,7 @@
                         <outlet property="hAterrizajeTF" destination="2as-Ev-QFZ" id="PGm-8h-qMQ"/>
                         <outlet property="hDecolajeTF" destination="tvg-9c-h4e" id="mie-ND-l1N"/>
                         <outlet property="horaBlancoTF" destination="7lS-LA-rgX" id="pFI-KQ-axy"/>
+                        <outlet property="horaTF" destination="MX1-jg-tLn" id="WeD-Xg-sy9"/>
                         <outlet property="itinerarioTF" destination="ixm-lh-gO8" id="Qe4-sA-7hi"/>
                         <outlet property="ovTF" destination="qi3-ba-sYG" id="x6f-ri-ngM"/>
                         <outlet property="pageScrollView" destination="u07-NH-2gj" id="7hz-bu-ORg"/>

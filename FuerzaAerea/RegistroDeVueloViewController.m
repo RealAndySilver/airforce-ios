@@ -984,6 +984,7 @@
 #pragma mark - guardar
 -(IBAction)guardarRegistro:(UIButton*)sender{
     
+    NSMutableDictionary *saveForMision = [[NSMutableDictionary alloc]init];
     NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
     NSMutableDictionary *generalDic=[[NSMutableDictionary alloc]init];
     
@@ -1009,7 +1010,11 @@
         [alert show];
         return;
     }
-    if(unidadQueCreaTextfield.text.length>0){[generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];}
+    if(unidadQueCreaTextfield.text.length>0){
+        [generalDic setObject:unidadQueCreaTextfield.text forKey:@"UnidadQueCrea"];
+        NSDictionary *unidadDic = @{@"id":idUnidad ? idUnidad:0, @"nombre":unidadQueCreaTextfield.text};
+        [saveForMision setObject:unidadDic forKey:@"UnidadQueCrea"];
+    }
     else{
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"El campo 'Unidad que crea' no debe estar vacío." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
@@ -1084,7 +1089,7 @@
     
     [masterDic setObject:generalDic forKey:@"General"];
     
-    NSMutableDictionary *saveForMision = [[NSMutableDictionary alloc]init];
+    
     
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
     for (CeldaItinerario *cell in arregloParaSumarItinerario) {

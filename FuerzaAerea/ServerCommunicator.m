@@ -8,8 +8,8 @@
 
 #import "ServerCommunicator.h"
 
-//#define ENDPOINT @"172.20.100.6:8989"
-#define ENDPOINT @"app.sinte.co:8383"
+#define ENDPOINT @"172.20.100.6:8989"
+//#define ENDPOINT @"app.sinte.co:8383"
 
 @implementation ServerCommunicator
 @synthesize dictionary,tag,caller,objectDic,resDic,methodName;
