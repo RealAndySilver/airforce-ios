@@ -132,8 +132,10 @@
         fechaDigitadoTF.text = [cabezeraDic objectForKey:@"FechaDigitado"];
     }
 
-    NSString *IdRegistroString = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"];
-    registroVueloTF.text = IdRegistroString;
+    NSString *noRegistroString = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"noRegistro"];
+    double IdRegistro = [[[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"] doubleValue];
+    registroVueloTF.text = noRegistroString;
+    registroVueloTF.tag = IdRegistro;
     //registroVueloTF.text = [cabezeraDic objectForKey:@"IdRegistroVuelo"];
     
     fechaTF.text = ordenDeVuelo.principal.fecha;//[cabezeraDic objectForKey:@"HoraOrden"];
@@ -1574,7 +1576,8 @@
         [generalCabezeraDic setObject:fechaDigitadoTF.text forKey:@"FechaDigitado"];
     }
     if(registroVueloTF.text){
-        [generalCabezeraDic setObject:registroVueloTF.text forKey:@"IdRegistroVuelo"];
+        [generalCabezeraDic setObject:registroVueloTF.text forKey:@"RegistroVuelo"];
+        [generalCabezeraDic setObject:[NSString stringWithFormat:@"%li",(long)registroVueloTF.tag] forKey:@"IdRegistroVuelo"];
     }
     if(fechaTF.text){
         [generalCabezeraDic setObject:fechaTF.text forKey:@"FechaOrden"];

@@ -12,10 +12,22 @@
 
 @end
 
-@implementation RegistroDeVueloViewController
+@implementation RegistroDeVueloViewController{
+    NSMutableArray *numbersArray;
+    int sumaCombustibleInicial;
+    int sumaTanqueo;
+    int sumaCombustibleFinal;
+}
 @synthesize ordenDeVuelo,arrayFaseVuelo,arrayDepartamentos,arrayMunicipios,arrayArmamentos,arrayLatitud,arrayLongitud,lista;
 -(void)viewDidLoad{
     [super viewDidLoad];
+    numbersArray = [[NSMutableArray alloc]init];
+    for (int i=0; i<101; i++) {
+        [numbersArray addObject:[NSString stringWithFormat:@"%i",i]];
+    }
+    
+    [self inicializarContadoresCombustible];
+    
     arregloParaSumarItinerario=[[NSMutableArray alloc]init];
     arregloParaSumarCondiciones=[[NSMutableArray alloc]init];
     arregloPaginasArmamento=[[NSMutableArray alloc]init];
@@ -23,6 +35,8 @@
     arregloEntrenamiento=[[NSMutableArray alloc]init];
     arregloTeplas=[[NSMutableArray alloc]init];
     arregloSanidad=[[NSMutableArray alloc]init];
+    arrayCombustible=[[NSMutableArray alloc]init];
+    [self setAllPickers];
     [self crearPaginas];
     [self seleccionarBoton:1];
     //NSLog(@"Fecha fase %@",ordenDeVuelo.principal.fecha);
@@ -30,7 +44,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sumarColumnasCondiciones) name:@"updateCondiciones" object:nil];
     
     [self integrarInfoDeOrdenDeVueloEnLosTextfields];
-    [self setAllPickers];
+    
     [self checkIfSaved];
     
 
@@ -47,6 +61,12 @@
     aeronaveDosTextfield.text=ordenDeVuelo.principal.equipo;
     grupoTextfield.text=@"";
     unidadQueCreaTextfield.text=@"";
+}
+-(void)inicializarContadoresCombustible{
+    sumaCombustibleFinal = 0;
+    sumaCombustibleInicial = 0;
+    sumaTanqueo = 0;
+    dicTotalesCombustible = [[NSMutableDictionary alloc]init];
 }
 -(void)setAllPickers{
     pickerFaseVuelo=[[UIPickerView alloc]init];
@@ -124,6 +144,12 @@
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(displayDate:) forControlEvents:UIControlEventAllEvents];
     fechaTextfield.inputView=datePicker;
+    
+    pickerNumeros=[[UIPickerView alloc]init];
+    pickerNumeros.dataSource=self;
+    pickerNumeros.delegate=self;
+    pickerNumeros.showsSelectionIndicator = YES;
+    pickerNumeros.tag=2008;
 }
 -(void)checkIfSaved{
     FileSaver *file=[[FileSaver alloc]init];
@@ -398,6 +424,10 @@
     [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
     [self seleccionarBoton:6];
 }
+-(IBAction)combustible:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
+    [self seleccionarBoton:6];
+}
 -(IBAction)fadeInAeronaveImpactada:(UISwitch*)sender{
     if (sender.on) {
         [UIView beginAnimations:nil context:NULL];
@@ -446,12 +476,14 @@
             [botonTripulacion setBackgroundColor:colorNormal];
             [botonTeplas setBackgroundColor:colorNormal];
             [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:YES];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
             [botonTeplas setHighlighted:NO];
             [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:NO];
             break;
         case 2:
             [botonItinerario setBackgroundColor:colorNormal];
@@ -460,12 +492,14 @@
             [botonTripulacion setBackgroundColor:colorNormal];
             [botonTeplas setBackgroundColor:colorNormal];
             [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:YES];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
             [botonTeplas setHighlighted:NO];
             [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:NO];
             break;
         case 3:
             [botonItinerario setBackgroundColor:colorNormal];
@@ -474,12 +508,14 @@
             [botonTripulacion setBackgroundColor:colorNormal];
             [botonTeplas setBackgroundColor:colorNormal];
             [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:YES];
             [botonTripulacion setHighlighted:NO];
             [botonTeplas setHighlighted:NO];
             [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:NO];
             break;
         case 4:
             [botonItinerario setBackgroundColor:colorNormal];
@@ -488,12 +524,14 @@
             [botonTripulacion setBackgroundColor:colorHilight];
             [botonTeplas setBackgroundColor:colorNormal];
             [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:YES];
             [botonTeplas setHighlighted:NO];
             [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:NO];
             break;
         
         case 5:
@@ -503,27 +541,32 @@
             [botonTripulacion setBackgroundColor:colorNormal];
             [botonTeplas setBackgroundColor:colorHilight];
             [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorNormal];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
             [botonTeplas setHighlighted:YES];
             [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:NO];
             break;
             
+        
         case 6:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorNormal];
             [botonTripulacion setBackgroundColor:colorNormal];
             [botonTeplas setBackgroundColor:colorNormal];
-            [botonSanidad setBackgroundColor:colorHilight];
+            [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorHilight];
             [botonItinerario setHighlighted:NO];
             [botonCondiciones setHighlighted:NO];
             [botonArmamento setHighlighted:NO];
             [botonTripulacion setHighlighted:NO];
             [botonTeplas setHighlighted:NO];
-            [botonSanidad setHighlighted:YES];
+            [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:YES];
             break;
             
         default:
@@ -532,9 +575,66 @@
     
     
 }
+
+#pragma mark - textfield delegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    currentTextField = textField;
+    //overlayLabel.text = currentTextField.text;
+    if (currentTextField.inputView) {
+        currentPicker = (UIPickerView*)currentTextField.inputView;
+        //[self animarView:overlayLabel Hasta:CGPointMake(self.view.bounds.size.width/2, (self.view.bounds.size.height/2)+118) conAlpha:1];
+//        if([currentTextField.inputView isKindOfClass:[UIDatePicker class]]){
+//            if(currentTextField.text.length>0){
+//                [(UIDatePicker *)currentPicker setDate:[self returnDateWithStringDate:currentTextField.text
+//                                                                      andStringFormat:[self getStringFormatFromDatePicker:(UIDatePicker *)currentPicker]] animated:YES];
+//            }
+//            return;
+//        }
+        NSInteger index = 0;
+        if (currentPicker.tag == 2008) {
+            index=[numbersArray indexOfObject:currentTextField.text];
+        }
+        
+        if(index != NSNotFound ){
+            [currentPicker selectRow:index inComponent:0 animated:YES];
+        }
+        else{
+            [currentPicker selectRow:0 inComponent:0 animated:YES];
+        }
+        
+    }
+    else{
+        //[self animarView:overlayLabel Hasta:CGPointMake(self.view.bounds.size.width/2, (self.view.bounds.size.height/2)-28) conAlpha:1];
+    }
+}
+- (void)textFieldDidChange:(UITextField *)textField{
+    //overlayLabel.text = currentTextField.text;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    NSArray *combInicial = [dicTotalesCombustible objectForKey:@"TFCombustibleInicial"];
+    NSArray *tanqueo = [dicTotalesCombustible objectForKey:@"TFTanqueo"];
+    NSArray *combFinal = [dicTotalesCombustible objectForKey:@"TFCombustibleFinal"];
+    sumaCombustibleInicial = 0;
+    sumaTanqueo = 0;
+    sumaCombustibleFinal = 0;
+    for (UITextField *tf in combInicial) {
+        sumaCombustibleInicial += [tf.text intValue];
+    }
+    for (UITextField *tf in tanqueo) {
+        sumaTanqueo += [tf.text intValue];
+    }
+    for (UITextField *tf in combFinal) {
+        sumaCombustibleFinal += [tf.text intValue];
+    }
+    
+    totalCombustibleInicialLabel.text = [NSString stringWithFormat:@"%i", sumaCombustibleInicial];
+    totalTanqueoLabel.text = [NSString stringWithFormat:@"%i", sumaTanqueo];
+    totalCombustibleFinalLabel.text = [NSString stringWithFormat:@"%i", sumaCombustibleFinal];
+}
 #pragma mark - creacion de paginas
 -(void)crearPaginas{
-    int numeroPaginas=5;
+    int numeroPaginas=6;
     [pageScrollView setPagingEnabled:YES];
     pageScrollView.delegate=self;
     pageScrollView.contentSize=CGSizeMake(pageScrollView.frame.size.width*numeroPaginas, pageScrollView.frame.size.height);
@@ -546,6 +646,7 @@
     [self crearPaginaTripulacion];
     [self crearPaginaTeplasSanidad];
     [self crearFilasDeItinerarioYCondiciones];
+    [self crearPaginaCombustible];
     
     /*for (int j=0; j<5; j++) {
         CeldaItinerario *cell=[[CeldaItinerario alloc]initWithFrame:CGRectMake(0, 33+33*j, 0,0) andDelegate:cell];
@@ -678,6 +779,163 @@
         posFinalY=sanidadCell.frame.origin.y+33;
     }
     
+}
+-(void)crearPaginaCombustible{
+    FileSaver *file=[[FileSaver alloc]init];
+    NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];
+    
+    UIScrollView *paginaCombustible=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
+    paginaCombustible.backgroundColor=[UIColor clearColor];
+    paginaCombustible.contentSize=CGSizeMake(paginaCombustible.frame.size.width, paginaCombustible.frame.size.height+1);
+    [pageScrollView addSubview:paginaCombustible];
+    
+    int marginLeftForTV = 100;
+    int tfHeight = 30;
+    int tfWidthLarge = 160;
+    int margenInicial = 40;
+    
+    //Cabecera Combustible
+    UILabel *combustibleInicialLabel = [[UILabel alloc]initWithFrame:CGRectMake( 135, 0, 80, 40)];
+    combustibleInicialLabel.numberOfLines = 2;
+    combustibleInicialLabel.text = @"Combustible Inicial GLS.";
+    combustibleInicialLabel.textAlignment = NSTextAlignmentCenter;
+    [combustibleInicialLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
+    UILabel *tanqueoLabel = [[UILabel alloc]initWithFrame:CGRectMake(305, 0, 80, 40)];
+    tanqueoLabel.text = @"Tanqueo GLS.";
+    tanqueoLabel.numberOfLines = 2;
+    tanqueoLabel.textAlignment = NSTextAlignmentCenter;
+    [tanqueoLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
+    UILabel *comprobanteLabel = [[UILabel alloc]initWithFrame:CGRectMake(460, 0, 80, 40)];
+    comprobanteLabel.text = @"No. Comprobante ";
+    comprobanteLabel.numberOfLines = 2;
+    comprobanteLabel.textAlignment = NSTextAlignmentCenter;
+    [comprobanteLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
+    UILabel *empresaSuministraLabel = [[UILabel alloc]initWithFrame:CGRectMake(620, 0, 80, 40)];
+    empresaSuministraLabel.text = @"Empresa Suministra";
+    empresaSuministraLabel.numberOfLines = 2;
+    empresaSuministraLabel.textAlignment = NSTextAlignmentCenter;
+    [empresaSuministraLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
+    UILabel *combustibleFinalLabel = [[UILabel alloc]initWithFrame:CGRectMake(790, 0, 80, 40)];
+    combustibleFinalLabel.text = @"Combustible Final GLS.";
+    combustibleFinalLabel.numberOfLines = 2;
+    combustibleFinalLabel.textAlignment = NSTextAlignmentCenter;
+    [combustibleFinalLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
+    
+    [paginaCombustible addSubview:combustibleInicialLabel];
+    [paginaCombustible addSubview:tanqueoLabel];
+    [paginaCombustible addSubview:comprobanteLabel];
+    [paginaCombustible addSubview:empresaSuministraLabel];
+    [paginaCombustible addSubview:combustibleFinalLabel];
+    
+    //combustibleArray = [[NSMutableArray alloc]init];
+    NSArray *arregloCombustibleFromSave = [masterDic objectForKey:@"Combustible"];
+    
+    NSMutableArray *tfCombustibleInicialArray = [[NSMutableArray alloc]init];
+    NSMutableArray *tfTanqueoArray = [[NSMutableArray alloc]init];
+    NSMutableArray *tfCombustibleFinalArray = [[NSMutableArray alloc]init];
+    
+    for (int i=0; i<ordenDeVuelo.arregloDePiernas.count; i++) {
+        Piernas *pierna = ordenDeVuelo.arregloDePiernas[i];
+        UILabel *piernaLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, margenInicial+5+(tfHeight*i)+(2*i), 80, 20)];
+        piernaLabel.text = [NSString stringWithFormat:@"#%i. %@-%@",i,pierna.de, pierna.a];
+        [piernaLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:9]];
+        [paginaCombustible addSubview:piernaLabel];
+        
+        UITextField *combustibleInicialTF = [self crearTextField:marginLeftForTV y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
+        combustibleInicialTF.inputView = pickerNumeros;
+        combustibleInicialTF.textAlignment =NSTextAlignmentCenter;
+        [combustibleInicialTF setUserInteractionEnabled:YES];
+        
+        UITextField *tanqueoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*1)+2 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
+        tanqueoTF.inputView = pickerNumeros;
+        tanqueoTF.textAlignment =NSTextAlignmentCenter;
+        [tanqueoTF setUserInteractionEnabled:YES];
+        
+        UITextField *comprobanteTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*2)+4 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
+        comprobanteTF.textAlignment =NSTextAlignmentCenter;
+        [comprobanteTF setUserInteractionEnabled:YES];
+        
+        UITextField *empresaSuministraTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*3)+6 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
+        empresaSuministraTF.textAlignment =NSTextAlignmentCenter;
+        [empresaSuministraTF setUserInteractionEnabled:YES];
+                
+        UITextField *combustibleFinalTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*4)+8 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
+        combustibleFinalTF.textAlignment =NSTextAlignmentCenter;
+        combustibleFinalTF.inputView = pickerNumeros;
+        [combustibleFinalTF setUserInteractionEnabled:YES];
+        
+        [tfCombustibleInicialArray addObject:combustibleInicialTF];
+        [tfTanqueoArray addObject:tanqueoTF];
+        [tfCombustibleFinalArray addObject:combustibleFinalTF];
+        
+
+        if(arregloCombustibleFromSave.count >i){
+            NSDictionary *tempDic =arregloCombustibleFromSave[i];
+            combustibleInicialTF.text = [tempDic objectForKey:@"CombustibleInicial"] ? [tempDic objectForKey:@"CombustibleInicial"]:@"";
+            tanqueoTF.text = [tempDic objectForKey:@"Tanqueo"] ? [tempDic objectForKey:@"Tanqueo"]:@"";
+            comprobanteTF.text = [tempDic objectForKey:@"Comprobante"] ? [tempDic objectForKey:@"Comprobante"]:@"";
+            empresaSuministraTF.text = [tempDic objectForKey:@"EmpresaSuministra"] ? [tempDic objectForKey:@"EmpresaSuministra"]:@"";
+            empresaSuministraTF.tag = [tempDic objectForKey:@"IDEmpresaSuministra"] ? [[tempDic objectForKey:@"EmpresaSuministra"] doubleValue ]:0;
+            combustibleFinalTF.text = [tempDic objectForKey:@"CombustibleFinal"] ? [tempDic objectForKey:@"CombustibleFinal"]:@"";
+        }
+        
+        sumaTanqueo += [tanqueoTF.text intValue];
+        sumaCombustibleInicial += [combustibleInicialTF.text intValue];
+        sumaCombustibleFinal += [combustibleFinalTF.text intValue];
+        
+        NSMutableDictionary * combustibleDic = [[NSMutableDictionary alloc]init];
+        [combustibleDic setObject:piernaLabel.text forKey:@"Pierna"];
+        [combustibleDic setObject:combustibleInicialTF forKey:@"CombustibleInicial"];
+        [combustibleDic setObject:tanqueoTF forKey:@"Tanqueo"];
+        [combustibleDic setObject:comprobanteTF forKey:@"Comprobante"];
+        [combustibleDic setObject:empresaSuministraTF forKey:@"EmpresaSuministra"];
+        [combustibleDic setObject:combustibleFinalTF forKey:@"CombustibleFinal"];
+        [arrayCombustible addObject:combustibleDic];
+    }
+    [dicTotalesCombustible setObject:tfCombustibleInicialArray forKey:@"TFCombustibleInicial"];
+    [dicTotalesCombustible setObject:tfTanqueoArray forKey:@"TFTanqueo"];
+    [dicTotalesCombustible setObject:tfCombustibleFinalArray forKey:@"TFCombustibleFinal"];
+    
+    
+    UIView *containerDeResultado=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, pageScrollView.frame.size.height-50, pageScrollView.frame.size.width, 50)];
+    containerDeResultado.backgroundColor=[UIColor darkGrayColor];
+    [pageScrollView addSubview:containerDeResultado];
+    UILabel *totalLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 60, 40)];
+    totalLabel.text=@"Total";
+    totalLabel.backgroundColor=[UIColor clearColor];
+    totalLabel.font=[UIFont boldSystemFontOfSize:20];
+    totalLabel.textColor=[UIColor whiteColor];
+    totalLabel.textAlignment=NSTextAlignmentCenter;
+    [containerDeResultado addSubview:totalLabel];
+    
+    totalCombustibleInicialLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeftForTV, 5, tfWidthLarge, 40)];
+    totalCombustibleInicialLabel.text=[NSString stringWithFormat:@"%i",sumaCombustibleInicial];
+    totalCombustibleInicialLabel.textAlignment=NSTextAlignmentCenter;
+    totalCombustibleInicialLabel.backgroundColor = [UIColor whiteColor];
+    [containerDeResultado addSubview:totalCombustibleInicialLabel];
+    
+    totalTanqueoLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeftForTV+(tfWidthLarge*1)+2, 5, tfWidthLarge, 40)];
+    totalTanqueoLabel.text=[NSString stringWithFormat:@"%i",sumaTanqueo];
+    totalTanqueoLabel.textAlignment=NSTextAlignmentCenter;
+    totalTanqueoLabel.backgroundColor = [UIColor whiteColor];
+    [containerDeResultado addSubview:totalTanqueoLabel];
+    
+    totalCombustibleFinalLabel = [[UILabel alloc]initWithFrame:CGRectMake(marginLeftForTV+(tfWidthLarge*4)+8, 5, tfWidthLarge, 40)];
+    totalCombustibleFinalLabel.text=[NSString stringWithFormat:@"%i",sumaCombustibleFinal];
+    totalCombustibleFinalLabel.textAlignment=NSTextAlignmentCenter;
+    totalCombustibleFinalLabel.backgroundColor = [UIColor whiteColor];
+    [containerDeResultado addSubview:totalCombustibleFinalLabel];
+    
+}
+#pragma mark - creacion de textfields
+- (UITextField*)crearTextField:(int)x y:(int)y width:(int)width height:(int)height InView:(UIView*)view{
+    UITextField *tf = [[UITextField alloc]initWithFrame:CGRectMake(x, y, width, height)];
+    tf.backgroundColor = [UIColor whiteColor];
+    tf.borderStyle =UITextBorderStyleLine;
+    tf.delegate = self;
+    [tf addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [view addSubview:tf];
+    return tf;
 }
 #pragma mark - procedimientos compartidos entre páginas
 ////// las 3 primeras páginas están relacionadas entre sí.
@@ -866,6 +1124,9 @@
     else if (pickerView.tag==2007){
         return lista.arregloDeGrupo.count;
     }
+    else if (pickerView.tag == 2008) {
+        return numbersArray.count;
+    }
     else{
         return 0;
     }
@@ -912,6 +1173,9 @@
             Grupo *result=[lista.arregloDeGrupo objectAtIndex:row];
             NSString *strRes=result.nombreOrganizacion;
             return strRes;
+        }
+        else if (pickerView.tag == 2008) {
+            return [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
         }
     }
     else{
@@ -974,9 +1238,11 @@
             idGrupo=result.idOrganizacion;
             return;
         }
-        else if (pickerView.tag==2002){
+        else if (pickerView.tag == 2008) {
             
+            currentTextField.text = [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
         }
+ 
     }
     return;
     
@@ -1380,6 +1646,40 @@
     }
     [masterDic setObject:sanidadArray forKey:@"ArregloSanidad"];
     
+    NSMutableArray *combustibleArray=[[NSMutableArray alloc]init];
+    for (NSDictionary *dic in arrayCombustible) {
+        UITextField *tf1 = [dic objectForKey:@"CombustibleInicial"];
+        UITextField *tf2 = [dic objectForKey:@"Tanqueo"];
+        UITextField *tf3 = [dic objectForKey:@"Comprobante"];
+        UITextField *tf4 = [dic objectForKey:@"EmpresaSuministra"];
+        UITextField *tf5 = [dic objectForKey:@"CombustibleFinal"];
+        
+        //Validación acá
+        int inicial = tf1.text.length ? [tf1.text intValue]:0;
+        int final = tf2.text.length ? [tf5.text intValue]:0;
+        int tanqueo = tf3.text.length ? [tf2.text intValue]:0;
+        
+        BOOL esMayor = final > (inicial+tanqueo) ? YES:NO;
+        
+        if (esMayor) {
+            NSString *message = [NSString stringWithFormat:@"Los galones de combustibles finales, no deben ser  mayores a la suma de los galones de combustible iniciales y los galones de combustible tanqueados en la pierna %@",[dic objectForKey:@"Pierna"]];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            return;
+        }
+                //Fin de validación
+        
+        NSMutableDictionary *combustibleDic=[[NSMutableDictionary alloc]init];
+        [combustibleDic setObject:tf1.text forKey:@"CombustibleInicial"];
+        [combustibleDic setObject:tf2.text forKey:@"Tanqueo"];
+        [combustibleDic setObject:tf3.text forKey:@"Comprobante"];
+        [combustibleDic setObject:tf4.text forKey:@"EmpresaSuministra"];
+        [combustibleDic setObject:[NSString stringWithFormat:@"%li",(long)tf4.tag] forKey:@"IDEmpresaSuministra"];
+        [combustibleDic setObject:tf5.text forKey:@"CombustibleFinal"];
+        [combustibleArray addObject:combustibleDic];
+    }
+    [masterDic setObject:combustibleArray forKey:@"Combustible"];
+    
     SBJSON *json=[[SBJSON alloc]init];
     //NSMutableArray *arr=[[NSMutableArray alloc]init];
     //for (int i=0; i<19; i++) {
@@ -1483,6 +1783,7 @@
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
                 [masterDic setObject:[sender.resDic objectForKey:@"IdRegistro"] forKey:@"IdRegistro"];
+                [masterDic setObject:[sender.resDic objectForKey:@"noRegistro"] forKey:@"noRegistro"];
                 [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -1498,6 +1799,7 @@
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
                 [masterDic setObject:[sender.resDic objectForKey:@"IdRegistro"] forKey:@"IdRegistro"];
+                [masterDic setObject:[sender.resDic objectForKey:@"noRegistro"] forKey:@"noRegistro"];
                 [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -1519,8 +1821,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 #pragma mark number check
-- (BOOL) isAllDigitsFromArray:(NSArray*)array
-{
+- (BOOL) isAllDigitsFromArray:(NSArray*)array{
     for (NSString *string in array) {
         NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
         NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
@@ -1530,8 +1831,7 @@
     }
     return YES;
 }
-- (BOOL) isAllDigitsFromString:(NSString*)string
-{
+- (BOOL) isAllDigitsFromString:(NSString*)string{
     NSCharacterSet* nonNumbers = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange r = [string rangeOfCharacterFromSet: nonNumbers];
     return r.location == NSNotFound;

@@ -24,7 +24,7 @@
 #import "IAmCoder.h"
 #import "MBProgressHud.h"
 #import "NSData+AES.h"
-@interface RegistroDeVueloViewController : UIViewController<UIScrollViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>{
+@interface RegistroDeVueloViewController : UIViewController<UIScrollViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate>{
     MBProgressHUD *hud;
     IBOutlet UIScrollView *pageScrollView;
     
@@ -34,6 +34,7 @@
     IBOutlet UIButton *botonTripulacion;
     IBOutlet UIButton *botonTeplas;
     IBOutlet UIButton *botonSanidad;
+    IBOutlet UIButton *botonCombustible;
     
     IBOutlet UISwitch *aeronaveImpactadaSwitch;
     IBOutlet UIView *containerAeronaveImpactada;
@@ -76,6 +77,8 @@
     UIPickerView *pickerLongitud;
     UIPickerView *pickerUnidad;
     UIPickerView *pickerGrupo;
+    
+    UIPickerView *pickerNumeros;
 
     UIDatePicker *datePicker;
 
@@ -105,6 +108,16 @@
     NSString *idUnidad;
     
     NSString *idImpactadaFase;
+    
+    NSMutableArray *arrayCombustible;
+    
+    UILabel *totalCombustibleInicialLabel;
+    UILabel *totalTanqueoLabel;
+    UILabel *totalCombustibleFinalLabel;
+    NSMutableDictionary *dicTotalesCombustible;
+    
+    UITextField *currentTextField;
+    UIPickerView *currentPicker;
 
 
     CeldaCondiciones *condicionesTotal;
