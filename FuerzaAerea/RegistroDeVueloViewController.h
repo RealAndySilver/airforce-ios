@@ -115,6 +115,7 @@
     UILabel *totalTanqueoLabel;
     UILabel *totalCombustibleFinalLabel;
     NSMutableDictionary *dicTotalesCombustible;
+    UIPickerView *pickerCombustible;
     
     UITextField *currentTextField;
     UIPickerView *currentPicker;

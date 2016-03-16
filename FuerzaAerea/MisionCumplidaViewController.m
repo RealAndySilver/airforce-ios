@@ -131,10 +131,12 @@
     else{
         fechaDigitadoTF.text = [cabezeraDic objectForKey:@"FechaDigitado"];
     }
-
-    NSString *noRegistroString = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"noRegistro"];
-    double IdRegistro = [[[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"] doubleValue];
-    registroVueloTF.text = noRegistroString;
+    
+    NSString *noRegistroString = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"noRegistro"] ? [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"noRegistro"]:@"";
+    double IdRegistro = [[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"] ?
+    [[[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad] objectForKey:@"IdRegistro"] doubleValue]:0;
+    NSLog(@"CrashXX: %@", noRegistroString);
+    registroVueloTF.text = [NSString stringWithFormat:@"%@", noRegistroString];
     registroVueloTF.tag = IdRegistro;
     //registroVueloTF.text = [cabezeraDic objectForKey:@"IdRegistroVuelo"];
     
@@ -1271,9 +1273,6 @@
     return [NSString stringWithFormat:@"%.1f",contador];
 }
 
-#pragma mark - guardar
-- (IBAction)guardarRegistro:(UIButton*)sender{
-}
 
 #pragma mark - date helpers
 - (void)displayDate:(id)sender{
@@ -1356,7 +1355,8 @@
                 FileSaver *file=[[FileSaver alloc]init];
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
-                [masterDic setObject:[sender.resDic objectForKey:noRegistro] forKey:@"NoRegistro"];
+                [masterDic setObject:[sender.resDic objectForKey:noRegistro] forKey:noRegistro];
+                //[file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [file setDictionary:masterDic withName:pathForSave];
                 [self.navigationController popViewControllerAnimated:YES];
             }
@@ -1372,7 +1372,9 @@
                 NSMutableDictionary *masterDic=[[NSMutableDictionary alloc]init];
                 [masterDic setObject:@"YES" forKey:@"Done"];
                 [masterDic setObject:[sender.resDic objectForKey:noRegistro] forKey:noRegistro];
+                //[file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
                 [file setDictionary:masterDic withName:pathForSave];
+
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }

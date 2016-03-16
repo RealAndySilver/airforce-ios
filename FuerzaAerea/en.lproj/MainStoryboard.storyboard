@@ -2030,22 +2030,6 @@
                                         <rect key="frame" x="0.0" y="412" width="1024" height="40"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
-                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uhe-IY-ORq">
-                                                <rect key="frame" x="430" y="0.0" width="164" height="42"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                                <size key="titleShadowOffset" width="1" height="1"/>
-                                                <state key="normal" title="Enviar registro al SIIO" backgroundImage="atras.png">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <state key="highlighted">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="0Qe-I9-ATN"/>
-                                                </connections>
-                                            </button>
                                             <button hidden="YES" opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P4S-yr-ccn">
                                                 <rect key="frame" x="783" y="0.0" width="164" height="42"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2060,6 +2044,22 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="guardarRegistro" destination="MgK-cT-A3I" eventType="touchUpInside" id="IXU-00-ubX"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ugt-Je-WiZ">
+                                                <rect key="frame" x="430" y="3" width="178" height="35"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.0" green="0.61038749219999999" blue="0.82796556119999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                <size key="titleShadowOffset" width="1" height="1"/>
+                                                <state key="normal" title="Enviar registro al SIIO">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="laf-7S-3uq"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -2091,7 +2091,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sEV-bT-qny">
-                                                <rect key="frame" x="154" y="7" width="156" height="29"/>
+                                                <rect key="frame" x="314" y="7" width="156" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2107,7 +2107,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Q2O-53-8Ds">
-                                                <rect key="frame" x="314" y="7" width="156" height="29"/>
+                                                <rect key="frame" x="474" y="7" width="156" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2123,7 +2123,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qBx-FE-f5D">
-                                                <rect key="frame" x="474" y="7" width="156" height="29"/>
+                                                <rect key="frame" x="634" y="7" width="156" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2139,7 +2139,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Bfw-Vd-FCo">
-                                                <rect key="frame" x="634" y="7" width="156" height="29"/>
+                                                <rect key="frame" x="794" y="7" width="156" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2154,8 +2154,8 @@
                                                     <action selector="teplas:" destination="MgK-cT-A3I" eventType="touchUpInside" id="7Uz-QB-Iwp"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hUn-E5-76O">
-                                                <rect key="frame" x="794" y="7" width="156" height="29"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UTr-2t-WJQ">
+                                                <rect key="frame" x="154" y="7" width="156" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
@@ -2167,7 +2167,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="combustible:" destination="MgK-cT-A3I" eventType="touchUpInside" id="ROj-6v-RZd"/>
+                                                    <action selector="combustible:" destination="MgK-cT-A3I" eventType="touchUpInside" id="abl-Kl-mtf"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -2610,12 +2610,18 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HN4-nS-V81">
-                                <rect key="frame" x="10" y="4" width="164" height="38"/>
+                            <view contentMode="scaleToFill" id="Nw4-er-tux">
+                                <rect key="frame" x="-3" y="46" width="1031" height="2"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="stW-cn-tge">
+                                <rect key="frame" x="10" y="8" width="164" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.61038749219999999" blue="0.82796556119999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="Guardar y regresar" backgroundImage="atras.png">
+                                <state key="normal" title="Guardar y regresar">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2623,14 +2629,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="thW-zH-O3n"/>
+                                    <action selector="guardarRegistro:" destination="MgK-cT-A3I" eventType="touchUpInside" id="TTY-CN-Ktr"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" id="Nw4-er-tux">
-                                <rect key="frame" x="-3" y="46" width="1031" height="2"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -2641,8 +2642,8 @@
                         <outlet property="aeronaveImpactadaSwitch" destination="2dX-6R-qXp" id="xXd-f1-qwa"/>
                         <outlet property="aeronaveUnoTextfield" destination="3WY-jm-iBs" id="JQg-8n-NFI"/>
                         <outlet property="botonArmamento" destination="Q2O-53-8Ds" id="vrB-Nm-KNG"/>
-                        <outlet property="botonCombustible" destination="hUn-E5-76O" id="k1c-Di-GPD"/>
-                        <outlet property="botonCondiciones" destination="sEV-bT-qny" id="WnE-WS-q60"/>
+                        <outlet property="botonCombustible" destination="UTr-2t-WJQ" id="sCy-d5-pwx"/>
+                        <outlet property="botonCondiciones" destination="sEV-bT-qny" id="z4d-Ma-2Hn"/>
                         <outlet property="botonItinerario" destination="k89-Lh-QW2" id="WcT-J5-m3M"/>
                         <outlet property="botonTeplas" destination="Bfw-Vd-FCo" id="AMr-ia-qkk"/>
                         <outlet property="botonTripulacion" destination="qBx-FE-f5D" id="PKT-8D-YhA"/>

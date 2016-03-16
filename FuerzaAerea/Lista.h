@@ -33,7 +33,7 @@
 @property(nonatomic,readonly)NSMutableArray *arregloDeGrupo;
 @property(nonatomic,readonly)NSMutableArray *arregloDeFaseDeVuelo;
 @property(nonatomic,readonly)NSMutableArray *arregloDeEntidades;
-
+@property(nonatomic,readonly)NSMutableArray *arregloDeEmpresasCombustible;
 
 @property(nonatomic,readonly)NSMutableArray *arregloDeEnemigo;
 @property(nonatomic,readonly)NSMutableArray *arregloDeOperacion;

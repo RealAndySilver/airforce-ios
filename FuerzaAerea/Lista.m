@@ -11,12 +11,11 @@
 @implementation Lista
 
 @synthesize arregloDeArmamentos,arregloDeArmamentosImpactados,arregloDeDepartamentos,arregloDeManiobra,arregloDePlan,arregloDeTipoOperacion,arregloDeUnidades,arregloDeFaseDeVuelo,arregloDeGrupo,arregloDeEnemigo,arregloDeObjetivo,arregloDeOperacion,arregloDeEntidades,arregloDeMunicipios;
-@synthesize arregloDeConvenios,arregloEntidadesPaxCarga,arregloMotivosIncumplimiento,arregloResultadosInmediatos,arregloRetardos,arregloTipoOperacionMision,arregloTipoPax;
+@synthesize arregloDeConvenios,arregloEntidadesPaxCarga,arregloMotivosIncumplimiento,arregloResultadosInmediatos,arregloRetardos,arregloTipoOperacionMision,arregloTipoPax, arregloDeEmpresasCombustible;
 -(id)initWithDictionary:(NSDictionary*)dictionary{
     if (self =[super init]) {
         
         dictionary=[dictionary objectForKey:@"listas"];
-        
         NSArray *tempArmamentos=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"armamentos"]];
         if (tempArmamentos.count) {
             arregloDeArmamentos=[[NSMutableArray alloc]init];
@@ -125,6 +124,17 @@
             }
             NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"nombreOrganizacion" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
             [arregloDeEntidades sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
+        }
+        
+        NSArray *tempArregloEmpresasCombustible=[[NSArray alloc]initWithArray:[dictionary objectForKey:@"ListaEmpresasCombustibe"]];
+        if (tempArregloEmpresasCombustible.count) {
+            arregloDeEmpresasCombustible=[[NSMutableArray alloc]init];
+            for (int i=0; i<tempArregloEmpresasCombustible.count; i++) {
+                NSDictionary *dic = tempArregloEmpresasCombustible[i];
+                [arregloDeEmpresasCombustible addObject:dic];
+            }
+            NSSortDescriptor *alphaDesc = [[NSSortDescriptor alloc] initWithKey:@"Empresa" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+            [arregloDeEmpresasCombustible sortUsingDescriptors:[NSMutableArray arrayWithObjects:alphaDesc, nil]];
         }
         
     }

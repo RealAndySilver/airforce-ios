@@ -179,7 +179,7 @@
         SBJSON *json=[[SBJSON alloc]init];
         NSData *data=[[dictionary2 objectForKey:@"return"] dataUsingEncoding:NSUTF8StringEncoding];
         NSString *json_string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"Json %@",json_string);
+        NSLog(@"Json %@",json_string);
         //login,ordenVuelo,
         if ([tempMethod isEqualToString:@"login"]) {
             //json_string=[IAmCoder base64DecodeString:json_string];

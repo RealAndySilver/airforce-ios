@@ -17,6 +17,13 @@
     int sumaCombustibleInicial;
     int sumaTanqueo;
     int sumaCombustibleFinal;
+    
+    int pagItinerario;
+    int pagCondiciones;
+    int pagArmamento;
+    int pagTripulacion;
+    int pagTeplas;
+    int pagCombustible;
 }
 @synthesize ordenDeVuelo,arrayFaseVuelo,arrayDepartamentos,arrayMunicipios,arrayArmamentos,arrayLatitud,arrayLongitud,lista;
 -(void)viewDidLoad{
@@ -36,6 +43,7 @@
     arregloTeplas=[[NSMutableArray alloc]init];
     arregloSanidad=[[NSMutableArray alloc]init];
     arrayCombustible=[[NSMutableArray alloc]init];
+    [self setPageOrder];
     [self setAllPickers];
     [self crearPaginas];
     [self seleccionarBoton:1];
@@ -47,6 +55,7 @@
     
     [self checkIfSaved];
     
+    [self numberOfDays];
 
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -150,6 +159,21 @@
     pickerNumeros.delegate=self;
     pickerNumeros.showsSelectionIndicator = YES;
     pickerNumeros.tag=2008;
+    
+    pickerCombustible=[[UIPickerView alloc]init];
+    pickerCombustible.dataSource=self;
+    pickerCombustible.delegate=self;
+    pickerCombustible.showsSelectionIndicator = YES;
+    pickerCombustible.tag=2009;
+}
+-(void)setPageOrder{
+    pagItinerario=0;
+    pagCombustible=1;
+    pagCondiciones=2;
+    pagArmamento=3;
+    pagTripulacion=4;
+    pagTeplas=5;
+    
 }
 -(void)checkIfSaved{
     FileSaver *file=[[FileSaver alloc]init];
@@ -401,33 +425,34 @@
     [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
 }
 -(IBAction)itinerario:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 0, 0.0f) animated:YES];
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagItinerario, 0.0f) animated:YES];
     [self seleccionarBoton:1];
 }
--(IBAction)condicionesDeVuelo:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 1, 0.0f) animated:YES];
+-(IBAction)combustible:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagCombustible, 0.0f) animated:YES];
     [self seleccionarBoton:2];
 }
--(IBAction)armamentoPierna:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 2, 0.0f) animated:YES];
+-(IBAction)condicionesDeVuelo:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagCondiciones, 0.0f) animated:YES];
     [self seleccionarBoton:3];
 }
--(IBAction)tripulacion:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 3, 0.0f) animated:YES];
+-(IBAction)armamentoPierna:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagArmamento, 0.0f) animated:YES];
     [self seleccionarBoton:4];
 }
--(IBAction)teplas:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 4, 0.0f) animated:YES];
+-(IBAction)tripulacion:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagTripulacion, 0.0f) animated:YES];
     [self seleccionarBoton:5];
+}
+-(IBAction)teplas:(id)sender{
+    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * pagTeplas, 0.0f) animated:YES];
+    [self seleccionarBoton:6];
 }
 -(IBAction)sanidad:(id)sender{
     [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
     [self seleccionarBoton:6];
 }
--(IBAction)combustible:(id)sender{
-    [pageScrollView setContentOffset:CGPointMake(pageScrollView.frame.size.width * 5, 0.0f) animated:YES];
-    [self seleccionarBoton:6];
-}
+
 -(IBAction)fadeInAeronaveImpactada:(UISwitch*)sender{
     if (sender.on) {
         [UIView beginAnimations:nil context:NULL];
@@ -485,7 +510,25 @@
             [botonSanidad setHighlighted:NO];
             [botonCombustible setHighlighted:NO];
             break;
+            
         case 2:
+            [botonItinerario setBackgroundColor:colorNormal];
+            [botonCondiciones setBackgroundColor:colorNormal];
+            [botonArmamento setBackgroundColor:colorNormal];
+            [botonTripulacion setBackgroundColor:colorNormal];
+            [botonTeplas setBackgroundColor:colorNormal];
+            [botonSanidad setBackgroundColor:colorNormal];
+            [botonCombustible setBackgroundColor:colorHilight];
+            [botonItinerario setHighlighted:NO];
+            [botonCondiciones setHighlighted:NO];
+            [botonArmamento setHighlighted:NO];
+            [botonTripulacion setHighlighted:NO];
+            [botonTeplas setHighlighted:NO];
+            [botonSanidad setHighlighted:NO];
+            [botonCombustible setHighlighted:YES];
+            break;
+            
+        case 3:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorHilight];
             [botonArmamento setBackgroundColor:colorNormal];
@@ -501,7 +544,7 @@
             [botonSanidad setHighlighted:NO];
             [botonCombustible setHighlighted:NO];
             break;
-        case 3:
+        case 4:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorHilight];
@@ -517,7 +560,7 @@
             [botonSanidad setHighlighted:NO];
             [botonCombustible setHighlighted:NO];
             break;
-        case 4:
+        case 5:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorNormal];
@@ -534,7 +577,7 @@
             [botonCombustible setHighlighted:NO];
             break;
         
-        case 5:
+        case 6:
             [botonItinerario setBackgroundColor:colorNormal];
             [botonCondiciones setBackgroundColor:colorNormal];
             [botonArmamento setBackgroundColor:colorNormal];
@@ -552,22 +595,7 @@
             break;
             
         
-        case 6:
-            [botonItinerario setBackgroundColor:colorNormal];
-            [botonCondiciones setBackgroundColor:colorNormal];
-            [botonArmamento setBackgroundColor:colorNormal];
-            [botonTripulacion setBackgroundColor:colorNormal];
-            [botonTeplas setBackgroundColor:colorNormal];
-            [botonSanidad setBackgroundColor:colorNormal];
-            [botonCombustible setBackgroundColor:colorHilight];
-            [botonItinerario setHighlighted:NO];
-            [botonCondiciones setHighlighted:NO];
-            [botonArmamento setHighlighted:NO];
-            [botonTripulacion setHighlighted:NO];
-            [botonTeplas setHighlighted:NO];
-            [botonSanidad setHighlighted:NO];
-            [botonCombustible setHighlighted:YES];
-            break;
+        
             
         default:
             break;
@@ -659,7 +687,7 @@
     }*/
 }
 -(void)crearPaginaItinerario{
-    paginaItinerario=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*0, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
+    paginaItinerario=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagItinerario, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
     paginaItinerario.contentSize=CGSizeMake(paginaItinerario.frame.size.width, paginaItinerario.frame.size.height+1);
     paginaItinerario.backgroundColor=[UIColor clearColor];
     UITapGestureRecognizer *tapDismisser=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(callForeignDismisser)];
@@ -667,7 +695,7 @@
     [pageScrollView addSubview:paginaItinerario];
     CeldaItinerario *header=[[CeldaItinerario alloc]initHeaderWithFrame:CGRectMake(0, 0, 0,0)];
     [paginaItinerario addSubview:header];
-    UIView *containerDeResultado=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*0, pageScrollView.frame.size.height-50, pageScrollView.frame.size.width, 50)];
+    UIView *containerDeResultado=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagItinerario, pageScrollView.frame.size.height-50, pageScrollView.frame.size.width, 50)];
     containerDeResultado.backgroundColor=[UIColor darkGrayColor];
     [pageScrollView addSubview:containerDeResultado];
     UILabel *totalLabel = [[UILabel alloc]initWithFrame:CGRectMake(320, 5, 60, 40)];
@@ -689,18 +717,18 @@
     [containerDeResultado addSubview:totalTripulacion];
 }
 -(void)crearPaginaCondiciones{
-    paginaCondicionesDeVuelo=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*1, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
+    paginaCondicionesDeVuelo=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagCondiciones, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
     paginaCondicionesDeVuelo.contentSize=CGSizeMake(paginaCondicionesDeVuelo.frame.size.width, paginaCondicionesDeVuelo.frame.size.height+1);
     paginaCondicionesDeVuelo.backgroundColor=[UIColor clearColor];
     [pageScrollView addSubview:paginaCondicionesDeVuelo];
     CeldaCondiciones *condicionesHeader=[[CeldaCondiciones alloc]initHeaderWithFrame:CGRectMake(0, 0, 0, 0)];
     [paginaCondicionesDeVuelo addSubview:condicionesHeader];
-    condicionesTotal=[[CeldaCondiciones alloc]initTotalWithFrame:CGRectMake(pageScrollView.frame.size.width*1, pageScrollView.frame.size.height-50, 0, 0)];
+    condicionesTotal=[[CeldaCondiciones alloc]initTotalWithFrame:CGRectMake(pageScrollView.frame.size.width*pagCondiciones, pageScrollView.frame.size.height-50, 0, 0)];
     [pageScrollView addSubview:condicionesTotal];
 
 }
 -(void)crearPaginaArmamentoPiernas{
-    paginaArmamentoPierna=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*2, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    paginaArmamentoPierna=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagArmamento, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
     [paginaArmamentoPierna setPagingEnabled:YES];
     [paginaArmamentoPierna setShowsVerticalScrollIndicator:NO];
     paginaArmamentoPierna.backgroundColor=[UIColor clearColor];
@@ -709,7 +737,7 @@
     
 }
 -(void)crearPaginaTripulacion{
-    paginaTripulacion=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*3, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    paginaTripulacion=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagTripulacion, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
     paginaTripulacion.backgroundColor=[UIColor clearColor];
     paginaTripulacion.contentSize=CGSizeMake(paginaTripulacion.frame.size.width, paginaTripulacion.frame.size.height+1);
     [pageScrollView addSubview:paginaTripulacion];
@@ -743,7 +771,7 @@
     }
 }
 -(void)crearPaginaTeplasSanidad{
-    paginaTeplasSanidad=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*4, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
+    paginaTeplasSanidad=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagTeplas, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height)];
     paginaTeplasSanidad.backgroundColor=[UIColor clearColor];
     paginaTeplasSanidad.contentSize=CGSizeMake(paginaTeplasSanidad.frame.size.width, paginaTeplasSanidad.frame.size.height+1);
     [pageScrollView addSubview:paginaTeplasSanidad];
@@ -784,7 +812,7 @@
     FileSaver *file=[[FileSaver alloc]init];
     NSDictionary *masterDic=[file getDictionary:ordenDeVuelo.principal.idConsecutivoUnidad];
     
-    UIScrollView *paginaCombustible=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
+    UIScrollView *paginaCombustible=[[UIScrollView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagCombustible, 0, pageScrollView.frame.size.width, pageScrollView.frame.size.height-50)];
     paginaCombustible.backgroundColor=[UIColor clearColor];
     paginaCombustible.contentSize=CGSizeMake(paginaCombustible.frame.size.width, paginaCombustible.frame.size.height+1);
     [pageScrollView addSubview:paginaCombustible];
@@ -797,11 +825,11 @@
     //Cabecera Combustible
     UILabel *combustibleInicialLabel = [[UILabel alloc]initWithFrame:CGRectMake( 135, 0, 80, 40)];
     combustibleInicialLabel.numberOfLines = 2;
-    combustibleInicialLabel.text = @"Combustible Inicial GLS.";
+    combustibleInicialLabel.text = @"Combustible Inicial Lbs.";
     combustibleInicialLabel.textAlignment = NSTextAlignmentCenter;
     [combustibleInicialLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
     UILabel *tanqueoLabel = [[UILabel alloc]initWithFrame:CGRectMake(305, 0, 80, 40)];
-    tanqueoLabel.text = @"Tanqueo GLS.";
+    tanqueoLabel.text = @"Tanqueo Lbs.";
     tanqueoLabel.numberOfLines = 2;
     tanqueoLabel.textAlignment = NSTextAlignmentCenter;
     [tanqueoLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
@@ -816,7 +844,7 @@
     empresaSuministraLabel.textAlignment = NSTextAlignmentCenter;
     [empresaSuministraLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
     UILabel *combustibleFinalLabel = [[UILabel alloc]initWithFrame:CGRectMake(790, 0, 80, 40)];
-    combustibleFinalLabel.text = @"Combustible Final GLS.";
+    combustibleFinalLabel.text = @"Combustible Final Lbs.";
     combustibleFinalLabel.numberOfLines = 2;
     combustibleFinalLabel.textAlignment = NSTextAlignmentCenter;
     [combustibleFinalLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:10]];
@@ -837,17 +865,17 @@
     for (int i=0; i<ordenDeVuelo.arregloDePiernas.count; i++) {
         Piernas *pierna = ordenDeVuelo.arregloDePiernas[i];
         UILabel *piernaLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, margenInicial+5+(tfHeight*i)+(2*i), 80, 20)];
-        piernaLabel.text = [NSString stringWithFormat:@"#%i. %@-%@",i,pierna.de, pierna.a];
+        piernaLabel.text = [NSString stringWithFormat:@"#%i. %@-%@",i+1,pierna.de, pierna.a];
         [piernaLabel setFont:[UIFont fontWithName:@"Arial-BoldMT" size:9]];
         [paginaCombustible addSubview:piernaLabel];
         
         UITextField *combustibleInicialTF = [self crearTextField:marginLeftForTV y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
-        combustibleInicialTF.inputView = pickerNumeros;
+        //combustibleInicialTF.inputView = pickerNumeros;
         combustibleInicialTF.textAlignment =NSTextAlignmentCenter;
         [combustibleInicialTF setUserInteractionEnabled:YES];
         
         UITextField *tanqueoTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*1)+2 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
-        tanqueoTF.inputView = pickerNumeros;
+        //tanqueoTF.inputView = pickerNumeros;
         tanqueoTF.textAlignment =NSTextAlignmentCenter;
         [tanqueoTF setUserInteractionEnabled:YES];
         
@@ -857,11 +885,12 @@
         
         UITextField *empresaSuministraTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*3)+6 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
         empresaSuministraTF.textAlignment =NSTextAlignmentCenter;
+        empresaSuministraTF.inputView = pickerCombustible;
         [empresaSuministraTF setUserInteractionEnabled:YES];
                 
         UITextField *combustibleFinalTF = [self crearTextField:marginLeftForTV+(tfWidthLarge*4)+8 y:margenInicial+(tfHeight*i)+(2*i) width:tfWidthLarge height:tfHeight InView:paginaCombustible];
         combustibleFinalTF.textAlignment =NSTextAlignmentCenter;
-        combustibleFinalTF.inputView = pickerNumeros;
+        //combustibleFinalTF.inputView = pickerNumeros;
         [combustibleFinalTF setUserInteractionEnabled:YES];
         
         [tfCombustibleInicialArray addObject:combustibleInicialTF];
@@ -875,7 +904,7 @@
             tanqueoTF.text = [tempDic objectForKey:@"Tanqueo"] ? [tempDic objectForKey:@"Tanqueo"]:@"";
             comprobanteTF.text = [tempDic objectForKey:@"Comprobante"] ? [tempDic objectForKey:@"Comprobante"]:@"";
             empresaSuministraTF.text = [tempDic objectForKey:@"EmpresaSuministra"] ? [tempDic objectForKey:@"EmpresaSuministra"]:@"";
-            empresaSuministraTF.tag = [tempDic objectForKey:@"IDEmpresaSuministra"] ? [[tempDic objectForKey:@"EmpresaSuministra"] doubleValue ]:0;
+            empresaSuministraTF.tag = [tempDic objectForKey:@"IDEmpresaSuministra"] ? [[tempDic objectForKey:@"IDEmpresaSuministra"] doubleValue ]:0;
             combustibleFinalTF.text = [tempDic objectForKey:@"CombustibleFinal"] ? [tempDic objectForKey:@"CombustibleFinal"]:@"";
         }
         
@@ -897,7 +926,7 @@
     [dicTotalesCombustible setObject:tfCombustibleFinalArray forKey:@"TFCombustibleFinal"];
     
     
-    UIView *containerDeResultado=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*5, pageScrollView.frame.size.height-50, pageScrollView.frame.size.width, 50)];
+    UIView *containerDeResultado=[[UIView alloc]initWithFrame:CGRectMake(pageScrollView.frame.size.width*pagCombustible, pageScrollView.frame.size.height-50, pageScrollView.frame.size.width, 50)];
     containerDeResultado.backgroundColor=[UIColor darkGrayColor];
     [pageScrollView addSubview:containerDeResultado];
     UILabel *totalLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 60, 40)];
@@ -1127,6 +1156,9 @@
     else if (pickerView.tag == 2008) {
         return numbersArray.count;
     }
+    else if (pickerView.tag == 2009) {
+        return lista.arregloDeEmpresasCombustible.count;
+    }
     else{
         return 0;
     }
@@ -1176,6 +1208,10 @@
         }
         else if (pickerView.tag == 2008) {
             return [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
+        }
+        else if (pickerView.tag == 2009) {
+            NSDictionary *dic = lista.arregloDeEmpresasCombustible[row];
+            return [NSString stringWithFormat:@"%@",[dic objectForKey:@"Empresa"]];
         }
     }
     else{
@@ -1241,6 +1277,11 @@
         else if (pickerView.tag == 2008) {
             
             currentTextField.text = [NSString stringWithFormat:@"%@",[numbersArray objectAtIndex:row]];
+        }
+        else if (pickerView.tag == 2009) {
+            NSDictionary *dic = lista.arregloDeEmpresasCombustible[row];
+            currentTextField.text = [dic objectForKey:@"Empresa"];
+            currentTextField.tag = [[dic objectForKey:@"IdEmpSuministra"] doubleValue];
         }
  
     }
@@ -1358,6 +1399,7 @@
     
     
     NSMutableArray *itinerarioArray=[[NSMutableArray alloc]init];
+    int i = 0;
     for (CeldaItinerario *cell in arregloParaSumarItinerario) {
         NSMutableDictionary *itinerarioDic=[[NSMutableDictionary alloc]init];
         
@@ -1421,6 +1463,37 @@
         
         if(cell.checkDefensa.isOn){[itinerarioDic setObject:@"S" forKey:@"CheckDefensa"];}
         else{[itinerarioDic setObject:@"N" forKey:@"CheckDefensa"];}
+        
+        
+        NSDictionary *dic = arrayCombustible[i];
+            UITextField *tf1 = [dic objectForKey:@"CombustibleInicial"];
+            UITextField *tf2 = [dic objectForKey:@"Tanqueo"];
+            UITextField *tf3 = [dic objectForKey:@"Comprobante"];
+            UITextField *tf4 = [dic objectForKey:@"EmpresaSuministra"];
+            UITextField *tf5 = [dic objectForKey:@"CombustibleFinal"];
+            
+            //Validación acá
+            int inicial = tf1.text.length ? [tf1.text intValue]:0;
+            int final = tf2.text.length ? [tf5.text intValue]:0;
+            int tanqueo = tf3.text.length ? [tf2.text intValue]:0;
+            
+            BOOL esMayor = final > (inicial+tanqueo) ? YES:NO;
+            
+            if (esMayor) {
+                NSString *message = [NSString stringWithFormat:@"Los galones de combustibles finales, no deben ser  mayores a la suma de los galones de combustible iniciales y los galones de combustible tanqueados en la pierna %@",[dic objectForKey:@"Pierna"]];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+                return;
+            }
+            //Fin de validación
+            
+            [itinerarioDic setObject:tf1.text forKey:@"CombustibleInicial"];
+            [itinerarioDic setObject:tf2.text forKey:@"Tanqueo"];
+            [itinerarioDic setObject:tf3.text forKey:@"Comprobante"];
+            [itinerarioDic setObject:tf4.text forKey:@"EmpresaSuministra"];
+            [itinerarioDic setObject:[NSString stringWithFormat:@"%li",(long)tf4.tag] forKey:@"IDEmpresaSuministra"];
+            [itinerarioDic setObject:tf5.text forKey:@"CombustibleFinal"];
+        
         [itinerarioArray addObject:itinerarioDic];
     }
     [masterDic setObject:itinerarioArray forKey:@"ArregloItinerario"];
@@ -1690,25 +1763,42 @@
     NSMutableDictionary *ultra=[[NSMutableDictionary alloc]init];
     [ultra setObject:masterDic forKey:@"RegistroDeVuelo"];
     NSString *str=[json stringWithObject:ultra];
-    //NSLog(@"JSON %@",str);
-    
+    NSLog(@"JSON %@",str);
     
     
     [masterDic setObject:@"NO" forKey:@"Done"];
     [masterDic setObject:ordenDeVuelo.principal.idConsecutivoUnidad forKey:@"NoOrden"];
     //[masterDic setObject:@"123456" forKey:@"IdRegistro"];
 
+    
     [file setDictionary:saveForMision withName:@"SaveMision"];
     [file setDictionary:@{@"NoOrden":ordenDeVuelo.principal.idConsecutivoUnidad} withName:@"UltimoRegistroGuardado"];
     
+    
+    [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
+    
+    
+    
+    BOOL cantSendRegistro = [self numberOfDays]>3 ? YES:NO;
+    if (cantSendRegistro) {
+        NSString *message = @"Este Registro de Vuelo tiene más de 3 días y no podrá ser enviado. Por favor contacte al administrador de sistemas.";
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Error" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UILabel *label=[[UILabel alloc]init];
+        label.backgroundColor=[UIColor greenColor];
+        label.layer.cornerRadius=10;
+        label.frame=CGRectMake(5, 2, 273, 13);
+        [alert addSubview:label];
+        [alert show];
+    }
+    
     if (sender.tag==10) {
-        FileSaver *file=[[FileSaver alloc]init];
-        [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (sender.tag==11){
+        if (cantSendRegistro) {
+            return;
+        }
         [self sincronizarDataConServer:str];
-        //NSLog(@"Diccionario %@",masterDic);
     }
 }
 #pragma mark - fecha
@@ -1720,6 +1810,18 @@
     
     NSString *strDate = [formatter stringFromDate:selected];
     fechaTextfield.text = strDate;
+}
+-(int)numberOfDays{
+    NSDate *currDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    NSDate *registroDate = [dateFormatter dateFromString:fechaTextfield.text];
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay
+                                                        fromDate:registroDate
+                                                          toDate:currDate
+                                                         options:NSCalendarWrapComponents];
+    return [components day];
 }
 #pragma mark - server communication
 -(void)sincronizarDataConServer:(NSString*)data{
@@ -1761,6 +1863,7 @@
          [file setDictionary:masterDic withName:ordenDeVuelo.principal.idConsecutivoUnidad];
          [self.navigationController popViewControllerAnimated:YES];
          }*/
+        NSLog(@"ResXX: %@",sender.resDic);
         if ([sender.resDic objectForKey:@"status:"]) {
             if ([[sender.resDic objectForKey:@"status:"] intValue]==2) {
                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:[sender.resDic objectForKey:@"mensaje:"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
